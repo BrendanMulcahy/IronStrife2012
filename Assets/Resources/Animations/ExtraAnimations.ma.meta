@@ -1,0 +1,2013 @@
+fileFormatVersion: 2
+guid: b98c3723731128a4f9cd93b5d831d08c
+ModelImporter:
+  fileIDToRecycleName:
+    4300004: Mesh
+    4300006: pCube1
+    7400000: Take 001 //// ExtraAnimations
+    7400002: FullCombo //// ExtraAnimations
+    7400004: Combo1 //// ExtraAnimations
+    7400006: idle //// ExtraAnimations
+    7400008: idle0 //// ExtraAnimations
+    7400010: idle1 //// ExtraAnimations
+    7400012: Combo2 //// ExtraAnimations
+    7400014: Combo3 //// ExtraAnimations
+    7400016: Combo4 //// ExtraAnimations
+    7400018: TwoHandedCombo1 //// ExtraAnimations
+    7400020: TwoHandedCombo2 //// ExtraAnimations
+    7400022: TwoHandedCombo3 //// ExtraAnimations
+  serializedVersion: 10
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    generateAnimations: 3
+    bakeSimulation: 1
+    splitAnimations: 1
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 8
+    clipAnimations:
+    - name: FullCombo
+      firstFrame: 1165
+      lastFrame: 1342
+      wrapMode: 2
+      loop: 1
+    - name: Combo1
+      firstFrame: 1165
+      lastFrame: 1188
+      wrapMode: 1
+      loop: 0
+    - name: Combo2
+      firstFrame: 1189
+      lastFrame: 1206
+      wrapMode: 1
+      loop: 0
+    - name: Combo3
+      firstFrame: 1207
+      lastFrame: 1221
+      wrapMode: 1
+      loop: 0
+    - name: Combo4
+      firstFrame: 1222
+      lastFrame: 1238
+      wrapMode: 1
+      loop: 0
+    - name: TwoHandedCombo1
+      firstFrame: 1807
+      lastFrame: 1827
+      wrapMode: 1
+      loop: 0
+    - name: TwoHandedCombo2
+      firstFrame: 1828
+      lastFrame: 1845
+      wrapMode: 1
+      loop: 0
+    - name: TwoHandedCombo3
+      firstFrame: 1846
+      lastFrame: 1862
+      wrapMode: 1
+      loop: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .100000001
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMesh: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  textMetaNamesToFileIDs:
+    //RootNode:
+      data:
+        first: 1
+        second: a0860100
+      data:
+        first: 4
+        second: 801a0600
+      data:
+        first: 111
+        second: 605fa900
+    Dagger_of_the_seabeast1:pCube1:
+      data:
+        first: 1
+        second: ac860100
+      data:
+        first: 4
+        second: 8c1a0600
+    Dagger_of_the_seabeast1:polySurface1:
+      data:
+        first: 1
+        second: b0860100
+      data:
+        first: 4
+        second: 901a0600
+    Dagger_of_the_seabeast1:transform1:
+      data:
+        first: 1
+        second: aa860100
+      data:
+        first: 4
+        second: 8a1a0600
+    Dagger_of_the_seabeast1:transform2:
+      data:
+        first: 1
+        second: ae860100
+      data:
+        first: 4
+        second: 8e1a0600
+    Greatsword:polySurface1:
+      data:
+        first: 1
+        second: 3e880100
+      data:
+        first: 4
+        second: 1e1c0600
+      data:
+        first: 23
+        second: 64182300
+      data:
+        first: 33
+        second: a45a3200
+    LightWeight_Rigged_:DSN_lElbowParentUpG:
+      data:
+        first: 1
+        second: bc880100
+      data:
+        first: 4
+        second: 9c1c0600
+    LightWeight_Rigged_:DSN_lKneeParentUpG:
+      data:
+        first: 1
+        second: b8880100
+      data:
+        first: 4
+        second: 981c0600
+    LightWeight_Rigged_:DSN_rElbowParentUpG:
+      data:
+        first: 1
+        second: ba880100
+      data:
+        first: 4
+        second: 9a1c0600
+    LightWeight_Rigged_:DSN_rKneeParentUpG:
+      data:
+        first: 1
+        second: b6880100
+      data:
+        first: 4
+        second: 961c0600
+    LightWeight_Rigged_:EyeAimCG:
+      data:
+        first: 1
+        second: ae870100
+      data:
+        first: 4
+        second: 8e1b0600
+    LightWeight_Rigged_:HeadC:
+      data:
+        first: 1
+        second: a8870100
+      data:
+        first: 4
+        second: 881b0600
+    LightWeight_Rigged_:HeadCG:
+      data:
+        first: 1
+        second: aa870100
+      data:
+        first: 4
+        second: 8a1b0600
+    LightWeight_Rigged_:HeadJ:
+      data:
+        first: 1
+        second: 38870100
+      data:
+        first: 4
+        second: 181b0600
+    LightWeight_Rigged_:HeadTipJ:
+      data:
+        first: 1
+        second: 36870100
+      data:
+        first: 4
+        second: 161b0600
+    LightWeight_Rigged_:IK_Weapon_NodeL1:
+      data:
+        first: 1
+        second: bc870100
+      data:
+        first: 4
+        second: 9c1b0600
+    LightWeight_Rigged_:IK_Weapon_NodeR1:
+      data:
+        first: 1
+        second: 38880100
+      data:
+        first: 4
+        second: 181c0600
+    LightWeight_Rigged_:JawCG:
+      data:
+        first: 1
+        second: ac870100
+      data:
+        first: 4
+        second: 8c1b0600
+    LightWeight_Rigged_:JawJ:
+      data:
+        first: 1
+        second: 34870100
+      data:
+        first: 4
+        second: 141b0600
+    LightWeight_Rigged_:JawTipJ:
+      data:
+        first: 1
+        second: 32870100
+      data:
+        first: 4
+        second: 121b0600
+    LightWeight_Rigged_:MainHipC:
+      data:
+        first: 1
+        second: 48870100
+      data:
+        first: 4
+        second: 281b0600
+    LightWeight_Rigged_:MainHipCG:
+      data:
+        first: 1
+        second: 4a870100
+      data:
+        first: 4
+        second: 2a1b0600
+    LightWeight_Rigged_:MainHipJ:
+      data:
+        first: 1
+        second: c6860100
+      data:
+        first: 4
+        second: a61a0600
+    LightWeight_Rigged_:NeckC:
+      data:
+        first: 1
+        second: a0870100
+      data:
+        first: 4
+        second: 801b0600
+    LightWeight_Rigged_:NeckCG:
+      data:
+        first: 1
+        second: a2870100
+      data:
+        first: 4
+        second: 821b0600
+    LightWeight_Rigged_:NeckJ:
+      data:
+        first: 1
+        second: 3a870100
+      data:
+        first: 4
+        second: 1a1b0600
+    LightWeight_Rigged_:ROOTFKC:
+      data:
+        first: 1
+        second: 44870100
+      data:
+        first: 4
+        second: 241b0600
+    LightWeight_Rigged_:ROOTFKCG:
+      data:
+        first: 1
+        second: 46870100
+      data:
+        first: 4
+        second: 261b0600
+    LightWeight_Rigged_:Spine01FKC:
+      data:
+        first: 1
+        second: a4870100
+      data:
+        first: 4
+        second: 841b0600
+    LightWeight_Rigged_:Spine01FKCG:
+      data:
+        first: 1
+        second: a6870100
+      data:
+        first: 4
+        second: 861b0600
+    LightWeight_Rigged_:Spine01J:
+      data:
+        first: 1
+        second: 42870100
+      data:
+        first: 4
+        second: 221b0600
+    LightWeight_Rigged_:Spine02FKC:
+      data:
+        first: 1
+        second: 94870100
+      data:
+        first: 4
+        second: 741b0600
+    LightWeight_Rigged_:Spine02FKCG:
+      data:
+        first: 1
+        second: 96870100
+      data:
+        first: 4
+        second: 761b0600
+    LightWeight_Rigged_:Spine02J:
+      data:
+        first: 1
+        second: 40870100
+      data:
+        first: 4
+        second: 201b0600
+    LightWeight_Rigged_:Spine03FKC:
+      data:
+        first: 1
+        second: 98870100
+      data:
+        first: 4
+        second: 781b0600
+    LightWeight_Rigged_:Spine03FKCG:
+      data:
+        first: 1
+        second: 9a870100
+      data:
+        first: 4
+        second: 7a1b0600
+    LightWeight_Rigged_:Spine03J:
+      data:
+        first: 1
+        second: 3e870100
+      data:
+        first: 4
+        second: 1e1b0600
+    LightWeight_Rigged_:Spine04FKC:
+      data:
+        first: 1
+        second: 9c870100
+      data:
+        first: 4
+        second: 7c1b0600
+    LightWeight_Rigged_:Spine04FKCG:
+      data:
+        first: 1
+        second: 9e870100
+      data:
+        first: 4
+        second: 7e1b0600
+    LightWeight_Rigged_:Spine04J:
+      data:
+        first: 1
+        second: 3c870100
+      data:
+        first: 4
+        second: 1c1b0600
+    LightWeight_Rigged_:lAnkleFKC:
+      data:
+        first: 1
+        second: 12880100
+      data:
+        first: 4
+        second: f21b0600
+    LightWeight_Rigged_:lAnkleFKCG:
+      data:
+        first: 1
+        second: 14880100
+      data:
+        first: 4
+        second: f41b0600
+    LightWeight_Rigged_:lAnkleJ:
+      data:
+        first: 1
+        second: c0860100
+      data:
+        first: 4
+        second: a01a0600
+    LightWeight_Rigged_:lAnkleJFK:
+      data:
+        first: 1
+        second: 70870100
+      data:
+        first: 4
+        second: 501b0600
+    LightWeight_Rigged_:lAnkleJIK:
+      data:
+        first: 1
+        second: 66870100
+      data:
+        first: 4
+        second: 461b0600
+    LightWeight_Rigged_:lArmIKFKG:
+      data:
+        first: 1
+        second: 92870100
+      data:
+        first: 4
+        second: 721b0600
+    LightWeight_Rigged_:lArmIKHandle:
+      data:
+        first: 1
+        second: aa880100
+      data:
+        first: 4
+        second: 8a1c0600
+    LightWeight_Rigged_:lArmSwitchC:
+      data:
+        first: 1
+        second: ca870100
+      data:
+        first: 4
+        second: aa1b0600
+    LightWeight_Rigged_:lArmSwitchCG:
+      data:
+        first: 1
+        second: cc870100
+      data:
+        first: 4
+        second: ac1b0600
+    LightWeight_Rigged_:lBallFKC:
+      data:
+        first: 1
+        second: 16880100
+      data:
+        first: 4
+        second: f61b0600
+    LightWeight_Rigged_:lBallFKCG:
+      data:
+        first: 1
+        second: 18880100
+      data:
+        first: 4
+        second: f81b0600
+    LightWeight_Rigged_:lBallIKHandle:
+      data:
+        first: 1
+        second: 20880100
+      data:
+        first: 4
+        second: 001c0600
+    LightWeight_Rigged_:lBallJ:
+      data:
+        first: 1
+        second: be860100
+      data:
+        first: 4
+        second: 9e1a0600
+    LightWeight_Rigged_:lBallJFK:
+      data:
+        first: 1
+        second: 6e870100
+      data:
+        first: 4
+        second: 4e1b0600
+    LightWeight_Rigged_:lBallJIK:
+      data:
+        first: 1
+        second: 64870100
+      data:
+        first: 4
+        second: 441b0600
+    LightWeight_Rigged_:lClavicleC:
+      data:
+        first: 1
+        second: b0870100
+      data:
+        first: 4
+        second: 901b0600
+    LightWeight_Rigged_:lClavicleCG:
+      data:
+        first: 1
+        second: b2870100
+      data:
+        first: 4
+        second: 921b0600
+    LightWeight_Rigged_:lClavicleJ:
+      data:
+        first: 1
+        second: 2c870100
+      data:
+        first: 4
+        second: 0c1b0600
+    LightWeight_Rigged_:lElbowFKC:
+      data:
+        first: 1
+        second: b8870100
+      data:
+        first: 4
+        second: 981b0600
+    LightWeight_Rigged_:lElbowFKCG:
+      data:
+        first: 1
+        second: ba870100
+      data:
+        first: 4
+        second: 9a1b0600
+    LightWeight_Rigged_:lElbowIKC:
+      data:
+        first: 1
+        second: c6870100
+      data:
+        first: 4
+        second: a61b0600
+    LightWeight_Rigged_:lElbowIKCG:
+      data:
+        first: 1
+        second: c8870100
+      data:
+        first: 4
+        second: a81b0600
+    LightWeight_Rigged_:lElbowJ:
+      data:
+        first: 1
+        second: 28870100
+      data:
+        first: 4
+        second: 081b0600
+    LightWeight_Rigged_:lElbowJFK:
+      data:
+        first: 1
+        second: 8e870100
+      data:
+        first: 4
+        second: 6e1b0600
+    LightWeight_Rigged_:lElbowJIK:
+      data:
+        first: 1
+        second: 88870100
+      data:
+        first: 4
+        second: 681b0600
+    LightWeight_Rigged_:lEyeJ:
+      data:
+        first: 1
+        second: 30870100
+      data:
+        first: 4
+        second: 101b0600
+    LightWeight_Rigged_:lFootBallPivot:
+      data:
+        first: 1
+        second: 22880100
+      data:
+        first: 4
+        second: 021c0600
+    LightWeight_Rigged_:lFootIKC:
+      data:
+        first: 1
+        second: 28880100
+      data:
+        first: 4
+        second: 081c0600
+    LightWeight_Rigged_:lFootIKCG:
+      data:
+        first: 1
+        second: 2a880100
+      data:
+        first: 4
+        second: 0a1c0600
+    LightWeight_Rigged_:lFootToePivot:
+      data:
+        first: 1
+        second: 26880100
+      data:
+        first: 4
+        second: 061c0600
+    LightWeight_Rigged_:lForearmJ:
+      data:
+        first: 1
+        second: 26870100
+      data:
+        first: 4
+        second: 061b0600
+    LightWeight_Rigged_:lHipFKC:
+      data:
+        first: 1
+        second: 0a880100
+      data:
+        first: 4
+        second: ea1b0600
+    LightWeight_Rigged_:lHipFKCG:
+      data:
+        first: 1
+        second: 0c880100
+      data:
+        first: 4
+        second: ec1b0600
+    LightWeight_Rigged_:lHipJ:
+      data:
+        first: 1
+        second: c4860100
+      data:
+        first: 4
+        second: a41a0600
+    LightWeight_Rigged_:lHipJFK:
+      data:
+        first: 1
+        second: 74870100
+      data:
+        first: 4
+        second: 541b0600
+    LightWeight_Rigged_:lHipJIK:
+      data:
+        first: 1
+        second: 6a870100
+      data:
+        first: 4
+        second: 4a1b0600
+    LightWeight_Rigged_:lIndex1C:
+      data:
+        first: 1
+        second: e2870100
+      data:
+        first: 4
+        second: c21b0600
+    LightWeight_Rigged_:lIndex1CG:
+      data:
+        first: 1
+        second: e4870100
+      data:
+        first: 4
+        second: c41b0600
+    LightWeight_Rigged_:lIndex1J:
+      data:
+        first: 1
+        second: 1a870100
+      data:
+        first: 4
+        second: fa1a0600
+    LightWeight_Rigged_:lIndex2C:
+      data:
+        first: 1
+        second: da870100
+      data:
+        first: 4
+        second: ba1b0600
+    LightWeight_Rigged_:lIndex2CG:
+      data:
+        first: 1
+        second: dc870100
+      data:
+        first: 4
+        second: bc1b0600
+    LightWeight_Rigged_:lIndex2J:
+      data:
+        first: 1
+        second: 18870100
+      data:
+        first: 4
+        second: f81a0600
+    LightWeight_Rigged_:lIndex3C:
+      data:
+        first: 1
+        second: de870100
+      data:
+        first: 4
+        second: be1b0600
+    LightWeight_Rigged_:lIndex3CG:
+      data:
+        first: 1
+        second: e0870100
+      data:
+        first: 4
+        second: c01b0600
+    LightWeight_Rigged_:lIndex3J:
+      data:
+        first: 1
+        second: 16870100
+      data:
+        first: 4
+        second: f61a0600
+    LightWeight_Rigged_:lIndexTipJ:
+      data:
+        first: 1
+        second: 14870100
+      data:
+        first: 4
+        second: f41a0600
+    LightWeight_Rigged_:lKneeFKC:
+      data:
+        first: 1
+        second: 0e880100
+      data:
+        first: 4
+        second: ee1b0600
+    LightWeight_Rigged_:lKneeFKCG:
+      data:
+        first: 1
+        second: 10880100
+      data:
+        first: 4
+        second: f01b0600
+    LightWeight_Rigged_:lKneeIKC:
+      data:
+        first: 1
+        second: 1a880100
+      data:
+        first: 4
+        second: fa1b0600
+    LightWeight_Rigged_:lKneeIKCG:
+      data:
+        first: 1
+        second: 1c880100
+      data:
+        first: 4
+        second: fc1b0600
+    LightWeight_Rigged_:lKneeJ:
+      data:
+        first: 1
+        second: c2860100
+      data:
+        first: 4
+        second: a21a0600
+    LightWeight_Rigged_:lKneeJFK:
+      data:
+        first: 1
+        second: 72870100
+      data:
+        first: 4
+        second: 521b0600
+    LightWeight_Rigged_:lKneeJIK:
+      data:
+        first: 1
+        second: 68870100
+      data:
+        first: 4
+        second: 481b0600
+    LightWeight_Rigged_:lLegIKFKG:
+      data:
+        first: 1
+        second: 76870100
+      data:
+        first: 4
+        second: 561b0600
+    LightWeight_Rigged_:lLegIKHandle:
+      data:
+        first: 1
+        second: 1e880100
+      data:
+        first: 4
+        second: fe1b0600
+    LightWeight_Rigged_:lLegSwitchC:
+      data:
+        first: 1
+        second: ac880100
+      data:
+        first: 4
+        second: 8c1c0600
+    LightWeight_Rigged_:lLegSwitchCG:
+      data:
+        first: 1
+        second: ae880100
+      data:
+        first: 4
+        second: 8e1c0600
+    LightWeight_Rigged_:lMiddle1C:
+      data:
+        first: 1
+        second: ee870100
+      data:
+        first: 4
+        second: ce1b0600
+    LightWeight_Rigged_:lMiddle1CG:
+      data:
+        first: 1
+        second: f0870100
+      data:
+        first: 4
+        second: d01b0600
+    LightWeight_Rigged_:lMiddle1J:
+      data:
+        first: 1
+        second: 12870100
+      data:
+        first: 4
+        second: f21a0600
+    LightWeight_Rigged_:lMiddle2C:
+      data:
+        first: 1
+        second: e6870100
+      data:
+        first: 4
+        second: c61b0600
+    LightWeight_Rigged_:lMiddle2CG:
+      data:
+        first: 1
+        second: e8870100
+      data:
+        first: 4
+        second: c81b0600
+    LightWeight_Rigged_:lMiddle2J:
+      data:
+        first: 1
+        second: 10870100
+      data:
+        first: 4
+        second: f01a0600
+    LightWeight_Rigged_:lMiddle3C:
+      data:
+        first: 1
+        second: ea870100
+      data:
+        first: 4
+        second: ca1b0600
+    LightWeight_Rigged_:lMiddle3CG:
+      data:
+        first: 1
+        second: ec870100
+      data:
+        first: 4
+        second: cc1b0600
+    LightWeight_Rigged_:lMiddle3J:
+      data:
+        first: 1
+        second: 0e870100
+      data:
+        first: 4
+        second: ee1a0600
+    LightWeight_Rigged_:lMiddleTipJ:
+      data:
+        first: 1
+        second: 0c870100
+      data:
+        first: 4
+        second: ec1a0600
+    LightWeight_Rigged_:lPinkie1C:
+      data:
+        first: 1
+        second: 06880100
+      data:
+        first: 4
+        second: e61b0600
+    LightWeight_Rigged_:lPinkie1CG:
+      data:
+        first: 1
+        second: 08880100
+      data:
+        first: 4
+        second: e81b0600
+    LightWeight_Rigged_:lPinkie1J:
+      data:
+        first: 1
+        second: 02870100
+      data:
+        first: 4
+        second: e21a0600
+    LightWeight_Rigged_:lPinkie2C:
+      data:
+        first: 1
+        second: fe870100
+      data:
+        first: 4
+        second: de1b0600
+    LightWeight_Rigged_:lPinkie2CG:
+      data:
+        first: 1
+        second: 00880100
+      data:
+        first: 4
+        second: e01b0600
+    LightWeight_Rigged_:lPinkie2J:
+      data:
+        first: 1
+        second: 00870100
+      data:
+        first: 4
+        second: e01a0600
+    LightWeight_Rigged_:lPinkie3C:
+      data:
+        first: 1
+        second: 02880100
+      data:
+        first: 4
+        second: e21b0600
+    LightWeight_Rigged_:lPinkie3CG:
+      data:
+        first: 1
+        second: 04880100
+      data:
+        first: 4
+        second: e41b0600
+    LightWeight_Rigged_:lPinkie3J:
+      data:
+        first: 1
+        second: fe860100
+      data:
+        first: 4
+        second: de1a0600
+    LightWeight_Rigged_:lPinkieTipJ:
+      data:
+        first: 1
+        second: fc860100
+      data:
+        first: 4
+        second: dc1a0600
+    LightWeight_Rigged_:lRing1C:
+      data:
+        first: 1
+        second: fa870100
+      data:
+        first: 4
+        second: da1b0600
+    LightWeight_Rigged_:lRing1CG:
+      data:
+        first: 1
+        second: fc870100
+      data:
+        first: 4
+        second: dc1b0600
+    LightWeight_Rigged_:lRing1J:
+      data:
+        first: 1
+        second: 0a870100
+      data:
+        first: 4
+        second: ea1a0600
+    LightWeight_Rigged_:lRing2C:
+      data:
+        first: 1
+        second: f2870100
+      data:
+        first: 4
+        second: d21b0600
+    LightWeight_Rigged_:lRing2CG:
+      data:
+        first: 1
+        second: f4870100
+      data:
+        first: 4
+        second: d41b0600
+    LightWeight_Rigged_:lRing2J:
+      data:
+        first: 1
+        second: 08870100
+      data:
+        first: 4
+        second: e81a0600
+    LightWeight_Rigged_:lRing3C:
+      data:
+        first: 1
+        second: f6870100
+      data:
+        first: 4
+        second: d61b0600
+    LightWeight_Rigged_:lRing3CG:
+      data:
+        first: 1
+        second: f8870100
+      data:
+        first: 4
+        second: d81b0600
+    LightWeight_Rigged_:lRing3J:
+      data:
+        first: 1
+        second: 06870100
+      data:
+        first: 4
+        second: e61a0600
+    LightWeight_Rigged_:lRingTipJ:
+      data:
+        first: 1
+        second: 04870100
+      data:
+        first: 4
+        second: e41a0600
+    LightWeight_Rigged_:lShoulderFKC:
+      data:
+        first: 1
+        second: b4870100
+      data:
+        first: 4
+        second: 941b0600
+    LightWeight_Rigged_:lShoulderFKCG:
+      data:
+        first: 1
+        second: b6870100
+      data:
+        first: 4
+        second: 961b0600
+    LightWeight_Rigged_:lShoulderJ:
+      data:
+        first: 1
+        second: 2a870100
+      data:
+        first: 4
+        second: 0a1b0600
+    LightWeight_Rigged_:lShoulderJFK:
+      data:
+        first: 1
+        second: 90870100
+      data:
+        first: 4
+        second: 701b0600
+    LightWeight_Rigged_:lShoulderJIK:
+      data:
+        first: 1
+        second: 8a870100
+      data:
+        first: 4
+        second: 6a1b0600
+    LightWeight_Rigged_:lThumb1C:
+      data:
+        first: 1
+        second: d6870100
+      data:
+        first: 4
+        second: b61b0600
+    LightWeight_Rigged_:lThumb1CG:
+      data:
+        first: 1
+        second: d8870100
+      data:
+        first: 4
+        second: b81b0600
+    LightWeight_Rigged_:lThumb1J:
+      data:
+        first: 1
+        second: 22870100
+      data:
+        first: 4
+        second: 021b0600
+    LightWeight_Rigged_:lThumb2C:
+      data:
+        first: 1
+        second: ce870100
+      data:
+        first: 4
+        second: ae1b0600
+    LightWeight_Rigged_:lThumb2CG:
+      data:
+        first: 1
+        second: d0870100
+      data:
+        first: 4
+        second: b01b0600
+    LightWeight_Rigged_:lThumb2J:
+      data:
+        first: 1
+        second: 20870100
+      data:
+        first: 4
+        second: 001b0600
+    LightWeight_Rigged_:lThumb3C:
+      data:
+        first: 1
+        second: d2870100
+      data:
+        first: 4
+        second: b21b0600
+    LightWeight_Rigged_:lThumb3CG:
+      data:
+        first: 1
+        second: d4870100
+      data:
+        first: 4
+        second: b41b0600
+    LightWeight_Rigged_:lThumb3J:
+      data:
+        first: 1
+        second: 1e870100
+      data:
+        first: 4
+        second: fe1a0600
+    LightWeight_Rigged_:lThumbTipJ:
+      data:
+        first: 1
+        second: 1c870100
+      data:
+        first: 4
+        second: fc1a0600
+    LightWeight_Rigged_:lToeIKHandle:
+      data:
+        first: 1
+        second: 24880100
+      data:
+        first: 4
+        second: 041c0600
+    LightWeight_Rigged_:lToeJ:
+      data:
+        first: 1
+        second: bc860100
+      data:
+        first: 4
+        second: 9c1a0600
+    LightWeight_Rigged_:lToeJFK:
+      data:
+        first: 1
+        second: 6c870100
+      data:
+        first: 4
+        second: 4c1b0600
+    LightWeight_Rigged_:lToeJIK:
+      data:
+        first: 1
+        second: 62870100
+      data:
+        first: 4
+        second: 421b0600
+    LightWeight_Rigged_:lWristFKC:
+      data:
+        first: 1
+        second: be870100
+      data:
+        first: 4
+        second: 9e1b0600
+    LightWeight_Rigged_:lWristFKCG:
+      data:
+        first: 1
+        second: c0870100
+      data:
+        first: 4
+        second: a01b0600
+    LightWeight_Rigged_:lWristIKC:
+      data:
+        first: 1
+        second: c2870100
+      data:
+        first: 4
+        second: a21b0600
+    LightWeight_Rigged_:lWristIKCG:
+      data:
+        first: 1
+        second: c4870100
+      data:
+        first: 4
+        second: a41b0600
+    LightWeight_Rigged_:lWristJ:
+      data:
+        first: 1
+        second: 24870100
+      data:
+        first: 4
+        second: 041b0600
+    LightWeight_Rigged_:lWristJFK:
+      data:
+        first: 1
+        second: 8c870100
+      data:
+        first: 4
+        second: 6c1b0600
+    LightWeight_Rigged_:lWristJIK:
+      data:
+        first: 1
+        second: 86870100
+      data:
+        first: 4
+        second: 661b0600
+    LightWeight_Rigged_:rAnkleFKC:
+      data:
+        first: 1
+        second: 90880100
+      data:
+        first: 4
+        second: 701c0600
+    LightWeight_Rigged_:rAnkleFKCG:
+      data:
+        first: 1
+        second: 92880100
+      data:
+        first: 4
+        second: 721c0600
+    LightWeight_Rigged_:rAnkleJ:
+      data:
+        first: 1
+        second: b6860100
+      data:
+        first: 4
+        second: 961a0600
+    LightWeight_Rigged_:rAnkleJFK:
+      data:
+        first: 1
+        second: 5a870100
+      data:
+        first: 4
+        second: 3a1b0600
+    LightWeight_Rigged_:rAnkleJIK:
+      data:
+        first: 1
+        second: 50870100
+      data:
+        first: 4
+        second: 301b0600
+    LightWeight_Rigged_:rArmIKFKG:
+      data:
+        first: 1
+        second: 84870100
+      data:
+        first: 4
+        second: 641b0600
+    LightWeight_Rigged_:rArmIKHandle:
+      data:
+        first: 1
+        second: b0880100
+      data:
+        first: 4
+        second: 901c0600
+    LightWeight_Rigged_:rArmSwitchC:
+      data:
+        first: 1
+        second: 48880100
+      data:
+        first: 4
+        second: 281c0600
+    LightWeight_Rigged_:rArmSwitchCG:
+      data:
+        first: 1
+        second: 4a880100
+      data:
+        first: 4
+        second: 2a1c0600
+    LightWeight_Rigged_:rBallFKC:
+      data:
+        first: 1
+        second: 94880100
+      data:
+        first: 4
+        second: 741c0600
+    LightWeight_Rigged_:rBallFKCG:
+      data:
+        first: 1
+        second: 96880100
+      data:
+        first: 4
+        second: 761c0600
+    LightWeight_Rigged_:rBallIKHandle:
+      data:
+        first: 1
+        second: 9e880100
+      data:
+        first: 4
+        second: 7e1c0600
+    LightWeight_Rigged_:rBallJ:
+      data:
+        first: 1
+        second: b4860100
+      data:
+        first: 4
+        second: 941a0600
+    LightWeight_Rigged_:rBallJFK:
+      data:
+        first: 1
+        second: 58870100
+      data:
+        first: 4
+        second: 381b0600
+    LightWeight_Rigged_:rBallJIK:
+      data:
+        first: 1
+        second: 4e870100
+      data:
+        first: 4
+        second: 2e1b0600
+    LightWeight_Rigged_:rClavicleC:
+      data:
+        first: 1
+        second: 2c880100
+      data:
+        first: 4
+        second: 0c1c0600
+    LightWeight_Rigged_:rClavicleCG:
+      data:
+        first: 1
+        second: 2e880100
+      data:
+        first: 4
+        second: 0e1c0600
+    LightWeight_Rigged_:rClavicleJ:
+      data:
+        first: 1
+        second: fa860100
+      data:
+        first: 4
+        second: da1a0600
+    LightWeight_Rigged_:rElbowFKC:
+      data:
+        first: 1
+        second: 34880100
+      data:
+        first: 4
+        second: 141c0600
+    LightWeight_Rigged_:rElbowFKCG:
+      data:
+        first: 1
+        second: 36880100
+      data:
+        first: 4
+        second: 161c0600
+    LightWeight_Rigged_:rElbowIKC:
+      data:
+        first: 1
+        second: 44880100
+      data:
+        first: 4
+        second: 241c0600
+    LightWeight_Rigged_:rElbowIKCG:
+      data:
+        first: 1
+        second: 46880100
+      data:
+        first: 4
+        second: 261c0600
+    LightWeight_Rigged_:rElbowJ:
+      data:
+        first: 1
+        second: f6860100
+      data:
+        first: 4
+        second: d61a0600
+    LightWeight_Rigged_:rElbowJFK:
+      data:
+        first: 1
+        second: 80870100
+      data:
+        first: 4
+        second: 601b0600
+    LightWeight_Rigged_:rElbowJIK:
+      data:
+        first: 1
+        second: 7a870100
+      data:
+        first: 4
+        second: 5a1b0600
+    LightWeight_Rigged_:rEyeJ:
+      data:
+        first: 1
+        second: 2e870100
+      data:
+        first: 4
+        second: 0e1b0600
+    LightWeight_Rigged_:rFootBallPivot:
+      data:
+        first: 1
+        second: a0880100
+      data:
+        first: 4
+        second: 801c0600
+    LightWeight_Rigged_:rFootIKC:
+      data:
+        first: 1
+        second: a6880100
+      data:
+        first: 4
+        second: 861c0600
+    LightWeight_Rigged_:rFootIKCG:
+      data:
+        first: 1
+        second: a8880100
+      data:
+        first: 4
+        second: 881c0600
+    LightWeight_Rigged_:rFootToePivot:
+      data:
+        first: 1
+        second: a4880100
+      data:
+        first: 4
+        second: 841c0600
+    LightWeight_Rigged_:rForearmJ:
+      data:
+        first: 1
+        second: f4860100
+      data:
+        first: 4
+        second: d41a0600
+    LightWeight_Rigged_:rHipFKC:
+      data:
+        first: 1
+        second: 88880100
+      data:
+        first: 4
+        second: 681c0600
+    LightWeight_Rigged_:rHipFKCG:
+      data:
+        first: 1
+        second: 8a880100
+      data:
+        first: 4
+        second: 6a1c0600
+    LightWeight_Rigged_:rHipJ:
+      data:
+        first: 1
+        second: ba860100
+      data:
+        first: 4
+        second: 9a1a0600
+    LightWeight_Rigged_:rHipJFK:
+      data:
+        first: 1
+        second: 5e870100
+      data:
+        first: 4
+        second: 3e1b0600
+    LightWeight_Rigged_:rHipJIK:
+      data:
+        first: 1
+        second: 54870100
+      data:
+        first: 4
+        second: 341b0600
+    LightWeight_Rigged_:rIndex1C:
+      data:
+        first: 1
+        second: 60880100
+      data:
+        first: 4
+        second: 401c0600
+    LightWeight_Rigged_:rIndex1CG:
+      data:
+        first: 1
+        second: 62880100
+      data:
+        first: 4
+        second: 421c0600
+    LightWeight_Rigged_:rIndex1J:
+      data:
+        first: 1
+        second: e8860100
+      data:
+        first: 4
+        second: c81a0600
+    LightWeight_Rigged_:rIndex2C:
+      data:
+        first: 1
+        second: 58880100
+      data:
+        first: 4
+        second: 381c0600
+    LightWeight_Rigged_:rIndex2CG:
+      data:
+        first: 1
+        second: 5a880100
+      data:
+        first: 4
+        second: 3a1c0600
+    LightWeight_Rigged_:rIndex2J:
+      data:
+        first: 1
+        second: e6860100
+      data:
+        first: 4
+        second: c61a0600
+    LightWeight_Rigged_:rIndex3C:
+      data:
+        first: 1
+        second: 5c880100
+      data:
+        first: 4
+        second: 3c1c0600
+    LightWeight_Rigged_:rIndex3CG:
+      data:
+        first: 1
+        second: 5e880100
+      data:
+        first: 4
+        second: 3e1c0600
+    LightWeight_Rigged_:rIndex3J:
+      data:
+        first: 1
+        second: e4860100
+      data:
+        first: 4
+        second: c41a0600
+    LightWeight_Rigged_:rIndexTipJ:
+      data:
+        first: 1
+        second: e2860100
+      data:
+        first: 4
+        second: c21a0600
+    LightWeight_Rigged_:rKneeFKC:
+      data:
+        first: 1
+        second: 8c880100
+      data:
+        first: 4
+        second: 6c1c0600
+    LightWeight_Rigged_:rKneeFKCG:
+      data:
+        first: 1
+        second: 8e880100
+      data:
+        first: 4
+        second: 6e1c0600
+    LightWeight_Rigged_:rKneeIKC:
+      data:
+        first: 1
+        second: 98880100
+      data:
+        first: 4
+        second: 781c0600
+    LightWeight_Rigged_:rKneeIKCG:
+      data:
+        first: 1
+        second: 9a880100
+      data:
+        first: 4
+        second: 7a1c0600
+    LightWeight_Rigged_:rKneeJ:
+      data:
+        first: 1
+        second: b8860100
+      data:
+        first: 4
+        second: 981a0600
+    LightWeight_Rigged_:rKneeJFK:
+      data:
+        first: 1
+        second: 5c870100
+      data:
+        first: 4
+        second: 3c1b0600
+    LightWeight_Rigged_:rKneeJIK:
+      data:
+        first: 1
+        second: 52870100
+      data:
+        first: 4
+        second: 321b0600
+    LightWeight_Rigged_:rLegIKFKG:
+      data:
+        first: 1
+        second: 60870100
+      data:
+        first: 4
+        second: 401b0600
+    LightWeight_Rigged_:rLegIKHandle:
+      data:
+        first: 1
+        second: 9c880100
+      data:
+        first: 4
+        second: 7c1c0600
+    LightWeight_Rigged_:rLegSwitchC:
+      data:
+        first: 1
+        second: b2880100
+      data:
+        first: 4
+        second: 921c0600
+    LightWeight_Rigged_:rLegSwitchCG:
+      data:
+        first: 1
+        second: b4880100
+      data:
+        first: 4
+        second: 941c0600
+    LightWeight_Rigged_:rMiddle1C:
+      data:
+        first: 1
+        second: 6c880100
+      data:
+        first: 4
+        second: 4c1c0600
+    LightWeight_Rigged_:rMiddle1CG:
+      data:
+        first: 1
+        second: 6e880100
+      data:
+        first: 4
+        second: 4e1c0600
+    LightWeight_Rigged_:rMiddle1J:
+      data:
+        first: 1
+        second: e0860100
+      data:
+        first: 4
+        second: c01a0600
+    LightWeight_Rigged_:rMiddle2C:
+      data:
+        first: 1
+        second: 64880100
+      data:
+        first: 4
+        second: 441c0600
+    LightWeight_Rigged_:rMiddle2CG:
+      data:
+        first: 1
+        second: 66880100
+      data:
+        first: 4
+        second: 461c0600
+    LightWeight_Rigged_:rMiddle2J:
+      data:
+        first: 1
+        second: de860100
+      data:
+        first: 4
+        second: be1a0600
+    LightWeight_Rigged_:rMiddle3C:
+      data:
+        first: 1
+        second: 68880100
+      data:
+        first: 4
+        second: 481c0600
+    LightWeight_Rigged_:rMiddle3CG:
+      data:
+        first: 1
+        second: 6a880100
+      data:
+        first: 4
+        second: 4a1c0600
+    LightWeight_Rigged_:rMiddle3J:
+      data:
+        first: 1
+        second: dc860100
+      data:
+        first: 4
+        second: bc1a0600
+    LightWeight_Rigged_:rMiddleTipJ:
+      data:
+        first: 1
+        second: da860100
+      data:
+        first: 4
+        second: ba1a0600
+    LightWeight_Rigged_:rPinkie1C:
+      data:
+        first: 1
+        second: 84880100
+      data:
+        first: 4
+        second: 641c0600
+    LightWeight_Rigged_:rPinkie1CG:
+      data:
+        first: 1
+        second: 86880100
+      data:
+        first: 4
+        second: 661c0600
+    LightWeight_Rigged_:rPinkie1J:
+      data:
+        first: 1
+        second: d0860100
+      data:
+        first: 4
+        second: b01a0600
+    LightWeight_Rigged_:rPinkie2C:
+      data:
+        first: 1
+        second: 7c880100
+      data:
+        first: 4
+        second: 5c1c0600
+    LightWeight_Rigged_:rPinkie2CG:
+      data:
+        first: 1
+        second: 7e880100
+      data:
+        first: 4
+        second: 5e1c0600
+    LightWeight_Rigged_:rPinkie2J:
+      data:
+        first: 1
+        second: ce860100
+      data:
+        first: 4
+        second: ae1a0600
+    LightWeight_Rigged_:rPinkie3C:
+      data:
+        first: 1
+        second: 80880100
+      data:
+        first: 4
+        second: 601c0600
+    LightWeight_Rigged_:rPinkie3CG:
+      data:
+        first: 1
+        second: 82880100
+      data:
+        first: 4
+        second: 621c0600
+    LightWeight_Rigged_:rPinkie3J:
+      data:
+        first: 1
+        second: cc860100
+      data:
+        first: 4
+        second: ac1a0600
+    LightWeight_Rigged_:rPinkieTipJ:
+      data:
+        first: 1
+        second: ca860100
+      data:
+        first: 4
+        second: aa1a0600
+    LightWeight_Rigged_:rRing1C:
+      data:
+        first: 1
+        second: 78880100
+      data:
+        first: 4
+        second: 581c0600
+    LightWeight_Rigged_:rRing1CG:
+      data:
+        first: 1
+        second: 7a880100
+      data:
+        first: 4
+        second: 5a1c0600
+    LightWeight_Rigged_:rRing1J:
+      data:
+        first: 1
+        second: d8860100
+      data:
+        first: 4
+        second: b81a0600
+    LightWeight_Rigged_:rRing2C:
+      data:
+        first: 1
+        second: 70880100
+      data:
+        first: 4
+        second: 501c0600
+    LightWeight_Rigged_:rRing2CG:
+      data:
+        first: 1
+        second: 72880100
+      data:
+        first: 4
+        second: 521c0600
+    LightWeight_Rigged_:rRing2J:
+      data:
+        first: 1
+        second: d6860100
+      data:
+        first: 4
+        second: b61a0600
+    LightWeight_Rigged_:rRing3C:
+      data:
+        first: 1
+        second: 74880100
+      data:
+        first: 4
+        second: 541c0600
+    LightWeight_Rigged_:rRing3CG:
+      data:
+        first: 1
+        second: 76880100
+      data:
+        first: 4
+        second: 561c0600
+    LightWeight_Rigged_:rRing3J:
+      data:
+        first: 1
+        second: d4860100
+      data:
+        first: 4
+        second: b41a0600
+    LightWeight_Rigged_:rRingTipJ:
+      data:
+        first: 1
+        second: d2860100
+      data:
+        first: 4
+        second: b21a0600
+    LightWeight_Rigged_:rShoulderFKC:
+      data:
+        first: 1
+        second: 30880100
+      data:
+        first: 4
+        second: 101c0600
+    LightWeight_Rigged_:rShoulderFKCG:
+      data:
+        first: 1
+        second: 32880100
+      data:
+        first: 4
+        second: 121c0600
+    LightWeight_Rigged_:rShoulderJ:
+      data:
+        first: 1
+        second: f8860100
+      data:
+        first: 4
+        second: d81a0600
+    LightWeight_Rigged_:rShoulderJFK:
+      data:
+        first: 1
+        second: 82870100
+      data:
+        first: 4
+        second: 621b0600
+    LightWeight_Rigged_:rShoulderJIK:
+      data:
+        first: 1
+        second: 7c870100
+      data:
+        first: 4
+        second: 5c1b0600
+    LightWeight_Rigged_:rThumb1C:
+      data:
+        first: 1
+        second: 54880100
+      data:
+        first: 4
+        second: 341c0600
+    LightWeight_Rigged_:rThumb1CG:
+      data:
+        first: 1
+        second: 56880100
+      data:
+        first: 4
+        second: 361c0600
+    LightWeight_Rigged_:rThumb1J:
+      data:
+        first: 1
+        second: f0860100
+      data:
+        first: 4
+        second: d01a0600
+    LightWeight_Rigged_:rThumb2C:
+      data:
+        first: 1
+        second: 4c880100
+      data:
+        first: 4
+        second: 2c1c0600
+    LightWeight_Rigged_:rThumb2CG:
+      data:
+        first: 1
+        second: 4e880100
+      data:
+        first: 4
+        second: 2e1c0600
+    LightWeight_Rigged_:rThumb2J:
+      data:
+        first: 1
+        second: ee860100
+      data:
+        first: 4
+        second: ce1a0600
+    LightWeight_Rigged_:rThumb3C:
+      data:
+        first: 1
+        second: 50880100
+      data:
+        first: 4
+        second: 301c0600
+    LightWeight_Rigged_:rThumb3CG:
+      data:
+        first: 1
+        second: 52880100
+      data:
+        first: 4
+        second: 321c0600
+    LightWeight_Rigged_:rThumb3J:
+      data:
+        first: 1
+        second: ec860100
+      data:
+        first: 4
+        second: cc1a0600
+    LightWeight_Rigged_:rThumbTipJ:
+      data:
+        first: 1
+        second: ea860100
+      data:
+        first: 4
+        second: ca1a0600
+    LightWeight_Rigged_:rToeIKHandle:
+      data:
+        first: 1
+        second: a2880100
+      data:
+        first: 4
+        second: 821c0600
+    LightWeight_Rigged_:rToeJ:
+      data:
+        first: 1
+        second: b2860100
+      data:
+        first: 4
+        second: 921a0600
+    LightWeight_Rigged_:rToeJFK:
+      data:
+        first: 1
+        second: 56870100
+      data:
+        first: 4
+        second: 361b0600
+    LightWeight_Rigged_:rToeJIK:
+      data:
+        first: 1
+        second: 4c870100
+      data:
+        first: 4
+        second: 2c1b0600
+    LightWeight_Rigged_:rWristFKC:
+      data:
+        first: 1
+        second: 3a880100
+      data:
+        first: 4
+        second: 1a1c0600
+    LightWeight_Rigged_:rWristFKCG:
+      data:
+        first: 1
+        second: 3c880100
+      data:
+        first: 4
+        second: 1c1c0600
+    LightWeight_Rigged_:rWristIKC:
+      data:
+        first: 1
+        second: 40880100
+      data:
+        first: 4
+        second: 201c0600
+    LightWeight_Rigged_:rWristIKCG:
+      data:
+        first: 1
+        second: 42880100
+      data:
+        first: 4
+        second: 221c0600
+    LightWeight_Rigged_:rWristJ:
+      data:
+        first: 1
+        second: f2860100
+      data:
+        first: 4
+        second: d21a0600
+    LightWeight_Rigged_:rWristJFK:
+      data:
+        first: 1
+        second: 7e870100
+      data:
+        first: 4
+        second: 5e1b0600
+    LightWeight_Rigged_:rWristJIK:
+      data:
+        first: 1
+        second: 78870100
+      data:
+        first: 4
+        second: 581b0600
+    MainC:
+      data:
+        first: 1
+        second: a8860100
+      data:
+        first: 4
+        second: 881a0600
+    Mesh:
+      data:
+        first: 1
+        second: a4860100
+      data:
+        first: 4
+        second: 841a0600
+    ROOTJ:
+      data:
+        first: 1
+        second: a6860100
+      data:
+        first: 4
+        second: 861a0600
+      data:
+        first: 137
+        second: a00bd100
+    Staff1:polySurface5:
+      data:
+        first: 1
+        second: c8860100
+      data:
+        first: 4
+        second: a81a0600
+      data:
+        first: 23
+        second: 62182300
+      data:
+        first: 33
+        second: a25a3200
+    pCube1:
+      data:
+        first: 1
+        second: a2860100
+      data:
+        first: 4
+        second: 821a0600
+      data:
+        first: 23
+        second: 60182300
+      data:
+        first: 33
+        second: a05a3200

@@ -33,7 +33,7 @@ public class WeaponCollider : MonoBehaviour
             if (!gameObjectsHitThisSwing.Contains(other.transform.root))
             {
                 gameObjectsHitThisSwing.Add(other.transform.root);
-                DebugGUI.Print(other.transform.root.gameObject.name + " has been hit now.");
+                Debug.Log(other.transform.root.gameObject.name + " has been hit now.");
                 DamageReceiver dr;
                 if (dr = other.transform.root.gameObject.GetDamageReceiver())
                 {

@@ -10,7 +10,7 @@ public class ThirdPersonNetworkInit : MonoBehaviour
         // Server looking at client
         if (Network.isServer)
         {
-            DebugGUI.Print("You are the server looking at " + gameObject.name + ".");
+            Debug.Log("You are the server looking at " + gameObject.name + ".");
             GetComponent<ThirdPersonController>().enabled = true;
             GetComponent<PlayerMotor>().enabled = true;
             var cs = gameObject.GetCharacterStats();
@@ -22,7 +22,7 @@ public class ThirdPersonNetworkInit : MonoBehaviour
         // Client looking at client
         else
         {
-            DebugGUI.Print("You are a client looking at " + gameObject.name + ".");
+            Debug.Log("You are a client looking at " + gameObject.name + ".");
             GetComponent<ThirdPersonSimpleAnimation>().enabled = false;
             GetComponent<ThirdPersonController>().enabled = false;
             GetComponent<NetworkController>().enabled = false;
@@ -56,7 +56,7 @@ public class ThirdPersonNetworkInit : MonoBehaviour
         Destroy(transform.FindChild("Name Label").gameObject);
         GetComponent<ThirdPersonController>().enabled = true;
         GetComponent<ThirdPersonController>().isLocallyControlledPlayer = true;
-        DebugGUI.Print(gameObject.name + " is your character. You should put the character controls on it and set up message relaying to the server.");
+        Debug.Log(gameObject.name + " is your character. You should put the character controls on it and set up message relaying to the server.");
         Camera.main.SendMessage("SetTarget", transform);
 
         gameObject.AddComponent<PlayerGUI>();
@@ -70,7 +70,7 @@ public class ThirdPersonNetworkInit : MonoBehaviour
     [RPC]
     void PlayerDisconnected()
     {
-        DebugGUI.Print(gameObject.name + " has disconnected.");
+        Debug.Log(gameObject.name + " has disconnected.");
         Destroy(gameObject);
     }
 

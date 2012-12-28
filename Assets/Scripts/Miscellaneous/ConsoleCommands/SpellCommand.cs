@@ -18,6 +18,6 @@ class SpellCommand : ConsoleCommand
     /// <param name="parameters"></param>
     public override void Execute(params string[] parameters)
     {
-        DebugGUI.Print(PlayerAbilities.StringList());
+        Debug.Log(PlayerAbilities.StringList());
     }
 }

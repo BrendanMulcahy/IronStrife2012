@@ -10,9 +10,9 @@ public class NPCStats : CharacterStats
         {
             networkView.RPC("ChangeName", RPCMode.All, "Iron Guard");
             Strength = 10; Health = 100; MaxHealth = 100;
-            DebugGUI.Print("Setting new kill reward.");
+            Debug.Log("Setting new kill reward.");
             reward = new KillReward(200, 200);
-            DebugGUI.print("kill reward is " + reward.experience + " | " + reward.iron);
+            Debug.Log("kill reward is " + reward.experience + " | " + reward.iron);
         }
 
         else if (rand == 8 || rand == 9)
@@ -20,7 +20,7 @@ public class NPCStats : CharacterStats
             Strength = 15; Health = 150; MaxHealth = 150;
             networkView.RPC("ChangeName", RPCMode.All, "Iron Captain");
             reward = new KillReward(500, 300);
-            DebugGUI.print("kill reward is " + reward.experience + " | " + reward.iron);
+            Debug.Log("kill reward is " + reward.experience + " | " + reward.iron);
 
 
         }
@@ -30,7 +30,7 @@ public class NPCStats : CharacterStats
             networkView.RPC("ChangeName", RPCMode.All, "Iron Champion");
             transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
             reward = new KillReward(2000, 2000);
-            DebugGUI.print("kill reward is " + reward.experience + " | " + reward.iron);
+            Debug.Log("kill reward is " + reward.experience + " | " + reward.iron);
 
 
         }

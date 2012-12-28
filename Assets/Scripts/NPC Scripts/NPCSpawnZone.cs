@@ -45,7 +45,7 @@ public class NPCSpawnZone : MonoBehaviour
                 break;
 
         }
-        DebugGUI.Print("Spawn area = " + area);
+        Debug.Log("Spawn area = " + area);
         spawnArea = new Vector3(104, 35, 151);
    
     }

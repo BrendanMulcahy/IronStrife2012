@@ -21,7 +21,7 @@ class EquipCommand : ConsoleCommand
 
         if (parameters.Length <= 1)
         {
-            DebugGUI.Print("no item name given.");
+            Debug.Log("no item name given.");
             return;
         }
         var type = parameters[0];

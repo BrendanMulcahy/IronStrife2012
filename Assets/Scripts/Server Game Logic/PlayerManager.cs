@@ -52,7 +52,7 @@ public class PlayerManager
                 team = team
             };
         players.Add(newPlayer);
-        DebugGUI.Print("A new player has been added to team " + team);
+        Debug.Log("A new player has been added to team " + team);
         if (newPlayer.team == 1)
         {
             goodPlayers.Add(gameObject);
@@ -117,7 +117,6 @@ public class PlayerManager
             evilPlayers.Remove(gameObject);
             goodPlayers.Add(gameObject);
         }
-
-        FindRecord(gameObject).team = newTeam;
+        this.FindRecord(gameObject).team = newTeam;
     }
 }

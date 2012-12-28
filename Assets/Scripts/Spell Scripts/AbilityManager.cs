@@ -40,7 +40,7 @@ public class AbilityManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            DebugGUI.Print("E pressed");
+            Debug.Log("E pressed");
             visible = true;
             gameObject.DisableControls();
         }
@@ -79,7 +79,7 @@ public class AbilityManager : MonoBehaviour
         {
             if (Input.GetKeyDown(spellButtons[i]))
             {
-                DebugGUI.Print("Bound " + lookingToBindSpell.name + " to key " + (i + 1) + ".");
+                Debug.Log("Bound " + lookingToBindSpell.name + " to key " + (i + 1) + ".");
                 equippedSpells[i] = (int)lookingToBindSpell;
                 GetComponent<PlayerGUI>().UpdateSpellIcons(i, lookingToBindSpell); //draw the new spell 
                 lookingToBindSpell = null;

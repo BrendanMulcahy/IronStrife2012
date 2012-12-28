@@ -28,7 +28,7 @@ class SpawnCommand : ConsoleCommand
 				Util.Spawn(parameters[0], new Vector3(int.Parse(parameters[1]), int.Parse(parameters[2]), int.Parse(parameters[3])));
 				break;
 			default:
-			DebugGUI.Print("invalid parameters for spawn function");
+			Debug.Log("invalid parameters for spawn function");
 				break;
 		}
 	

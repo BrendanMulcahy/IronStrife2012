@@ -57,7 +57,7 @@ public static class Util
         CharacterStats cs = go.GetComponent<CharacterStats>();
         if (cs == null)
         {
-            DebugGUI.Print("Game Object " + go.name + " does not have a Character Stats component.");
+            Debug.Log("Game Object " + go.name + " does not have a Character Stats component.");
             return null;
         }
         else
@@ -76,7 +76,7 @@ public static class Util
         PlayerMotor cs = go.GetComponent<PlayerMotor>();
         if (cs == null)
         {
-            DebugGUI.Print("Game Object " + go.name + " does not have a PlayerMotor component.");
+            Debug.Log("Game Object " + go.name + " does not have a PlayerMotor component.");
             return null;
         }
         else
@@ -113,7 +113,7 @@ public static class Util
         DamageReceiver dr = go.GetComponent<DamageReceiver>();
         if (dr == null)
         {
-            DebugGUI.Print("Game Object " + go.name + " does not have a DamageReceiver component.");
+            Debug.Log("Game Object " + go.name + " does not have a DamageReceiver component.");
             return null;
         }
         {
@@ -178,47 +178,7 @@ public static class Util
     /// <returns></returns>
     internal static Vector3 FindClosestTeamRespawn(Vector3 requestedRespawnLocation, int teamNumber)
     {
-        Vector3 toReturn;
-        float clickDistance;
-        //Default spawn for each team
-        if (teamNumber == 1)
-        {
-            toReturn = MasterGameLogic.Main.controlPoint1.transform.position;
-            clickDistance = (toReturn - requestedRespawnLocation).magnitude;
-        }
-        else
-        {
-            toReturn = MasterGameLogic.Main.controlPoint5.transform.position;
-            clickDistance = (toReturn - requestedRespawnLocation).magnitude;
-
-        }
-
-        GameObject toTest = MasterGameLogic.Main.controlPoint2;
-        ControlPoint controlPoint = toTest.GetComponent<ControlPoint>();
-        if ((toTest.transform.position - requestedRespawnLocation).magnitude < clickDistance && teamNumber == (int)controlPoint.allegiance)
-        {
-            toReturn = toTest.transform.position; 
-            clickDistance = (toTest.transform.position - requestedRespawnLocation).magnitude;
-        }
-
-        toTest = MasterGameLogic.Main.controlPoint3;
-        controlPoint = toTest.GetComponent<ControlPoint>();
-        if ((toTest.transform.position - requestedRespawnLocation).magnitude < clickDistance && teamNumber == (int)controlPoint.allegiance)
-        {
-            toReturn = toTest.transform.position;
-            clickDistance = (toTest.transform.position - requestedRespawnLocation).magnitude;
-        }
-
-        toTest = MasterGameLogic.Main.controlPoint4;
-        controlPoint = toTest.GetComponent<ControlPoint>();
-        if ((toTest.transform.position - requestedRespawnLocation).magnitude < clickDistance && teamNumber == (int)controlPoint.allegiance)
-        {
-            toReturn = toTest.transform.position;
-            clickDistance = (toTest.transform.position - requestedRespawnLocation).magnitude;
-        }
-
-        toReturn.y = Util.MainTerrain.GetComponent<Terrain>().SampleHeight(toReturn);
-        return toReturn;
+        return new Vector3(500,1,500);
     }
 
     /// <summary>

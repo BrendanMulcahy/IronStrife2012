@@ -95,7 +95,7 @@ public class RegularCamera : MonoBehaviour
 
         y = ClampAngle(y, yMinLimit, yMaxLimit);
         var wheeldelta = Input.GetAxis("Mouse ScrollWheel");
-        if (!isChatOpen)
+        if (!isChatOpen && !DebugGUI.visible)
             distance -= wheeldelta * 4;
         distance = Mathf.Clamp(distance, mindistance, maxdistance);
 
@@ -140,9 +140,14 @@ public class RegularCamera : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(directionVector);
         SmoothlyUpdatePosition(desiredPosition);
 
-        var wheeldelta = Input.GetAxis("Mouse ScrollWheel");
-        distance -= wheeldelta * 4;
-        distance = Mathf.Clamp(distance, mindistance, maxdistance);
+        if (!DebugGUI.visible && !isChatOpen)
+        {
+            Debug.Log("Debug GUI is not visible.");
+            var wheeldelta = Input.GetAxis("Mouse ScrollWheel");
+            distance -= wheeldelta * 4;
+
+            distance = Mathf.Clamp(distance, mindistance, maxdistance);
+        }
     }
 
     private void SmoothlyUpdatePosition(Vector3 desiredPosition)

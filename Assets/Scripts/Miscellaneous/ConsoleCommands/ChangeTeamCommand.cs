@@ -27,7 +27,7 @@ class ChangeTeamCommand : ConsoleCommand
         }
         else if (parameters.Length != 2)
         {
-            DebugGUI.Print("Need player name and team value as parameters");
+            Debug.Log("Need player name and team value as parameters");
             return;
         }
         GameObject player = GameObject.Find(parameters[0]);
@@ -36,11 +36,11 @@ class ChangeTeamCommand : ConsoleCommand
         {
             CharacterStats charStats = player.GetComponent <CharacterStats>();
             charStats.TeamNumber = int.Parse(parameters[1]);
-            DebugGUI.Print("Successful team change for player \"" + parameters[0] + "\"");
+            Debug.Log("Successful team change for player \"" + parameters[0] + "\"");
         }
         else
         {
-            DebugGUI.Print("Player with the given name cannot be found.");
+            Debug.Log("Player with the given name cannot be found.");
         }
     
     }

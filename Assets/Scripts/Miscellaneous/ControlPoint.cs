@@ -97,7 +97,7 @@ class ControlPoint : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             players.AddLast(other.gameObject);
-            DebugGUI.Print(other.gameObject.name + " has entered " + this.gameObject.name);
+            Debug.Log(other.gameObject.name + " has entered " + this.gameObject.name);
         }
     }
 
@@ -107,7 +107,7 @@ class ControlPoint : MonoBehaviour
         if (players.Contains(other.gameObject))
         {
             players.Remove(other.gameObject);
-            DebugGUI.Print(other.gameObject.name + " has left " + this.gameObject.name);
+            Debug.Log(other.gameObject.name + " has left " + this.gameObject.name);
         }
     }
 
@@ -166,7 +166,7 @@ class ControlPoint : MonoBehaviour
                 influence -= this.teams[(int)Team.Evil] * Time.deltaTime;
                 break;
             default:
-                DebugGUI.Print("Cannot update influence.  Improper controlledBy.");
+                Debug.Log("Cannot update influence.  Improper controlledBy.");
                 break;
         }
 

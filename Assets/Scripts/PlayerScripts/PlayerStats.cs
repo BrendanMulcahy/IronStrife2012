@@ -132,7 +132,7 @@ public class PlayerStats : CharacterStats
     [RPC]
     void BroadcastReward(int xp, int ironReward)
     {
-        //	DebugGUI.Print("You have obtained "+xp + " experience and " + iron + " iron.");
+        //	Debug.Log("You have obtained "+xp + " experience and " + iron + " iron.");
         experience += xp;
         iron += ironReward;
     }
@@ -145,7 +145,7 @@ public class PlayerStats : CharacterStats
         MaxMana += (int)(MaxMana * .15f);
         MaxStamina += (int)(MaxStamina * .15f);
 
-        //	DebugGUI.Print(this.gameObject.name + " has leveled up.");
+        //	Debug.Log(this.gameObject.name + " has leveled up.");
         experience -= experienceNeeded;
         experienceNeeded = experiencePerLevel[Level - 1];
         UpdateKillReward();
@@ -168,7 +168,7 @@ public class PlayerStats : CharacterStats
         MaxHealth += (int)(MaxHealth * .15f);
         MaxMana += (int)(MaxMana * .15f);
         MaxStamina += (int)(MaxStamina * .15f);
-        //	DebugGUI.Print(this.gameObject.name + " has leveled up.");
+        //	Debug.Log(this.gameObject.name + " has leveled up.");
         experience -= experienceNeeded;
         experienceNeeded = experiencePerLevel[Level - 1];
         PopupMessage.Display("You have reached level " + Level);
@@ -182,7 +182,7 @@ public class PlayerStats : CharacterStats
     [RPC]
     public void TryRespawn(Vector3 requestedRespawnLocation)
     {
-        DebugGUI.Print("Trying to respawn.");
+        Debug.Log("Trying to respawn.");
         if (canRespawn)
         {
             Vector3 actualRespawnLocation = Util.FindClosestTeamRespawn(requestedRespawnLocation, teamNumber);
@@ -198,7 +198,7 @@ public class PlayerStats : CharacterStats
     [RPC]
     void BroadcastRespawn(Vector3 respawnLocation)
     {
-        DebugGUI.Print(gameObject.name + "has respawned.");
+        Debug.Log(gameObject.name + "has respawned.");
 
         if (Util.MyLocalPlayerObject == gameObject)
         {

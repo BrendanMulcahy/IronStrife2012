@@ -1,4 +1,5 @@
-﻿class ScoreCommand : ConsoleCommand
+﻿using UnityEngine;
+class ScoreCommand : ConsoleCommand
 {
     public override string[] Names { get { string[] names = { "score" }; return names; } }
 
@@ -10,9 +11,9 @@
 
     public override void Execute(params string[] parameters)
     {
-        DebugGUI.Print("Good Score : " + GameState.goodScore);
-        DebugGUI.Print("Evil Score : " + GameState.evilScore);
-        DebugGUI.Print("Score Limit : " + GameState.scoreLimit);
+        Debug.Log("Good Score : " + GameState.goodScore);
+        Debug.Log("Evil Score : " + GameState.evilScore);
+        Debug.Log("Score Limit : " + GameState.scoreLimit);
     }
 }
 

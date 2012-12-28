@@ -6,24 +6,24 @@ using System.Reflection;
 
 /// <summary>
 /// Class for handling debug commands and displaying debug messages. 
-/// Use the DebugGUI.Print() method to print to this window.
+/// Use the Debug.Log() method to print to this window.
 /// </summary>
 public class DebugGUI : MonoBehaviour {
 	
 	public ArrayList entries;
 	private Rect window = new Rect(60, 60, 600, 400);
 	private Vector2 scrollPosition;
-	private bool visible = false;
-	private ArrayList debugFlags;
+	public static bool visible = false;
 	private String consoleInputField = "";
 	private bool consoleInputFieldFocused = false;
     private LinkedList<String> history = new LinkedList<string>();
     private LinkedListNode<string> selectedHistory;
+    private Vector3 mousePosition;
+    GUISkin skin;
+    private string currentTooltip = "";
 
     private Dictionary<string, ConsoleCommand> commands;
 
-
-	public static String[] DebugFlags = {"collision", "audio", "combat", "network"};
     private const int maxHistoryCount = 40;
 
     private static DebugGUI instance;
@@ -41,13 +41,32 @@ public class DebugGUI : MonoBehaviour {
 		}
 	}
 
+    class DebugEntry
+    {
+        public string message;
+        public string stackTrace;
+        public LogType type;
+    }
+
     void Awake()
     {
         entries = new ArrayList();
-        debugFlags = new ArrayList();
-        SetAllFlags();
-
         LoadAllConsoleCommands();
+        skin = Resources.Load("ISEGUISkin") as GUISkin;
+    }
+
+    // Use this for initialization
+    void OnEnable()
+    {
+        UnityEngine.Application.RegisterLogCallback(new Application.LogCallback(MyCallback));
+    }
+
+    private void MyCallback(string condition, string stacktrace, UnityEngine.LogType type)
+    {
+        if (condition[condition.Length - 1] == '\n')
+            condition = condition.Substring(0, condition.Length - 1);
+        if (!condition.Contains("Sent RPC call"))
+            this.AddEntry(condition, stacktrace, type);
     }
 	
 	void Start()
@@ -68,27 +87,25 @@ public class DebugGUI : MonoBehaviour {
             }
         }
     }
-	
-	void SetAllFlags()
-	{
-		foreach (String flag in DebugFlags)
-		{
-			debugFlags.Add(flag);
-		}
-	}
 
 	void OnGUI()
 	{
 		if (visible)
 		{
 			window = GUI.Window (3, window, ConsoleWindow, "Debug");
+
+            if (currentTooltip != "")
+            {
+                GUI.Window(4, new Rect(mousePosition.x, Screen.height - mousePosition.y, Screen.width - mousePosition.x - 25, Screen.height - (Screen.height - mousePosition.y) - 25), TooltipWindow, GUIContent.none, skin.GetStyle("debugTooltipWindow"));
+                GUI.BringWindowToFront(4);
+            }
 		}
 		
 		Event e = Event.current;
 
         if (consoleInputFieldFocused && e.type == EventType.keyDown && e.keyCode == KeyCode.UpArrow)
         {
-            DebugGUI.Print("moving history up");
+            Debug.Log("moving history up");
             if (selectedHistory == null)
             {
                 selectedHistory = history.First;
@@ -111,6 +128,11 @@ public class DebugGUI : MonoBehaviour {
 			consoleInputFieldFocused = false;
 	    }
 	}
+
+    private void TooltipWindow(int id)
+    {
+        GUILayout.Label(currentTooltip, skin.GetStyle("debugLabelBlack"));
+    }
 	
 	void Update () 
 	{
@@ -120,7 +142,10 @@ public class DebugGUI : MonoBehaviour {
             {
                 consoleInputField = "";
             }
+
+            mousePosition = Input.mousePosition;
         }
+
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             BackQuotePressed();
@@ -135,8 +160,6 @@ public class DebugGUI : MonoBehaviour {
                     consoleInputField = selectedHistory.Value;
             }
         }
-
-
 	}
 
     private void BackQuotePressed()
@@ -161,71 +184,80 @@ public class DebugGUI : MonoBehaviour {
         consoleInputFieldFocused = true;
         consoleInputField = "";
     }
-	
-	/// <summary>
-    /// Unconditionally Prints the message to the Debug window.
-	/// </summary>
-	/// <param name="message">The message to be printed</param>
-    public static void Print(String message)
+		
+	void AddDebugLog(string message, string stackTrace)
 	{
-		DebugGUI.Main.SendMessage("AddDebugEntry", message);
-        Debug.Log(message);
+        entries.Add(new DebugEntry() { message = message, stackTrace = stackTrace, type = LogType.Log });
+        scrollPosition.y = 1000000;	
 	}
 
-    /// <summary>
-    /// Unconditionally Prints the message to the Debug window.
-    /// </summary>
-    /// <param name="message">The message to be printed</param>
-    public static void Print(System.Object message)
+    void AddDebugWarning(string message, string stackTrace)
     {
-        DebugGUI.Main.SendMessage("AddDebugEntry", message.ToString());
-        Debug.Log(message);
+        entries.Add(new DebugEntry() { message = message, stackTrace = stackTrace, type = LogType.Warning });
+        scrollPosition.y = 1000000;	
     }
-	
-	//Conditionally prints the message to the Debug window (assuming the associated debugFlag is set
-    public static void Print(String message, String debugFlag)
-	{
-		String[] both = {message, debugFlag};
-		both[0] = message; both[1] = debugFlag;
-		DebugGUI.Main.SendMessage("AddDebugEntry", both);
-		Debug.Log(message);
-	}
-	
-	void AddDebugEntry(String message)
-	{
-		entries.Add(message);
-	}
-	
-	void AddDebugEntry(String[] both)
-	{
-		var message = both[0];
-		var debugFlag = both[1];
-		if (debugFlags.Contains(debugFlag))
-		{
-			entries.Add(message);
-		}
-	}
+
+    void AddDebugError(string message, string stackTrace)
+    {
+        entries.Add(new DebugEntry() { message = message, stackTrace = stackTrace, type = LogType.Error });
+        scrollPosition.y = 1000000;	
+    }
+
+    private void AddEntry(string condition, string stackTrace, LogType type)
+    {
+        switch (type)
+        {
+            case LogType.Log:
+                AddDebugLog(condition, stackTrace);
+                break;
+            case LogType.Warning:
+                AddDebugWarning(condition, stackTrace);
+                break;
+            case LogType.Error:
+                AddDebugError(condition, stackTrace);
+                break;
+            default:
+                AddDebugError(condition, stackTrace);
+                break;
+        }
+        scrollPosition.y = 1000000;	
+
+    }
 	
 	void ConsoleWindow(int id)
 	{	
 		// Begin a scroll view. All rects are calculated automatically - 
 	    // it will use up any available screen space and make sure contents flow correctly.
 	    // This is kept small with the last two parameters to force scrollbars to appear.
-        GUIStyle style = GUIStyle.none;
-        style.normal.textColor = Color.white;
-        style.wordWrap = true;
+        GUIStyle style;
 		scrollPosition = GUILayout.BeginScrollView (scrollPosition);
         if (entries == null)
             entries = new ArrayList();
-		foreach (String entry in entries)
+		foreach (DebugEntry entry in entries)
 		{
 			GUILayout.BeginHorizontal();
-			
-			GUILayout.Label (entry, style);
-			scrollPosition.y = 1000000;	
-			
+            switch (entry.type)
+            {
+                case LogType.Log:
+                    style = skin.GetStyle("debugLabelWhite");
+                    break;
+                case LogType.Warning:
+                    style = skin.GetStyle("debugLabelYellow");
+                    break;
+                case LogType.Error:
+                    style = skin.GetStyle("debugLabelRed");
+                    break;
+                default:
+                    style = skin.GetStyle("debugLabelWhite");
+                    break;
+
+            }
+			GUILayout.Label (new GUIContent(entry.message, entry.stackTrace), style);
+
+            if (Event.current.type == EventType.Repaint)
+                currentTooltip = GUI.tooltip;			
 			GUILayout.EndHorizontal();
-			GUILayout.Space(2);
+			GUILayout.Space(1);
 			
 		}
 		// End the scrollview we began above.
@@ -256,24 +288,7 @@ public class DebugGUI : MonoBehaviour {
 	{
 		visible = false;
 	}
-	
-	static void ToggleDebugFlag(String flag)
-	{
-		DebugGUI.Main.SendMessage("ToggleDebugFlagCommit", flag);
-	}
-	
-	void ToggleDebugFlagCommit(String flag)
-	{
-		if (debugFlags.Contains(flag))
-		{
-			debugFlags.Remove(flag);
-		}
-		else
-		{
-			debugFlags.Add(flag);
-		}
-	}
-	
+		
 	void SubmitConsoleCommand()
 	{
 		String command = consoleInputField;
@@ -291,7 +306,7 @@ public class DebugGUI : MonoBehaviour {
             }
             else
             {
-                DebugGUI.Print("Invalid command name.");
+                Debug.Log("Invalid command name.");
             }
         }
 		consoleInputField = "";
@@ -301,29 +316,27 @@ public class DebugGUI : MonoBehaviour {
     {
         if (parameters.Length == 0)
         {
-            DebugGUI.Print("The following are valid console commands. Type \"help <command>\" for more information.");
+            Debug.Log("The following are valid console commands. Type \"help <command>\" for more information.");
             foreach (string key in commands.Keys)
             {
-                DebugGUI.Print(key);
+                Debug.Log(key);
             }
         }
         else if (parameters.Length != 1)
         {
-            DebugGUI.Print("Enter a console command name after \"help\" to get more information about how to use that command.");
+            Debug.Log("Enter a console command name after \"help\" to get more information about how to use that command.");
         }
         else
         {
             if (commands.ContainsKey(parameters[0]))
-                DebugGUI.Print(commands[parameters[0]].HelpMessage);
+                Debug.Log(commands[parameters[0]].HelpMessage);
             else
             {
-                DebugGUI.Print("No such command. Type \"help\" for a list of all commands.");
+                Debug.Log("No such command. Type \"help\" for a list of all commands.");
             }
         }
     }
 
-
-	
 	ConsoleCommandSubmission ParseCommand(String commandString)
 	{
 		var commandSplit = commandString.Split(" "[0]);
@@ -333,26 +346,6 @@ public class DebugGUI : MonoBehaviour {
 			argsArray[g] = commandSplit[g+1];
 		}
 		return new ConsoleCommandSubmission(commandSplit[0].ToLower(), argsArray);
-	}
-
-	void SetFlag(String flag, String setOrUnset)
-	{
-		if (setOrUnset == "0")
-		{
-			if (debugFlags.Contains(flag))
-			{
-				debugFlags.Remove(flag);
-				AddDebugEntry(flag + " was unset.");
-			}
-		}
-		else
-		{
-			if (!debugFlags.Contains(flag))
-			{
-				debugFlags.Add(flag);
-				AddDebugEntry(flag + " was set.");
-			}
-		}
 	}
 
     internal static void Clear()

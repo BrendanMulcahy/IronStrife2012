@@ -272,7 +272,7 @@ public class ThirdPersonController : MonoBehaviour, IController
                     CastSelfSpell(inputManager.spellBeingCast);
                     break;
                 default:
-                    DebugGUI.Print("Invalid spell target type");
+                    Debug.Log("Invalid spell target type");
                     break;
             }
         }
@@ -295,7 +295,7 @@ public class ThirdPersonController : MonoBehaviour, IController
         {
             yield return null;
             startTime += Time.deltaTime;
-            if (startTime > endTime) DebugGUI.Print("Cast time complete.");
+            if (startTime > endTime) Debug.Log("Cast time complete.");
             if (isMoving || IsJumping()) { isCasting = false; inputManager.spellButton = false; inputManager.spellBeingCast = null; yield break; }
         }
         characterStats.ReduceMana(spell.manaCost);
@@ -329,7 +329,7 @@ public class ThirdPersonController : MonoBehaviour, IController
         {
             yield return null;
             startTime += Time.deltaTime;
-            if (startTime > endTime) DebugGUI.Print("Cast time complete.");
+            if (startTime > endTime) Debug.Log("Cast time complete.");
             if (isMoving || IsJumping()) { isCasting = false; inputManager.spellButton = false; inputManager.spellBeingCast = null; yield break; }
         }
 
@@ -663,7 +663,7 @@ public class ThirdPersonController : MonoBehaviour, IController
 
     private IEnumerator CastTargetSpell()
     {
-        DebugGUI.Print("Starting coroutine CastTargetSpell");
+        Debug.Log("Starting coroutine CastTargetSpell");
         isCasting = true;
         isBowShooting = true;
         if (isLocallyControlledPlayer)
@@ -674,7 +674,7 @@ public class ThirdPersonController : MonoBehaviour, IController
         {
             if (inputManager.attackButton && inputManager.spellBeingCast != null && characterStats.Mana >= inputManager.spellBeingCast.manaCost)
             {
-                if (inputManager.spellBeingCast == null) DebugGUI.Print("spell being cast is null");
+                if (inputManager.spellBeingCast == null) Debug.Log("spell being cast is null");
                 ((ITargetSpell)inputManager.spellBeingCast).Execute(this.gameObject, transform.forward, null);
                 if (Network.isServer)
 

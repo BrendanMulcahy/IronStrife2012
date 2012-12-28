@@ -26,7 +26,7 @@ public class RespawnCamera : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray.origin, ray.direction, out hit))
             {
-                DebugGUI.Print("You clicked on " + hit.point.ToString());
+                Debug.Log("You clicked on " + hit.point.ToString());
                 if (CanRespawn)
                 {
                     if (Network.isServer)

@@ -89,7 +89,7 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            DebugGUI.Print(gameObject.name + " tried to equip " + itemName + " but he doesn't have one.");
+            Debug.Log(gameObject.name + " tried to equip " + itemName + " but he doesn't have one.");
         }
     }
 
@@ -105,7 +105,7 @@ public class InventoryManager : MonoBehaviour
 
     [RPC] void CommitEquipItem(string itemName, int itemType)
     {
-        DebugGUI.Print("Trying to equip " + itemName + " of type " + ((ItemType)itemType).ToString());
+        Debug.Log("Trying to equip " + itemName + " of type " + ((ItemType)itemType).ToString());
         EquippableItem item = new EquippableItem();
         switch ((ItemType)itemType)
         {

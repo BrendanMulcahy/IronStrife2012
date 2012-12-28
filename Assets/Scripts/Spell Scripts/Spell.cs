@@ -34,12 +34,12 @@ public abstract class Spell
     public void GetSpellIcon()
     {
         string teamColor = Util.MyLocalPlayerTeam == 1 ? "Blue" : "Red";
-        DebugGUI.Print("Team color is " + teamColor);
+        Debug.Log("Team color is " + teamColor);
         spellImage = Resources.Load("SpellIcons/" + name + teamColor) as Texture2D;
 
         if (spellImage == null)
         {
-            DebugGUI.Print("No spell icon was found for " + name + ". Loading the default one.");
+            Debug.Log("No spell icon was found for " + name + ". Loading the default one.");
             spellImage = Resources.Load("SpellIcons/Cast" + teamColor) as Texture2D;
 
         }

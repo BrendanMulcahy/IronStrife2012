@@ -6,7 +6,7 @@ class TeleportCommand : ConsoleCommand
     {
         if (parameters.Length == 0)
         {
-            DebugGUI.Print("invalid teleport target name.");
+            Debug.Log("invalid teleport target name.");
             return;
         }
         else if (parameters.Length == 1)
@@ -15,7 +15,7 @@ class TeleportCommand : ConsoleCommand
             GameObject object2 = GameObject.Find(parameters[0]);
             if (object2 == null)
             {
-                DebugGUI.Print("The gameObject \"" + parameters[0] + "\" could not be found.");
+                Debug.Log("The gameObject \"" + parameters[0] + "\" could not be found.");
                 return;
             }
             object1.transform.position = object2.transform.position;
@@ -28,7 +28,7 @@ class TeleportCommand : ConsoleCommand
             GameObject object2 = GameObject.Find((string)parameters[1]);
             if (object1 == null || object2 == null)
             {
-                DebugGUI.Print("One or both gameObjects were not found.");
+                Debug.Log("One or both gameObjects were not found.");
                 return;
             }
             object1.transform.position = object2.transform.position;

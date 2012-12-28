@@ -182,7 +182,7 @@ public class CharacterStats : MonoBehaviour {
     public static void RewardPlayersInArea(Vector3 location, GameObject killer, KillReward reward)
     {
         if (reward == null)
-            DebugGUI.Print("REWARD IS NULL.");
+            Debug.Log("REWARD IS NULL.");
         int teamNumber;
         if (killer.GetCharacterStats().teamNumber == 0)
             return;
@@ -240,6 +240,7 @@ public class CharacterStats : MonoBehaviour {
     {
         if (Network.isServer && this is PlayerStats)
         {
+            if (MasterGameLogic.Main.PlayerManager == null) Debug.Log("NULL!");
             MasterGameLogic.Main.PlayerManager.ChangePlayerTeam(gameObject, TeamNumber, newTeam);
         }
         if (gameObject == Util.MyLocalPlayerObject)
@@ -247,7 +248,7 @@ public class CharacterStats : MonoBehaviour {
             Util.MyLocalPlayerTeam = newTeam;
         }
         teamNumber = newTeam;
-        DebugGUI.Print(gameObject.name + " is now on team "+newTeam);
+        Debug.Log(gameObject.name + " is now on team "+newTeam);
         ParticleSystem particles;
 
 
@@ -273,7 +274,7 @@ public class CharacterStats : MonoBehaviour {
     {
         if (Network.isServer)
         {
-            DebugGUI.Print("Healing here.");
+            Debug.Log("Healing here.");
             Health = Math.Min(Health + healthToAdd, MaxHealth);
         }
     }

@@ -90,7 +90,7 @@ public class SpawnPrefab : MonoBehaviour {
     [RPC]
     void AuthoritativeServerSpawnPlayer(string username, string prefabName, NetworkMessageInfo msg)
     {
-        DebugGUI.Print("RPC call into group " + int.Parse(msg.sender.ToString()));
+        Debug.Log("RPC call into group " + int.Parse(msg.sender.ToString()));
         GameObject playerPrefab = Resources.Load("Player/" + prefabName) as GameObject;
         GameObject newPlayer = Network.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, int.Parse(msg.sender.ToString())) as GameObject;
         newPlayer.networkView.RPC("ChangeName", RPCMode.AllBuffered, username);
@@ -114,9 +114,10 @@ public class SpawnPrefab : MonoBehaviour {
         newPlayer.networkView.RPC("ChangeName", RPCMode.AllBuffered, username);
         newPlayer.gameObject.GetComponent<ThirdPersonNetworkInit>().SetOwnership();
         ((PlayerStats)newPlayer.GetCharacterStats()).SetNetworkPlayer(Network.player);
-        int team = 1;
+        int team = MasterGameLogic.Main.PlayerManager.AddPlayer(newPlayer.gameObject, Network.player);
         newPlayer.gameObject.GetCharacterStats().TeamNumber = team;
         newPlayer.transform.position = Util.FindClosestTeamRespawn(Vector3.zero, team);
+
 
     }
 

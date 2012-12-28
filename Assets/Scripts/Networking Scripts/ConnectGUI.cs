@@ -49,7 +49,7 @@ public class ConnectGUI : MonoBehaviour {
 	    }
 	    if (Input.GetKeyDown(KeyCode.F5))
 	    {
-		    //DebugGUI.Print("Refreshing the Master Server List", "network");
+		    //Debug.Log("Refreshing the Master Server List", "network");
 		    MasterServer.RequestHostList("IronStrifeEternity");
 	    }
     }
@@ -101,7 +101,7 @@ public class ConnectGUI : MonoBehaviour {
 	    if (GUILayout.Button("Change username"))
 	    {
 		    ChangeUserName();
-		    //DebugGUI.Print("username is now " + username);
+		    //Debug.Log("username is now " + username);
 	    }
 	    GUILayout.EndHorizontal();
     }
@@ -199,7 +199,7 @@ public class ConnectGUI : MonoBehaviour {
     void ConnectToSelectedServer()
     {
 	    HostData host = hostData[selectedServer];
-	    //DebugGUI.Print("Trying to connect to "+hostIp+":"+host.port);
+	    //Debug.Log("Trying to connect to "+hostIp+":"+host.port);
 	    Network.Connect(host);
 	    showMasterGameList = false;
 	    hidden = true;

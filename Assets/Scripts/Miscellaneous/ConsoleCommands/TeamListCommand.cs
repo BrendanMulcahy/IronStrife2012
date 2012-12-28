@@ -18,16 +18,16 @@ class TeamListCommand : ConsoleCommand
     /// <param name="parameters"></param>
     public override void Execute(params string[] parameters)
     {
-        DebugGUI.Print("GOOD PLAYERS:");
+        Debug.Log("GOOD PLAYERS:");
         foreach (GameObject go in MasterGameLogic.Main.PlayerManager.goodPlayers)
         {
-            DebugGUI.Print(go.name);
+            Debug.Log(go.name);
         }
 
-        DebugGUI.Print("EVIL PLAYERS:");
+        Debug.Log("EVIL PLAYERS:");
         foreach (GameObject go in MasterGameLogic.Main.PlayerManager.evilPlayers)
         {
-            DebugGUI.Print(go.name);
+            Debug.Log(go.name);
         }
     }
 }

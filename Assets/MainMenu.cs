@@ -368,17 +368,13 @@ public class MainMenu : MonoBehaviour
     {
         if (!invalidScore)
         {
+            var mgl = new GameObject("MasterGameLogic").AddComponent<MasterGameLogic>();
             Network.InitializeServer(32, 25000, false);
             MasterServer.RegisterHost("IronStrife", gameName, gameDescription);
             GameState.Reset(parsedScore);
             this.inGame = true;
             CloseMainMenu();
         }
-
-        //chatEntries = new LinkedList<ChatEntry>();
-        //windowFunction = GameLobbyWindow;
-        //StartCoroutine(ListenForEnterKey());
-
     }
 
     private void BackButtonPressed()
@@ -493,7 +489,7 @@ public class MainMenu : MonoBehaviour
     void ConnectToSelectedServer()
     {
         HostData host = hostData[selectedServer];
-        //DebugGUI.Print("Trying to connect to "+hostIp+":"+host.port);
+        //Debug.Log("Trying to connect to "+hostIp+":"+host.port);
         Network.Connect(host);
         this.inGame = true;
         this.CloseMainMenu();

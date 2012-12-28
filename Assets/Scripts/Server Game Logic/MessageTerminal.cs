@@ -19,7 +19,7 @@ public class MessageTerminal : MonoBehaviour
     [RPC]
     void SpawnNPC(string type, Vector3 position, NetworkViewID animationID, NetworkViewID transformID)
     {
-        DebugGUI.print("Spawning new NPC of type " + type + " at  ["+position.x + ", "+position.y + " +, "+position.z + "]");
+        Debug.Log("Spawning new NPC of type " + type + " at  ["+position.x + ", "+position.y + " +, "+position.z + "]");
         GameObject newNPC = GameObject.Instantiate(Resources.Load(type)) as GameObject;
         newNPC.GetComponents<NetworkView>()[0].viewID = animationID;
         newNPC.GetComponents<NetworkView>()[1].viewID = transformID;
@@ -35,14 +35,14 @@ public class MessageTerminal : MonoBehaviour
     [RPC]
     void GameStarted()
     {
-        DebugGUI.Print("The game has started!");
+        Debug.Log("The game has started!");
         PopupMessage.Display("The game has started!", 3.0f);
     }
 
     [RPC]
     void GameEnded(int winningTeam)
     {
-        DebugGUI.Print("Team " + winningTeam + " has won!");
+        Debug.Log("Team " + winningTeam + " has won!");
         PopupMessage.Display("Team " + winningTeam + " has won!", 20.0f);
         Util.MyLocalPlayerObject.DisableControls();
     }

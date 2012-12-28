@@ -11,6 +11,8 @@ public delegate void PlayerRespawnedEventHandler(PlayerRespawnedEventArgs e);
 public delegate void HealedEventHandler(HealedEventArgs e);
 public delegate void DamageEventHandler(DamageEventArgs e);
 
+public delegate void StatChangedEventHandler(GameObject sender, StatChangedEventArgs e);
+
 public class UnitDiedEventArgs
 {
     public GameObject killer;
@@ -25,12 +27,18 @@ public class PlayerRespawnedEventArgs
 
 public class HealedEventArgs
 {
-    public StrifeGameObject healer;
+    public GameObject healer;
     public int healAmount;
 }
 
 public class DamageEventArgs
 {
-    public StrifeGameObject attacker;
+    public GameObject attacker;
     public int damageAmount;
+}
+
+public class StatChangedEventArgs
+{
+    public int oldValue;
+    public int newValue;
 }

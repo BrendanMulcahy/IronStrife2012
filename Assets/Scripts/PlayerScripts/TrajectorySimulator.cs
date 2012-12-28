@@ -48,7 +48,7 @@ public class TrajectorySimulator : MonoBehaviour {
 
                 if (Physics.Raycast(lastPosition, position, out hit, velocity.magnitude+.1f))
                 {
-                    //DebugGUI.Print("Collided with " + hit.collider.gameObject.name);
+                    //Debug.Log("Collided with " + hit.collider.gameObject.name);
                     break;
                 }
             }
@@ -70,7 +70,7 @@ public class TrajectorySimulator : MonoBehaviour {
 
     internal void SetWeaponGameObject(GameObject GO)
     {
-        DebugGUI.Print("Setting new weapon object");
+        Debug.Log("Setting new weapon object");
         weaponGameObject = GO;
     }
 }

@@ -77,6 +77,9 @@ public class ThirdPersonNetworkInit : MonoBehaviour
     [RPC]
     public void EquipDefaultItems(string charactertype)
     {
-
+        var inv = GetComponent<InventoryManager>();
+        var weapon = Weapon.FromName<Weapon>("Simple Sword");
+        inv.Items.Add(weapon);
+        inv.TryEquipItem(weapon);
     }
 }

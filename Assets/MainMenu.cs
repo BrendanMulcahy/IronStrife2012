@@ -9,7 +9,6 @@ public class MainMenu : MonoBehaviour
     const float windowPercentage = 1 - 2 * edgeMargin;
     private Rect windowRect;
     private Rect imageRect;
-    private Rect backButtonRect;
     private Stack<GUI.WindowFunction> windowFunctions = new Stack<GUI.WindowFunction>();
 
     string gameName = "Enter game name here";
@@ -29,7 +28,6 @@ public class MainMenu : MonoBehaviour
 
     AudioClip mainMenuSong;
     Texture2D logoImage;
-    Texture2D backButtonImage;
 
     private const int defaultFontSize = 36;
     private int hostGameFontSize = defaultFontSize;
@@ -59,7 +57,6 @@ public class MainMenu : MonoBehaviour
     {
         skin = Resources.Load("ISEGUISkin") as GUISkin;
         logoImage = Resources.Load("GUI/MainMenuLogo") as Texture2D;
-        backButtonImage = Resources.Load("GUI/BackButton") as Texture2D;
         mainMenuSong = Resources.Load("BGM/Iron Strife Theme") as AudioClip;
     }
 
@@ -95,7 +92,6 @@ public class MainMenu : MonoBehaviour
 
         windowWidth = windowHeight * bgRatio;
 
-        backButtonRect = new Rect(Screen.width * .03f, Screen.height * .03f, 150, 100);
 
         windowRect = new Rect(leftMargin, topMargin - 25, windowWidth, windowHeight);
     }
@@ -106,11 +102,6 @@ public class MainMenu : MonoBehaviour
         {
             GUI.skin = skin;
             GUI.Label(imageRect, logoImage);
-
-            //if (GUI.Button(backButtonRect, backButtonImage))
-            //{
-            //    BackButtonPressed();
-            //}
 
             GUI.Window(0, windowRect, MainFrame, GUIContent.none);
             if (Event.current.type == EventType.Repaint)
@@ -368,7 +359,7 @@ public class MainMenu : MonoBehaviour
     {
         if (!invalidScore)
         {
-            var mgl = new GameObject("MasterGameLogic").AddComponent<MasterGameLogic>();
+            new GameObject("MasterGameLogic").AddComponent<MasterGameLogic>();
             Network.InitializeServer(32, 25000, false);
             MasterServer.RegisterHost("IronStrife", gameName, gameDescription);
             GameState.Reset(parsedScore);

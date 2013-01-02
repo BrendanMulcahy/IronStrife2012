@@ -18,6 +18,13 @@ public class PlayerStats : CharacterStats
     public event PlayerRespawnedEventHandler Respawned;
     public bool canRespawn;
 
+    void Awake()
+    {
+        gameObject.AddComponent<Health>();
+        gameObject.AddComponent<Mana>();
+        gameObject.AddComponent<Stamina>();
+    }
+
     public override void Start()
     {
         base.Start();

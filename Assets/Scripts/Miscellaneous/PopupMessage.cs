@@ -11,7 +11,16 @@ public class PopupMessage : MonoBehaviour
         {
             if (_guiText == null)
             {
-                _guiText = GameObject.Find("PopupMessages").GetComponent<GUIText>();
+                var go = GameObject.Find("PopupMessages");
+                if (!go)
+                {
+                    go = new GameObject("PopupMessages");
+                    go.AddComponent<PopupMessage>();
+                    _guiText = go.AddComponent<GUIText>();
+                }
+                else
+                    _guiText = go.GetComponent<GUIText>();
+                
             }
             return _guiText;
         }

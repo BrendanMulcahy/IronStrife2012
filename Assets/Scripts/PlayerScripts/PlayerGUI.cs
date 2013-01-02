@@ -22,7 +22,6 @@ public class PlayerGUI : MonoBehaviour
     public Texture healthBar;
     private Rect scoreboardRect = new Rect(Screen.width * .5f, 5, 200, 200);
 
-    private Font regularFont;
     private GUISkin skin;
 
     private Texture2D blueBaseLabel, redBaselabel, fortressLabel, farmLabel, swampLabel;
@@ -37,7 +36,6 @@ public class PlayerGUI : MonoBehaviour
     {
         healthBar = Resources.Load("WhiteSquare") as Texture;
         stats = GetComponent<PlayerStats>();
-        regularFont = Resources.Load("OFLGoudyStMTT") as Font;
 
         elements["HealthBackground"] = Resources.Load("GUI/HealthBackground") as Texture2D;
         elements["HealthForeground"] = Resources.Load("GUI/HealthActive") as Texture2D;

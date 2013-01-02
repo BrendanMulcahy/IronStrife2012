@@ -78,20 +78,8 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
 
     public static void InitializeAnimation(Animation ani)
     {
-        var clips = Resources.LoadAll("Animations/Lightweight-Animated", typeof(AnimationClip)).Cast<AnimationClip>();
+        var clips = Resources.LoadAll("Animations/animationFull", typeof(AnimationClip)).Cast<AnimationClip>();
 
-        foreach (var c in clips)
-        {
-            ani.AddClip(c, c.name);
-        }
-
-        clips = Resources.LoadAll("Animations/DyingAnimation-1385-1630", typeof(AnimationClip)).Cast<AnimationClip>();
-        foreach (var c in clips)
-        {
-            ani.AddClip(c, c.name);
-        }
-
-        clips = Resources.LoadAll("Animations/ExtraAnimations", typeof(AnimationClip)).Cast<AnimationClip>();
         foreach (var c in clips)
         {
             ani.AddClip(c, c.name);
@@ -117,12 +105,12 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
         ani["Combo4"].layer = 3;
         ani["Combo4"].normalizedSpeed = 5 / 4;
 
-        ani["TwoHandedCombo1"].layer = 3;
-        ani["TwoHandedCombo1"].normalizedSpeed = 5 / 4;
-        ani["TwoHandedCombo2"].layer = 3;
-        ani["TwoHandedCombo2"].normalizedSpeed = 5 / 4;
-        ani["TwoHandedCombo3"].layer = 3;
-        ani["TwoHandedCombo3"].normalizedSpeed = 5 / 4;
+        //ani["TwoHandedCombo1"].layer = 3;
+        //ani["TwoHandedCombo1"].normalizedSpeed = 5 / 4;
+        //ani["TwoHandedCombo2"].layer = 3;
+        //ani["TwoHandedCombo2"].normalizedSpeed = 5 / 4;
+        //ani["TwoHandedCombo3"].layer = 3;
+        //ani["TwoHandedCombo3"].normalizedSpeed = 5 / 4;
 
         ani["IdleTwoHandedSwing"].layer = 3;
         ani["IdleTwoHandedSwing"].normalizedSpeed = 6 / 4;

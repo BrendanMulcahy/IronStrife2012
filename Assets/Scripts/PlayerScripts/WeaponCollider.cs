@@ -32,17 +32,22 @@ public class WeaponCollider : MonoBehaviour
 
             if (!gameObjectsHitThisSwing.Contains(other.transform.root))
             {
-                gameObjectsHitThisSwing.Add(other.transform.root);
-                Debug.Log(other.transform.root.gameObject.name + " has been hit now.");
-                DamageReceiver dr;
-                if (dr = other.transform.root.gameObject.GetDamageReceiver())
-                {
-                    dr.ApplyHit(transform.root.gameObject);
-                    PlayerSoundGenerator sound = transform.root.gameObject.GetComponent<PlayerSoundGenerator>();
-                    if (sound !=null)
-                    transform.root.gameObject.GetComponent<PlayerSoundGenerator>().PlaySwingAttackHitSound();
-                }
+                ApplyWeaponHitting(other);
             }
+        }
+    }
+
+    private void ApplyWeaponHitting(Collider other)
+    {
+        gameObjectsHitThisSwing.Add(other.transform.root);
+        Debug.Log(other.transform.root.gameObject.name + " has been hit now.");
+        DamageReceiver dr;
+        if (dr = other.transform.root.gameObject.GetDamageReceiver())
+        {
+            dr.ApplyHit(transform.root.gameObject);
+            PlayerSoundGenerator sound = transform.root.gameObject.GetComponent<PlayerSoundGenerator>();
+            if (sound != null)
+                transform.root.gameObject.GetComponent<PlayerSoundGenerator>().PlaySwingAttackHitSound();
         }
     }
 }

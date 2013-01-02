@@ -5,15 +5,24 @@ public abstract class RegeneratingStat : MonoBehaviour
     protected int _currentValue;
     protected int _maxValue;
 
-    private bool statRegenerating;
-    private float timeTilStatRegenerating;
-    private float maxStatRegenTime = 5.0f;
-    private int statRegenRate = 1;
+    protected bool statRegenerating;
+    protected float timeTilStatRegenerating;
+    protected float maxStatRegenTime = 5.0f;
+    public int statRegenRate = 1;
 
-    public abstract int CurrentValue { get; set; }
-    public abstract int MaxValue { get; set; }
+    public int CurrentValue
+    {
+        get { return _currentValue; }
+        set
+        {
+            var temp = _currentValue;
+            OnChanged(this.gameObject, new StatChangedEventArgs() { newValue = value, oldValue = temp });
+            _currentValue = value;
+        }
+    }
+    public int MaxValue { get { return _maxValue; } set { _maxValue = value; } }
 
-    protected event StatChangedEventHandler Changed;
+    public event StatChangedEventHandler Changed;
 
     protected void OnChanged(GameObject sender, StatChangedEventArgs e)
     {
@@ -21,26 +30,31 @@ public abstract class RegeneratingStat : MonoBehaviour
             Changed(sender, e);
     }
 
-    private void Awake()
+    protected void Awake()
     {
         StartCoroutine(Regenerate());
         if (Network.isServer)
         {
-
+            StartCoroutine(Monitor());
         }
     }
 
+    protected abstract System.Collections.IEnumerator Monitor();
+
     protected System.Collections.IEnumerator Regenerate()
     {
-        if (statRegenerating)
+        while (true)
         {
-            CurrentValue = Mathf.Min(MaxValue, CurrentValue + statRegenRate);
+            if (statRegenerating)
+            {
+                CurrentValue = Mathf.Min(MaxValue, CurrentValue + statRegenRate);
+            }
+            else
+            {
+                timeTilStatRegenerating -= .25f;
+                statRegenerating = (timeTilStatRegenerating <= 0);
+            }
+            yield return new WaitForSeconds(.25f);
         }
-        else
-        {
-            timeTilStatRegenerating -= .25f;
-            statRegenerating = (timeTilStatRegenerating <= 0);
-        }
-        yield return new WaitForSeconds(.25f);
     }
 }

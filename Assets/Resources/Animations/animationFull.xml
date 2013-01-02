@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Asset name="animationFull" ScaleFactor=".1">
+  <Animations>
+    <Clip name="Idle01" Start="0" End="80" WarpMode="Loop" Loop="true" />
+    <Clip name="Walk" Start="83" End="113" WarpMode="Loop" Loop="true" />
+    <Clip name="Run" Start="114" End="134" WarpMode="Loop" Loop="true" />
+    <Clip name="Sprint" Start="135" End="149" WarpMode="Loop" Loop="true"></Clip>
+    <Clip name="IdleSwing" Start="150" End="176" WarpMode="Default" Loop="false" />
+    <Clip name="RunJumpStart" Start="177" End="200" WarpMode="Default" Loop="false" />
+    <Clip name="RunJumpHover" Start="200" End="211" WarpMode="Loop" Loop="true" />
+    <Clip name="RunJumpLand" Start="212" End="237" WarpMode="Default" Loop="false" />
+    <Clip name="RunSwing" Start="238" End="278" WarpMode="Default" Loop="false" />
+    <Clip name="IdleBowStartAim" Start="279" End="307" WarpMode="Default" Loop="false" />
+    <Clip name="IdleBowAim" Start="308" End="338" WarpMode="Loop" Loop="true" />
+    <Clip name="IdleBowShootReload" Start="339" End="380" WarpMode="Loop" Loop="true" />
+    <Clip name="IdleBowRelax" Start="381" End="419" WarpMode="Default" Loop="false" />
+    <Clip name="IdleShieldBlock" Start="420" End="472" WarpMode="Default" Loop="false" />
+    <Clip name="IdleConjureStart" Start="473" End="484" WarpMode="Default" Loop="false" />
+    <Clip name="IdleConjure" Start="485" End="520" WarpMode="Loop" Loop="true" />
+    <Clip name="IdleSpellBlast" Start="521" End="537" WarpMode="Default" Loop="false" />
+    <Clip name="BackStep" Start="538" End="558" WarpMode="Loop" Loop="true" />
+    <Clip name="WalkShieldBlock" Start="559" End="619" WarpMode="Default" Loop="false" />
+    <Clip name="WalkBowStartAim" Start="620" End="680" WarpMode="Default" Loop="false" />
+    <Clip name="WalkBowAim" Start="681" End="711" WarpMode="Loop" Loop="true" />
+    <Clip name="WalkBowShootReload" Start="712" End="772" WarpMode="Default" Loop="false" />
+    <Clip name="WalkBowRelax" Start="773" End="833" WarpMode="Default" Loop="false" />
+    <Clip name="WalkConjureStart" Start="834" End="864" WarpMode="Default" Loop="false" />
+    <Clip name="WalkConjure" Start="865" End="925" WarpMode="Loop" Loop="true" />
+    <Clip name="WalkSpellblast" Start="926" End="956" WarpMode="Default" Loop="false" />
+    <Clip name="IdleTwoHanded" Start="957" End="1000" WarpMode="Default" Loop="false" />
+    <Clip name="RunTwoHanded" Start="1001" End="1021" WarpMode="Default" Loop="false" />
+    <Clip name="IdleTwoHandedSwing" Start="1022" End="1081" WarpMode="Default" Loop="false" />
+    <Clip name="RunTwoHandedSwing" Start="1082" End="1123" WarpMode="Default" Loop="false" />
+    <Clip name="RunTwoHandedSwingAlt" Start="1124" End="1164" WarpMode="Default" Loop="false" />
+    <Clip name="OneHandedCombo" Start="1165" End="1342" WarpMode="Loop" Loop="true" />
+    <Clip name="RunLeanLeft" Start="1343" End="1363" WarpMode="Loop" Loop="true" />
+    <Clip name="RunLeanRight" Start="1364" End="1384" WarpMode="Loop" Loop="true" />
+    <Clip name="Death" Start="1385" End="1612" WarpMode="Default" Loop="false" />
+    <Clip name="WeaponEnchant" Start="1613" End="1705" WarpMode="Default" Loop="false" />
+    <Clip name="DashAttack" Start="1706" End="1806" WarpMode="Default" Loop="false" />
+    <Clip name="Frustrated" Start="1888" End="1988" WarpMode="Loop" Loop="true" />
+    <Clip name="Combo1" Start="1165" End="1186" WarpMode="Default" Loop="false" />
+    <Clip name="Combo2" Start="1187" End="1205" WarpMode="Default" Loop="false" />
+    <Clip name="Combo3" Start="1206" End="1220" WarpMode="Default" Loop="false" />
+    <Clip name="Combo4" Start="1221" End="1240" WarpMode="Default" Loop="false" />
+  </Animations>
+</Asset>

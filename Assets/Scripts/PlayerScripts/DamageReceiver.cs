@@ -8,7 +8,7 @@ public class DamageReceiver : MonoBehaviour {
 
     protected CharacterStats characterStats;
     protected PlayerMotor playerMotor;
-    protected InventoryManager inventory;
+    protected Inventory inventory;
 
     public virtual void Start()
     {

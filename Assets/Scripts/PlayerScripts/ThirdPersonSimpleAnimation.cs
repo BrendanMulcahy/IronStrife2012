@@ -53,13 +53,13 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<InventoryManager>().weaponChanged += ThirdPersonSimpleAnimation_weaponChanged;
-        if (GetComponent<InventoryManager>().currentWeapon == null)
+        GetComponent<Inventory>().weaponChanged += ThirdPersonSimpleAnimation_weaponChanged;
+        if (GetComponent<Inventory>().currentWeapon == null)
             numWeaponHands = 1;
         else
         {
-            numWeaponHands = GetComponent<InventoryManager>().currentWeapon.numHands;
-            if (GetComponent<InventoryManager>().currentWeapon.name.ToLower().Contains("bow"))
+            numWeaponHands = GetComponent<Inventory>().currentWeapon.numHands;
+            if (GetComponent<Inventory>().currentWeapon.name.ToLower().Contains("bow"))
             {
                 numWeaponHands = 1;
             }
@@ -70,7 +70,7 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
     void ThirdPersonSimpleAnimation_weaponChanged(WeaponChangedEventArgs e)
     {
         numWeaponHands = e.newWeapon.numHands;
-        if (GetComponent<InventoryManager>().currentWeapon.name.ToLower().Contains("bow"))
+        if (GetComponent<Inventory>().currentWeapon.name.ToLower().Contains("bow"))
         {
             numWeaponHands = 1;
         }

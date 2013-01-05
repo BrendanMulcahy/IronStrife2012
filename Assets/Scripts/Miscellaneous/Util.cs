@@ -90,9 +90,9 @@ public static class Util
     /// </summary>
     /// <param name="go"></param>
     /// <returns></returns>
-    public static InventoryManager GetInventory(this GameObject go)
+    public static Inventory GetInventory(this GameObject go)
     {
-        InventoryManager inv = go.GetComponent<InventoryManager>();
+        Inventory inv = go.GetComponent<Inventory>();
         if (inv == null)
         {
             return null;

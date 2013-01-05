@@ -123,7 +123,7 @@ public class ThirdPersonController : MonoBehaviour, IController
 
     private RegularCamera regularCamera;
     private PlayerSoundGenerator playerSound;
-    private InventoryManager inventory;
+    private Inventory inventory;
     private PlayerInputManager inputManager;
     private CharacterStats characterStats;
 

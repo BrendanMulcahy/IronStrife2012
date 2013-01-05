@@ -49,7 +49,7 @@ public class ThirdPersonNetworkInit : MonoBehaviour
             Destroy(GetComponent<NetworkController>());
         }
 
-        GetComponent<InventoryManager>().enabled = true;
+        GetComponent<Inventory>().enabled = true;
         GetComponent<AbilityManager>().enabled = true;
 
 
@@ -77,7 +77,7 @@ public class ThirdPersonNetworkInit : MonoBehaviour
     [RPC]
     public void EquipDefaultItems(string charactertype)
     {
-        var inv = GetComponent<InventoryManager>();
+        var inv = GetComponent<Inventory>();
         var weapon = Weapon.FromName<Weapon>("Simple Sword");
         inv.Items.Add(weapon);
         inv.TryEquipItem(weapon);

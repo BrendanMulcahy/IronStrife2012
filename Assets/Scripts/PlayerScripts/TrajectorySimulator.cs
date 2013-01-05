@@ -9,7 +9,7 @@ public class TrajectorySimulator : MonoBehaviour {
     LinkedList<Vector3> positions;
     ThirdPersonController controller;
     RegularCamera regularCamera;
-    InventoryManager inventory;
+    Inventory inventory;
     bool IsAimCameraOn { get { return regularCamera.CameraMode == CameraMode.Aim; } }
     float ArrowFireVelocity { get { return controller.ArrowFireVelocity; } }
     const int maxIterations = 200;
@@ -24,7 +24,7 @@ public class TrajectorySimulator : MonoBehaviour {
         controller = GetComponent<ThirdPersonController>();
         regularCamera = Camera.main.GetComponent<RegularCamera>();
         lineRenderer = GetComponent<LineRenderer>();
-        inventory = GetComponent<InventoryManager>();
+        inventory = GetComponent<Inventory>();
         weaponGameObject = inventory.currentWeaponGameobject;
 	}
 

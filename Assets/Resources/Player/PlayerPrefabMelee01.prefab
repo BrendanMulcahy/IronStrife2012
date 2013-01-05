@@ -7504,7 +7504,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100154}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bbc8ce6cb8084f48a5016b8e0cc8517, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fbb0f1b8d2495f45b7acf6336a85ccf, type: 3}
   m_Name: 
   currentWeaponGameobject: {fileID: 0}
   currentShieldGameObject: {fileID: 0}

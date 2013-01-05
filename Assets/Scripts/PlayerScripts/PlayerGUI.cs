@@ -101,7 +101,7 @@ public class PlayerGUI : MonoBehaviour
         if (visible && loaded)
         {
             GUI.skin = skin;
-            DrawWholeScreenBezel();
+            //DrawWholeScreenBezel();
             DrawHealth();
             DrawMana();
             DrawStamina();

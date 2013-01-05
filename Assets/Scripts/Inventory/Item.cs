@@ -15,14 +15,27 @@ public abstract class Item
     [XmlAttribute("name")]
     public string name;
 
-    [XmlAttribute("assetName")]
-    public string inventoryImageAssetName;
-
     [XmlAttribute("description")]
     public string description;
 
     [XmlAttribute("itemType")]
     public ItemType itemType;
+
+    private Texture2D _inventoryIcon;
+    public Texture2D inventoryIcon
+    {
+        get 
+        {
+            if (_inventoryIcon == null)
+            {
+                _inventoryIcon = Resources.Load("Items/Icons/" + name) as Texture2D;
+
+                if (_inventoryIcon == null) 
+                    _inventoryIcon = Resources.Load("Items/Icons/DefaultIcon") as Texture2D;
+            }
+            return _inventoryIcon;
+        }
+    }
 
     public static T FromName<T>(string itemName)
     {
@@ -31,7 +44,8 @@ public abstract class Item
         Byte[] bytes = Encoding.UTF8.GetBytes(xmlFile.text);
         using (MemoryStream stream = new MemoryStream(bytes))
         {
-            return (T)(new XmlSerializer(typeof(T))).Deserialize(stream);
+            var item = (T)(new XmlSerializer(typeof(T))).Deserialize(stream);
+            return item;
         }
     }
 

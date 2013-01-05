@@ -37,7 +37,7 @@ public class CharacterStats : MonoBehaviour {
     private float maxStaminaRegenerationTime = 1.5f;
     private float timeTilStaminaRegenerating;
 
-    private InventoryManager inventory;
+    private Inventory inventory;
 		
 	public int Strength;
     /// <summary>

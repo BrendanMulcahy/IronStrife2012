@@ -15,7 +15,7 @@ public class GameSettings
         {
             if (_terrain == null)
             {
-                var go = GameObject.Find("ValleyOfTheKnight_Terrain") as GameObject;
+                var go = GameObject.Find("Terrain") as GameObject;
                 if (go)
                 {
                     _terrain = go.GetComponent<Terrain>();
@@ -284,7 +284,7 @@ public class GameSettings
     {
         if (windowVisible)
         {
-            GUI.Window(0, window, SettingsWindow, "Iron Strife Settings");
+            GUI.Window("gamesettings".GetHashCode(), window, SettingsWindow, "Iron Strife Settings");
         }
     }
 

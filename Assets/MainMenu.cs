@@ -103,7 +103,7 @@ public class MainMenu : MonoBehaviour
             GUI.skin = skin;
             GUI.Label(imageRect, logoImage);
 
-            GUI.Window(0, windowRect, MainFrame, GUIContent.none);
+            GUI.Window("mainmenu".GetHashCode(), windowRect, MainFrame, GUIContent.none);
             if (Event.current.type == EventType.Repaint)
             {
                 newTooltip = GUI.tooltip;

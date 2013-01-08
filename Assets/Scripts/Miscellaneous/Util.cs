@@ -267,4 +267,7 @@ public static class Util
         t.parent = other.transform;
         t.localPosition = new Vector3();
     }
+
+    private static GUISkin skin;
+    public static GUISkin ISEGUISkin { get { if (!skin) skin = Resources.Load("ISEGUISkin") as GUISkin; return skin; } }
 }

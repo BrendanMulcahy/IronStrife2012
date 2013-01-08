@@ -498,7 +498,7 @@ State:
   m_Name: Idle
   m_Speed: 1
   m_Motions:
-  - {fileID: 7400002, guid: 599be4b89e2bb7349b5d4bddc1a39818, type: 3}
+  - {fileID: 0}
   m_ParentStateMachine: {fileID: 110700000}
   m_Position: {x: 24, y: 48, z: 0}
   m_IKOnFeet: 1
@@ -511,7 +511,7 @@ State:
   m_Name: Run
   m_Speed: 1
   m_Motions:
-  - {fileID: 7400006, guid: 599be4b89e2bb7349b5d4bddc1a39818, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   m_ParentStateMachine: {fileID: 110705910}
   m_Position: {x: 324, y: 96, z: 0}
@@ -525,7 +525,7 @@ State:
   m_Name: JumpLand
   m_Speed: 1
   m_Motions:
-  - {fileID: 7400016, guid: 599be4b89e2bb7349b5d4bddc1a39818, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   m_ParentStateMachine: {fileID: 110721975}
   m_Position: {x: 300, y: 192, z: 0}
@@ -539,7 +539,7 @@ State:
   m_Name: JumpHover
   m_Speed: 1
   m_Motions:
-  - {fileID: 7400014, guid: 599be4b89e2bb7349b5d4bddc1a39818, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   m_ParentStateMachine: {fileID: 110721975}
   m_Position: {x: 300, y: 108, z: 0}
@@ -553,7 +553,7 @@ State:
   m_Name: Sprint
   m_Speed: 1
   m_Motions:
-  - {fileID: 7400008, guid: 599be4b89e2bb7349b5d4bddc1a39818, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   m_ParentStateMachine: {fileID: 110705910}
   m_Position: {x: 324, y: -12, z: 0}
@@ -567,7 +567,7 @@ State:
   m_Name: JumpStart
   m_Speed: 1
   m_Motions:
-  - {fileID: 7400012, guid: 599be4b89e2bb7349b5d4bddc1a39818, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   m_ParentStateMachine: {fileID: 110721975}
   m_Position: {x: 300, y: 12, z: 0}

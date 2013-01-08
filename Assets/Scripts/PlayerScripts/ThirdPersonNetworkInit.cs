@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 public class ThirdPersonNetworkInit : MonoBehaviour
 {
     void OnNetworkInstantiate(NetworkMessageInfo msg)
@@ -35,6 +34,7 @@ public class ThirdPersonNetworkInit : MonoBehaviour
     [RPC]
     public void SetOwnership()
     {
+        gameObject.SendMessage("OnSetOwnership", SendMessageOptions.DontRequireReceiver);
         if (Network.isClient)
         {
             GetComponent<NetworkController>().enabled = true;
@@ -62,6 +62,8 @@ public class ThirdPersonNetworkInit : MonoBehaviour
         gameObject.AddComponent<PlayerGUI>();
         gameObject.GetComponent<LineRenderer>().enabled = true;
         gameObject.GetComponent<TrajectorySimulator>().enabled = true;
+
+        gameObject.AddComponent<PlayerObjectInteractor>();
         
         // Store this game object for later reference from other scripts (just for ease of access)
         Util.MyLocalPlayerObject = this.gameObject;

@@ -1,0 +1,30 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 31.05.2012 13:11:31
+
+newmtl 9___Default
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka C:\Documents and Settings\Owner\Desktop\Medieval\Assets\Textures\Old_Cart_Wood.tga
+	map_Kd C:\Documents and Settings\Owner\Desktop\Medieval\Assets\Textures\Old_Cart_Wood.tga
+
+newmtl ground_1
+	Ns 0.000000
+	Ni 1.000000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.011765 0.011765 0.011765
+	Kd 0.305882 0.541176 0.274510
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka C:\Documents and Settings\Owner\Desktop\Medieval\Assets\Textures\Old_Cart_Wheels.tga
+	map_Kd C:\Documents and Settings\Owner\Desktop\Medieval\Assets\Textures\Old_Cart_Wheels.tga

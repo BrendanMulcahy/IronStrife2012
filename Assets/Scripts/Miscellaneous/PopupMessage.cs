@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 
+[DefaultSceneObject("PopupMessage", "PopupMessage")]
 public class PopupMessage : MonoBehaviour
 {
     private static GUIText _guiText;
@@ -11,10 +12,10 @@ public class PopupMessage : MonoBehaviour
         {
             if (_guiText == null)
             {
-                var go = GameObject.Find("PopupMessages");
+                var go = GameObject.Find("PopupMessage");
                 if (!go)
                 {
-                    go = new GameObject("PopupMessages");
+                    go = new GameObject("PopupMessage");
                     go.AddComponent<PopupMessage>();
                     _guiText = go.AddComponent<GUIText>();
                 }

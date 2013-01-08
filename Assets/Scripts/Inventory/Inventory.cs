@@ -28,6 +28,9 @@ public class Inventory : MonoBehaviour
 
     private Rect inventoryWindowRect = new Rect(70, 70, 600, 400);
 
+    private int gold;
+    public int Gold { get { return gold; } set { gold = value; } }
+
     void Awake()
     {
         Items = new ArrayList();
@@ -35,9 +38,10 @@ public class Inventory : MonoBehaviour
 
     void OnGUI()
     {
+        GUI.skin = Util.ISEGUISkin;
         if (visible)
         {
-            GUI.Window(0, inventoryWindowRect, ShowInventoryWindow, "Inventory");
+            GUI.Window("inventory".GetHashCode(), inventoryWindowRect, ShowInventoryWindow, "Inventory", GUI.skin.GetStyle("smallWindow"));
         }
     }
 
@@ -56,11 +60,12 @@ public class Inventory : MonoBehaviour
     void ShowInventoryWindow(int id)
     {
         GUILayout.BeginVertical();
-        foreach (EquippableItem item in Items)
+        foreach (Item item in Items)
         {
-            if (GUILayout.Button(item.name))
+            if (GUILayout.Button(item.name, GUI.skin.GetStyle("smallButton")))
             {
-                TryEquipItem(item);
+                if (item is EquippableItem)
+                TryEquipItem((EquippableItem)item);
             }
         }
         GUILayout.EndVertical();
@@ -144,7 +149,7 @@ public class Inventory : MonoBehaviour
         }
         if (item is Shield)
         {
-            if (currentWeapon.numHands == 2)
+            if (currentWeapon!=null && currentWeapon.numHands == 2)
             {
                 CommitUnequipItem((int)ItemType.Weapon);
             }
@@ -174,6 +179,49 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called by a client, run on the server when a client attempts to purchase an item at a shop.
+    /// </summary>
+    /// <param name="itemname"></param>
+    [RPC]
+    public void TryPurchaseItem(string itemName, NetworkViewID shopID, NetworkMessageInfo msg)
+    {
+        var itemToPurchase = ItemDirectory.Get(itemName);
+        if (itemToPurchase.goldCost <= this.gold)
+        {
+            networkView.RPC("AddItemToInventory", RPCMode.OthersBuffered, itemName);
+        }
+        else
+        {
+            networkView.RPC("InsufficientGoldMessage", msg.sender);
+        }
+    }
+
+    public void TryPurchaseItem(string itemName, NetworkViewID shopID)
+    {
+        var itemToPurchase = ItemDirectory.Get(itemName);
+        if (itemToPurchase.goldCost <= this.gold)
+        {
+            networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, itemName);
+        }
+        else
+        {
+            InsufficientGoldMessage();
+        }
+    }
+
+    [RPC]
+    void AddItemToInventory(string itemName)
+    {
+        Debug.Log("Adding item to inventory: " + itemName);
+        Items.Add(ItemDirectory.Get(itemName));
+    }
+
+    [RPC]
+    void InsufficientGoldMessage()
+    {
+        PopupMessage.LocalDisplay("You don't have enough gold to buy that!");
+    }
 }
 
 public delegate void WeaponChangedEventHandler(WeaponChangedEventArgs e);

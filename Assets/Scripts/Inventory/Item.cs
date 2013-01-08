@@ -21,6 +21,12 @@ public abstract class Item
     [XmlAttribute("itemType")]
     public ItemType itemType;
 
+    [XmlAttribute("goldCost")]
+    public int goldCost;
+
+    [XmlAttribute("availability")]
+    public ItemAvailability availability;
+
     private Texture2D _inventoryIcon;
     public Texture2D inventoryIcon
     {
@@ -37,10 +43,11 @@ public abstract class Item
         }
     }
 
-    public static T FromName<T>(string itemName)
+    public static T FromName<T>(string itemName) where T : Item
     {
         var type = typeof(T);
         TextAsset xmlFile = Resources.Load("Items/" + type.ToString() + "/" + itemName, typeof(TextAsset)) as TextAsset;
+        if (!xmlFile) return null;
         Byte[] bytes = Encoding.UTF8.GetBytes(xmlFile.text);
         using (MemoryStream stream = new MemoryStream(bytes))
         {
@@ -58,5 +65,27 @@ public abstract class Item
             serializer.Serialize(writer, this);
         }
     }
+}
+
+/// <summary>
+/// Describes the availability of an item in a store. Default is "Regular" (if undefined in XML file)
+/// </summary>
+public enum ItemAvailability
+{
+    /// <summary>
+    /// Available in a regular store
+    /// </summary>
+    Regular = 0,
+
+    /// <summary>
+    /// Available in a special store
+    /// </summary>
+    Rare,
+
+    /// <summary>
+    /// Not available in stores
+    /// </summary>
+    Unavailable,
+
 
 }

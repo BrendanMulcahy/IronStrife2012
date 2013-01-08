@@ -32,23 +32,23 @@ public class AbilityManager : MonoBehaviour
     {
         if (visible)
         {
-            GUI.Window(0, abilityWindowRect, ShowAbilityWindow, "Spells & Abilities");
+            GUI.Window("abilities".GetHashCode(), abilityWindowRect, ShowAbilityWindow, "Spells & Abilities");
         }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("E pressed");
-            visible = true;
-            gameObject.DisableControls();
-        }
-        else if (Input.GetKeyUp(KeyCode.E))
-        {
-            visible = false;
-            gameObject.EnableControls();
-        }
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    Debug.Log("E pressed");
+        //    visible = true;
+        //    gameObject.DisableControls();
+        //}
+        //else if (Input.GetKeyUp(KeyCode.E))
+        //{
+        //    visible = false;
+        //    gameObject.EnableControls();
+        //}
 
         if (lookingForSpellKey)
         {

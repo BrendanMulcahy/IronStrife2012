@@ -58,7 +58,7 @@ public class ConnectGUI : MonoBehaviour {
     {   
 	    if (showMasterGameList && !hidden)
 	    {
-		    window = GUI.Window(3,window,MasterGameListWindow,"List of Available Games");
+		    window = GUI.Window("connectgui".GetHashCode(),window,MasterGameListWindow,"List of Available Games");
 	    }
 
 	    if (!hidden)

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-[DefaultSceneObject("HUDFPS")]
+[DefaultSceneObject("HUDFPS", "HUDFPS")]
 [RequireComponent(typeof(GUIText))]
 public class HUDFPS : MonoBehaviour
 {
@@ -35,6 +35,7 @@ public class HUDFPS : MonoBehaviour
             enabled = false;
             return;
         }
+        
         timeleft = updateInterval;
     }
 

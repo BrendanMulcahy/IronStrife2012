@@ -45,7 +45,7 @@ public abstract class Spell
 
         if (spellImage == null)
         {
-            Debug.LogWarning("No spell icon was found for " + name + ". Loading the default one.");
+            Debug.Log("No spell icon was found for " + name + ". Loading the default one.");
             spellImage = Resources.Load("SpellIcons/Cast" + teamColor) as Texture2D;
 
         }

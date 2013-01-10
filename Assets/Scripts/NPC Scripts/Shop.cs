@@ -16,9 +16,11 @@ public class Shop : InteractableObject {
     GUISkin skin;
     public bool disabledThisFrame = false;
     public int counter = 1;
+    private AudioClip coinSound;
 
 	void Awake() 
     {
+        coinSound = Resources.Load("Sounds/coins") as AudioClip;
         sellingAbility = ItemAvailability.Regular;
 
         itemsForSale = new LinkedList<Item>();
@@ -49,12 +51,16 @@ public class Shop : InteractableObject {
             {
                 isShopping = false;
                 lookTarget = null;
+                Util.MyLocalPlayerObject.EnableControls();
+
             }
             if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape))
             {
                 isShopping = false;
                 lookTarget = null;
                 disabledThisFrame = true; counter = 1;
+                Util.MyLocalPlayerObject.EnableControls();
+
             }
         }
 	}
@@ -74,6 +80,7 @@ public class Shop : InteractableObject {
         {
             isShopping = false;
             lookTarget = null;
+            Util.MyLocalPlayerObject.EnableControls();
         }
         else
         {
@@ -81,6 +88,7 @@ public class Shop : InteractableObject {
             {
                 lookTarget = player.transform;
                 isShopping = true;
+                Util.MyLocalPlayerObject.DisableControls();
             }
         }
         
@@ -116,5 +124,11 @@ public class Shop : InteractableObject {
         {
             PopupMessage.LocalDisplay("You don't have enough gold to buy that!");
         }
+    }
+
+    [RPC]
+    void ItemPurchasedSound()
+    {
+        GetComponentInChildren<AudioSource>().PlayOneShot(coinSound);
     }
 }

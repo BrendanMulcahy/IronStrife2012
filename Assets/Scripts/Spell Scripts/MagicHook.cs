@@ -73,6 +73,11 @@ public class MagicHookEffect : MonoBehaviour
     {
         if (other.transform.root == casterTransform || this.grappled) return;
         this.grappled = true;
+        if (other.GetComponent<Terrain>())
+        {
+            Destroy(this.gameObject);
+            return;
+        }
 
         if (other.GetComponent<CharacterController>())
             StartCoroutine(BeginPullingObject(other.gameObject));

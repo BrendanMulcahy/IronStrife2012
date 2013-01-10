@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        if (!other.GetComponent<Projectile>() && other.transform != creator)
+        if (!other.GetComponent<Projectile>() && other.transform.root != creator.transform.root)
         CollideWith(other);
     }
 

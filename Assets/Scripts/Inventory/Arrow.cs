@@ -8,6 +8,7 @@ public class Arrow : Projectile
 {
     public override void CollideWith(Collider other)
     {
+
         base.CollideWith(other);
         transform.GetComponentInChildren<TrailRenderer>().enabled = false;
     }

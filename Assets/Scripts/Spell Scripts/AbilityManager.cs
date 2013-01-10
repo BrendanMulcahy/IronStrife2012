@@ -21,7 +21,7 @@ public class AbilityManager : MonoBehaviour
     private void EquipStartingSpells()
     {
         equippedSpells[4] = (int)PlayerAbilities.GetSpell("Surge");
-        equippedSpells[1] = (int)PlayerAbilities.GetSpell("Burning Blade");
+        equippedSpells[1] = (int)PlayerAbilities.GetSpell("Clearsight");
         equippedSpells[3] = (int)PlayerAbilities.GetSpell("Flameburst");
         equippedSpells[2] = (int)PlayerAbilities.GetSpell("Fireball");
         equippedSpells[0] = (int)PlayerAbilities.GetSpell("Magic Hook");
@@ -38,25 +38,26 @@ public class AbilityManager : MonoBehaviour
 
     void OnGUI()
     {
+        GUI.skin = Util.ISEGUISkin;
         if (visible)
         {
-            GUI.Window("abilities".GetHashCode(), abilityWindowRect, ShowAbilityWindow, "Spells & Abilities");
+            GUI.Window("abilities".GetHashCode(), abilityWindowRect, ShowAbilityWindow, "Spells & Abilities", GUI.skin.GetStyle("smallWindow"));
         }
     }
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    Debug.Log("E pressed");
-        //    visible = true;
-        //    gameObject.DisableControls();
-        //}
-        //else if (Input.GetKeyUp(KeyCode.E))
-        //{
-        //    visible = false;
-        //    gameObject.EnableControls();
-        //}
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Debug.Log("E pressed");
+            visible = true;
+            gameObject.DisableControls();
+        }
+        else if (Input.GetKeyUp(KeyCode.Y))
+        {
+            visible = false;
+            gameObject.EnableControls();
+        }
 
         if (lookingForSpellKey)
         {
@@ -71,7 +72,7 @@ public class AbilityManager : MonoBehaviour
         {
             if (spell == null)
                 continue;
-            if (GUILayout.Button(spell.name) && !lookingForSpellKey)
+            if (GUILayout.Button(spell.name, "smallButton") && !lookingForSpellKey)
             {
                 lookingForSpellKey = true;
                 lookingToBindSpell = spell;

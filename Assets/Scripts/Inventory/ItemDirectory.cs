@@ -35,6 +35,12 @@ public static class ItemDirectory
             var ta = (TextAsset)o;
             items.Add(ta.name, Shield.FromName<Shield>(ta.name));
         }
+        Object[] consumableXML = Resources.LoadAll("Items/Consumable", typeof(TextAsset));
+        foreach (Object o in consumableXML)
+        {
+            var ta = (TextAsset)o;
+            items.Add(ta.name, Consumable.FromName<Consumable>(ta.name));
+        }
         initialized = true;
     }
 }

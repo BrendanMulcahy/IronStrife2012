@@ -7,10 +7,9 @@ public class Fireball : Spell, ITargetSpell
     {
         GameObject fireBallObject = GameObject.Instantiate(Resources.Load("SpellEffects/Fireball")) as GameObject;
         fireBallObject.name = caster.name + "'s Fireball";
-        fireBallObject.transform.position = caster.transform.position + caster.transform.forward * 3f;
+        fireBallObject.transform.position = caster.transform.position + caster.transform.forward * 3f + Vector3.up*2f;
         var fireballEffect = fireBallObject.AddComponent<FireballEffect>();
         fireballEffect.Initialize(direction, 15.0f, caster);
-        fireBallObject.AddComponent<ParticleSystem>();
     }
 
     public override string name
@@ -46,11 +45,15 @@ public class FireballEffect : Projectile
         this.moveDirection = direction;
         this.caster = caster;
         sphereCollider = this.gameObject.AddComponent<SphereCollider>();
-        sphereCollider.radius = 2.0f; sphereCollider.isTrigger = true;
+        sphereCollider.radius = 1.0f; sphereCollider.isTrigger = true;
+        var rb = this.gameObject.AddComponent<Rigidbody>();
+        rb.isKinematic = true; rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+
         StartCoroutine(Util.DestroyInSeconds(this.gameObject, 5.0f));
     }
     public override void CollideWith(Collider other)
     {
+        if (other.transform.root != caster.transform.root) 
         Explode();
     }
 

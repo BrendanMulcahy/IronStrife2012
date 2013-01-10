@@ -9,12 +9,13 @@ public class RegularCamera : MonoBehaviour
     Transform target;
     float distance = 4.0f;
     float height = 3.0f;
+    float maximumAutoTransparentDistance = 4.0f;
 
     private Vector3 headOffset = Vector3.zero;
     private Vector3 centerOffset = Vector3.zero;
     private ThirdPersonController controller;
 
-    private bool isChatOpen = false;
+    private bool isScrollingDisabled = false;
 
     float mindistance = 3.0f;
     float maxdistance = 10.0f;
@@ -126,7 +127,7 @@ public class RegularCamera : MonoBehaviour
 
         y = ClampAngle(y, yMinLimit, yMaxLimit);
         var wheeldelta = Input.GetAxis("Mouse ScrollWheel");
-        if (!isChatOpen && !DebugGUI.visible)
+        if (!isScrollingDisabled && !DebugGUI.visible)
             distance -= wheeldelta * 4;
         distance = Mathf.Clamp(distance, mindistance, maxdistance);
 
@@ -171,7 +172,7 @@ public class RegularCamera : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(directionVector);
         SmoothlyUpdatePosition(desiredPosition);
 
-        if (!DebugGUI.visible && !isChatOpen)
+        if (!DebugGUI.visible && !isScrollingDisabled)
         {
             Debug.Log("Debug GUI is not visible.");
             var wheeldelta = Input.GetAxis("Mouse ScrollWheel");
@@ -214,6 +215,24 @@ public class RegularCamera : MonoBehaviour
         {
             this.transform.position = hit.point - rayDirection * .1f;
         }
+
+        layerMask = 1 << 13;
+        layerMask += (1 << 9);
+        RaycastHit[] hits = Physics.RaycastAll(rayTarget, rayDirection, rayDirection.magnitude, layerMask);
+        foreach (RaycastHit h in hits)
+        {
+            if (Vector3.Distance(h.collider.bounds.center, transform.position) > maximumAutoTransparentDistance) continue;
+            GameObject go = h.collider.transform.root.gameObject;
+            foreach (Renderer R in go.GetComponentsInChildren<Renderer>())
+            {
+                AutoTransparent AT = R.GetComponent<AutoTransparent>();
+                if (AT == null) // if no script is attached, attach one
+                {
+                    AT = R.gameObject.AddComponent<AutoTransparent>();
+                }
+                AT.BeTransparent(); // get called every frame to reset the falloff        
+            }
+        }
     }
 
     private static float ClampAngle(float angle, float min, float max)
@@ -245,14 +264,19 @@ public class RegularCamera : MonoBehaviour
         }
     }
 
-    private void ChatOpen()
+    private void DisableScrolling()
     {
-        isChatOpen = true;
+        isScrollingDisabled = true;
     }
 
-    private void ChatClose()
+    private void EnableScrolling()
     {
-        isChatOpen = false;
+        isScrollingDisabled = false;
+    }
+
+    internal void ToggleScrollingEnabled()
+    {
+        isScrollingDisabled = !isScrollingDisabled;
     }
 }
 

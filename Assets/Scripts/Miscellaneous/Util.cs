@@ -170,6 +170,11 @@ public static class Util
             go.GetComponent<NetworkController>().enabled = true;
     }
 
+    public static void TogglePlayerScrollZoom()
+    {
+        Camera.main.GetComponent<RegularCamera>().ToggleScrollingEnabled();
+    }
+
     /// <summary>
     /// Locates the closest valid spawn location for a given team and a given spawn location.
     /// </summary>
@@ -270,4 +275,32 @@ public static class Util
 
     private static GUISkin skin;
     public static GUISkin ISEGUISkin { get { if (!skin) skin = Resources.Load("ISEGUISkin") as GUISkin; return skin; } }
+
+    public static void SetLayerRecursively(this GameObject go, int layerNumber)
+    {
+        foreach (Transform trans in go.GetComponentsInChildren<Transform>(true))
+        {
+            trans.gameObject.layer = layerNumber;
+        }
+    }
+
+    public static void Destroy(UnityEngine.Object o)
+    {
+        UnityEngine.Object.Destroy(o);
+    }
+
+    public static void Destroy(UnityEngine.Object[] o)
+    {
+        for (int g = 0; g < o.Length; g++)
+        {
+            UnityEngine.Object.Destroy(o[g]);
+        }
+    }
+
+    internal static IEnumerator DisableInSeconds(Component comp, float p)
+    {
+        yield return new WaitForSeconds(p);
+        if (comp != null)
+            comp.active = false;
+    }
 }

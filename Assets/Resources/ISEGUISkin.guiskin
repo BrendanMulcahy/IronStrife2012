@@ -1656,18 +1656,18 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 0
     m_StretchHeight: 0
-  - m_Name: smallWindow
+  - m_Name: smallLabel
     m_Normal:
-      m_Background: {fileID: 2800000, guid: e2d09b40387fdc04da5cdc082c756082, type: 3}
+      m_Background: {fileID: 0}
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_Hover:
-      m_Background: {fileID: 2800000, guid: e2d09b40387fdc04da5cdc082c756082, type: 3}
+      m_Background: {fileID: 0}
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_Active:
-      m_Background: {fileID: 2800000, guid: e2d09b40387fdc04da5cdc082c756082, type: 3}
+      m_Background: {fileID: 0}
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_Focused:
-      m_Background: {fileID: 2800000, guid: e2d09b40387fdc04da5cdc082c756082, type: 3}
+      m_Background: {fileID: 0}
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_OnNormal:
       m_Background: {fileID: 0}
@@ -1692,17 +1692,17 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
     m_Padding:
-      m_Left: 75
-      m_Right: 50
-      m_Top: 45
-      m_Bottom: 25
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
     m_Overflow:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-    m_Font: {fileID: 12800000, guid: edaa50a9bbfd30d4b8505ecaefca27a3, type: 3}
-    m_FontSize: 14
+    m_Font: {fileID: 12800000, guid: a72914fcc6b5ed4429e2e5f0c3ef5cf6, type: 3}
+    m_FontSize: 16
     m_FontStyle: 0
     m_Alignment: 0
     m_WordWrap: 1

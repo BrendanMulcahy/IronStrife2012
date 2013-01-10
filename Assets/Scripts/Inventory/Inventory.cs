@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Handles player inventory, equipping items, unequipping items.
@@ -12,7 +13,7 @@ public class Inventory : MonoBehaviour
     /// <summary>
     /// The list of items that a player currently owns.
     /// </summary>
-    public ArrayList Items { get; set; }
+    public List<Item> Items { get; set; }
 
     // Is the inventory GUI visible?
     bool visible = false;
@@ -29,11 +30,12 @@ public class Inventory : MonoBehaviour
     private Rect inventoryWindowRect = new Rect(70, 70, 600, 400);
 
     private int gold;
+    private Vector2 scrollPosition = new Vector2();
     public int Gold { get { return gold; } set { gold = value; } }
 
     void Awake()
     {
-        Items = new ArrayList();
+        Items = new List<Item>();
     }
 
     void OnGUI()
@@ -59,16 +61,27 @@ public class Inventory : MonoBehaviour
 
     void ShowInventoryWindow(int id)
     {
+        scrollPosition = GUILayout.BeginScrollView(scrollPosition);
         GUILayout.BeginVertical();
-        foreach (Item item in Items)
-        {
-            if (GUILayout.Button(item.name, GUI.skin.GetStyle("smallButton")))
+        for (int g = 0; g < Items.Count; g++)
+        {        
+            if (GUILayout.Button(Items[g].name, GUI.skin.GetStyle("smallButton")))
             {
-                if (item is EquippableItem)
-                TryEquipItem((EquippableItem)item);
+                if (Items[g] is EquippableItem)
+                    TryEquipItem((EquippableItem)Items[g]);
+                if (Items[g] is Consumable)
+                {
+                    if (Network.isServer)
+                        TryConsumeItem(Items[g].name);
+                    else
+                        networkView.RPC("TryConsumeItem", RPCMode.Server, Items[g].name);
+                    g--;
+                }
+
             }
         }
         GUILayout.EndVertical();
+        GUILayout.EndScrollView();
         GUI.DragWindow();
     }
 
@@ -88,7 +101,7 @@ public class Inventory : MonoBehaviour
     void ServerTryEquipItem(string itemName)
     {
         EquippableItem item;
-        if ((item = (EquippableItem)this.Contains(itemName)) !=null && item is EquippableItem)
+        if ((item = (EquippableItem)this.Get(itemName)) !=null && item is EquippableItem)
         {
             networkView.RPC("CommitEquipItem", RPCMode.All, itemName, (int)item.itemType);
         }
@@ -98,7 +111,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private Item Contains(string itemName)
+    private Item Get(string itemName)
     {
         foreach (Item item in Items)
         {
@@ -189,7 +202,8 @@ public class Inventory : MonoBehaviour
         var itemToPurchase = ItemDirectory.Get(itemName);
         if (itemToPurchase.goldCost <= this.gold)
         {
-            networkView.RPC("AddItemToInventory", RPCMode.OthersBuffered, itemName);
+            networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, itemName);
+            NetworkView.Find(shopID).RPC("ItemPurchasedSound", RPCMode.All);
         }
         else
         {
@@ -203,6 +217,7 @@ public class Inventory : MonoBehaviour
         if (itemToPurchase.goldCost <= this.gold)
         {
             networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, itemName);
+            NetworkView.Find(shopID).RPC("ItemPurchasedSound", RPCMode.All);
         }
         else
         {
@@ -211,10 +226,32 @@ public class Inventory : MonoBehaviour
     }
 
     [RPC]
+    void TryConsumeItem(string itemName)
+    {
+        Item item = this.Get(itemName);
+        if (item!=null && item.itemType == ItemType.Consumable)
+        {
+            networkView.RPC("ConsumeItem", RPCMode.All, itemName);
+        }
+    }
+
+    [RPC]
+    void ConsumeItem(string itemName)
+    {
+        Item item = this.Get(itemName);
+        ((Consumable)item).Consume(this.gameObject);
+        Items.Remove(item);
+    }
+
+    [RPC]
     void AddItemToInventory(string itemName)
     {
         Debug.Log("Adding item to inventory: " + itemName);
         Items.Add(ItemDirectory.Get(itemName));
+        if (this.gameObject.IsMyLocalPlayer())
+        {
+            PopupMessage.LocalDisplay("You picked up a " + itemName + ".");
+        }
     }
 
     [RPC]

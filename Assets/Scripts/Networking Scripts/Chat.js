@@ -38,8 +38,8 @@ function Update()
 	{
 		if (!visible)
 		{
-			GameObject.Find("Main Camera").SendMessage("ChatOpen");
-			visible = true; scrollPosition.y = 100000; isInputFieldFocused = true;
+		    GameObject.Find("Main Camera").GetComponent("RegularCamera").DisableScrolling();
+		    visible = true; scrollPosition.y = 100000; isInputFieldFocused = true;
 		}
 	}
 	numberOfOldEntries = oldEntries.Count;
@@ -75,7 +75,7 @@ function OnGUI ()
 	var e : Event = Event.current;
 	if (e.type == EventType.MouseDown)
     {
-    	GameObject.Find("Main Camera").SendMessage("ChatClose");
+	    GameObject.Find("Main Camera").GetComponent("RegularCamera").EnableScrolling();
 		visible = false; isInputFieldFocused = false;
 	}
 
@@ -87,12 +87,12 @@ function OnGUI ()
 	{
 		for (var entry : ChatEntry in oldEntries)
 		{
-			GUILayout.Label(entry.sender + ": " + entry.text);
+			GUILayout.Label(entry.sender + ": " + entry.text,"smallLabel");
 		}
 	}
 	for (var entry : ChatEntry in newEntries)
 	{
-		GUILayout.Label(entry.sender + ": " + entry.text);
+		GUILayout.Label(entry.sender + ": " + entry.text, "smallLabel");
 	}
 	GUILayout.EndVertical();
 	GUILayout.EndScrollView();

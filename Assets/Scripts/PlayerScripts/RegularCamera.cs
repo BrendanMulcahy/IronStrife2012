@@ -38,6 +38,8 @@ public class RegularCamera : MonoBehaviour
     private const float startingTransitionTime = .005f;
     private GameObject LockedTarget { get { return controller.LockedTarget; } }
 
+    private bool firstPersonModeEnabled = false;
+
     private void Awake()
     {
         aimOffset = new Vector3(.3f, .5f, -1f);
@@ -72,21 +74,46 @@ public class RegularCamera : MonoBehaviour
     {
         if (target)
         {
-            switch (cameraMode)
+            if (firstPersonModeEnabled)
             {
-                case CameraMode.Regular:
-                    RegularModeUpdate();
-                    break;
-                case CameraMode.Aim:
-                    AimModeUpdate();
-                    break;
-                case CameraMode.Locked:
-                    LockedModeUpdate();
-                    break;
+                FirstPersonUpdate();
             }
-            FixCollision();
-
+            else
+            {
+                switch (cameraMode)
+                {
+                    case CameraMode.Regular:
+                        RegularModeUpdate();
+                        break;
+                    case CameraMode.Aim:
+                        AimModeUpdate();
+                        break;
+                    case CameraMode.Locked:
+                        LockedModeUpdate();
+                        break;
+                }
+                FixCollision();
+            }
         }
+    }
+
+    public void ToggleFirstPersonCamera()
+    {
+        this.firstPersonModeEnabled = !this.firstPersonModeEnabled;
+        if (firstPersonModeEnabled)
+        {
+            target = target.transform.Find("MainC/LightWeight_Rigged_:HeadCG");
+        }
+        else
+        {
+            target = target.transform.root;
+        }
+    }
+
+    private void FirstPersonUpdate()
+    {
+        this.transform.position = target.transform.position;
+        this.transform.rotation = target.transform.rotation;
     }
 
     private void RegularModeUpdate()

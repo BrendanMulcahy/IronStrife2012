@@ -44,6 +44,7 @@ public class FireballEffect : Projectile
         this.velocity = direction * velocity; 
         this.moveDirection = direction;
         this.caster = caster;
+        creator = caster.transform;
         sphereCollider = this.gameObject.AddComponent<SphereCollider>();
         sphereCollider.radius = 1.0f; sphereCollider.isTrigger = true;
         var rb = this.gameObject.AddComponent<Rigidbody>();
@@ -87,8 +88,12 @@ public class FireballExplosionEffect : MonoBehaviour
         if (!targetsHit.Contains(targetToHit))
         {
             targetsHit.Add(targetToHit);
-            targetToHit.GetDamageReceiver().ApplyHit(caster);
-            targetToHit.GetCharacterStats().ApplyDamage(caster, 35);
+            var dr = targetToHit.GetDamageReceiver();
+            if (dr)
+                dr.ApplyHit(caster);
+            var stats = targetToHit.GetCharacterStats();
+            if (stats)
+                stats.ApplyDamage(caster, 35);
         }
     }
 }

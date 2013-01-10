@@ -18,6 +18,8 @@ public class PlayerInputManager : MonoBehaviour {
     public bool lockButton = false;
     public CameraMode cameraMode = CameraMode.Regular;
 
+    public GameObject homingTarget;
+
     public Vector3 targetClickLocation;
 
     public bool spellButton = false;

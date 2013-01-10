@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 /// <summary>
 /// This class is used only by the server to control his player. 
@@ -53,6 +54,54 @@ public class ServerController : MonoBehaviour
                 targetController.targetClickLocation = hit.point;
             }
         }
+
+        UpdateHomingTarget();
+    }
+
+    private void UpdateHomingTarget()
+    {
+        if (regularCamera.CameraMode != CameraMode.Aim)
+        {
+            if (targetController.homingTarget != null)
+            {
+                var glow = targetController.homingTarget.GetComponent<GlowOutline>();
+                if (glow)
+                    Destroy(glow);
+                targetController.homingTarget = null;
+
+            }
+        }
+        GameObject newHomingTarget = null;
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(transform.position + Vector3.up * 2f, transform.forward, 100).OrderBy(h => h.distance).ToArray();
+        foreach (RaycastHit hit in hits)
+        {
+            var collidedTarget = hit.collider.transform.root.gameObject;
+            if (collidedTarget.networkView != null && collidedTarget.transform.root != this.transform.root)
+            {
+                newHomingTarget = collidedTarget;
+                break;
+            }
+        }
+        if (newHomingTarget == null && targetController.homingTarget != null)
+        {
+            var glow = targetController.homingTarget.GetComponent<GlowOutline>();
+            if (glow)
+                Destroy(glow);
+        }
+
+        if (newHomingTarget != null && newHomingTarget != targetController.homingTarget)
+        {
+            if (targetController.homingTarget)
+            {
+                var glow = targetController.homingTarget.GetComponent<GlowOutline>();
+                if (glow)
+                    Destroy(glow);
+            }
+            newHomingTarget.AddComponent<GlowOutline>();
+        }
+
+        targetController.homingTarget = newHomingTarget;
     }
 
     /// <summary>

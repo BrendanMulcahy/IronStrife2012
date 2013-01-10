@@ -49,12 +49,12 @@ public class PlayerObjectSpawner : MonoBehaviour
     }
 
     [RPC]
-    private void SimulateITargetSpellExecute(int spellId, Vector3 direction)
+    private void SimulateITargetSpellExecute(int spellId, Vector3 direction, NetworkViewID viewID)
     {
         if (gameObject.IsMyLocalPlayer()) return;
 
         ITargetSpell toCast = (PlayerAbilities.AllSpells()[spellId]) as ITargetSpell;
-        toCast.Execute(this.gameObject, direction, null);
+        toCast.Execute(this.gameObject, direction, viewID.GetGameObject());
     }
 
     [RPC]

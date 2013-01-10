@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Effect that creates a glowing outline around a gameObject and cleans it up when this component is removed.
+/// </summary>
 public class GlowOutline : MonoBehaviour
 {
     GameObject clone;
@@ -11,6 +14,8 @@ public class GlowOutline : MonoBehaviour
     
     void Start()
     {
+        if (this.gameObject.GetComponents<GlowOutline>().Length > 1)
+            Destroy(this);
         clone = Instantiate((Object)this.gameObject) as GameObject;
         Destroy(clone.GetComponent<GlowOutline>());
 

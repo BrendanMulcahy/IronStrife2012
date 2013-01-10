@@ -113,7 +113,6 @@ public static class Util
         DamageReceiver dr = go.GetComponent<DamageReceiver>();
         if (dr == null)
         {
-            Debug.Log("Game Object " + go.name + " does not have a DamageReceiver component.");
             return null;
         }
         {
@@ -302,5 +301,22 @@ public static class Util
         yield return new WaitForSeconds(p);
         if (comp != null)
             comp.active = false;
+    }
+
+    public static NetworkViewID GetNetworkViewID(this GameObject go)
+    {
+        if (!go) Debug.Log("Null");
+        var networkViewID = go.GetComponent<NetworkView>();
+        if (networkViewID) 
+            return networkViewID.viewID;
+        else 
+            return NetworkViewID.unassigned;
+    }
+
+    public static GameObject GetGameObject(this NetworkViewID viewID)
+    {
+        if (viewID == NetworkViewID.unassigned) return null;
+
+        return NetworkView.Find(viewID).gameObject;
     }
 }

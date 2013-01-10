@@ -678,10 +678,10 @@ public class ThirdPersonController : MonoBehaviour, IController
             if (inputManager.attackButton && inputManager.spellBeingCast != null && characterStats.Mana >= inputManager.spellBeingCast.manaCost)
             {
                 if (inputManager.spellBeingCast == null) Debug.Log("spell being cast is null");
-                ((ITargetSpell)inputManager.spellBeingCast).Execute(this.gameObject, transform.forward, null);
+                    ((ITargetSpell)inputManager.spellBeingCast).Execute(this.gameObject, transform.forward, inputManager.homingTarget);
                 if (Network.isServer)
+                    networkView.RPC("SimulateITargetSpellExecute", RPCMode.Others, (int)inputManager.spellBeingCast, transform.forward, inputManager.homingTarget ? inputManager.homingTarget.GetNetworkViewID() : NetworkViewID.unassigned);
 
-                networkView.RPC("SimulateITargetSpellExecute", RPCMode.Others, (int)inputManager.spellBeingCast, transform.forward);
                 characterStats.ReduceMana(inputManager.spellBeingCast.manaCost);
                 yield return new WaitForSeconds(.1f);
                 isCasting = false;

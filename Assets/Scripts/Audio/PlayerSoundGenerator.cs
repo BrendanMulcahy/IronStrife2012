@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerSoundGenerator : MonoBehaviour {
     AudioClip[] footStepClip = new AudioClip[1];
@@ -8,17 +9,29 @@ public class PlayerSoundGenerator : MonoBehaviour {
     AudioClip arrowDrawClip;
     AudioClip swordAttackHitClip;
 
+    Dictionary<string, AudioClip> elements;
+
     /// <summary>
     /// Initializes each animation clip that is used for player sounds.
     /// </summary>
     void Start()
     {
+        elements = new Dictionary<string, AudioClip>();
         footStepClip[0] = Resources.Load("Sounds/footstep_grass_01") as AudioClip;
         arrowFireClip = Resources.Load("Sounds/bow_fire") as AudioClip;
         swordSwingClip = Resources.Load("Sounds/sword_swoosh") as AudioClip;
         arrowDrawClip = Resources.Load("Sounds/arrow_draw_fast") as AudioClip;
         swordAttackHitClip = Resources.Load("Sounds/sword_hit") as AudioClip;
     
+    }
+
+    AudioClip GetAudioClip(string key)
+    {
+        if (!elements.ContainsKey(key))
+        {
+            elements[key] = Resources.Load("Sounds/" + key) as AudioClip;
+        }
+        return elements[key];
     }
 
     /// <summary>
@@ -69,9 +82,22 @@ public class PlayerSoundGenerator : MonoBehaviour {
         PlayRandomPitch(arrowDrawClip, .94f, 1.15f, .4f);
     }
 
-    internal void PlaySwingAttackHitSound()
+    internal void PlaySwingAttackHitSound(Collider other)
     {
-        PlayRandomPitch(swordAttackHitClip, .94f, 1.15f);
-
+        if (other.material)
+        {
+            if (other.material.name == "Metal (Instance)" || other.material.name == "Metal")
+            {
+                PlayRandomPitch(GetAudioClip("sword on metal"), .9f, 1.1f);
+            }
+            else
+            {
+                PlayRandomPitch(swordAttackHitClip, .94f, 1.15f);
+            }
+        }
+        else
+        {
+            PlayRandomPitch(swordAttackHitClip, .94f, 1.15f);
+        }
     }
 }

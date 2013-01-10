@@ -5,8 +5,12 @@ using System.Collections.Generic;
 
 public abstract class Spell
 {
+    //Initialize these values in InitializeSpellValues()
     public float castTime;
     public int manaCost;
+
+
+
     public GameObject caster;
     public Texture2D spellImage;
 
@@ -19,6 +23,9 @@ public abstract class Spell
         this.InitializeSpellValues();
     }
 
+    /// <summary>
+    /// Initializes castTime and manaCost
+    /// </summary>
     protected abstract void InitializeSpellValues();
     
     public static explicit operator int(Spell s)

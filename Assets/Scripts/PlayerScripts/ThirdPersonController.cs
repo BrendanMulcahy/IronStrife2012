@@ -34,6 +34,9 @@ public class ThirdPersonController : MonoBehaviour, IController
     float gravity = 20.0f;
     float speedSmoothing = 10.0f;
     float trotAfterSeconds = 0.5f;
+    bool isAffectedByGravity = true;
+    public void HaltGravity() { isAffectedByGravity = false; }
+    public void ResumeGravity() { isAffectedByGravity = true; }
 
     //Attack timer for bow so we know what animation to play
     public float attacktimer = 0;
@@ -442,9 +445,9 @@ public class ThirdPersonController : MonoBehaviour, IController
 
         if (extraPowerJump)
             return;
-        else if (IsGrounded())
+        else if (IsGrounded() && isAffectedByGravity)
             verticalSpeed = -gravity * 0.2f;
-        else
+        else if (isAffectedByGravity)
             verticalSpeed -= gravity * Time.deltaTime;
     }
 

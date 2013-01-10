@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -7,8 +8,15 @@ using System.Text;
 public static class PlayerAbilities
 {
     private static ArrayList spells = new ArrayList();
+    private static Dictionary<string, Spell> spellDictionary = new Dictionary<string, Spell>();
     public static Spell GetSpell(int g) { if (!isInitialized) Initialize(); return spells[g] as Spell; }
     private static bool isInitialized = false;
+
+    public static Spell GetSpell(string s)
+    {
+        if (!isInitialized) Initialize();
+        return spellDictionary[s];
+    }
 
     public static void LoadAllSpells()
     {
@@ -19,7 +27,10 @@ public static class PlayerAbilities
             {
                 if (t.IsSubclassOf(typeof(Spell)))
                 {
-                    spells.Add(Activator.CreateInstance(t));
+                    Spell instance = Activator.CreateInstance(t) as Spell;
+                    spells.Add(instance);
+                    spellDictionary.Add(instance.name, instance);
+                    
                 }
             }
         }

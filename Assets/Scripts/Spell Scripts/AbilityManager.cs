@@ -20,11 +20,19 @@ public class AbilityManager : MonoBehaviour
 
     private void EquipStartingSpells()
     {
-        for (int i = 0; i < 5; i++)
+        equippedSpells[4] = (int)PlayerAbilities.GetSpell("Surge");
+        equippedSpells[1] = (int)PlayerAbilities.GetSpell("Burning Blade");
+        equippedSpells[3] = (int)PlayerAbilities.GetSpell("Flameburst");
+        equippedSpells[2] = (int)PlayerAbilities.GetSpell("Fireball");
+        equippedSpells[0] = (int)PlayerAbilities.GetSpell("Magic Hook");
+        for (int g = 0; g < 5; g++)
         {
-            equippedSpells[i] = i+1;
-            GetComponent<PlayerGUI>().UpdateSpellIcons(i, (Spell)(i+1)); //draw the new spell 
+            GetComponent<PlayerGUI>().UpdateSpellIcons(g, (Spell)equippedSpells[g]);
+
         }
+
+
+
     }
 
 

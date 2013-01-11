@@ -1663,7 +1663,6 @@ GameObject:
   - 33: {fileID: 76292023}
   - 23: {fileID: 76292022}
   - 64: {fileID: 76292021}
-  - 111: {fileID: 76292020}
   m_Layer: 0
   m_Name: Booth
   m_TagString: Untagged
@@ -1671,24 +1670,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!111 &76292020
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11100000, guid: 901dcc112748e466bb5d74b3a9ed46b9,
-    type: 3}
-  m_PrefabInternal: {fileID: 616483578}
-  m_GameObject: {fileID: 76292019}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!64 &76292021
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5333,7 +5314,6 @@ GameObject:
   - 4: {fileID: 280811693}
   - 33: {fileID: 280811696}
   - 23: {fileID: 280811695}
-  - 111: {fileID: 280811694}
   m_Layer: 0
   m_Name: LargeCandlePrefab
   m_TagString: Untagged
@@ -5353,24 +5333,6 @@ Transform:
   m_Children:
   - {fileID: 1568102292}
   m_Father: {fileID: 0}
---- !u!111 &280811694
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11100002, guid: 87c6467cd6b647e4e82fa9b1b15bd00d,
-    type: 2}
-  m_PrefabInternal: {fileID: 1674398088}
-  m_GameObject: {fileID: 280811692}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!23 &280811695
 Renderer:
   m_ObjectHideFlags: 0
@@ -6998,7 +6960,6 @@ GameObject:
   - 33: {fileID: 361254789}
   - 23: {fileID: 361254788}
   - 64: {fileID: 361254787}
-  - 111: {fileID: 361254786}
   m_Layer: 0
   m_Name: Hay_Wagon
   m_TagString: Untagged
@@ -7006,24 +6967,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!111 &361254786
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11100000, guid: 6cf5b74fc672348278cb87cb785eddaf,
-    type: 3}
-  m_PrefabInternal: {fileID: 1274596730}
-  m_GameObject: {fileID: 361254785}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!64 &361254787
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8877,7 +8820,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 444607842}
-  - 111: {fileID: 444607841}
   - 64: {fileID: 444607843}
   m_Layer: 0
   m_Name: Chest4
@@ -8886,24 +8828,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!111 &444607841
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11100000, guid: 99b654a0270bb6541ad8c6cfaec2d04b,
-    type: 3}
-  m_PrefabInternal: {fileID: 1926213494}
-  m_GameObject: {fileID: 444607840}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!4 &444607842
 Transform:
   m_ObjectHideFlags: 0
@@ -12317,7 +12241,8 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1.79999995
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11100000, guid: 901dcc112748e466bb5d74b3a9ed46b9, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 901dcc112748e466bb5d74b3a9ed46b9, type: 3}
   m_RootGameObject: {fileID: 76292019}
   m_IsPrefabParent: 0
@@ -20160,7 +20085,6 @@ GameObject:
   - 4: {fileID: 941187128}
   - 33: {fileID: 941187127}
   - 23: {fileID: 941187126}
-  - 111: {fileID: 941187125}
   - 65: {fileID: 941187129}
   m_Layer: 13
   m_Name: WoodenTabelLargeID
@@ -20169,24 +20093,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!111 &941187125
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11100000, guid: 27890fe087125094f94db3a44836d5c0,
-    type: 3}
-  m_PrefabInternal: {fileID: 1657902958}
-  m_GameObject: {fileID: 941187124}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!23 &941187126
 Renderer:
   m_ObjectHideFlags: 0
@@ -27542,7 +27448,8 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11100000, guid: 6cf5b74fc672348278cb87cb785eddaf, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 6cf5b74fc672348278cb87cb785eddaf, type: 3}
   m_RootGameObject: {fileID: 361254785}
   m_IsPrefabParent: 0
@@ -28095,7 +28002,8 @@ Prefab:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: c16bbe3378a9b2448a800b3e3f4e1465, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: c16bbe3378a9b2448a800b3e3f4e1465, type: 3}
   m_RootGameObject: {fileID: 1418081874}
   m_IsPrefabParent: 0
@@ -30812,7 +30720,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1418081875}
-  - 95: {fileID: 1418081876}
   m_Layer: 11
   m_Name: Medieval_Sanctuary
   m_TagString: Untagged
@@ -30832,19 +30739,6 @@ Transform:
   m_Children:
   - {fileID: 43365765}
   m_Father: {fileID: 0}
---- !u!95 &1418081876
-Animator:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9500000, guid: c16bbe3378a9b2448a800b3e3f4e1465,
-    type: 3}
-  m_PrefabInternal: {fileID: 1297648668}
-  m_GameObject: {fileID: 1418081874}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: c16bbe3378a9b2448a800b3e3f4e1465, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_ApplyRootMotion: 1
-  m_AnimatePhysics: 0
 --- !u!1 &1418105745
 GameObject:
   m_ObjectHideFlags: 0
@@ -33191,7 +33085,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f506240bd3443ca43bbfede2ae41ce98, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 802.715454
+      value: 803.173035
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f506240bd3443ca43bbfede2ae41ce98, type: 3}
       propertyPath: m_LocalRotation.x
@@ -33209,7 +33103,8 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11100000, guid: f506240bd3443ca43bbfede2ae41ce98, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: f506240bd3443ca43bbfede2ae41ce98, type: 3}
   m_RootGameObject: {fileID: 1525288826}
   m_IsPrefabParent: 0
@@ -33222,7 +33117,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1525288827}
-  - 111: {fileID: 1525288828}
   - 65: {fileID: 1525288829}
   m_Layer: 0
   m_Name: Chest1
@@ -33238,31 +33132,13 @@ Transform:
   m_PrefabInternal: {fileID: 1524871004}
   m_GameObject: {fileID: 1525288826}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 404.873871, y: 32.3644333, z: 802.715454}
+  m_LocalPosition: {x: 404.873871, y: 32.3644333, z: 803.173035}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1985637394}
   - {fileID: 2138430163}
   - {fileID: 1109396059}
   m_Father: {fileID: 0}
---- !u!111 &1525288828
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11100000, guid: f506240bd3443ca43bbfede2ae41ce98,
-    type: 3}
-  m_PrefabInternal: {fileID: 1524871004}
-  m_GameObject: {fileID: 1525288826}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!65 &1525288829
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35776,7 +35652,8 @@ Prefab:
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11100000, guid: 27890fe087125094f94db3a44836d5c0, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 27890fe087125094f94db3a44836d5c0, type: 3}
   m_RootGameObject: {fileID: 941187124}
   m_IsPrefabParent: 0
@@ -36183,7 +36060,8 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: .621722102
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11100002, guid: 87c6467cd6b647e4e82fa9b1b15bd00d, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 87c6467cd6b647e4e82fa9b1b15bd00d, type: 2}
   m_RootGameObject: {fileID: 280811692}
   m_IsPrefabParent: 0
@@ -36326,7 +36204,6 @@ GameObject:
   - 4: {fileID: 1679729249}
   - 33: {fileID: 1679729248}
   - 23: {fileID: 1679729247}
-  - 111: {fileID: 1679729246}
   - 65: {fileID: 1679729250}
   m_Layer: 13
   m_Name: WoodenTabeSmallOD
@@ -36335,24 +36212,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!111 &1679729246
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11100000, guid: 26eb4cf48f449104dbb870a7b7ff0a44,
-    type: 3}
-  m_PrefabInternal: {fileID: 2003387891}
-  m_GameObject: {fileID: 1679729245}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!23 &1679729247
 Renderer:
   m_ObjectHideFlags: 0
@@ -42084,7 +41943,8 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: .539652526
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11100000, guid: 99b654a0270bb6541ad8c6cfaec2d04b, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 99b654a0270bb6541ad8c6cfaec2d04b, type: 3}
   m_RootGameObject: {fileID: 444607840}
   m_IsPrefabParent: 0
@@ -43605,7 +43465,8 @@ Prefab:
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11100000, guid: 26eb4cf48f449104dbb870a7b7ff0a44, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 26eb4cf48f449104dbb870a7b7ff0a44, type: 3}
   m_RootGameObject: {fileID: 1679729245}
   m_IsPrefabParent: 0

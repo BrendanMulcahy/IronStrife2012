@@ -62,14 +62,7 @@ public class ServerController : MonoBehaviour
     {
         if (regularCamera.CameraMode != CameraMode.Aim)
         {
-            if (targetController.homingTarget != null)
-            {
-                var glow = targetController.homingTarget.GetComponent<GlowOutline>();
-                if (glow)
-                    Destroy(glow);
-                targetController.homingTarget = null;
-
-            }
+            return;
         }
         GameObject newHomingTarget = null;
         RaycastHit[] hits;

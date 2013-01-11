@@ -44,6 +44,7 @@ public class NetworkController : MonoBehaviour
         regularCamera = Camera.main.GetComponent<RegularCamera>();
         tpController = GetComponent<ThirdPersonController>();
         abilityManager = GetComponent<AbilityManager>();
+        targetController = GetComponent<PlayerInputManager>();
     }
 
     public void StartMonitoringCameraMovement()

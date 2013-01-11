@@ -9,7 +9,7 @@ public class Fireball : Spell, ITargetSpell
         fireBallObject.name = caster.name + "'s Fireball";
         fireBallObject.transform.position = caster.transform.position + caster.transform.forward * 3f + Vector3.up*2f;
         var fireballEffect = fireBallObject.AddComponent<FireballEffect>();
-        fireballEffect.Initialize(direction, 15.0f, caster);
+        fireballEffect.Initialize(direction, 15.0f, caster, homingTarget);
     }
 
     public override string name
@@ -33,13 +33,19 @@ public class FireballEffect : Projectile
 {
     SphereCollider sphereCollider;
     GameObject caster;
+    GameObject homingTarget;
 
     // Update is called once per frame
     void Update()
     {
+        if (homingTarget)
+        {
+            var towardsHomingTarget = homingTarget.transform.position - this.gameObject.transform.position;
+            velocity = Vector3.RotateTowards(velocity, towardsHomingTarget, .05f, .1f);
+        }
         transform.position += velocity * Time.deltaTime;
     }
-    public void Initialize(Vector3 direction, float velocity, GameObject caster)
+    public void Initialize(Vector3 direction, float velocity, GameObject caster, GameObject homingTarget)
     {
         this.velocity = direction * velocity; 
         this.moveDirection = direction;

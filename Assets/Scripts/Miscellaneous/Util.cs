@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Reflection;
+using System.Linq;
 
 /// <summary>
 /// Static utility class containing many useful static methods.
@@ -318,5 +320,17 @@ public static class Util
         if (viewID == NetworkViewID.unassigned) return null;
 
         return NetworkView.Find(viewID).gameObject;
+    }
+
+    public static Type[] GetSubclasses<T>()
+    {
+        var allClasses = Assembly.GetExecutingAssembly().GetExportedTypes().Where(t => t.IsSubclassOf(typeof(T))).ToArray();
+        return allClasses;
+    }
+
+    public static Type[] GetClassesWithAttribute<T>()
+    {
+        var allClasses = Assembly.GetExecutingAssembly().GetExportedTypes().Where(t => t.GetCustomAttributes(typeof(T), false).Length > 0).ToArray();
+        return allClasses;
     }
 }

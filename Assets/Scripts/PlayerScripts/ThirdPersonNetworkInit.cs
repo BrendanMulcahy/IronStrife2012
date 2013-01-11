@@ -16,6 +16,7 @@ public class ThirdPersonNetworkInit : MonoBehaviour
             cs.StartMonitoringRegeneration();
             cs.StartSyncingHMS();
             gameObject.AddComponent<PlayerDamageReceiver>();
+            Destroy(GetComponent<ServerController>());
 
         }
         // Client looking at client
@@ -27,6 +28,9 @@ public class ThirdPersonNetworkInit : MonoBehaviour
             GetComponent<NetworkController>().enabled = false;
             GetComponent<NetworkSyncAnimation>().enabled = true;
             gameObject.AddComponent<PlayerDamageReceiver>().isClientView = true;
+            Destroy(GetComponent<NetworkController>());
+            Destroy(GetComponent<ServerController>());
+
 
         }
     }

@@ -6,8 +6,21 @@ public class NPC_Controller : MonoBehaviour
 {
     CharacterController characterController;
     float moveSpeed;
+
+    public float MoveSpeed
+    {
+        get { return moveSpeed; }
+        set { moveSpeed = value; }
+    }
     float walkSpeed;
     Vector3 moveDirection;
+    Vector3 targetMoveDirection;
+
+    public Vector3 TargetMoveDirection
+    {
+        get { return targetMoveDirection; }
+        set { targetMoveDirection = value; }
+    }
 
     public Vector3 MoveDirection
     {
@@ -16,30 +29,30 @@ public class NPC_Controller : MonoBehaviour
     }
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         characterController = GetComponent<CharacterController>();
         walkSpeed = GetComponent<NPC_AI>().WalkSpeed;
         moveDirection = Vector3.forward;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        GetComponent<CharacterController>().SimpleMove(moveDirection * moveSpeed);
+	void Update ()
+    {
+        UpdateMoveDirection();
 	}
 
     /// <summary>
     /// Makes the NPC walk forward at its walk speed
     /// </summary>
-    public void Walk()
+    public void Move()
     {
-        moveSpeed = walkSpeed;
+        characterController.SimpleMove(moveDirection * moveSpeed);
     }
 
-    /// <summary>
-    /// Causes the NPC to stop moving and stand still
-    /// </summary>
-    public void StopMoving()
+    private void UpdateMoveDirection()
     {
-        moveSpeed = 0.0f;
+        moveDirection = Vector3.RotateTowards(moveDirection, targetMoveDirection, 3.14f * Time.deltaTime, 1f);
+        transform.rotation = Quaternion.LookRotation(moveDirection);
     }
 }

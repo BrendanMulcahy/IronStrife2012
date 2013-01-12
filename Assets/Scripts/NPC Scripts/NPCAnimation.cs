@@ -20,61 +20,6 @@ public class NPCAnimation : MonoBehaviour {
 
     }
 
-    public static void InitializeAnimation(Animation ani)
-    {
-        var clips = Resources.LoadAll("Animations/Lightweight-Animated", typeof(AnimationClip)).Cast<AnimationClip>();
-        foreach (var c in clips)
-        {
-            ani.AddClip(c, c.name);
-        }
-        foreach (AnimationState state in ani)
-        {
-            state.layer = -1;
-        }
-        ani["RunSwing"].layer = 3;
-        ani["RunSwing"].normalizedSpeed = 5 / 4;
-        ani["IdleSwing"].normalizedSpeed = 5 / 4;
-        ani["IdleSwing"].layer = 3;
-        ani["IdleBowAim"].layer = 3;
-        ani["IdleBowAim"].wrapMode = WrapMode.Once; //Doesnt loop these animations
-
-        ani["WalkBowAim"].layer = 3;
-        ani["WalkBowAim"].wrapMode = WrapMode.Once;
-
-        ani["IdleBowStartAim"].layer = 4;
-        ani["IdleBowStartAim"].speed = 1.5f;
-        ani["WalkBowStartAim"].layer = 4;
-        ani["WalkBowStartAim"].speed = 1.5f;
-
-        ani["IdleBowShootReload"].layer = 4;
-        ani["IdleBowShootReload"].wrapMode = WrapMode.Once;
-        ani["IdleBowShootReload"].speed = 1.5f;
-        ani["WalkBowShootReload"].layer = 4;
-        ani["WalkBowShootReload"].wrapMode = WrapMode.Once;
-        ani["WalkBowShootReload"].speed = 1.5f;
-
-        ani["IdleBowRelax"].layer = 1;
-        ani["IdleBowRelax"].speed = 1.5f;
-        ani["WalkBowRelax"].layer = 1;
-        ani["WalkBowRelax"].speed = 1.5f;
-
-        ani["RunJumpStart"].layer = 2;
-        ani["RunJumpHover"].layer = 1;
-        ani["RunJumpLand"].layer = 1;
-
-        ani["Run"].layer = 3;
-        ani["Sprint"].layer = 3;
-        ani["Idle01"].layer = 3;
-
-        //ani["RunFlinch"].layer = 5;
-        //ani["IdleShieldBlockFlinch"].layer = 5;
-
-
-        ani["RunJumpHover"].speed = .5f;
-
-        ani.Stop();
-        ani.Play("Idle01");
-    }
 	// Use this for initialization
 	void Start () {
 	
@@ -82,7 +27,7 @@ public class NPCAnimation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float currentspeed = GetComponent<NPCController>().currentspeed;
+        float currentspeed = GetComponent<NPC_Controller>().MoveSpeed;
 
         switch (currentstatus)
         {
@@ -131,7 +76,7 @@ public class NPCAnimation : MonoBehaviour {
     private void CrossFadeAndSync(string anim, float fadeLength = 0.0f)
     {
         animation.CrossFade(anim, fadeLength);
-        SendMessage("SyncAnimation", anim);
+        SendMessage("SyncAnimation", anim, SendMessageOptions.DontRequireReceiver);
     } 
 
 

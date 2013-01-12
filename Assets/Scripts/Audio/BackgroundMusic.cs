@@ -195,7 +195,7 @@ public class BackgroundMusic : MonoBehaviour
             return null;
 
         GameObject closestPoint = null;
-        float closestDistance = 9999f;
+
         SortedList listOfDistances = new SortedList();
         listOfDistances.Add(Vector3.Distance(playerPosition, HomeBase.transform.position), HomeBase);
         listOfDistances.Add(Vector3.Distance(playerPosition, EnemyBase.transform.position), EnemyBase);
@@ -203,7 +203,6 @@ public class BackgroundMusic : MonoBehaviour
         listOfDistances.Add(Vector3.Distance(playerPosition, Swamp.transform.position), Swamp);
         listOfDistances.Add(Vector3.Distance(playerPosition, Farm.transform.position), Farm);
 
-        closestDistance = (float)listOfDistances.GetKey(0);
         closestPoint = listOfDistances.GetByIndex(0) as GameObject;
 
         return closestPoint;

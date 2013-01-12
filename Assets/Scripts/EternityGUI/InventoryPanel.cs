@@ -105,7 +105,7 @@
             background.guiTexture.pixelInset = new Rect(0, 0, tex.width, tex.height);
         }
 
-        internal virtual void Resize(int newWidth, int newHeight)
+        internal override void Resize(int newWidth, int newHeight)
         {
             this.transform.localScale = new Vector3(1,1,1);
             var newInset = new Rect(0, 0, newWidth, newHeight);

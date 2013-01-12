@@ -42966,6 +42966,7 @@ GameObject:
   - 114: {fileID: 1932197936}
   - 114: {fileID: 1932197937}
   - 114: {fileID: 1932197938}
+  - 148: {fileID: 1932197939}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -43029,6 +43030,18 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 787944a5516f8604caf8a6ccae3ba03c, type: 3}
   m_Name: 
+--- !u!148 &1932197939
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1932197933}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 1932197934}
+  m_ViewID:
+    m_ID: 15
+    m_Type: 1
 --- !u!1001 &1934505388
 Prefab:
   m_ObjectHideFlags: 0

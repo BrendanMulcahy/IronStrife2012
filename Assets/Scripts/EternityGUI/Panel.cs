@@ -29,10 +29,5 @@ namespace EternityGUI
             newContainer.transform.parent = this.transform;
             containers.Add(newContainer);
         }
-
-        void Update()
-        {
-            base.Update();
-        }
     }
 }

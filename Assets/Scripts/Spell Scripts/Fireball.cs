@@ -34,20 +34,22 @@ public class FireballEffect : Projectile
     SphereCollider sphereCollider;
     GameObject caster;
     GameObject homingTarget;
+    float initialMagnitude;
 
     // Update is called once per frame
     void Update()
     {
         if (homingTarget)
         {
-            var towardsHomingTarget = homingTarget.transform.position - this.gameObject.transform.position;
-            velocity = Vector3.RotateTowards(velocity, towardsHomingTarget, .05f, .1f);
+            var towardsHomingTarget = homingTarget.transform.position + Vector3.up*2f - this.gameObject.transform.position;
+            velocity = Vector3.RotateTowards(velocity, towardsHomingTarget, 50f, 50f).normalized * initialMagnitude;
         }
         transform.position += velocity * Time.deltaTime;
     }
     public void Initialize(Vector3 direction, float velocity, GameObject caster, GameObject homingTarget)
     {
-        this.velocity = direction * velocity; 
+        initialMagnitude = velocity;
+        this.velocity = direction * velocity;
         this.moveDirection = direction;
         this.caster = caster;
         creator = caster.transform;
@@ -55,8 +57,9 @@ public class FireballEffect : Projectile
         sphereCollider.radius = 1.0f; sphereCollider.isTrigger = true;
         var rb = this.gameObject.AddComponent<Rigidbody>();
         rb.isKinematic = true; rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        this.homingTarget = homingTarget;
 
-        StartCoroutine(Util.DestroyInSeconds(this.gameObject, 5.0f));
+        //StartCoroutine(Util.DestroyInSeconds(this.gameObject, 5.0f));
     }
     public override void CollideWith(Collider other)
     {

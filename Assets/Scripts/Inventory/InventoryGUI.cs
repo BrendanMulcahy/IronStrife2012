@@ -4,12 +4,10 @@ public class InventoryGUI : MonoBehaviour
 {
     public Inventory inventory;
     public bool visible = false;
-    public UIPanel inventoryPanel;
 
     void Awake()
     {
         inventory = Util.MyLocalPlayerObject.GetInventory();
-        inventoryPanel = new UIPanel();
     }
 
     void Update()

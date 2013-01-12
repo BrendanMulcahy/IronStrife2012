@@ -88,5 +88,7 @@ public class ThirdPersonNetworkInit : MonoBehaviour
         inv.Items.Add(weapon);
         inv.TryEquipItem(weapon);
         inv.Gold = 100000;
+
+        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
     }
 }

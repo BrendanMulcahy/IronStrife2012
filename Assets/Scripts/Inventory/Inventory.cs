@@ -33,6 +33,10 @@ public class Inventory : MonoBehaviour
     private Vector2 scrollPosition = new Vector2();
     public int Gold { get { return gold; } set { gold = value; } }
 
+    public delegate void ItemAddedEventHandler(Inventory sender, Item newItem);
+
+    public event ItemAddedEventHandler ItemAdded;
+
     void Awake()
     {
         Items = new List<Item>();
@@ -246,11 +250,22 @@ public class Inventory : MonoBehaviour
     [RPC]
     void AddItemToInventory(string itemName)
     {
+        var newItem = ItemDirectory.Get(itemName);
         Debug.Log("Adding item to inventory: " + itemName);
-        Items.Add(ItemDirectory.Get(itemName));
+        Items.Add(newItem);
         if (this.gameObject.IsMyLocalPlayer())
         {
             PopupMessage.LocalDisplay("You picked up a " + itemName + ".");
+        }
+
+        OnItemAdded(newItem);
+    }
+
+    private void OnItemAdded(Item newItem)
+    {
+        if (ItemAdded != null)
+        {
+            ItemAdded(this, newItem);
         }
     }
 

@@ -42,13 +42,4 @@ public class NPC_Controller : MonoBehaviour
     {
         moveSpeed = 0.0f;
     }
-
-    /// <summary>
-    /// Changes the NPCs move direction
-    /// </summary>
-    /// <param name="direction">vector pointing in the direction to move towards</param>
-    public void ChangeDirection(Vector3 direction)
-    {
-        moveDirection = direction;
-    }
 }

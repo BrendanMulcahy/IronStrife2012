@@ -5,7 +5,7 @@ public class Wander : NPC_BehaviorState
 {
     NPC_Controller npcController;
 
-    void Start()
+    void Start ()
     {
         npcController = GetComponent<NPC_Controller>();
     }

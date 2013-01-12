@@ -20,12 +20,11 @@ public class NPC_AI : MonoBehaviour {
         get { return currentState; }
         set { currentState = value; }
     }
-    private bool stateHasChanged = false; //true if the state has changed recently
+    private bool stateHasChanged = true; //true if the state has changed recently
 
 	// Use this for initialization
 	void Start () {
         currentState = GetComponent<NPC_BehaviorState>();
-        currentState.Run();
 	}
 	
 	// Update is called once per frame

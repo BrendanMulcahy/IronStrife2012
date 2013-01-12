@@ -40,7 +40,42 @@ public class NPC_Controller : MonoBehaviour
 	void Update ()
     {
         UpdateMoveDirection();
+        AvoidObstacles();
 	}
+
+    private void AvoidObstacles()
+    {
+        //not sure if this layer mask is correct, just copied it from elsewhere
+        var layerMask = 1 << 8;
+        layerMask += (1 << 9);
+        layerMask += (1 << 10);
+        layerMask = ~layerMask;
+
+        //if there is obstacle in front
+        if (Physics.Raycast(transform.position, moveDirection, 4.0f, layerMask))
+        {
+            //if right is free
+            if (!Physics.Raycast(transform.position, Vector3.Cross(moveDirection, Vector3.up), 4.0f, layerMask))
+            {
+                targetMoveDirection = Vector3.Cross(moveDirection, Vector3.up);
+            }
+            //else if left is free
+            else if (!Physics.Raycast(transform.position, Vector3.Cross(moveDirection, Vector3.down), 4.0f, layerMask))
+            {
+                targetMoveDirection = Vector3.Cross(moveDirection, Vector3.down);
+            }
+            else
+            {
+                //turn around
+                targetMoveDirection = Vector3.Reflect(moveDirection, Vector3.up);
+            }
+        }
+
+        if (Physics.Raycast(transform.position, moveDirection, 2.0f, layerMask))
+        {
+            moveSpeed = 0.0f;
+        }
+    }
 
     /// <summary>
     /// Makes the NPC walk forward at its walk speed

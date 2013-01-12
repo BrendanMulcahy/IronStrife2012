@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using EternityGUI;
 
 /// <summary>
 /// Handles player inventory, equipping items, unequipping items.
@@ -28,6 +29,7 @@ public class Inventory : MonoBehaviour
     public event WeaponChangedEventHandler weaponChanged;
 
     private Rect inventoryWindowRect = new Rect(70, 70, 600, 400);
+    private InventoryPanel inventoryPanel;
 
     private int gold;
     private Vector2 scrollPosition = new Vector2();
@@ -40,15 +42,22 @@ public class Inventory : MonoBehaviour
     void Awake()
     {
         Items = new List<Item>();
+        
+    }
+
+    void OnSetOwnership()
+    {
+        inventoryPanel = InventoryPanel.Create(this, new Vector3(100, 100).ScreenToViewport());
+
     }
 
     void OnGUI()
     {
-        GUI.skin = Util.ISEGUISkin;
-        if (visible)
-        {
-            GUI.Window("inventory".GetHashCode(), inventoryWindowRect, ShowInventoryWindow, "Inventory", GUI.skin.GetStyle("smallWindow"));
-        }
+        //GUI.skin = Util.ISEGUISkin;
+        //if (visible)
+        //{
+        //    GUI.Window("inventory".GetHashCode(), inventoryWindowRect, ShowInventoryWindow, "Inventory", GUI.skin.GetStyle("smallWindow"));
+        //}
     }
 
     void Update()
@@ -61,6 +70,9 @@ public class Inventory : MonoBehaviour
             else
                 gameObject.EnableControls();
         }
+        if (inventoryPanel)
+            inventoryPanel.gameObject.SetActive(visible);
+
     }
 
     void ShowInventoryWindow(int id)

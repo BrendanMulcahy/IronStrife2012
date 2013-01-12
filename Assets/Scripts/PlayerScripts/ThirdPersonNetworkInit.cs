@@ -37,8 +37,10 @@ public class ThirdPersonNetworkInit : MonoBehaviour
 
     [RPC]
     public void SetOwnership()
-    {
-        gameObject.SendMessage("OnSetOwnership", SendMessageOptions.DontRequireReceiver);
+    {        // Store this game object for later reference from other scripts (just for ease of access)
+
+        Util.MyLocalPlayerObject = this.gameObject;
+
         if (Network.isClient)
         {
             GetComponent<NetworkController>().enabled = true;
@@ -68,9 +70,9 @@ public class ThirdPersonNetworkInit : MonoBehaviour
         gameObject.GetComponent<TrajectorySimulator>().enabled = true;
 
         gameObject.AddComponent<PlayerObjectInteractor>();
+        gameObject.SendMessage("OnSetOwnership", SendMessageOptions.DontRequireReceiver);
+
         
-        // Store this game object for later reference from other scripts (just for ease of access)
-        Util.MyLocalPlayerObject = this.gameObject;
     }
 
     [RPC]
@@ -90,5 +92,13 @@ public class ThirdPersonNetworkInit : MonoBehaviour
         inv.Gold = 100000;
 
         inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
+        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
+        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
+        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
+        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
+        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Shielded Bow");
+        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
+        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Simple Sword");
+
     }
 }

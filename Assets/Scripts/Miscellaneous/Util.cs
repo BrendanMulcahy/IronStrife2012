@@ -59,7 +59,6 @@ public static class Util
         CharacterStats cs = go.GetComponent<CharacterStats>();
         if (cs == null)
         {
-            Debug.Log("Game Object " + go.name + " does not have a Character Stats component.");
             return null;
         }
         else
@@ -78,7 +77,6 @@ public static class Util
         PlayerMotor cs = go.GetComponent<PlayerMotor>();
         if (cs == null)
         {
-            Debug.Log("Game Object " + go.name + " does not have a PlayerMotor component.");
             return null;
         }
         else
@@ -272,6 +270,8 @@ public static class Util
     {
         t.parent = other.transform;
         t.localPosition = new Vector3();
+        t.localRotation = Quaternion.identity;
+
     }
 
     private static GUISkin skin;

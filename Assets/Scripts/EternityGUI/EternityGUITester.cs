@@ -2,6 +2,7 @@
 {
     using UnityEngine;
 
+   // [EternityGUITest]
     public class GridPanelTester : MonoBehaviour
     {
         GridContainer panel;
@@ -21,7 +22,7 @@
         }
     }
 
-    [EternityGUITest]
+   // [EternityGUITest]
     public class InventoryPanelTester : MonoBehaviour
     {
         InventoryPanel panel;

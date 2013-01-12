@@ -11,6 +11,8 @@ public class GlowOutline : MonoBehaviour
     float cycleTime = .66f;
     float cloneMaxScaleIncrease = .1f;
     float scale = 0f;
+
+    public Color color = Color.red;
     
     void Start()
     {
@@ -25,6 +27,8 @@ public class GlowOutline : MonoBehaviour
         Util.Destroy(audioSources);
         var interactableObjects = clone.GetComponentsInChildren<InteractableObject>();
         Util.Destroy(interactableObjects);
+        var colliders = clone.GetComponentsInChildren<Collider>();
+        Util.Destroy(colliders);
 
 
         clone.transform.SetParentAndCenter(this.transform);
@@ -36,6 +40,7 @@ public class GlowOutline : MonoBehaviour
         foreach (Renderer r in renderers)
         {
             r.material = outlineMat;
+            r.material.SetColor("_OutlineColor", color);
         }
     }
 

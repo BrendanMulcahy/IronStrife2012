@@ -10,8 +10,8 @@
         public int numColumns;
         public int numRows;
 
-        public float columnWidth;
-        public float rowHeight;
+        public int columnWidth;
+        public int rowHeight;
 
         Vector2 padding;
 
@@ -36,7 +36,7 @@
             {
                 for (int column = 0; column < numColumns; column++)
                 {
-                    elements[counter].transform.position = transform.position + (new Vector3(column * columnWidth, row * rowHeight)).ScreenToViewport();
+                    elements[counter].transform.localPosition = new Vector3(column * columnWidth, row * rowHeight).ScreenToViewport();
                     counter++;
                     if (counter >= elements.Count)
                         return;
@@ -61,16 +61,16 @@
             panel.numRows = numRows;
             panel.transform.position = position;
 
-            panel.columnWidth = dimensions.x / numColumns;
-            panel.rowHeight = dimensions.y / numRows;
+            panel.columnWidth = (int)(dimensions.x / numColumns);
+            panel.rowHeight = (int)(dimensions.y / numRows);
 
             return panel;
         }
 
         public void ResizeElements()
         {
-            this.columnWidth = width / numColumns;
-            this.rowHeight = height / numRows;
+            this.columnWidth = (int)(width / numColumns);
+            this.rowHeight = (int)(height / numRows);
 
             resize = false;
 
@@ -89,7 +89,7 @@
         {
             foreach (BaseElement element in elements)
             {
-                element.Resize();
+                element.ResetSize();
             }
             revertToDefaultElementSize = false;
         }

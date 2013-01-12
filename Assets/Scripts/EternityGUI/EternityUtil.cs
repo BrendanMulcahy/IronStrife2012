@@ -14,12 +14,27 @@
             var t = go.transform;
             var root = go.transform.root;
             int toReturn = -1;
+            if (go.GetComponent<RenderTextureElement>())
+                toReturn++;
+
             while (t != root)
             {
                 t = t.parent;
                 toReturn--;
             }
             return toReturn;
+        }
+        private static Camera _inventoryCamera;
+        public static Camera InventoryCamera
+        {
+            get
+            {
+                if (!_inventoryCamera)
+                {
+                    _inventoryCamera = Util.MyLocalPlayerObject.transform.FindChild("InventoryPreviewCamera").GetComponent<Camera>();
+                }
+                return _inventoryCamera;
+            }
         }
     } 
 }

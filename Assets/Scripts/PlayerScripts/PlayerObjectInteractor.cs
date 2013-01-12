@@ -49,7 +49,7 @@ public class PlayerObjectInteractor : MonoBehaviour
             Destroy(selectedGO.GetComponent<GlowOutline>());
         }
         selectedGO = go;
-        selectedGO.AddComponent<GlowOutline>();
+        selectedGO.AddComponent<GlowOutline>().color = Color.green;
     }
 
     internal void DeselectObject()
@@ -113,7 +113,6 @@ public class PlayerSelectorSphere : MonoBehaviour
         {
             if (objectsInRange[g] == null)
             {
-                Debug.Log("object that was deleted detected.");
                 objectsInRange.RemoveAt(g); g--; continue;
             }
             if (objectsInRange[g] == poi.selectedGO) continue;

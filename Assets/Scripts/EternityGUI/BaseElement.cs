@@ -20,6 +20,20 @@
         float maxDoubleClickInterval = .25f;
         public Vector3 dragOffset;
 
+        public bool preserveAspectRatio = true;
+        protected float _textureRatio = -1;
+        protected virtual float TextureRatio
+        {
+            get
+            {
+                if (_textureRatio == -1)
+                {
+                    _textureRatio = (float)guiTexture.texture.width / (float)guiTexture.texture.height;
+
+                }
+                return _textureRatio;
+            }
+        }
 
         private UIElementContainer container;
         /// <summary>
@@ -42,7 +56,7 @@
             var baseElement = go.AddComponent<BaseElement>();
             gt.texture = tex;
             gt.pixelInset = new Rect(0, 0, tex.width, tex.height);
-            gt.transform.position = position;
+            gt.transform.position = position.ScreenToViewport();
             gt.transform.localScale = new Vector3();
 
             return baseElement;
@@ -145,15 +159,28 @@
 
         }
 
-        internal virtual void Resize(float columnWidth, float rowHeight)
-        {
-            guiTexture.pixelInset = new Rect(0, 0, columnWidth, rowHeight);
-        }
-
-        internal virtual void Resize()
+        internal virtual void ResetSize()
         {
             var tex = guiTexture.texture;
             guiTexture.pixelInset = new Rect(0, 0, tex.width, tex.height);
+        }
+
+        internal virtual void Resize(int newWidth, int newHeight)
+        {
+            this.transform.localScale = new Vector3();
+            var newInset = new Rect(0, 0, newWidth, newHeight);
+            if (preserveAspectRatio)
+            {
+                if (guiTexture.texture.width > guiTexture.texture.height)
+                {
+                    newInset.height = newInset.width * (1/TextureRatio);
+                }
+                else
+                {
+                    newInset.width = newInset.height * (TextureRatio);
+                }
+            }
+            this.guiTexture.pixelInset = newInset;
         }
     }
 }

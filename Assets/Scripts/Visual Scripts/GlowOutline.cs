@@ -27,9 +27,6 @@ public class GlowOutline : MonoBehaviour
         Util.Destroy(audioSources);
         var interactableObjects = clone.GetComponentsInChildren<InteractableObject>();
         Util.Destroy(interactableObjects);
-        var colliders = clone.GetComponentsInChildren<Collider>();
-        Util.Destroy(colliders);
-
 
         clone.transform.SetParentAndCenter(this.transform);
         clone.SetLayerRecursively(14);

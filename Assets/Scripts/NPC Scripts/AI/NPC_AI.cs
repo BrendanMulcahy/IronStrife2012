@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+
 /// <summary>
 /// A basic AI that uses a typical finite state machine to determine AI behavior
 /// </summary>
+[RequireComponent(typeof(NPC_Controller))]
 public class NPC_AI : MonoBehaviour
 {
     private float walkSpeed = 5.0f;  //the speed this AI typically walks at
@@ -39,9 +41,10 @@ public class NPC_AI : MonoBehaviour
     {
         foreach (StateTransition transition in currentState.transitions)
         {
+            //should probably prioritize states with a value of some sort
             if (transition.CanTransition())
             {
-                currentState = transition.endingState;
+                currentState = transition.nextState;
                 return;
             }
         }

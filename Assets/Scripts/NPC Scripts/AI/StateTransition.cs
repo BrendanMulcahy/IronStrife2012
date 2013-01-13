@@ -7,9 +7,16 @@ using System.Collections.Generic;
 /// </summary>
 public class StateTransition
 {
-    public NPC_BehaviorState startingState;
-    public NPC_BehaviorState endingState;
-    public LinkedList<TransitionRequirement> requirements = new LinkedList<TransitionRequirement>();
+    //public NPC_BehaviorState startingState; //I dont think we need this
+    public NPC_BehaviorState nextState;
+    public LinkedList<TransitionRequirement> requirements;
+
+    public StateTransition(NPC_BehaviorState nextState, LinkedList<TransitionRequirement> requirements)
+    {
+        //this.startingState = startingState;
+        this.nextState = nextState;
+        this.requirements = requirements;
+    }
 
     public bool CanTransition()
     {
@@ -29,9 +36,11 @@ public class StateTransition
 /// </summary>
 public abstract class TransitionRequirement
 {
+    protected NPCStats npcStats;
+
     /// <summary>
     /// Returns whether this transition requirement is fulfilled
     /// </summary>
     /// <returns>True: The requirement is satisfied. False: The requirement is not satisfied</returns>
-    public virtual bool IsSatisfied();
+    public abstract bool IsSatisfied();
 }

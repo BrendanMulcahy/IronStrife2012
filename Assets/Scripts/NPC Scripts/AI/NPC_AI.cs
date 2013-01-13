@@ -32,6 +32,18 @@ public class NPC_AI : MonoBehaviour
     void Update()
     {
         currentState.Run();
-        //TransitionStates();
+        TransitionState();
+    }
+
+    private void TransitionState()
+    {
+        foreach (StateTransition transition in currentState.transitions)
+        {
+            if (transition.CanTransition())
+            {
+                currentState = transition.endingState;
+                return;
+            }
+        }
     }
 }

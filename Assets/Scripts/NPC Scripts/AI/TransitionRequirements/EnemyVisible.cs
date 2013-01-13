@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
-namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
+public class EnemyVisible : TransitionRequirement
 {
-    class EnemyVisible : TransitionRequirement
+    /// <summary>
+    /// 
+    /// </summary>
+    public List<GameObject> charactersNearby;
+
+    public override bool IsSatisfied()
     {
-        public override bool IsSatisfied()
-        {
-         //   throw new System.NotImplementedException();
-            //check if other object is a character
-            //then check if teams are different
-            return false;
-        }
+        return false;
     }
 }

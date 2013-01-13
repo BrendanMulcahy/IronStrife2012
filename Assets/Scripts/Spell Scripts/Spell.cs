@@ -69,4 +69,4 @@ public abstract class Spell
 }
 
 public enum SpellTargetType { Self, Target, Point, Area, Global } //how is this spell targetted
-public enum SpellAffectType { Allies, Enemies, Neutrals, All } //who does this spell affect
+public enum SpellAffectType { Allies, Enemies, Neutrals, All, None } //who does this spell affect

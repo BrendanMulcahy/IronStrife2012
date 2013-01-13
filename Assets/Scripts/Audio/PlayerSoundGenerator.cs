@@ -62,8 +62,11 @@ public class PlayerSoundGenerator : MonoBehaviour {
     void PlayRandomPitch(AudioClip clip, float min, float max, float volume = 1.0f)
     {
         float pitch = Random.Range(min, max);
-        audio.pitch = pitch;
-        audio.PlayOneShot(clip, volume);
+        if (audio)
+        {
+            audio.pitch = pitch;
+            audio.PlayOneShot(clip, volume);
+        }
     }
 
     /// <summary>

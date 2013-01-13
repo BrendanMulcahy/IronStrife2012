@@ -83,7 +83,7 @@ public class SpawnPrefab : MonoBehaviour {
     }
 
     /// <summary>
-    /// This method is called on the server. Clients request it when they join the game.
+    /// This method is run on the server. Clients request it when they join the game.
     /// </summary>
     /// <param name="username">The username which is used to name the gameobject</param>
     /// <param name="msg"></param>

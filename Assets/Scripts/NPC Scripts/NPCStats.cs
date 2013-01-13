@@ -3,8 +3,9 @@ using System;
 
 public class NPCStats : CharacterStats
 {
-    public override void Start()
+    public void OnNetworkInstantiate(NetworkMessageInfo info)
     {
+        if (Network.isClient) return;
         int rand = (int)UnityEngine.Random.Range(0, 11);
         if (rand >= 0 && rand <= 7)
         {
@@ -35,6 +36,7 @@ public class NPCStats : CharacterStats
 
         }
         return;
+    
     }
 
 

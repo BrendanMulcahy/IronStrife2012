@@ -54,7 +54,7 @@ namespace Assets.Scripts.NPC_Scripts.AI.BehaviorStates
 
         public override void Disable()
         {
-            throw new System.NotImplementedException();
+           // throw new System.NotImplementedException();
         }
 
         private IEnumerator CheckIfContinueWandering()

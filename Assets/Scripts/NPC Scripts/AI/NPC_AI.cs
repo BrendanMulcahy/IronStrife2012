@@ -16,7 +16,15 @@ public class NPC_AI : MonoBehaviour
         set { walkSpeed = value; }
     }
 
-    private NPC_BehaviorState currentState; //the current behavior of the AI is dependent on its state
+    private GameObject lastSeenEnemy;
+
+    public GameObject LastSeenEnemy
+    {
+        get { return lastSeenEnemy; }
+        set { lastSeenEnemy = value; }
+    }
+
+    public NPC_BehaviorState currentState; //the current behavior of the AI is dependent on its state
 
     public NPC_BehaviorState CurrentState
     {
@@ -28,6 +36,8 @@ public class NPC_AI : MonoBehaviour
     void Start()
     {
         currentState = GetComponent<NPC_BehaviorState>();
+        lastSeenEnemy = GameObject.Find("Brendan");
+
     }
 
     // Update is called once per frame
@@ -35,6 +45,21 @@ public class NPC_AI : MonoBehaviour
     {
         currentState.Run();
         TransitionState();
+        CheckForEnemy();
+    }
+
+    private void CheckForEnemy()
+    {
+        //not sure if this layer mask is correct, just copied it from elsewhere
+        var layerMask = 1 << 8;
+        layerMask += (1 << 9);
+        layerMask += (1 << 10);
+        layerMask = ~layerMask;
+
+        //if there is obstacle in front
+        RaycastHit hit;
+       // if (Physics.SphereCast(transform.position, out hit, transform.rotation, 4.0f, layerMask))
+       // {
     }
 
     private void TransitionState()
@@ -44,7 +69,9 @@ public class NPC_AI : MonoBehaviour
             //should probably prioritize states with a value of some sort
             if (transition.CanTransition())
             {
+                currentState.Disable();
                 currentState = transition.nextState;
+                currentState.Enable();
                 return;
             }
         }

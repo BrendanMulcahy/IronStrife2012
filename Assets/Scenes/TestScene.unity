@@ -28170,6 +28170,7 @@ GameObject:
   - 114: {fileID: 1118629210}
   - 114: {fileID: 1118629211}
   - 114: {fileID: 1118629212}
+  - 114: {fileID: 1118629213}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -28229,6 +28230,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06012c2b6ce2d834bb624c7c6d75b045, type: 3}
   m_Name: 
+  currentState: {fileID: 0}
 --- !u!114 &1118629203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28386,6 +28388,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9dffabaf3d3a91b479dc5ed79eeedc3f, type: 3}
+  m_Name: 
+--- !u!114 &1118629213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1118629198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f761de0f72cf55478c3235c8bf90b98, type: 3}
   m_Name: 
 --- !u!1 &1119100905
 GameObject:

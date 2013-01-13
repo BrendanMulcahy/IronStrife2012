@@ -7,9 +7,10 @@ namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
     {
         public override bool IsSatisfied()
         {
-            throw new System.NotImplementedException();
+         //   throw new System.NotImplementedException();
             //check if other object is a character
             //then check if teams are different
+            return false;
         }
     }
 }

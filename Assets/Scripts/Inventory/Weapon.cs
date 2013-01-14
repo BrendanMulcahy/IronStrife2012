@@ -10,8 +10,8 @@ using System.Xml;
 [XmlRoot("Weapon")]
 public class Weapon : EquippableItem
 {
-    [XmlAttribute("strength")]
-    public int strength;
+    [XmlAttribute("damage")]
+    public int damage;
 
     [XmlAttribute("weaponType")]
     public WeaponType weaponType;

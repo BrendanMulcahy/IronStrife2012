@@ -8,8 +8,8 @@ using UnityEngine;
 /// <param name="e">Unit died event args</param>
 public delegate void UnitDiedEventHandler(GameObject deadUnit, UnitDiedEventArgs e);
 public delegate void PlayerRespawnedEventHandler(PlayerRespawnedEventArgs e);
-public delegate void HealedEventHandler(HealedEventArgs e);
-public delegate void DamageEventHandler(DamageEventArgs e);
+public delegate void HealedEventHandler(GameObject sender, HealedEventArgs e);
+public delegate void DamageEventHandler(GameObject sender, DamageEventArgs e);
 
 public delegate void StatChangedEventHandler(GameObject sender, StatChangedEventArgs e);
 
@@ -33,8 +33,7 @@ public class HealedEventArgs
 
 public class DamageEventArgs
 {
-    public GameObject attacker;
-    public int damageAmount;
+    public Damage damage;
 }
 
 public class StatChangedEventArgs

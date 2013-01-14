@@ -49,7 +49,7 @@ public class CharacterStats : MonoBehaviour {
         {
             var effectiveStr = Strength;
             if (inventory != null)
-                effectiveStr += inventory.currentWeapon.strength;
+                effectiveStr += inventory.currentWeapon.damage;
             return effectiveStr;
         }
     }

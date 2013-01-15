@@ -53,7 +53,7 @@ public class FlameburstEffect : MonoBehaviour
         CharacterStats cs;
         if ((cs = other.gameObject.GetCharacterStats()) != null && !targetsHit.Contains(other.transform.root))
         {
-            cs.ApplyDamage(caster, damage);
+            cs.ApplyDamage(caster, new Damage(damage, caster, DamageType.Magical));
             var force = new Force((other.transform.position - transform.position).normalized*forceMagnitude, .4f);
             other.gameObject.GetPlayerMotor().ApplyForce(force);
             other.gameObject.GetPlayerMotor().ApplyForce(new Force(Vector3.up * forceMagnitude * 1f, .4f));

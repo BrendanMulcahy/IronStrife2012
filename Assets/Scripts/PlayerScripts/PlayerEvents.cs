@@ -12,6 +12,8 @@ public delegate void HealedEventHandler(GameObject sender, HealedEventArgs e);
 public delegate void DamageEventHandler(GameObject sender, DamageEventArgs e);
 
 public delegate void StatChangedEventHandler(GameObject sender, StatChangedEventArgs e);
+public delegate void FloatChangedEventHandler(GameObject sender, FloatChangedEventArgs e);
+
 
 public class UnitDiedEventArgs
 {
@@ -40,4 +42,10 @@ public class StatChangedEventArgs
 {
     public int oldValue;
     public int newValue;
+}
+
+public class FloatChangedEventArgs
+{
+    public float oldValue;
+    public float newValue;
 }

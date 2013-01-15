@@ -5,7 +5,7 @@ public class HealthPotion : MonoBehaviour
     GameObject particle;
     void Start()
     {
-        gameObject.GetCharacterStats().Health += 30;
+        gameObject.GetCharacterStats().Health.CurrentValue += 30;
 
         particle = GameObject.Instantiate(Resources.Load("Particles/SparkleRising") as GameObject) as GameObject;
         particle.transform.SetParentAndCenter(this.transform.root);

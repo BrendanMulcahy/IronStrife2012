@@ -42,12 +42,12 @@ public class BurningBladeEffect : Buff
         burnEffect.transform.localPosition = new Vector3(-5.662436e-07f, -0.05265072f, -6.601214e-06f);
         burnEffect.transform.localRotation = Quaternion.identity;
 
-        gameObject.GetCharacterStats().Strength += 20;
+        gameObject.GetCharacterStats().Strength.ChangeModifierValue(20);
     }
 
     protected override void RemoveBuffEffects()
     {
-        gameObject.GetCharacterStats().Strength -= 20;
+        gameObject.GetCharacterStats().Strength.ChangeModifierValue(-20);
         if (burnEffect != null && burnEffect.GetComponent<ParticleSystem>()!=null)
         {
             StartCoroutine(FadeParticles(burnEffect.GetComponent<ParticleSystem>()));

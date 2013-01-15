@@ -18,6 +18,6 @@ class SuicideCommand : ConsoleCommand
     /// <param name="parameters"></param>
     public override void Execute(params string[] parameters)
     {
-        Util.MyLocalPlayerObject.GetCharacterStats().ApplyDamage(Util.MyLocalPlayerObject, 99999);
+        Util.MyLocalPlayerObject.GetCharacterStats().ApplyDamage(Util.MyLocalPlayerObject, new Damage(999999, Util.MyLocalPlayerObject, DamageType.Pure));
     }
 }

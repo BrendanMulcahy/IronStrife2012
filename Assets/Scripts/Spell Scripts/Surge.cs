@@ -30,7 +30,7 @@ public class SpeedBuff : Buff
 
     protected override void AddBuffEffects()
     {
-        this.gameObject.GetCharacterStats().MoveSpeed += 5.0f;
+        this.gameObject.GetCharacterStats().MoveSpeed.ChangeModifierValue(5.0f);
         trail = Instantiate(Resources.Load("SpellEffects/SurgeTrail")) as GameObject;
         trail.transform.SetParentAndCenter(gameObject.transform);
         trail.transform.localPosition = new Vector3(0, 1.5f, 0);
@@ -38,7 +38,7 @@ public class SpeedBuff : Buff
 
     protected override void RemoveBuffEffects()
     {
-        this.gameObject.GetCharacterStats().MoveSpeed -= 5.0f;
+        this.gameObject.GetCharacterStats().MoveSpeed.ChangeModifierValue(-5.0f);
         Destroy(trail);
     }
 

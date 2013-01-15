@@ -5676,7 +5676,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 240633404}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -.00378994015, y: -.000219386187, z: 4.13855481e-16}
+  m_LocalPosition: {x: -.00378417969, y: -.000219345093, z: 217.125366}
   m_LocalScale: {x: 1.34216809, y: 1.34216809, z: 1.6912775}
   m_Children: []
   m_Father: {fileID: 421096142}
@@ -28185,7 +28185,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1118629198}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 420.952972, y: 19.7827206, z: 863.866333}
+  m_LocalPosition: {x: 420.952972, y: 19.7827206, z: 872.692322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 421096142}
@@ -28364,10 +28364,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a625500da3d98ce49b72ab71c65dd4d3, type: 3}
   m_Name: 
-  healthRegenerating: 0
-  timeTilHealthRegenerating: 0
-  healthRegenerationRate: 1
-  Strength: 0
   teamNumber: 0
 --- !u!114 &1118629211
 MonoBehaviour:

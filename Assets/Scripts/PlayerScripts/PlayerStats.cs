@@ -18,13 +18,6 @@ public class PlayerStats : CharacterStats
     public event PlayerRespawnedEventHandler Respawned;
     public bool canRespawn;
 
-    void Awake()
-    {
-        gameObject.AddComponent<Health>();
-        gameObject.AddComponent<Mana>();
-        gameObject.AddComponent<Stamina>();
-    }
-
     public override void Start()
     {
         base.Start();
@@ -51,7 +44,6 @@ public class PlayerStats : CharacterStats
     {
         CharacterStats.RewardPlayersInArea(e.deathPosition, e.killer, e.reward);
         SetRespawnTimer();
-        StopMonitoringRegeneration();
         networkView.RPC("BroadcastDeath", RPCMode.All, e.killer.networkView.viewID);
 
         StartCoroutine(TimedDeathAnimation());
@@ -147,10 +139,9 @@ public class PlayerStats : CharacterStats
     void LevelUp()
     {
         Level++;
-        Strength += 5;
-        MaxHealth += (int)(MaxHealth * .15f);
-        MaxMana += (int)(MaxMana * .15f);
-        MaxStamina += (int)(MaxStamina * .15f);
+        Strength.ChangeBaseValue(5);
+        Agility.ChangeBaseValue(5);
+        Intelligence.ChangeBaseValue(5);
 
         //	Debug.Log(this.gameObject.name + " has leveled up.");
         experience -= experienceNeeded;
@@ -171,11 +162,10 @@ public class PlayerStats : CharacterStats
     void ClientLevelUp()
     {
         Level++;
-        Strength += 5;
-        MaxHealth += (int)(MaxHealth * .15f);
-        MaxMana += (int)(MaxMana * .15f);
-        MaxStamina += (int)(MaxStamina * .15f);
-        //	Debug.Log(this.gameObject.name + " has leveled up.");
+        Strength.ChangeBaseValue(5);
+        Agility.ChangeBaseValue(5);
+        Intelligence.ChangeBaseValue(5);
+
         experience -= experienceNeeded;
         experienceNeeded = experiencePerLevel[Level - 1];
         PopupMessage.Display("You have reached level " + Level);
@@ -194,8 +184,7 @@ public class PlayerStats : CharacterStats
         {
             Vector3 actualRespawnLocation = Util.FindClosestTeamRespawn(requestedRespawnLocation, teamNumber);
             networkView.RPC("StopDying", RPCMode.All);
-            StartMonitoringRegeneration();
-            Health = MaxHealth;
+            Health.CurrentValue = Health.MaxValue;
             transform.position = actualRespawnLocation;
             OnRespawn(actualRespawnLocation);
             networkView.RPC("BroadcastRespawn", RPCMode.All, actualRespawnLocation);

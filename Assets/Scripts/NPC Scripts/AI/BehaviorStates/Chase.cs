@@ -8,17 +8,17 @@ namespace Assets.Scripts.NPC_Scripts.AI.BehaviorStates
 
         public override void Run()
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public override void Enable()
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public override void Disable()
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
     }
 }

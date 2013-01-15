@@ -20,6 +20,6 @@ public class DamageReceiver : MonoBehaviour {
     public virtual void ApplyHit(GameObject attacker)
     {
        // playerMotor.ApplyForce(new Force((transform.position - attacker.transform.position).normalized/5 * attacker.GetCharacterStats().EffectiveStrength, .25f));
-        characterStats.ApplyDamage(attacker, attacker.GetCharacterStats().EffectiveStrength);
+        characterStats.ApplyDamage(attacker, new Damage(attacker.GetCharacterStats().Strength.ModifiedValue, attacker));
     }
 }

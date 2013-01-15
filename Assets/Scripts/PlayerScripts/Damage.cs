@@ -16,4 +16,11 @@ public class Damage
     /// The source GameObject responsible for this damage
     /// </summary>
     public GameObject source;
+
+    public Damage(int amount, GameObject source, DamageType damageType = DamageType.Physical)
+    {
+        this.amount = amount;
+        this.source = source;
+        this.damageType = damageType;
+    }
 }

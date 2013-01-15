@@ -14,7 +14,7 @@ namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
 
         public override bool IsSatisfied()
         {
-            if (npcStats.Health < LOWHEALTH_THRESHOLD * npcStats.MaxHealth)
+            if (npcStats.Health.CurrentValue < LOWHEALTH_THRESHOLD * npcStats.Health.MaxValue)
             {
                 return true;
             }

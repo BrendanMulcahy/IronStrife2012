@@ -17,6 +17,12 @@ public class Mana : RegeneratingStat
         }
     }
 
+    public void Intelligence_Changed(GameObject sender, StatChangedEventArgs e)
+    {
+        var difference = e.newValue - e.oldValue;
+        this.MaxValue = Mathf.Max(1, CurrentValue + (difference * IntelligenceStat.manaPerIntel));
+    }
+
     [RPC]
     void UpdateMana(int newValue)
     {

@@ -244,7 +244,7 @@ public class ThirdPersonController : MonoBehaviour, IController
 
     private void UpdateMovementSpeed()
     {
-        runSpeed = characterStats.MoveSpeed;
+        runSpeed = characterStats.MoveSpeed.ModifiedValue;
         trotSpeed = runSpeed * .8f;
         walkSpeed = runSpeed * .6f;
     }
@@ -253,7 +253,7 @@ public class ThirdPersonController : MonoBehaviour, IController
     {
         if (inputManager.spellButton && inputManager.spellBeingCast != null && !IsCasting)
         {
-            if (inputManager.spellBeingCast.manaCost > characterStats.Mana)
+            if (inputManager.spellBeingCast.manaCost > characterStats.Mana.CurrentValue)
             {
                 isCasting = false;
                 inputManager.spellButton = false;
@@ -283,7 +283,7 @@ public class ThirdPersonController : MonoBehaviour, IController
 
     private void CastSelfSpell(Spell spell)
     {
-        if (spell.manaCost <= characterStats.Mana && !isCasting)
+        if (spell.manaCost <= characterStats.Mana.CurrentValue && !isCasting)
         {
             StartCoroutine(SelfSpellCastTimer(spell));
         }
@@ -301,7 +301,7 @@ public class ThirdPersonController : MonoBehaviour, IController
             if (startTime > endTime) Debug.Log("Cast time complete.");
             if (isMoving || IsJumping()) { isCasting = false; inputManager.spellButton = false; inputManager.spellBeingCast = null; yield break; }
         }
-        characterStats.ReduceMana(spell.manaCost);
+        characterStats.Mana.CurrentValue -= spell.manaCost;
 
         ((ISelfSpell)spell).Execute(this.gameObject);
         if (Network.isServer)
@@ -317,7 +317,7 @@ public class ThirdPersonController : MonoBehaviour, IController
     
     private void CastPointSpell(Spell spell)
     {
-        if (AttackButton && spell.manaCost <= characterStats.Mana && !isCasting)
+        if (AttackButton && spell.manaCost <= characterStats.Mana.CurrentValue && !isCasting)
         {
             StartCoroutine(PointSpellCastTimer(spell));
         }
@@ -336,7 +336,7 @@ public class ThirdPersonController : MonoBehaviour, IController
             if (isMoving || IsJumping()) { isCasting = false; inputManager.spellButton = false; inputManager.spellBeingCast = null; yield break; }
         }
 
-        characterStats.ReduceMana(spell.manaCost);
+        characterStats.Mana.CurrentValue -= spell.manaCost;
         ((IPointSpell)spell).Execute(gameObject, inputManager.targetClickLocation);
         if (Network.isServer)
         networkView.RPC("SimulateIPointSpellExecute", RPCMode.Others, (int)spell, inputManager.targetClickLocation);
@@ -393,10 +393,10 @@ public class ThirdPersonController : MonoBehaviour, IController
 
 
             // Pick speed modifier
-            if (SprintButton && !IsAiming && (characterStats.Stamina > sprintStaminaThreshold || (lastFrameSprinting && characterStats.Stamina > sprintCostPerSecond*Time.deltaTime)))
+            if (SprintButton && !IsAiming && (characterStats.Stamina.CurrentValue > sprintStaminaThreshold || (lastFrameSprinting && characterStats.Stamina.CurrentValue > sprintCostPerSecond*Time.deltaTime)))
             {
                 targetSpeed *= runSpeed;
-                characterStats.ReduceStamina(Time.deltaTime * sprintCostPerSecond);
+                characterStats.Stamina.CurrentValue -= (int)(Time.deltaTime * sprintCostPerSecond);
                 lastFrameSprinting = true;
             }
             
@@ -464,9 +464,9 @@ public class ThirdPersonController : MonoBehaviour, IController
             // Jump
             // - Only when pressing the button down
             // - With a timeout so you can press the button slightly before landing		
-            if (canJump && Time.time < lastJumpButtonTime + jumpTimeout && characterStats.Stamina >= jumpStaminaCost)
+            if (canJump && Time.time < lastJumpButtonTime + jumpTimeout && characterStats.Stamina.CurrentValue >= jumpStaminaCost)
             {
-                characterStats.ReduceStamina(jumpStaminaCost);
+                characterStats.Stamina.CurrentValue -= (int)jumpStaminaCost;
                 verticalSpeed = CalculateJumpVerticalSpeed(jumpHeight);
                 DidJump();
             }
@@ -675,14 +675,14 @@ public class ThirdPersonController : MonoBehaviour, IController
         }
         while (true)
         {
-            if (inputManager.attackButton && inputManager.spellBeingCast != null && characterStats.Mana >= inputManager.spellBeingCast.manaCost)
+            if (inputManager.attackButton && inputManager.spellBeingCast != null && characterStats.Mana.CurrentValue >= inputManager.spellBeingCast.manaCost)
             {
                 if (inputManager.spellBeingCast == null) Debug.Log("spell being cast is null");
                     ((ITargetSpell)inputManager.spellBeingCast).Execute(this.gameObject, transform.forward, inputManager.homingTarget);
                 if (Network.isServer)
                     networkView.RPC("SimulateITargetSpellExecute", RPCMode.Others, (int)inputManager.spellBeingCast, transform.forward, inputManager.homingTarget ? inputManager.homingTarget.GetNetworkViewID() : NetworkViewID.unassigned);
 
-                characterStats.ReduceMana(inputManager.spellBeingCast.manaCost);
+                characterStats.Mana.CurrentValue -= inputManager.spellBeingCast.manaCost;
                 yield return new WaitForSeconds(.1f);
                 isCasting = false;
                 isBowShooting = false;

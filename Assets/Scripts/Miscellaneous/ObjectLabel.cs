@@ -74,7 +74,7 @@ public class ObjectLabel : MonoBehaviour {
         color.a = 1f - (Vector3.Distance(camTransform.position, transform.root.position) / maxDisplayDistance);
         guiText.material.color = color;
 
-		double healthPercentage = double.Parse(stats.Health.ToString()) / double.Parse(stats.MaxHealth.ToString());
+		double healthPercentage = double.Parse(stats.Health.CurrentValue.ToString()) / double.Parse(stats.Health.MaxValue.ToString());
 		var inset = guiTexture.pixelInset;
 		inset.width = (float ) (maxHealthWidth * healthPercentage);
 		inset.x = -(maxHealthWidth / 2);

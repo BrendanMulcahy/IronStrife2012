@@ -108,23 +108,23 @@ public class NPCController : MonoBehaviour {
     }
 
 
-    /// Calculates a new direction to move towards.
+    ///// Calculates a new direction to move towards.
     protected virtual void Wandering()
     {
-        currentspeed = wanderspeed;
-        if (directionChangeInterval <= 0)
-        {
-            heading = UnityEngine.Random.Range(-90, 90);
-            transform.Rotate(Vector3.up * heading);
-            directionChangeInterval = UnityEngine.Random.Range(2, 5);
-        }
-        //checks to see if been hit from behind then turns around
-        if (GetComponent<CharacterStats>().Health < currenthealth)
-        {
-            transform.Rotate(Vector3.up * 180);
-            currenthealth = GetComponent<CharacterStats>().Health;
-        }
-        GetComponent<CharacterController>().SimpleMove(transform.TransformDirection(Vector3.forward) * currentspeed);
+    //    currentspeed = wanderspeed;
+    //    if (directionChangeInterval <= 0)
+    //    {
+    //        heading = UnityEngine.Random.Range(-90, 90);
+    //        transform.Rotate(Vector3.up * heading);
+    //        directionChangeInterval = UnityEngine.Random.Range(2, 5);
+    //    }
+    //    //checks to see if been hit from behind then turns around
+    //    if (GetComponent<CharacterStats>().Health.CurrentValue < currenthealth)
+    //    {
+    //        transform.Rotate(Vector3.up * 180);
+    //        currenthealth = GetComponent<CharacterStats>().Health;
+    //    }
+    //    GetComponent<CharacterController>().SimpleMove(transform.TransformDirection(Vector3.forward) * currentspeed);
     }
 
     //Function for NPC to follow player by rotating towards and moving forward

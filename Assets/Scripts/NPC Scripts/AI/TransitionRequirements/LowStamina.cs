@@ -14,7 +14,7 @@ namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
 
         public override bool IsSatisfied()
         {
-            if (npcStats.Stamina < LOWSTAMINA_THRESHOLD * npcStats.MaxStamina)
+            if (npcStats.Stamina.CurrentValue < LOWSTAMINA_THRESHOLD * npcStats.Stamina.MaxValue)
             {
                 return true;
             }

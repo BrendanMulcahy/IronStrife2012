@@ -20,7 +20,7 @@ namespace Assets.Scripts.NPC_Scripts.AI.BehaviorStates
             transitions.Add(new StateTransition(GetComponent<Flee>(), fleeRequirements));
 
             LinkedList<TransitionRequirement> chaseRequirements = new LinkedList<TransitionRequirement>();
-            chaseRequirements.AddLast(new EnemyVisible());
+            chaseRequirements.AddLast(new EnemyVisible(this.gameObject));
             transitions.Add(new StateTransition(GetComponent<Chase>(), chaseRequirements));
 
             StartCoroutine(CheckIfContinueWandering());

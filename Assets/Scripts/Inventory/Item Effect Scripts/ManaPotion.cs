@@ -5,7 +5,7 @@ public class ManaPotion : MonoBehaviour
     GameObject particle;
     void Start()
     {
-        gameObject.GetCharacterStats().Mana += 50;
+        gameObject.GetCharacterStats().Mana.CurrentValue += 50;
 
         particle = GameObject.Instantiate(Resources.Load("Particles/SparkleRising") as GameObject) as GameObject;
         particle.transform.SetParentAndCenter(this.transform.root);

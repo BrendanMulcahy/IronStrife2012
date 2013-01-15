@@ -14,7 +14,7 @@ namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
 
         public override bool IsSatisfied()
         {
-            if (npcStats.Mana < LOWMANA_THRESHOLD * npcStats.MaxMana)
+            if (npcStats.Mana.CurrentValue < LOWMANA_THRESHOLD * npcStats.Mana.MaxValue)
             {
                 return true;
             }

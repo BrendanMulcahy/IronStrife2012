@@ -24,6 +24,12 @@ public abstract class RegeneratingStat : MonoBehaviour
 
     public event StatChangedEventHandler Changed;
 
+    public void SetInitialValues(int current, int max)
+    {
+        this._currentValue = current;
+        this._maxValue = max;
+    }
+
     protected void OnChanged(GameObject sender, StatChangedEventArgs e)
     {
         if (Changed != null)

@@ -11,7 +11,7 @@ public class NPCManager
     /// <param name="type"></param>
     /// <param name="location"></param>
     /// <param name="zone"></param>
-    public GameObject ServerSpawnNPC(string type, Vector3 location, NPCSpawnZone zone)
+    public GameObject ServerSpawnNPC(string type, Vector3 location)
     {
         GameObject newNPC = GameObject.Instantiate(Resources.Load(type)) as GameObject;
         newNPC.transform.position = Util.SampleFloorIncludingObjects(location);
@@ -24,7 +24,6 @@ public class NPCManager
         NPCs.Add(new NPCRecord()
         {
             gameObject = newNPC,
-            zone = zone,
             animationViewID = animationID,
             transformViewID = transformID
         });
@@ -52,7 +51,6 @@ public class NPCManager
 public class NPCRecord
 {
     public GameObject gameObject;
-    public NPCSpawnZone zone;
     public NetworkViewID animationViewID;
     public NetworkViewID transformViewID;
 }

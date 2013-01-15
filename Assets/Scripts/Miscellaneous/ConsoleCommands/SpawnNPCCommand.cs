@@ -23,13 +23,13 @@ class SpawnNPCCommand : ConsoleCommand
             if (parameters[0] == "guard")
             {
                 Vector3 position = Util.MyLocalPlayerObject.transform.position + Util.MyLocalPlayerObject.transform.forward * 2;
-                MasterGameLogic.Main.NPCManager.ServerSpawnNPC("GuardNPC", position, null).networkView.RPC("ChangeTeam", RPCMode.All, int.Parse(parameters[1]));
+                MasterGameLogic.Main.NPCManager.ServerSpawnNPC("GuardNPC", position).networkView.RPC("ChangeTeam", RPCMode.All, int.Parse(parameters[1]));
             }
         }
         else
         {
             Vector3 position = Util.MyLocalPlayerObject.transform.position + Util.MyLocalPlayerObject.transform.forward * 2;
-            MasterGameLogic.Main.NPCManager.ServerSpawnNPC("NPC", position, null);
+            MasterGameLogic.Main.NPCManager.ServerSpawnNPC("NPC", position);
         }
     }
 }

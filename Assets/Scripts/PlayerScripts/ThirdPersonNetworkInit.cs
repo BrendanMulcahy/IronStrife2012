@@ -13,8 +13,6 @@ public class ThirdPersonNetworkInit : MonoBehaviour
             GetComponent<ThirdPersonController>().enabled = true;
             GetComponent<PlayerMotor>().enabled = true;
             var cs = gameObject.GetCharacterStats();
-            cs.StartMonitoringRegeneration();
-            cs.StartSyncingHMS();
             gameObject.AddComponent<PlayerDamageReceiver>();
             Destroy(GetComponent<ServerController>());
 

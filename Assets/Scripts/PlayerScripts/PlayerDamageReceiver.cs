@@ -21,14 +21,14 @@ public class PlayerDamageReceiver : DamageReceiver {
     /// <param name="attacker"></param>
     public override void ApplyHit(GameObject attacker)
     {
-        var effectiveStrength = attacker.GetCharacterStats().EffectiveStrength;
+        var effectiveStrength = attacker.GetCharacterStats().Strength.ModifiedValue;
         if (controller.IsDefending)
         {
             effectiveStrength -= inventory.currentShield.blockAmount;
             effectiveStrength = Mathf.Max(0, effectiveStrength);
         }
         playerMotor.ApplyForce(new Force((transform.position - attacker.transform.position).normalized/5 * effectiveStrength, .25f));
-        characterStats.ApplyDamage(attacker, effectiveStrength);
+        characterStats.ApplyDamage(attacker, new Damage(effectiveStrength, attacker));
     }
 
 }

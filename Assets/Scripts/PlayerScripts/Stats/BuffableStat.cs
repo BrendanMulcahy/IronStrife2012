@@ -1,4 +1,4 @@
-﻿public class BuffableStat
+﻿public abstract class BuffableStat
 {
     public int baseValue;
     protected int totalModifiedValue;
@@ -11,14 +11,34 @@
     }
     public string name;
 
-    public BuffableStat(string name, int baseValue)
+    public BuffableStat(int baseValue)
     {
-        this.name = name;
-        this.baseValue = baseValue;
+        name = this.GetType().Name;
+        this.baseValue = 0;
+        ChangeBaseValue(baseValue);
     }
 
-    public virtual void Modify(int value)
+    public event StatChangedEventHandler BaseChanged;
+    public event StatChangedEventHandler Changed;
+
+    public BuffableStat() { }
+
+    public virtual void ChangeModifierValue(int value)
     {
+        if (this.Changed != null)
+        {
+            Changed(null, new StatChangedEventArgs() { oldValue = ModifiedValue, newValue = ModifiedValue + value });
+        }
         this.totalModifiedValue += value;
+
+    }
+
+    public virtual void ChangeBaseValue(int value)
+    {
+        if (this.BaseChanged != null)
+        {
+            BaseChanged(null, new StatChangedEventArgs() { oldValue = baseValue, newValue = baseValue + value });
+        }
+        this.baseValue += value;
     }
 }

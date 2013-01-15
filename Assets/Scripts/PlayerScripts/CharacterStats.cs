@@ -9,162 +9,118 @@ using System.Collections.Generic;
 /// Handles damage taking and dying, respawning, etc.
 /// Players use the PlayerStats subclass, NPCs use NPCStats.
 /// </summary>
-public class CharacterStats : MonoBehaviour {
-	
-	public int Health { get; set; }
-	public int MaxHealth { get; set; }
-	public int Mana { get; set; }
-	public int MaxMana { get; set; }
-    public void ReduceMana(int amount) { Mana -= amount; manaRegenerating = false; timeTilManaRegenerating = maxManaRegenerationTime; }
+public class CharacterStats : MonoBehaviour
+{
 
-    private float _stamina;
-    public int Stamina { get { return (int)_stamina; } set { _stamina = value; } }
-	public int MaxStamina { get; set; }
-    public void ReduceStamina(float amount) { _stamina -= amount; staminaRegenerating = false; timeTilStaminaRegenerating = maxStaminaRegenerationTime; }
+    #region Deprecated Stats Code
+    //public int Health { get; set; }
+    //public int MaxHealth { get; set; }
+    //public int Mana { get; set; }
+    //public int MaxMana { get; set; }
+    //public void ReduceMana(int amount) { Mana -= amount; manaRegenerating = false; timeTilManaRegenerating = maxManaRegenerationTime; }
 
-    public bool healthRegenerating;
-    public float timeTilHealthRegenerating;
-    private float maxHealthRegenerationTime = 5.0f;
-    public int healthRegenerationRate = 1;
+    //private float _stamina;
+    //public int Stamina { get { return (int)_stamina; } set { _stamina = value; } }
+    //public int MaxStamina { get; set; }
+    //public void ReduceStamina(float amount) { _stamina -= amount; staminaRegenerating = false; timeTilStaminaRegenerating = maxStaminaRegenerationTime; }
 
-    private bool manaRegenerating;
-    private int manaRegenerationRate = 1;
-    private float maxManaRegenerationTime = 5.0f;
-    private float timeTilManaRegenerating;
+    ////public bool healthRegenerating;
+    ////public float timeTilHealthRegenerating;
+    ////private float maxHealthRegenerationTime = 5.0f;
+    ////public int healthRegenerationRate = 1;
 
-    private bool staminaRegenerating;
-    private int staminaRegenerationRate = 3;
-    private float maxStaminaRegenerationTime = 1.5f;
-    private float timeTilStaminaRegenerating;
+    ////private bool manaRegenerating;
+    ////private int manaRegenerationRate = 1;
+    ////private float maxManaRegenerationTime = 5.0f;
+    ////private float timeTilManaRegenerating;
+
+    ////private bool staminaRegenerating;
+    ////private int staminaRegenerationRate = 3;
+    ////private float maxStaminaRegenerationTime = 1.5f;
+    ////private float timeTilStaminaRegenerating;
+
+    //public int Strength;
+    ///// <summary>
+    ///// Attack strength, including all modifiers, such as weapon damage, buffs, etc.
+    ///// </summary>
+    //public int EffectiveStrength
+    //{
+    //    get
+    //    {
+    //        var effectiveStr = Strength;
+    //        if (inventory != null)
+    //            effectiveStr += inventory.currentWeapon.damage;
+    //        return effectiveStr;
+    //    }
+    //}
+    #endregion
 
     private Inventory inventory;
-		
-	public int Strength;
-    /// <summary>
-    /// Attack strength, including all modifiers, such as weapon damage, buffs, etc.
-    /// </summary>
-    public int EffectiveStrength
-    {
-        get
-        {
-            var effectiveStr = Strength;
-            if (inventory != null)
-                effectiveStr += inventory.currentWeapon.damage;
-            return effectiveStr;
-        }
-    }
-	
-	public float MoveSpeed { get; set; }
+
+    public Health Health { get; set; }
+    public Mana Mana { get; set; }
+    public Stamina Stamina { get; set; }
+
+    public StrengthStat Strength { get; set; }
+    public AgilityStat Agility { get; set; }
+    public IntelligenceStat Intelligence { get; set; }
+
+    public PhysicalDefense PhysicalDefense { get; set; }
+
+    public MoveSpeedStat MoveSpeed { get; set; }
 
     public int teamNumber = 0;
     public int TeamNumber { get { return teamNumber; } set { networkView.RPC("ChangeTeam", RPCMode.AllBuffered, value); } }
 
-	public KillReward reward;
+    public KillReward reward;
 
     public event UnitDiedEventHandler Died;
-		
-	// Use this for initialization
-	public virtual void Start () {
-		Health = 100; MaxHealth = 100;
-		Mana = 100; MaxMana = 100;
-		Stamina = 100; MaxStamina = 100;
-		MoveSpeed = 10.0f;
-		Strength = 5;
+    public event DamageEventHandler Damaged;
+
+    protected virtual void Awake()
+    {
+        if ((Health = GetComponent<Health>()) == null)
+            Health = gameObject.AddComponent<Health>();
+        Health.SetInitialValues(50, 50);
+
+        if ((Mana = GetComponent<Mana>()) == null)
+            Mana = gameObject.AddComponent<Mana>();
+        Mana.SetInitialValues(50, 50);
+
+        if ((Stamina = GetComponent<Stamina>()) == null)
+            Stamina = gameObject.AddComponent<Stamina>();
+        Stamina.SetInitialValues(50, 50);
+
+        Strength = new StrengthStat(0);
+        Strength.Changed += Health.Strength_Changed;
+        Strength.BaseChanged += Health.Strength_Changed;
+        Strength.ChangeBaseValue(5);
+
+        MoveSpeed = new MoveSpeedStat(10.0f);
+        Agility = new AgilityStat(0);
+        Agility.Changed += MoveSpeed.Agility_Changed;
+        Agility.BaseChanged += MoveSpeed.Agility_Changed;
+        Agility.ChangeBaseValue(5);
+
+        Intelligence = new IntelligenceStat(0);
+        Intelligence.Changed += Mana.Intelligence_Changed;
+        Intelligence.BaseChanged += Mana.Intelligence_Changed;
+        Intelligence.ChangeBaseValue(5);
+    }
+
+    // Use this for initialization
+    public virtual void Start()
+    {
         inventory = gameObject.GetInventory();
-	}
-
-    public void StartMonitoringRegeneration()
-    {
-        StartCoroutine("MonitorRegeneration");
     }
 
-    public void StopMonitoringRegeneration()
-    {
-        StopCoroutine("MonitorRegeneration");
-    }
-
-    internal void StartSyncingHMS()
-    {
-        StartCoroutine(NetworkSyncHMS());
-    }
-
-    private IEnumerator MonitorRegeneration()
-    {
-        while (true)
-        {
-            if (healthRegenerating)
-            {
-                Health = Math.Min(MaxHealth, Health + healthRegenerationRate);
-            }
-            else
-            {
-                timeTilHealthRegenerating -= .25f;
-                healthRegenerating = (timeTilHealthRegenerating <= 0);
-            }
-
-            if (manaRegenerating)
-            {
-                Mana = Math.Min(MaxMana, Mana + manaRegenerationRate);
-            }
-            else
-            {
-                timeTilManaRegenerating -= .25f;
-                manaRegenerating = (timeTilManaRegenerating <= 0);
-            }
-
-            if (staminaRegenerating)
-            {
-                Stamina = Math.Min(MaxStamina, Stamina + staminaRegenerationRate);
-            }
-            else
-            {
-                timeTilStaminaRegenerating -= .25f;
-                staminaRegenerating = (timeTilStaminaRegenerating <= 0);
-            }
-
-            yield return new WaitForSeconds(.25f);
-        }
-    }
-
-    private IEnumerator NetworkSyncHMS()
-    {
-        int lastSyncedHealth = -1;
-        int lastSyncedMana = -1;
-        int lastSyncedStamina = -1;
-
-        while (true)
-        {
-            if (lastSyncedHealth != Health)
-            {
-                networkView.RPC("HealthChanged", RPCMode.Others, Health);
-                lastSyncedHealth = Health;
-            }
-
-            if (lastSyncedMana != Mana)
-            {
-                networkView.RPC("ManaChanged", RPCMode.Others, Mana);
-                lastSyncedMana = Mana;
-            }
-
-            if (lastSyncedStamina != Stamina)
-            {
-                networkView.RPC("StaminaChanged", RPCMode.Others, Stamina);
-                lastSyncedStamina = Stamina;
-            }
-
-            yield return null;
-        }
-    }
-
-    public void ApplyDamage(GameObject attacker, int damageAmount)
+    public void ApplyDamage(GameObject attacker, Damage damage)
     {
         if (Network.isServer)
         {
-        healthRegenerating = false;
-        timeTilHealthRegenerating = maxHealthRegenerationTime;
-        Health = Mathf.Max(0,Health-damageAmount);
+            Health.CurrentValue = Mathf.Max(0, Health.CurrentValue - damage.amount);
 
-            if (Health <= 0)
+            if (Health.CurrentValue <= 0)
             {
                 OnDeath(new UnitDiedEventArgs() { killer = attacker, deathPosition = transform.position, reward = this.reward });
             }
@@ -212,29 +168,31 @@ public class CharacterStats : MonoBehaviour {
         }
     }
 
-	[RPC]
-	public virtual void ChangeName(String newName)
-	{
-		Debug.Log ("new name has been received for "+gameObject.name+". The new name is "+newName);
-		gameObject.name = newName;
-	}
-	
-	[RPC] 
-	void HealthChanged(int newHealth)
-	{
-		Health = newHealth;
-	}
-
-    [RPC] private void ManaChanged(int newMana)
+    [RPC]
+    public virtual void ChangeName(String newName)
     {
-        Mana = newMana;
+        Debug.Log("new name has been received for " + gameObject.name + ". The new name is " + newName);
+        gameObject.name = newName;
     }
 
-    [RPC] private void StaminaChanged(int newStamina)
+    [RPC]
+    void HealthChanged(int newHealth)
     {
-        Stamina = newStamina;
+        Health.CurrentValue = newHealth;
     }
-		
+
+    [RPC]
+    private void ManaChanged(int newMana)
+    {
+        Mana.CurrentValue = newMana;
+    }
+
+    [RPC]
+    private void StaminaChanged(int newStamina)
+    {
+        Stamina.CurrentValue = newStamina;
+    }
+
     [RPC]
     void ChangeTeam(int newTeam)
     {
@@ -248,7 +206,7 @@ public class CharacterStats : MonoBehaviour {
             Util.MyLocalPlayerTeam = newTeam;
         }
         teamNumber = newTeam;
-        Debug.Log(gameObject.name + " is now on team "+newTeam);
+        Debug.Log(gameObject.name + " is now on team " + newTeam);
         ParticleSystem particles;
 
 
@@ -275,30 +233,30 @@ public class CharacterStats : MonoBehaviour {
         if (Network.isServer)
         {
             Debug.Log("Healing here.");
-            Health = Math.Min(Health + healthToAdd, MaxHealth);
+            Health.CurrentValue = Math.Min(Health.CurrentValue + healthToAdd, Health.MaxValue);
         }
     }
 
 
 }
 
-public class KillReward 
+public class KillReward
 {
-	public int experience;
-	public int iron;
-	
-	public KillReward(int setExperience, int setIron)
-	{
-		experience = setExperience;
-		iron = setIron;
-	}
+    public int experience;
+    public int iron;
 
-    public static KillReward operator / (KillReward reward, int divisor)
+    public KillReward(int setExperience, int setIron)
+    {
+        experience = setExperience;
+        iron = setIron;
+    }
+
+    public static KillReward operator /(KillReward reward, int divisor)
     {
         return new KillReward(reward.experience / divisor, reward.iron / divisor);
     }
 
-    public static KillReward operator * (KillReward reward, int factor)
+    public static KillReward operator *(KillReward reward, int factor)
     {
         return new KillReward(reward.experience * factor, reward.iron * factor);
     }

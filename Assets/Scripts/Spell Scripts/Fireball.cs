@@ -102,7 +102,7 @@ public class FireballExplosionEffect : MonoBehaviour
                 dr.ApplyHit(caster);
             var stats = targetToHit.GetCharacterStats();
             if (stats)
-                stats.ApplyDamage(caster, 35);
+                stats.ApplyDamage(caster, new Damage(35, this.gameObject));
         }
     }
 }

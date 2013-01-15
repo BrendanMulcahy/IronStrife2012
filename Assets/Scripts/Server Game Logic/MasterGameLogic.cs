@@ -44,14 +44,6 @@ public class MasterGameLogic : MonoBehaviour
         MessageTerminal.Main.networkView.RPC("BroadcastGameState", RPCMode.Others, GameState.goodScore, GameState.evilScore);
     }
 
-    private void SetUpSpawnZones()
-    {
-        GameObject spawnZone1 = new GameObject();
-        spawnZone1.AddComponent<NPCSpawnZone>();
-        spawnZone1.name = "spawnZone1";
-    }
-
-
     // Update is called once per frame
     void Update()
     {

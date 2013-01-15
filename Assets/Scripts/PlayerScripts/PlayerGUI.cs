@@ -77,12 +77,12 @@ public class PlayerGUI : MonoBehaviour
 
     private void Update()
     {
-        health = stats.Health;
-        maxHealth = stats.MaxHealth;
-        mana = stats.Mana;
-        maxMana = stats.MaxMana;
-        stamina = stats.Stamina;
-        maxStamina = stats.MaxStamina;
+        health = stats.Health.CurrentValue;
+        maxHealth = stats.Health.MaxValue;
+        mana = stats.Mana.CurrentValue;
+        maxMana = stats.Mana.MaxValue;
+        stamina = stats.Stamina.CurrentValue;
+        maxStamina = stats.Stamina.CurrentValue;
         experience = stats.experience;
         experienceNeeded = stats.experienceNeeded;
         level = stats.Level;

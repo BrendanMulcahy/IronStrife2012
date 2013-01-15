@@ -21,8 +21,11 @@ public static class ItemDirectory
         return items;
     }
 
-    private static void Initialize()
+    [StaticAutoLoad]
+    public static void Initialize()
     {
+        if (initialized) return;
+
         Object[] weaponXML = Resources.LoadAll("Items/Weapon", typeof(TextAsset));
         foreach (Object o in weaponXML)
         {

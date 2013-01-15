@@ -36,7 +36,8 @@ public static class PlayerAbilities
         }
     }
 
-    static void Initialize()
+    [StaticAutoLoad]
+    public static void Initialize()
     {
         LoadAllSpells();
 

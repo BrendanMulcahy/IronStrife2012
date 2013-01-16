@@ -1,5 +1,6 @@
 ﻿namespace EternityGUI
 {
+    using System.Collections.Generic;
     using UnityEngine;
 
     public static class EternityUtil
@@ -24,6 +25,7 @@
             }
             return toReturn;
         }
+
         private static Camera _inventoryCamera;
         public static Camera InventoryCamera
         {
@@ -37,5 +39,20 @@
             }
         }
 
-    } 
+        public static LinkedList<GUIElement> HitTestAll(this GUILayer guiLayer, Vector3 position)
+        {
+            var toReturn = new LinkedList<GUIElement>();
+            var previousPositions = new LinkedList<Vector3>();
+            GUIElement element;
+            while ((element = guiLayer.HitTest(position)) != null)
+            {
+                toReturn.AddLast(element);
+                previousPositions.AddLast(element.gameObject.transform.position);
+                element.transform.position = new Vector3(-100, -100, -100);
+            }
+
+        }
+
+
+    }
 }

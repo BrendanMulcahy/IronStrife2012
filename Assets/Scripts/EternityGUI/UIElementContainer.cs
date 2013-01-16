@@ -7,7 +7,7 @@
     {
         public List<BaseElement> elements = new List<BaseElement>();
 
-        public virtual void AddChild(BaseElement newChild)
+        public virtual void AddChild(BaseImage newChild)
         {
             newChild.transform.parent = this.transform;
             newChild.Container = this;

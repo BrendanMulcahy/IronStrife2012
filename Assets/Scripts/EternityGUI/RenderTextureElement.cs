@@ -1,7 +1,7 @@
 ﻿namespace EternityGUI
 {
     using UnityEngine;
-    public class RenderTextureElement : BaseElement
+    public class RenderTextureElement : BaseImage
     {
 
         public static RenderTextureElement Create(RenderTexture renderTexture, float width, float height)

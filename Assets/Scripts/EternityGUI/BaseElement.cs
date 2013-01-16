@@ -1,13 +1,8 @@
-﻿namespace EternityGUI
+﻿using UnityEngine;
+namespace EternityGUI
 {
-    using UnityEngine;
-
-    /// <summary>
-    /// A basic button object. Provides callback for clicking, dragging, etc.
-    /// </summary>
-    public class BaseElement : MonoBehaviour
+    public abstract class BaseElement : MonoBehaviour
     {
-
         public event MouseEventHandler Click;
         public event MouseEventHandler MouseDown;
         public event MouseEventHandler MouseUp;
@@ -17,24 +12,10 @@
         public event MouseEventHandler MouseWheelChanged;
         public event MouseDropEventHandler Dropped;
 
+        public bool draggable = false;
         float lastClickTime = 0;
         float maxDoubleClickInterval = .25f;
         public Vector3 dragOffset;
-
-        public bool preserveAspectRatio = true;
-        protected float _textureRatio = -1;
-        protected virtual float TextureRatio
-        {
-            get
-            {
-                if (_textureRatio == -1)
-                {
-                    _textureRatio = (float)guiTexture.texture.width / (float)guiTexture.texture.height;
-
-                }
-                return _textureRatio;
-            }
-        }
 
         private UIElementContainer container;
         /// <summary>
@@ -50,13 +31,13 @@
         /// </summary>
         /// <param name="imageName">Full Resources folder path and name of file to use as the texture</param>
         /// <param name="position">Screen position to place the element at</param>
-        public static BaseElement Create(string imageName, Vector3 position)
+        public static BaseImage Create(string imageName, Vector3 position)
         {
             var go = new GameObject(imageName + "BaseElement");
             go.layer = 12;
             var gt = go.AddComponent<GUITexture>();
             var tex = Resources.Load(imageName) as Texture2D;
-            var baseElement = go.AddComponent<BaseElement>();
+            var baseElement = go.AddComponent<BaseImage>();
             gt.texture = tex;
             gt.pixelInset = new Rect(0, 0, tex.width, tex.height);
             gt.transform.position = position.ScreenToViewport();
@@ -65,11 +46,11 @@
             return baseElement;
         }
 
-        public static BaseElement Create(Texture2D tex, Vector3 position)
+        public static BaseImage Create(Texture2D tex, Vector3 position)
         {
             var go = new GameObject(tex.name + "BaseElement");
             var gt = go.AddComponent<GUITexture>();
-            var baseElement = go.AddComponent<BaseElement>();
+            var baseElement = go.AddComponent<BaseImage>();
             gt.texture = tex;
             gt.pixelInset = new Rect(0, 0, tex.width, tex.height);
             gt.transform.position = position;
@@ -85,8 +66,11 @@
                 MouseDown(this, MouseEventArgs.Current);
             }
 
-            dragOffset = new Vector3(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height, 0) - gameObject.transform.position;
-            dragging = true;
+            if (draggable)
+            {
+                dragOffset = new Vector3(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height, 0) - gameObject.transform.position;
+                dragging = true;
+            }
         }
 
         internal virtual void OnMouseUp()
@@ -158,7 +142,6 @@
             {
                 MouseEnter(this, MouseEventArgs.Current);
             }
-
         }
 
         internal virtual void OnMouseExit()
@@ -195,33 +178,16 @@
 
         protected virtual void HandleDragging()
         {
+            //Guard statement for un-draggable elements
+            if (!draggable) return;
+
             var mousePos = Input.mousePosition;
             this.transform.position = new Vector3(mousePos.x / Screen.width, mousePos.y / Screen.height, EternityUtil.GetElementLayer(this.gameObject)) - dragOffset;
 
         }
 
-        internal virtual void ResetSize()
-        {
-            var tex = guiTexture.texture;
-            guiTexture.pixelInset = new Rect(0, 0, tex.width, tex.height);
-        }
+        internal abstract void ResetSize();
 
-        internal virtual void Resize(int newWidth, int newHeight)
-        {
-            this.transform.localScale = new Vector3();
-            var newInset = new Rect(0, 0, newWidth, newHeight);
-            if (preserveAspectRatio)
-            {
-                if (guiTexture.texture.width > guiTexture.texture.height)
-                {
-                    newInset.height = newInset.width * (1 / TextureRatio);
-                }
-                else
-                {
-                    newInset.width = newInset.height * (TextureRatio);
-                }
-            }
-            this.guiTexture.pixelInset = newInset;
-        }
+        internal abstract void Resize(int newWidth, int newHeight);
     }
 }

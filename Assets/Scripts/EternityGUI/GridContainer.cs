@@ -79,7 +79,7 @@
 
         public void ResizeElementsToFit()
         {
-            foreach (BaseElement element in elements)
+            foreach (BaseImage element in elements)
             {
                 element.Resize(columnWidth, rowHeight);
             }
@@ -88,7 +88,7 @@
 
         public void RevertToDefaultElementSize()
         {
-            foreach (BaseElement element in elements)
+            foreach (BaseImage element in elements)
             {
                 element.ResetSize();
             }

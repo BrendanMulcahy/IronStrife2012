@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 namespace EternityGUI
 {
-    public class ItemElement : BaseElement
+    public class ItemElement : BaseImage
     {
         public Item item;
 

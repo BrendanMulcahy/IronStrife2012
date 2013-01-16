@@ -11,7 +11,7 @@
             panel = GridContainer.Create(new Vector3(.2f, .2f), new Vector2(300, 300), 3, 3);
             for (int g = 0; g < 9; g++)
             {
-                panel.AddChild(BaseElement.Create("GUI/Button", new Vector3()));
+                panel.AddChild(BaseImage.Create("GUI/Button", new Vector3()));
                 panel.elements[g].Click += EternityGUITester_Click;
             }
         }

@@ -11,7 +11,6 @@
 
         public bool handled = false;
 
-
         public static MouseEventArgs Current
         {
             get 

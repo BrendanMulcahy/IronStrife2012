@@ -61,7 +61,7 @@
 
         private void GenerateBackgroundImage()
         {
-            var baseElement = BaseElement.Create("GUI/MainMenuLargeBGCropped", new Vector3());
+            var baseElement = BaseImage.Create("GUI/MainMenuLargeBGCropped", new Vector3());
             baseElement.gameObject.layer = 12;
             baseElement.layerOffset = -1;
             background = baseElement.gameObject;

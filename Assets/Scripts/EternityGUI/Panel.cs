@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EternityGUI
 {
-    public class Panel : BaseElement
+    public class Panel : BaseImage
     {
         public List<UIElementContainer> containers = new List<UIElementContainer>();
 

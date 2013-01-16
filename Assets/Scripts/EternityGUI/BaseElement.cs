@@ -15,6 +15,7 @@
         public event MouseEventHandler MouseLeave;
         public event MouseEventHandler DoubleClick;
         public event MouseEventHandler MouseWheelChanged;
+        public event MouseDropEventHandler Dropped;
 
         float lastClickTime = 0;
         float maxDoubleClickInterval = .25f;
@@ -42,6 +43,7 @@
         public UIElementContainer Container { get { return container; } set { container = value; } }
 
         public bool dragging = false;
+        public int layerOffset = 0;
 
         /// <summary>
         /// Creates a new BaseElement with the given texture and position. Must provide a fully qualified resource path as the image name.
@@ -105,6 +107,25 @@
         private void OnDragRelease()
         {
             Debug.Log("Dropped element " + gameObject.name + " at " + Input.mousePosition);
+            var guiLayer = Camera.main.GetComponent<GUILayer>();
+
+            var beforePos = this.transform.position;
+            this.transform.position = new Vector3(-100, -100, -100);
+            var element = guiLayer.HitTest(Input.mousePosition);
+            this.transform.position = beforePos;
+
+            if (Dropped != null)
+            {
+                if (!element)
+                {
+                    Dropped(this, new MouseDropEventArgs(this, null, Input.mousePosition));
+                }
+                else
+                {
+                    Dropped(this, new MouseDropEventArgs(this, element.GetComponent<BaseElement>(), Input.mousePosition));
+                }
+            }
+
         }
 
         internal virtual void OnMouseUpAsButton()
@@ -137,6 +158,7 @@
             {
                 MouseEnter(this, MouseEventArgs.Current);
             }
+
         }
 
         internal virtual void OnMouseExit()
@@ -153,14 +175,22 @@
         {
             if (dragging)
                 HandleDragging();
+        }
+
+        void LateUpdate()
+        {
             CorrectLayer();
         }
 
-        private void CorrectLayer()
+        protected virtual void CorrectLayer()
         {
             var pos = transform.position;
             pos.z = EternityUtil.GetElementLayer(this.gameObject);
+            if (dragging)
+                pos.z += 1;
+            pos.z += layerOffset;
             transform.position = pos;
+
         }
 
         protected virtual void HandleDragging()
@@ -184,7 +214,7 @@
             {
                 if (guiTexture.texture.width > guiTexture.texture.height)
                 {
-                    newInset.height = newInset.width * (1/TextureRatio);
+                    newInset.height = newInset.width * (1 / TextureRatio);
                 }
                 else
                 {

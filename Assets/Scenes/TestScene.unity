@@ -30760,6 +30760,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: .907647192
       objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: 7c59c0f0f445fe7468d5af6b5d87559e, type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294950655
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400012, guid: 7c59c0f0f445fe7468d5af6b5d87559e, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 7c59c0f0f445fe7468d5af6b5d87559e, type: 2}
@@ -32175,7 +32179,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294946559
+    m_Bits: 4294950655
   m_RenderingPath: 2
   m_TargetTexture: {fileID: 0}
   m_HDR: 1

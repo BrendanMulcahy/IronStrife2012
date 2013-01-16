@@ -36,5 +36,6 @@
                 return _inventoryCamera;
             }
         }
+
     } 
 }

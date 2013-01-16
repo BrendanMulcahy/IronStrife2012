@@ -30,5 +30,13 @@ namespace EternityGUI
             newContainer.transform.parent = this.transform;
             containers.Add(newContainer);
         }
+
+        protected override void CorrectLayer()
+        {
+            var pos = transform.position;
+            pos.z = EternityUtil.GetElementLayer(this.gameObject) - 1;
+
+            transform.position = pos;
+        }
     }
 }

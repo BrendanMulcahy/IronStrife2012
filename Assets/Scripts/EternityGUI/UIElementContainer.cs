@@ -10,6 +10,7 @@
         public virtual void AddChild(BaseElement newChild)
         {
             newChild.transform.parent = this.transform;
+            newChild.Container = this;
             elements.Add(newChild);
         }
     }

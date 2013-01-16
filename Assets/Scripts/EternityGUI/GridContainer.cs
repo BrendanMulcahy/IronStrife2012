@@ -36,13 +36,13 @@
             {
                 for (int column = 0; column < numColumns; column++)
                 {
-                    elements[counter].transform.localPosition = new Vector3(column * columnWidth, row * rowHeight).ScreenToViewport();
+                    elements[counter].transform.localPosition = new Vector3(column * columnWidth, row * rowHeight, elements[counter].transform.position.z).ScreenToViewport();
                     counter++;
                     if (counter >= elements.Count)
                         return;
                 }
             }
-            CorrectLayer();
+            //CorrectLayer();
         }
 
         private void CorrectLayer()

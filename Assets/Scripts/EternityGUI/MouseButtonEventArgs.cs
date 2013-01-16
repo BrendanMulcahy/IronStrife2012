@@ -28,4 +28,23 @@
     }
 
     public delegate void MouseEventHandler(BaseElement sender, MouseEventArgs e);
+
+    public class MouseDropEventArgs
+    {
+        public BaseElement draggedObject;
+        public BaseElement dropTarget;
+        public Vector3 screenPosition;
+
+        public bool handled = false;
+
+        public MouseDropEventArgs(BaseElement draggedObject, BaseElement dropTarget, Vector3 screenPosition)
+        {
+            this.draggedObject = draggedObject;
+            this.dropTarget = dropTarget;
+            this.screenPosition = screenPosition;
+        }
+    }
+
+    public delegate void MouseDropEventHandler(BaseElement sender, MouseDropEventArgs e);
+
 }

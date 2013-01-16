@@ -51,6 +51,7 @@
         public static BaseElement Create(string imageName, Vector3 position)
         {
             var go = new GameObject(imageName + "BaseElement");
+            go.layer = 12;
             var gt = go.AddComponent<GUITexture>();
             var tex = Resources.Load(imageName) as Texture2D;
             var baseElement = go.AddComponent<BaseElement>();
@@ -88,12 +89,22 @@
 
         internal virtual void OnMouseUp()
         {
+            if (dragging)
+            {
+                OnDragRelease();
+            }
+            dragging = false;
+
             if (MouseUp != null)
             {
                 MouseUp(this, MouseEventArgs.Current);
             }
 
-            dragging = false;
+        }
+
+        private void OnDragRelease()
+        {
+            Debug.Log("Dropped element " + gameObject.name + " at " + Input.mousePosition);
         }
 
         internal virtual void OnMouseUpAsButton()

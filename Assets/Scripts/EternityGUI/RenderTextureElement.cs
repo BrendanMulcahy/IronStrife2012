@@ -7,6 +7,7 @@
         public static RenderTextureElement Create(RenderTexture renderTexture, float width, float height)
         {
             var element = new GameObject(renderTexture.name + "Element").AddComponent<RenderTextureElement>();
+            element.gameObject.layer = 12;
             element.gameObject.AddComponent<GUITexture>();
             element.gameObject.guiTexture.texture = renderTexture;
             element.preserveAspectRatio = false;

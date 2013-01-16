@@ -8,6 +8,7 @@ namespace EternityGUI
         public static ItemElement Create(Item item)
         {
             var go = new GameObject(item.name + "InventoryIcon");
+            go.layer = 12;
             var gt = go.AddComponent<GUITexture>();
             var tex = item.inventoryIcon;
             var baseElement = go.AddComponent<ItemElement>();

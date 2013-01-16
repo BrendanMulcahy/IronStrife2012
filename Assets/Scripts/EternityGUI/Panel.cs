@@ -15,6 +15,7 @@ namespace EternityGUI
         public static Panel Create(string backgroundImage, int width, int height)
         {
             var panel = new GameObject(backgroundImage + "Panel").AddComponent<Panel>();
+            panel.gameObject.layer = 12;
             panel.width = width; 
             panel.height = height;
             var gt = panel.gameObject.AddComponent<GUITexture>();

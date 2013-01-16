@@ -55,6 +55,7 @@
         public static GridContainer Create(Vector3 position, Vector2 dimensions, int numColumns, int numRows)
         {
             var go = new GameObject("GridContainer");
+            go.layer = 12;
             var panel = go.AddComponent<GridContainer>();
             panel.width = dimensions.x; panel.height = dimensions.y;
             panel.numColumns = numColumns;

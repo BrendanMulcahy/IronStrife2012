@@ -28,6 +28,7 @@
         public static InventoryPanel Create(Inventory inventory, Vector3 position)
         {
             var inventoryPanel = new GameObject(inventory.gameObject.name + "InventoryPanel").AddComponent<InventoryPanel>();
+            inventoryPanel.gameObject.layer = 12;
             inventoryPanel.inventory = inventory;
             inventoryPanel.inventory.ItemAdded += inventoryPanel.inventory_ItemAdded;
             inventoryPanel.width = 750;

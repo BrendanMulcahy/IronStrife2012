@@ -35,6 +35,7 @@ public class HealedEventArgs
 
 public class DamageEventArgs
 {
+    public bool handled = false;
     public Damage damage;
 }
 

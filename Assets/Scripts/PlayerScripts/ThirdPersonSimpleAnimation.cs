@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using System.Linq;
 
+[PlayerComponent(PlayerScriptType.ServerEnabled, PlayerScriptType.ClientOwnerEnabled)]
 public class ThirdPersonSimpleAnimation : MonoBehaviour
 {
     Transform torso;

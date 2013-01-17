@@ -182,7 +182,8 @@ public static class Util
     /// <returns></returns>
     internal static Vector3 FindClosestTeamRespawn(Vector3 requestedRespawnLocation, int teamNumber)
     {
-        return new Vector3(500,1,500);
+        var spawner = GameObject.Find("PrefabSpawner");
+        return spawner.transform.position;
     }
 
     /// <summary>
@@ -298,11 +299,12 @@ public static class Util
         }
     }
 
-    internal static IEnumerator DisableInSeconds(Component comp, float p)
+    
+    internal static IEnumerator DisableInSeconds(Behaviour comp, float p)
     {
         yield return new WaitForSeconds(p);
         if (comp != null)
-            comp.active = false;
+            comp.enabled = false;
     }
 
     public static NetworkViewID GetNetworkViewID(this GameObject go)

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[PlayerComponent(PlayerScriptType.AllEnabled)]
 /// <summary>
 /// This class is used to synchronize and instantiate player-generated objects across the network.
 /// This includes things like projectiles fired, spell effects cast, or perhaps other cosmetic things.

@@ -9,7 +9,7 @@ namespace EternityGUI
         public event MouseEventHandler MouseEnter;
         public event MouseEventHandler MouseLeave;
         public event MouseEventHandler DoubleClick;
-        public event MouseEventHandler MouseWheelChanged;
+        //public event MouseEventHandler MouseWheelChanged;
         public event MouseDropEventHandler Dropped;
 
         public bool draggable = false;

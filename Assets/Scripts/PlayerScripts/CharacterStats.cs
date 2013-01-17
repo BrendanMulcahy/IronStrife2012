@@ -55,8 +55,6 @@ public class CharacterStats : MonoBehaviour
     //}
     #endregion
 
-    private Inventory inventory;
-
     public Health Health { get; set; }
     public Mana Mana { get; set; }
     public Stamina Stamina { get; set; }
@@ -66,6 +64,7 @@ public class CharacterStats : MonoBehaviour
     public IntelligenceStat Intelligence { get; set; }
 
     public PhysicalDefense PhysicalDefense { get; set; }
+    public MagicalDefense MagicalDefense { get; set; }
 
     public MoveSpeedStat MoveSpeed { get; set; }
 
@@ -98,6 +97,8 @@ public class CharacterStats : MonoBehaviour
 
         MoveSpeed = new MoveSpeedStat(10.0f);
         Agility = new AgilityStat(0);
+        Agility.Changed += Stamina.Agility_Changed;
+        Agility.BaseChanged += Stamina.Agility_Changed;
         Agility.Changed += MoveSpeed.Agility_Changed;
         Agility.BaseChanged += MoveSpeed.Agility_Changed;
         Agility.ChangeBaseValue(5);
@@ -106,18 +107,53 @@ public class CharacterStats : MonoBehaviour
         Intelligence.Changed += Mana.Intelligence_Changed;
         Intelligence.BaseChanged += Mana.Intelligence_Changed;
         Intelligence.ChangeBaseValue(5);
+
+        PhysicalDefense = new PhysicalDefense(100);
+        MagicalDefense = new MagicalDefense(0);
     }
 
     // Use this for initialization
     public virtual void Start()
     {
-        inventory = gameObject.GetInventory();
+
     }
 
+    /// <summary>
+    /// Causes damage to be received by this character. Is reduced by defenses and resistances.
+    /// </summary>
     public void ApplyDamage(GameObject attacker, Damage damage)
     {
-        if (Network.isServer)
+        if (Network.isClient) return;
+
+        var e = new DamageEventArgs() { damage = damage };
+        if (Damaged != null)
         {
+            Damaged(this.gameObject, e);
+        }
+
+        if (!e.handled)
+        {
+            switch (damage.damageType)
+            {
+                case DamageType.Pure:
+                    break;
+                case DamageType.Physical:
+                    damage.amount = (int)(damage.amount - damage.amount * PhysicalDefense.PercentageReduced);
+                    break;
+                case DamageType.Magical:
+                    damage.amount = (int)(damage.amount - damage.amount * MagicalDefense.PercentageReduced);
+                    break;
+                case DamageType.Composite:
+                    damage.amount = (int)(damage.amount - damage.amount * PhysicalDefense.PercentageReduced);
+                    damage.amount = (int)(damage.amount - damage.amount * MagicalDefense.PercentageReduced);
+                    break;
+
+                default:
+                    Debug.LogError("Invalid damage type from attacker " + attacker.name);
+                    break;
+            }
+
+
             Health.CurrentValue = Mathf.Max(0, Health.CurrentValue - damage.amount);
 
             if (Health.CurrentValue <= 0)

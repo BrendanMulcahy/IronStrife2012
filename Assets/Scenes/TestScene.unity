@@ -16138,32 +16138,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.89658046, y: .754808247, z: 1.0923233}
   m_Center: {x: -.00836181641, y: .377666473, z: -.0462036133}
---- !u!1 &645215310
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100022, guid: aa627f81296ee5a42a5a96cf3806f189, type: 3}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 645215311}
-  m_Layer: 0
-  m_Name: LightWeightMelee01
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &645215311
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400022, guid: aa627f81296ee5a42a5a96cf3806f189, type: 3}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 645215310}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 452.176147, y: 23.2202377, z: 848.720825}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
 --- !u!1 &645701284
 GameObject:
   m_ObjectHideFlags: 0

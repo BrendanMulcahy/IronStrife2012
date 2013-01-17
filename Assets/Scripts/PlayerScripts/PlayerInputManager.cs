@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[PlayerComponent(PlayerScriptType.AllEnabled)]
 /// <summary>
 /// This component handles storing user input, be it from a local player, 
 /// or from a remote client (if the component is on the server).

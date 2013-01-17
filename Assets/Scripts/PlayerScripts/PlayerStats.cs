@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
+[PlayerComponent(PlayerScriptType.AllEnabled)]
 public class PlayerStats : CharacterStats
 {
     public string username = "default_username";

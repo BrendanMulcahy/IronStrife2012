@@ -12,7 +12,7 @@ public class NPC_Controller : MonoBehaviour
         get { return moveSpeed; }
         set { moveSpeed = value; }
     }
-    float walkSpeed;
+
     Vector3 moveDirection;
     Vector3 targetMoveDirection;
 
@@ -32,7 +32,6 @@ public class NPC_Controller : MonoBehaviour
 	void Start ()
     {
         characterController = GetComponent<CharacterController>();
-        walkSpeed = GetComponent<NPC_AI>().WalkSpeed;
         moveDirection = Vector3.forward;
 	}
 	

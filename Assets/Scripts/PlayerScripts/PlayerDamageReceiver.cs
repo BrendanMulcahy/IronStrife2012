@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[PlayerComponent(PlayerScriptType.AllEnabled)]
 /// <summary>
 /// Class that acts as an interface for physical and magical attacks to apply their damage and effects to a player's game object.
 /// </summary>
@@ -8,6 +9,11 @@ public class PlayerDamageReceiver : DamageReceiver {
 
     private ThirdPersonController controller;
     public bool isClientView;
+
+    void Awake()
+    {
+        if (Network.isClient) isClientView = true;
+    }
 
     public override void Start()
     {

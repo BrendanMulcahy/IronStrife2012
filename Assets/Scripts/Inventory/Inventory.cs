@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using EternityGUI;
 
+[PlayerComponent(PlayerScriptType.AllDisabled, PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerOwnerEnabled)]
 /// <summary>
 /// Handles player inventory, equipping items, unequipping items.
 /// Contains information about currently equipped weapons, armor, shield, etc.
@@ -28,12 +29,10 @@ public class Inventory : MonoBehaviour
 
     public event WeaponChangedEventHandler weaponChanged;
 
-    private Rect inventoryWindowRect = new Rect(70, 70, 600, 400);
     private InventoryPanel inventoryPanel;
 
-    private int gold;
-    private Vector2 scrollPosition = new Vector2();
-    public int Gold { get { return gold; } set { gold = value; } }
+    private int _gold;
+    public int Gold { get { return _gold; } set { _gold = value; } }
 
     public delegate void ItemAddedEventHandler(Inventory sender, Item newItem);
 
@@ -42,22 +41,33 @@ public class Inventory : MonoBehaviour
     void Awake()
     {
         Items = new List<Item>();
+        if (Network.isServer)
+            AddDefaultInventoryItems();
         
     }
 
     void OnSetOwnership()
     {
         inventoryPanel = InventoryPanel.Create(this, new Vector3(100, 100).ScreenToViewport());
-
     }
 
-    void OnGUI()
+    public void AddDefaultInventoryItems()
     {
-        //GUI.skin = Util.ISEGUISkin;
-        //if (visible)
-        //{
-        //    GUI.Window("inventory".GetHashCode(), inventoryWindowRect, ShowInventoryWindow, "Inventory", GUI.skin.GetStyle("smallWindow"));
-        //}
+        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Simple Sword");
+        TryEquipItem((Weapon)Items[0]);
+
+        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Health Potion");
+        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Health Potion");
+        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Health Potion");
+        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Mana Potion");
+        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Mana Potion");
+        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Mana Potion");
+
+        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Shielded Bow");
+        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Shield of the Round");
+        TryEquipItem((Shield)Items[8]);
+
+
     }
 
     void Update()
@@ -73,32 +83,6 @@ public class Inventory : MonoBehaviour
         if (inventoryPanel)
             inventoryPanel.gameObject.SetActive(visible);
 
-    }
-
-    void ShowInventoryWindow(int id)
-    {
-        scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-        GUILayout.BeginVertical();
-        for (int g = 0; g < Items.Count; g++)
-        {        
-            if (GUILayout.Button(Items[g].name, GUI.skin.GetStyle("smallButton")))
-            {
-                if (Items[g] is EquippableItem)
-                    TryEquipItem((EquippableItem)Items[g]);
-                if (Items[g] is Consumable)
-                {
-                    if (Network.isServer)
-                        TryConsumeItem(Items[g].name);
-                    else
-                        networkView.RPC("TryConsumeItem", RPCMode.Server, Items[g].name);
-                    g--;
-                }
-
-            }
-        }
-        GUILayout.EndVertical();
-        GUILayout.EndScrollView();
-        GUI.DragWindow();
     }
 
     public void TryEquipItem(EquippableItem item)
@@ -119,7 +103,7 @@ public class Inventory : MonoBehaviour
         EquippableItem item;
         if ((item = (EquippableItem)this.Get(itemName)) !=null && item is EquippableItem)
         {
-            networkView.RPC("CommitEquipItem", RPCMode.All, itemName, (int)item.itemType);
+            networkView.RPC("CommitEquipItem", RPCMode.AllBuffered, itemName, (int)item.itemType);
         }
         else
         {
@@ -216,7 +200,7 @@ public class Inventory : MonoBehaviour
     public void TryPurchaseItem(string itemName, NetworkViewID shopID, NetworkMessageInfo msg)
     {
         var itemToPurchase = ItemDirectory.Get(itemName);
-        if (itemToPurchase.goldCost <= this.gold)
+        if (itemToPurchase.goldCost <= this._gold)
         {
             networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, itemName);
             NetworkView.Find(shopID).RPC("ItemPurchasedSound", RPCMode.All);
@@ -230,7 +214,7 @@ public class Inventory : MonoBehaviour
     public void TryPurchaseItem(string itemName, NetworkViewID shopID)
     {
         var itemToPurchase = ItemDirectory.Get(itemName);
-        if (itemToPurchase.goldCost <= this.gold)
+        if (itemToPurchase.goldCost <= this._gold)
         {
             networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, itemName);
             NetworkView.Find(shopID).RPC("ItemPurchasedSound", RPCMode.All);

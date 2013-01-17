@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Linq;
 
-[RequireComponent(typeof(PlayerInputManager))]
+[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerEnabled)]
 public class ThirdPersonController : MonoBehaviour, IController
 {
 
@@ -164,6 +164,11 @@ public class ThirdPersonController : MonoBehaviour, IController
         playerSound = GetComponent<PlayerSoundGenerator>();
         characterStats = gameObject.GetCharacterStats();
 
+    }
+
+    void OnSetOwnership()
+    {
+        this.isLocallyControlledPlayer = true;
     }
 
     private void Update()

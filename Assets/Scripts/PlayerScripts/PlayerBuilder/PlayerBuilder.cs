@@ -11,44 +11,125 @@ using System.Collections.Generic;
 public class PlayerBuilder : MonoBehaviour
 {
     public string[] attributeNames;
+    Dictionary<Type, PlayerComponentAttribute> typeToAttributes = new Dictionary<Type, PlayerComponentAttribute>();
 
-    void Start()
+    public void BuildCharacter()
     {
-        Type[] attributes = new Type[attributeNames.Length];
-        for (int g = 0; g < attributeNames.Length; g++)
+        var allPlayerComponents = Util.GetClassesWithAttribute<PlayerComponentAttribute>();
+        foreach (Type t in allPlayerComponents)
         {
-            attributes[g] = Type.GetType(attributeNames[g]+"Attribute");
-            Debug.Log("Attribute " + g + " is " + attributes[g].Name);
+            typeToAttributes[t] = t.GetCustomAttributes(typeof(PlayerComponentAttribute), false)[0] as PlayerComponentAttribute;
         }
 
-        AddComponentScripts(attributes);
+        AddCommonComponents();
+
+        if (Network.isServer)
+        {
+            BuildServerCharacter();
+        }
+        else if (Network.isClient)
+        {
+            BuildClientCharacter();
+        }
     }
 
-    void AddComponentScripts(Type[] attributes)
+    private void AddCommonComponents()
     {
-        LinkedList<Type> scriptsToAdd = new LinkedList<Type>();
-        var allMonoBehaviours = Assembly.GetExecutingAssembly().GetExportedTypes().Where(type => type.IsSubclassOf(typeof(MonoBehaviour)));
-        foreach (Type monoBehaviourType in allMonoBehaviours)
+        foreach (Type t in typeToAttributes.Keys)
         {
-            foreach (Type attributeType in attributes)
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.AllEnabled))
             {
-                if (monoBehaviourType.GetCustomAttributes(attributeType, false).Length != 0)
-                {
-                    scriptsToAdd.AddLast(monoBehaviourType);
-                    continue;
-                }
+                ((MonoBehaviour)gameObject.AddComponent(t)).enabled = true;
+            }
+
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.AllDisabled))
+            {
+                ((MonoBehaviour)gameObject.AddComponent(t)).enabled = false;
             }
         }
-        
-        Debug.Log("All player scripts :");
-        foreach (Type t in scriptsToAdd)
-        {
-            Debug.Log("\t- " + t.FullName);
-        }
+    }
 
-        foreach (Type t in scriptsToAdd)
+    internal void SetOwnership()
+    {
+        Util.MyLocalPlayerObject = this.gameObject;
+
+        if (Network.isServer)
+            AddServerOwnerComponents();
+        else
+            AddClientOwnerComponents();
+
+        gameObject.SendMessage("OnSetOwnership", SendMessageOptions.DontRequireReceiver);
+        Camera.main.SendMessage("SetTarget", transform);
+
+    }
+
+    private void BuildServerCharacter()
+    {
+        foreach (Type t in typeToAttributes.Keys)
         {
-            this.gameObject.AddComponent(t);
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ServerDisabled))
+            {
+                ((MonoBehaviour)gameObject.AddComponent(t)).enabled = false;
+            }
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ServerEnabled))
+            {
+                ((MonoBehaviour)gameObject.AddComponent(t)).enabled = true;
+            }
         }
     }
+
+    private void BuildClientCharacter()
+    {
+        foreach (Type t in typeToAttributes.Keys)
+        {
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ClientDisabled))
+            {
+                ((MonoBehaviour)gameObject.AddComponent(t)).enabled = false;
+            }
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ClientEnabled))
+            {
+                ((MonoBehaviour)gameObject.AddComponent(t)).enabled = true;
+            }
+        }
+    }
+
+    private void AddServerOwnerComponents()
+    {
+        foreach (Type t in typeToAttributes.Keys)
+        {
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ServerOwnerEnabled))
+            {
+                MonoBehaviour c = GetComponent(t) as MonoBehaviour;
+                if (c)
+                    c.enabled = true;
+                else
+                    ((MonoBehaviour)gameObject.AddComponent(t)).enabled = true;
+            }
+        }
+    }
+
+    private void AddClientOwnerComponents()
+    {
+        foreach (Type t in typeToAttributes.Keys)
+        {
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ClientOwnerEnabled))
+            {
+                MonoBehaviour c = GetComponent(t) as MonoBehaviour;
+                if (c)
+                    c.enabled = true;
+                else
+                    ((MonoBehaviour)gameObject.AddComponent(t)).enabled = true;
+            }
+
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ClientOwnerDeleted))
+            {
+                MonoBehaviour c = GetComponent(t) as MonoBehaviour;
+                if (c)
+                    Destroy(c);
+
+            }
+        }
+    }
+
+
 }

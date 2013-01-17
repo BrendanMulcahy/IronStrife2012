@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+[PlayerComponent(PlayerScriptType.AllEnabled)]
 public class PlayerSoundGenerator : MonoBehaviour {
     AudioClip[] footStepClip = new AudioClip[1];
     AudioClip swordSwingClip = new AudioClip();

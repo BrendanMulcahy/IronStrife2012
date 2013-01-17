@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerOwnerEnabled)]
 public class PlayerGUI : MonoBehaviour
 {
     private bool visible = true;

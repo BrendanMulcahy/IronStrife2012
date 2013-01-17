@@ -2,11 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Linq;
 
+[PlayerComponent(PlayerScriptType.ServerOwnerEnabled)]
 /// <summary>
 /// This class is used only by the server to control his player. 
 /// It is essentially the same as the NetworkController but does not need to relay the information over the network.
 /// </summary>
-[RequireComponent(typeof(PlayerInputManager))]
 public class ServerController : MonoBehaviour
 {
     public PlayerInputManager targetController;

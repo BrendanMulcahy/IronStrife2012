@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using System.Linq;
 
-[RequireComponent(typeof(PlayerInputManager))]
+[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerDisabled)]
 public class NetworkController : MonoBehaviour
 {
     public PlayerInputManager targetController;
@@ -39,13 +39,15 @@ public class NetworkController : MonoBehaviour
     private bool lastSpellButton;
     private int lastSpellBeingCast;
 
-    void Start()
+    void Awake()
     {
         regularCamera = Camera.main.GetComponent<RegularCamera>();
         tpController = GetComponent<ThirdPersonController>();
         abilityManager = GetComponent<AbilityManager>();
         targetController = GetComponent<PlayerInputManager>();
     }
+
+    void OnSetOwnership() { StartMonitoringCameraMovement(); }
 
     public void StartMonitoringCameraMovement()
     {

@@ -27,8 +27,6 @@ public class BackgroundMusic : MonoBehaviour
     private AudioClip fortSong;
     private AudioClip swampSong;
     private AudioClip farmSong;
-    private AudioClip victorySong;
-    private AudioClip defeatSong;
     private ArrayList genericSongs = new ArrayList();
 
     private GameObject blueBase;
@@ -115,9 +113,6 @@ public class BackgroundMusic : MonoBehaviour
         genericSongs.Add(Resources.Load("BGM/Main Background Rhythm") as AudioClip);
         genericSongs.Add(Resources.Load("BGM/Far Too Many Trees") as AudioClip);
         genericSongs.Add(Resources.Load("BGM/Among Mountains") as AudioClip);
-
-        victorySong = Resources.Load("BGM/Anxious Victory") as AudioClip;
-        defeatSong = Resources.Load("BGM/Next Time We'll Win") as AudioClip;
 
         StartCoroutine(MonitorBackgroundMusic());
     }

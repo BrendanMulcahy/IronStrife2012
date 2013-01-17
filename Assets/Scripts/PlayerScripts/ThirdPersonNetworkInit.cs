@@ -6,36 +6,37 @@ public class ThirdPersonNetworkInit : MonoBehaviour
     void OnNetworkInstantiate(NetworkMessageInfo msg)
     {
 
-        // Server looking at client
-        if (Network.isServer)
-        {
-            Debug.Log("You are the server looking at " + gameObject.name + ".");
-            GetComponent<ThirdPersonController>().enabled = true;
-            GetComponent<PlayerMotor>().enabled = true;
-            var cs = gameObject.GetCharacterStats();
-            gameObject.AddComponent<PlayerDamageReceiver>();
-            Destroy(GetComponent<ServerController>());
+        //GetComponent<Inventory>().enabled = false;
+        //GetComponent<AbilityManager>().enabled = false;
+        //GetComponent<NetworkController>().enabled = false;
+        //GetComponent<ServerController>().enabled = false;
 
-        }
-        // Client looking at client
-        else
-        {
-            Debug.Log("You are a client looking at " + gameObject.name + ".");
-            GetComponent<ThirdPersonSimpleAnimation>().enabled = false;
-            GetComponent<ThirdPersonController>().enabled = false;
-            GetComponent<NetworkController>().enabled = false;
-            GetComponent<NetworkSyncAnimation>().enabled = true;
-            gameObject.AddComponent<PlayerDamageReceiver>().isClientView = true;
-            Destroy(GetComponent<NetworkController>());
-            Destroy(GetComponent<ServerController>());
+        //// Server looking at client
+        //if (Network.isServer)
+        //{
+        //    Debug.Log("You are the server looking at " + gameObject.name + ".");
+        //    GetComponent<ThirdPersonController>().enabled = true;
+        //    GetComponent<PlayerMotor>().enabled = true;
+        //    gameObject.AddComponent<PlayerDamageReceiver>();
 
+        //}
+        //// Client looking at client
+        //else
+        //{
+        //    Debug.Log("You are a client looking at " + gameObject.name + ".");
+        //    GetComponent<ThirdPersonSimpleAnimation>().enabled = false;
+        //    GetComponent<ThirdPersonController>().enabled = false;
+        //    GetComponent<NetworkSyncAnimation>().enabled = true;
 
-        }
+        //    gameObject.AddComponent<PlayerDamageReceiver>().isClientView = true;
+
+        //}
     }
 
     [RPC]
     public void SetOwnership()
     {        // Store this game object for later reference from other scripts (just for ease of access)
+        Debug.Log(gameObject.name + " is your character.");
 
         Util.MyLocalPlayerObject = this.gameObject;
 
@@ -43,25 +44,24 @@ public class ThirdPersonNetworkInit : MonoBehaviour
         {
             GetComponent<NetworkController>().enabled = true;
             GetComponent<NetworkController>().StartMonitoringCameraMovement();
+            GetComponent<ServerController>().enabled = false;
             GetComponent<ThirdPersonSimpleAnimation>().enabled = true;
             GetComponent<NetworkSyncAnimation>().enabled = false;
 
         }
         else
         {
-            gameObject.AddComponent<ServerController>();
+            gameObject.GetComponent<ServerController>().enabled = true;
             Destroy(GetComponent<NetworkController>());
         }
 
         GetComponent<Inventory>().enabled = true;
         GetComponent<AbilityManager>().enabled = true;
 
-
         Destroy(transform.FindChild("Name Label").gameObject);
         GetComponent<ThirdPersonController>().enabled = true;
         GetComponent<ThirdPersonController>().isLocallyControlledPlayer = true;
-        Debug.Log(gameObject.name + " is your character. You should put the character controls on it and set up message relaying to the server.");
-        Camera.main.SendMessage("SetTarget", transform);
+
 
         gameObject.AddComponent<PlayerGUI>();
         gameObject.GetComponent<LineRenderer>().enabled = true;
@@ -78,25 +78,5 @@ public class ThirdPersonNetworkInit : MonoBehaviour
     {
         Debug.Log(gameObject.name + " has disconnected.");
         Destroy(gameObject);
-    }
-
-    [RPC]
-    public void EquipDefaultItems(string charactertype)
-    {
-        var inv = GetComponent<Inventory>();
-        var weapon = Weapon.FromName<Weapon>("Simple Sword");
-        inv.Items.Add(weapon);
-        inv.TryEquipItem(weapon);
-        inv.Gold = 100000;
-
-        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
-        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
-        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
-        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
-        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
-        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Shielded Bow");
-        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
-        inv.networkView.RPC("AddItemToInventory", RPCMode.All, "Simple Sword");
-
     }
 }

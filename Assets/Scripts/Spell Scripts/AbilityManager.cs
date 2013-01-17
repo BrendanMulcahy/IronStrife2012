@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+[PlayerComponent(PlayerScriptType.AllDisabled, PlayerScriptType.ServerOwnerEnabled, PlayerScriptType.ClientOwnerEnabled)]
 public class AbilityManager : MonoBehaviour
 {
     public int[] equippedSpells = { -1, -1, -1, -1, -1 };

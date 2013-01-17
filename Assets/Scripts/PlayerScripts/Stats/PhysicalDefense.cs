@@ -12,4 +12,22 @@ public class PhysicalDefense : BuffableStat
         this.name = "Armor";
         this.baseValue = 0;
     }
+
+    public PhysicalDefense(int amount) : base(amount) { }
+
+    public float PercentageTaken
+    {
+        get
+        {
+            return 1f - (ModifiedValue / 100f);
+        }
+    }
+
+    public float PercentageReduced
+    {
+        get
+        {
+            return (ModifiedValue / 100f);
+        }
+    }
 }

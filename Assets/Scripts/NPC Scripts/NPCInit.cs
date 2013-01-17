@@ -8,7 +8,6 @@ public class NPCInit : MonoBehaviour {
         if (Network.isClient)
         {
             GetComponent<NPCController>().enabled = false;
-            GetComponent<NPCCombatController>().enabled = false;
             networkView.RPC("ChangeName", RPCMode.All, "NPC");
 
         }

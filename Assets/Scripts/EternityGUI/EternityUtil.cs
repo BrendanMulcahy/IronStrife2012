@@ -39,20 +39,29 @@
             }
         }
 
-        public static LinkedList<GUIElement> HitTestAll(this GUILayer guiLayer, Vector3 position)
+        /// <summary>
+        /// Returns all GUIElements under the mouse, in order from front to back.
+        /// </summary>
+        /// <param name="guiLayer">The layer to test the hit on</param>
+        /// <param name="position">The position in screen space (Input.mouseposition works)</param>
+        /// <returns>All GUIElements under the given position, in order from front to back</returns>
+        public static GUIElement[] HitTestAll(this GUILayer guiLayer, Vector3 position)
         {
-            var toReturn = new LinkedList<GUIElement>();
-            var previousPositions = new LinkedList<Vector3>();
+            var toReturn = new List<GUIElement>();
+            var previousPositions = new List<Vector3>();
             GUIElement element;
             while ((element = guiLayer.HitTest(position)) != null)
             {
-                toReturn.AddLast(element);
-                previousPositions.AddLast(element.gameObject.transform.position);
+                toReturn.Add(element);
+                previousPositions.Add(element.gameObject.transform.position);
                 element.transform.position = new Vector3(-100, -100, -100);
             }
 
+            for (int g = 0; g < previousPositions.Count; g++)
+            {
+                toReturn[g].transform.position = previousPositions[g];
+            }
+            return toReturn.ToArray();
         }
-
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerOwnerEnabled)]
 public class PlayerObjectInteractor : MonoBehaviour
 {
     const float interactionRayDistance = 25f;
@@ -13,7 +14,7 @@ public class PlayerObjectInteractor : MonoBehaviour
         var selectionSphere = new GameObject("Object Interactor");
         selectionSphere.transform.parent = this.transform;
         selectionSphere.transform.localPosition = transform.forward * 2f + Vector3.up * 1.4f;
-        selectionSphere.AddComponent<PlayerSelectorSphere>();
+        selectionSphere.AddComponent<PlayerSelectorBox>();
 
     }
 
@@ -61,7 +62,7 @@ public class PlayerObjectInteractor : MonoBehaviour
     }
 }
 
-public class PlayerSelectorSphere : MonoBehaviour
+public class PlayerSelectorBox : MonoBehaviour
 {
     PlayerObjectInteractor poi;
     float closestDistance = 999999f;

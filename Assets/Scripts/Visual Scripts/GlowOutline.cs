@@ -9,8 +9,6 @@ public class GlowOutline : MonoBehaviour
     Material outlineMat;
     float outlineWidth = 0f;
     float cycleTime = .66f;
-    float cloneMaxScaleIncrease = .1f;
-    float scale = 0f;
 
     public Color color = Color.red;
     

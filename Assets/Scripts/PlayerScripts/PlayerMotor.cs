@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[PlayerComponent(PlayerScriptType.AllEnabled)]
 public class PlayerMotor : MonoBehaviour {
 
     private Vector3 externalVelocity;
@@ -11,10 +12,6 @@ public class PlayerMotor : MonoBehaviour {
 	void Update () 
     {
         externalVelocity = Vector3.zero;
-        if (Input.GetKey(KeyCode.F7))
-        {
-            ApplyForce(new Force(Vector3.left , 2));
-        }
 
         for (int g = 0; g < forces.Count; g++)
         {

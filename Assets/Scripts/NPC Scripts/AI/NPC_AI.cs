@@ -57,7 +57,7 @@ public class NPC_AI : MonoBehaviour
         layerMask = ~layerMask;
 
         //if there is obstacle in front
-        RaycastHit hit;
+        //RaycastHit hit;
        // if (Physics.SphereCast(transform.position, out hit, transform.rotation, 4.0f, layerMask))
        // {
     }

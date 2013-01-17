@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Collections;
 
+[PlayerComponent(PlayerScriptType.ServerEnabled, PlayerScriptType.ClientEnabled, PlayerScriptType.ClientOwnerDeleted)]
 /// <summary>
 /// Handles syncing animation information over the network. 
 /// The server will send continuous info that clients read and use to animate the player.

@@ -20,9 +20,9 @@ public class EnemyVisible : TransitionRequirement
         sphereGO.transform.SetParentAndCenter(gameObject.transform);
         var searcher = sphereGO.AddComponent<EnemySearcher>();
         searcher.enemyVisible = this;
-        searcher.collider = sphereGO.AddComponent<SphereCollider>();
-        searcher.collider.radius = this.searchRadius;
-        searcher.collider.isTrigger = true;
+        var collider = sphereGO.AddComponent<SphereCollider>();
+        collider.radius = this.searchRadius;
+        collider.isTrigger = true;
     }
 
     public override bool IsSatisfied()

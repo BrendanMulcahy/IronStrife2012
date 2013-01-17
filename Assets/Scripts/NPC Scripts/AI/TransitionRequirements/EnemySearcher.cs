@@ -2,7 +2,6 @@
 
 public class EnemySearcher : MonoBehaviour
 {
-    public SphereCollider collider;
     public EnemyVisible enemyVisible;
 
     void Start()

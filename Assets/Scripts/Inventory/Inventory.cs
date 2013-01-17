@@ -121,7 +121,8 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    [RPC] void CommitEquipItem(string itemName, int itemType)
+    [RPC] 
+    void CommitEquipItem(string itemName, int itemType)
     {
         Debug.Log("Trying to equip " + itemName + " of type " + ((ItemType)itemType).ToString());
         EquippableItem item = new EquippableItem();
@@ -175,7 +176,8 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    [RPC] void CommitUnequipItem(int itemType)
+    [RPC] 
+    void CommitUnequipItem(int itemType)
     {
         ItemType type = (ItemType)itemType;
         if (type == ItemType.Shield)
@@ -225,8 +227,16 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void TryConsumeItem(string itemName)
+    {
+        if (Network.isServer)
+            ServerTryConsumeItem(itemName);
+        else
+            networkView.RPC("ServerTryConsumeItem", RPCMode.Server, itemName);
+    }
+
     [RPC]
-    void TryConsumeItem(string itemName)
+    void ServerTryConsumeItem(string itemName)
     {
         Item item = this.Get(itemName);
         if (item!=null && item.itemType == ItemType.Consumable)

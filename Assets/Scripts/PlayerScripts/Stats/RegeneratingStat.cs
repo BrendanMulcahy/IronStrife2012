@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public abstract class RegeneratingStat : MonoBehaviour
 {
     protected int _currentValue;
@@ -16,10 +17,24 @@ public abstract class RegeneratingStat : MonoBehaviour
         set
         {
             var temp = _currentValue;
-            OnChanged(this.gameObject, new StatChangedEventArgs() { newValue = value, oldValue = temp });
-            _currentValue = value;
+            var e = new StatChangedEventArgs() { newValue = value, oldValue = temp };
+            OnChanged(this.gameObject, e);
+            if (e.newValue < e.oldValue)
+            {
+                StopRegeneration();
+            }
+            _currentValue = e.newValue;
         }
     }
+
+    public float CurrentPercentage { get { return ((float)_currentValue / (float)_maxValue); } } 
+
+    private void StopRegeneration()
+    {
+        statRegenerating = false;
+        timeTilStatRegenerating = maxStatRegenTime;
+    }
+
     public int MaxValue { get { return _maxValue; } set { _maxValue = value; } }
 
     public event StatChangedEventHandler Changed;

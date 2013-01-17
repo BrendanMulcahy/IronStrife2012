@@ -1,4 +1,5 @@
-﻿public abstract class BuffableStat
+﻿[System.Serializable]
+public abstract class BuffableStat
 {
     public int baseValue;
     protected int totalModifiedValue;

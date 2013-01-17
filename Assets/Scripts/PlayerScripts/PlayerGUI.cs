@@ -83,7 +83,7 @@ public class PlayerGUI : MonoBehaviour
         mana = stats.Mana.CurrentValue;
         maxMana = stats.Mana.MaxValue;
         stamina = stats.Stamina.CurrentValue;
-        maxStamina = stats.Stamina.CurrentValue;
+        maxStamina = stats.Stamina.MaxValue;
         experience = stats.experience;
         experienceNeeded = stats.experienceNeeded;
         level = stats.Level;
@@ -154,9 +154,9 @@ public class PlayerGUI : MonoBehaviour
         float topmargin = 0.7481481481481481f * Screen.height;
         float width = Screen.width * 0.1901140684410646f;
         float height = (width / elements["StaminaBackground"].width) * elements["StaminaBackground"].height;
-
+        Debug.Log("Stamina percentage is " + stats.Stamina.CurrentPercentage);
         GUI.DrawTexture(new Rect(leftMargin, topmargin, width, height), elements["StaminaBackground"]);
-        GUI.DrawTexture(new Rect(leftMargin, topmargin, (stamina / maxStamina) * width, height), elements["StaminaForeground"]);
+        GUI.DrawTexture(new Rect(leftMargin, topmargin, stats.Stamina.CurrentPercentage * width, height), elements["StaminaForeground"]);
     }
 
     private void DrawXPBar()

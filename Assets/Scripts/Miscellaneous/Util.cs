@@ -132,8 +132,7 @@ public static class Util
     }
 
     /// <summary>
-    /// Stores and retrieves the client's local game player object. This is set in ThirdPersonNetworkInit
-    /// when the player is notified of their ownership.
+    /// Stores and retrieves the client's local game player object.
     /// </summary>
     public static GameObject MyLocalPlayerObject { get; set; }
 
@@ -334,5 +333,20 @@ public static class Util
     {
         var allClasses = Assembly.GetExecutingAssembly().GetExportedTypes().Where(t => t.GetCustomAttributes(typeof(T), false).Length > 0).ToArray();
         return allClasses;
+    }
+
+    public static void GetAndAssignNewNetworkView(this GameObject go, Component target, NetworkStateSynchronization stateSync = NetworkStateSynchronization.Off)
+    {
+        if (Network.isClient) throw new UnauthorizedAccessException("Clients cannot assign new network views.");
+
+        else
+        {
+            var newNetView = go.AddComponent<NetworkView>();
+            newNetView.observed = target; 
+            newNetView.stateSynchronization = stateSync;
+            newNetView.viewID = Network.AllocateViewID();
+
+            go.networkView.RPC("AssignNewNetworkView", RPCMode.AllBuffered, newNetView.viewID, (int)stateSync, target.GetType().Name);
+        }
     }
 }

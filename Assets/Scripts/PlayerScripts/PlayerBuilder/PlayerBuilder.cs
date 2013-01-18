@@ -10,17 +10,34 @@ using System.Collections.Generic;
 /// </summary>
 public class PlayerBuilder : MonoBehaviour
 {
-    public string[] attributeNames;
-    Dictionary<Type, PlayerComponentAttribute> typeToAttributes = new Dictionary<Type, PlayerComponentAttribute>();
-
-    public void BuildCharacter()
+    private static bool initialized = false;
+    private static Dictionary<Type, PlayerComponentAttribute> _typeToAttributes = new Dictionary<Type, PlayerComponentAttribute>();
+    private static Dictionary<Type, PlayerComponentAttribute> typeToAttributes
     {
+        get
+        {
+            if (!initialized) Initialize();
+            return _typeToAttributes;
+        }
+    }
+
+    [StaticAutoLoad]
+    private static void Initialize()
+    {
+        _typeToAttributes = new Dictionary<Type, PlayerComponentAttribute>();
         var allPlayerComponents = Util.GetClassesWithAttribute<PlayerComponentAttribute>();
         foreach (Type t in allPlayerComponents)
         {
-            typeToAttributes[t] = t.GetCustomAttributes(typeof(PlayerComponentAttribute), false)[0] as PlayerComponentAttribute;
+            _typeToAttributes[t] = t.GetCustomAttributes(typeof(PlayerComponentAttribute), false)[0] as PlayerComponentAttribute;
         }
+        initialized = true;
+    }
 
+    /// <summary>
+    /// Attaches the appropriate components to the player gameobject, depending on whether or not they are a server or client.
+    /// </summary>
+    public void BuildCharacter()
+    {
         AddCommonComponents();
 
         if (Network.isServer)
@@ -49,6 +66,11 @@ public class PlayerBuilder : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Notifies the player that the gameobject this is called on is their player.
+    /// Calls the OnSetOwnership method in all attached components.
+    /// Also attaches the camera to this gameObject.
+    /// </summary>
     internal void SetOwnership()
     {
         Util.MyLocalPlayerObject = this.gameObject;
@@ -129,6 +151,27 @@ public class PlayerBuilder : MonoBehaviour
 
             }
         }
+    }
+
+    /// <summary>
+    /// Assigns a new NetworkView to observe the given target.
+    /// </summary>
+    /// <param name="viewID">The NetworkViewID to use</param>
+    /// <param name="stateSync">The method of state sync to use</param>
+    /// <param name="targetTypeName">The name of the target type to observe. There must be only one attached</param>
+    [RPC]
+    void AssignNewNetworkView(NetworkViewID viewID, int stateSync, string targetTypeName)
+    {
+        var newNetView = this.gameObject.AddComponent<NetworkView>();
+        if (this.gameObject.GetComponents(Type.GetType(targetTypeName)).Length > 1)
+        {
+            Debug.LogError("There should only be one " + targetTypeName + " attached to " + gameObject + "!");
+            return;
+        }
+        newNetView.observed = this.gameObject.GetComponent(targetTypeName);
+        newNetView.stateSynchronization = (NetworkStateSynchronization)stateSync;
+        newNetView.viewID = viewID;
+
     }
 
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[DefaultSceneObject("ScreenshotTaker")]
 public class TakeScreenshot : MonoBehaviour
 {
     private int screenshotCount = 0;
@@ -9,7 +10,7 @@ public class TakeScreenshot : MonoBehaviour
     void Update()
     {
         // take screenshot on up->down transition of F9 key
-        if (Input.GetKeyDown("f9"))
+        if (Input.GetKeyDown(KeyCode.F9))
         {
             string screenshotFilename;
             do

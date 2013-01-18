@@ -19,6 +19,11 @@ public class AbilityManager : MonoBehaviour
         EquipStartingSpells();
     }
 
+    void OnSetOwnership()
+    {
+        EquipStartingSpells();
+    }
+
     private void EquipStartingSpells()
     {
         equippedSpells[4] = (int)PlayerAbilities.GetSpell("Surge");
@@ -26,14 +31,11 @@ public class AbilityManager : MonoBehaviour
         equippedSpells[3] = (int)PlayerAbilities.GetSpell("Flameburst");
         equippedSpells[2] = (int)PlayerAbilities.GetSpell("Fireball");
         equippedSpells[0] = (int)PlayerAbilities.GetSpell("Magic Hook");
+
         for (int g = 0; g < 5; g++)
         {
             GetComponent<PlayerGUI>().UpdateSpellIcons(g, (Spell)equippedSpells[g]);
-
         }
-
-
-
     }
 
 

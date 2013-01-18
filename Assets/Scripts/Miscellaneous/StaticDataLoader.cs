@@ -3,6 +3,9 @@ using System.Reflection;
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// This class automatically calls static methods marked with the [StaticAutoLoad] attribute.
+/// </summary>
 [DefaultSceneObject("StaticDataLoader")]
 public class StaticDataLoader : MonoBehaviour
 {
@@ -20,7 +23,7 @@ public class StaticDataLoader : MonoBehaviour
 
     private void FindAndCallStaticLoadingMethods(Type t)
     {
-        var allMethods = t.GetMethods(BindingFlags.Static | BindingFlags.Public);
+        var allMethods = t.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
         foreach (MethodInfo method in allMethods)
         {
             if (method.GetCustomAttributes(typeof(StaticAutoLoad), false).Length!=0 && !methodsCalled.Contains(method.Name))
@@ -32,5 +35,10 @@ public class StaticDataLoader : MonoBehaviour
         }
     }
 }
+
+/// <summary>
+/// Marks a method that should be called on scene load
+/// Classes implementing this should st
+/// </summary>
 [AttributeUsage(AttributeTargets.Method)]
 public class StaticAutoLoad : Attribute { }

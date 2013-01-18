@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Reflection;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public class DefaultSceneObjectAttribute : Attribute

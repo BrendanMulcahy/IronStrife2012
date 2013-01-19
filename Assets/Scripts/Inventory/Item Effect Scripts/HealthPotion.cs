@@ -11,8 +11,8 @@ public class HealthPotion : MonoBehaviour
         particle.transform.SetParentAndCenter(this.transform.root);
         particle.transform.localPosition += Vector3.up * 1.7f;
         Invoke("TurnOffParticles", 1.1f);
-        StartCoroutine(Util.DestroyInSeconds(particle, 5.0f));
-        StartCoroutine(Util.DestroyInSeconds(this, 5.0f));
+        Destroy(particle, 5.0f);
+        Destroy(this, 5.0f);
     }
 
     void TurnOffParticles()

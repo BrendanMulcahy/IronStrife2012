@@ -17,6 +17,8 @@ using System.Reflection;
 // the correct values. This is played back with a 100 ms delay to elminate
 // choppyness. The delay needs to be higher is the ping time between the server
 // and client is larger than 100 ms.
+
+[PlayerComponent(PlayerScriptType.ClientEnabled, PlayerScriptType.ServerDisabled)]
 public class GraduallyUpdateState : MonoBehaviour {
 	
 	ThirdPersonController targetController;

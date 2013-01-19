@@ -45,10 +45,16 @@ public class SpawnPrefab : MonoBehaviour {
         Debug.Log("RPC call into group " + int.Parse(msg.sender.ToString()));
         GameObject playerPrefab = Resources.Load("Player/" + prefabName) as GameObject;
         GameObject newPlayer = Network.Instantiate(playerPrefab, this.transform.position, Quaternion.identity, int.Parse(msg.sender.ToString())) as GameObject;
-        newPlayer.networkView.RPC("ChangeName", RPCMode.AllBuffered, username);
+        newPlayer.gameObject.GetComponent<PlayerBuilder>().BuildCharacter();
+        ((PlayerStats)newPlayer.GetCharacterStats()).SetNetworkPlayer(msg.sender);
         int team = MasterGameLogic.Main.PlayerManager.AddPlayer(newPlayer.gameObject, msg.sender);
+
         newPlayer.gameObject.GetCharacterStats().TeamNumber = team;
         ((PlayerStats)newPlayer.GetCharacterStats()).SetNetworkPlayer(msg.sender);
+        newPlayer.networkView.RPC("ChangeName", RPCMode.AllBuffered, username);
+
+        newPlayer.GetComponent<PlayerBuilder>().GetAndAssignNewNetworkView(newPlayer.GetComponent<GraduallyUpdateState>(), NetworkStateSynchronization.ReliableDeltaCompressed);
+
 
         newPlayer.networkView.RPC("SetOwnership", msg.sender);
     }
@@ -59,15 +65,17 @@ public class SpawnPrefab : MonoBehaviour {
     void AuthoritativeServerSpawnPlayer(string username, string prefabName)
     {
         GameObject playerPrefab = Resources.Load("Player/" + prefabName) as GameObject;
+
         GameObject newPlayer = Network.Instantiate(playerPrefab, this.transform.position, this.transform.rotation, 0) as GameObject;
-        //newPlayer.gameObject.GetComponent<ThirdPersonNetworkInit>().EquipDefaultItems();
         newPlayer.gameObject.GetComponent<PlayerBuilder>().BuildCharacter();
         newPlayer.gameObject.GetComponent<PlayerBuilder>().SetOwnership();
+
         ((PlayerStats)newPlayer.GetCharacterStats()).SetNetworkPlayer(Network.player);
         int team = MasterGameLogic.Main.PlayerManager.AddPlayer(newPlayer.gameObject, Network.player);
         newPlayer.gameObject.GetCharacterStats().TeamNumber = team;
         newPlayer.networkView.RPC("ChangeName", RPCMode.AllBuffered, username);
 
+        newPlayer.GetComponent<PlayerBuilder>().GetAndAssignNewNetworkView(newPlayer.GetComponent<GraduallyUpdateState>(), NetworkStateSynchronization.ReliableDeltaCompressed);
     }
 
     /// <summary>

@@ -33,6 +33,12 @@ public class PlayerBuilder : MonoBehaviour
         initialized = true;
     }
 
+    void OnNetworkInstantiate(NetworkMessageInfo info)
+    {
+        if (Network.isClient)
+            BuildCharacter();
+    }
+
     /// <summary>
     /// Attaches the appropriate components to the player gameobject, depending on whether or not they are a server or client.
     /// </summary>
@@ -71,6 +77,7 @@ public class PlayerBuilder : MonoBehaviour
     /// Calls the OnSetOwnership method in all attached components.
     /// Also attaches the camera to this gameObject.
     /// </summary>
+    [RPC]
     internal void SetOwnership()
     {
         Util.MyLocalPlayerObject = this.gameObject;
@@ -150,6 +157,21 @@ public class PlayerBuilder : MonoBehaviour
                     Destroy(c);
 
             }
+        }
+    }
+
+    public void GetAndAssignNewNetworkView(Component target, NetworkStateSynchronization stateSync = NetworkStateSynchronization.Off)
+    {
+        if (Network.isClient) throw new UnauthorizedAccessException("Clients cannot assign new network views.");
+
+        else
+        {
+            var newNetView = gameObject.AddComponent<NetworkView>();
+            newNetView.observed = target;
+            newNetView.stateSynchronization = stateSync;
+            newNetView.viewID = Network.AllocateViewID();
+
+            networkView.RPC("AssignNewNetworkView", RPCMode.OthersBuffered, newNetView.viewID, (int)stateSync, target.GetType().Name);
         }
     }
 

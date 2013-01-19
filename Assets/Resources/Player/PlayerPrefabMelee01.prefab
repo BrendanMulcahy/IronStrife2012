@@ -1165,11 +1165,11 @@ GameObject:
   - 4: {fileID: 400154}
   - 143: {fileID: 14300000}
   - 114: {fileID: 11400016}
-  - 148: {fileID: 14800000}
   - 120: {fileID: 12000000}
   - 111: {fileID: 11100000}
   - 82: {fileID: 8200000}
   - 114: {fileID: 11400000}
+  - 148: {fileID: 14800000}
   m_Layer: 0
   m_Name: PlayerPrefabMelee01
   m_TagString: Untagged
@@ -7527,7 +7527,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28c195014d8a18a4384e32518855ed4f, type: 3}
   m_Name: 
-  attributeNames: []
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8019,8 +8018,8 @@ NetworkView:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100154}
   m_Enabled: 1
-  m_StateSynchronization: 1
-  m_Observed: {fileID: 400154}
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 0}
   m_ViewID:
     m_ID: 0
     m_Type: 0

@@ -8,12 +8,11 @@ public class PlayerGUI : MonoBehaviour
     private bool visible = true;
 
     private const int MAX_SPELL_NUMBER = 5;
-    private float health;
-    private float maxHealth;
-    private float mana;
-    private float maxMana;
-    private float stamina;
-    private float maxStamina;
+
+    float healthPercentage;
+    float manaPercentage;
+    float staminaPercentage;
+
     private float experience;
     private float experienceNeeded;
     private float level;
@@ -78,12 +77,10 @@ public class PlayerGUI : MonoBehaviour
 
     private void Update()
     {
-        health = stats.Health.CurrentValue;
-        maxHealth = stats.Health.MaxValue;
-        mana = stats.Mana.CurrentValue;
-        maxMana = stats.Mana.MaxValue;
-        stamina = stats.Stamina.CurrentValue;
-        maxStamina = stats.Stamina.MaxValue;
+        healthPercentage = stats.Health.CurrentPercentage;
+        manaPercentage = stats.Mana.CurrentPercentage;
+        staminaPercentage = stats.Stamina.CurrentPercentage;
+
         experience = stats.experience;
         experienceNeeded = stats.experienceNeeded;
         level = stats.Level;
@@ -135,7 +132,7 @@ public class PlayerGUI : MonoBehaviour
         float height = (width / elements["HealthBackground"].width) * elements["HealthBackground"].height;
 
         GUI.DrawTexture(new Rect(leftMargin, topmargin, width, height), elements["HealthBackground"]);
-        GUI.DrawTexture(new Rect(leftMargin, topmargin, (health / maxHealth) * width, height), elements["HealthForeground"]);
+        GUI.DrawTexture(new Rect(leftMargin, topmargin, healthPercentage * width, height), elements["HealthForeground"]);
     }
 
     private void DrawMana()
@@ -145,7 +142,7 @@ public class PlayerGUI : MonoBehaviour
         float width = Screen.width * 0.1901140684410646f;
         float height = (width / elements["ManaBackground"].width) * elements["ManaBackground"].height;
         GUI.DrawTexture(new Rect(leftMargin, topmargin, width, height), elements["ManaBackground"]);
-        GUI.DrawTexture(new Rect(leftMargin, topmargin, (mana / maxMana) * width, height), elements["ManaForeground"]);
+        GUI.DrawTexture(new Rect(leftMargin, topmargin, manaPercentage * width, height), elements["ManaForeground"]);
     }
 
     private void DrawStamina()
@@ -154,9 +151,8 @@ public class PlayerGUI : MonoBehaviour
         float topmargin = 0.7481481481481481f * Screen.height;
         float width = Screen.width * 0.1901140684410646f;
         float height = (width / elements["StaminaBackground"].width) * elements["StaminaBackground"].height;
-        Debug.Log("Stamina percentage is " + stats.Stamina.CurrentPercentage);
         GUI.DrawTexture(new Rect(leftMargin, topmargin, width, height), elements["StaminaBackground"]);
-        GUI.DrawTexture(new Rect(leftMargin, topmargin, stats.Stamina.CurrentPercentage * width, height), elements["StaminaForeground"]);
+        GUI.DrawTexture(new Rect(leftMargin, topmargin, staminaPercentage * width, height), elements["StaminaForeground"]);
     }
 
     private void DrawXPBar()

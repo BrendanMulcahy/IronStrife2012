@@ -32,6 +32,26 @@ public class PlayerManager
             return numPlayers;
         }
     }
+
+    public PlayerRecord GenerateNewPlayer(NetworkPlayer player, string username)
+    {
+        var interpolationViewID = Network.AllocateViewID();
+        var animationViewID = Network.AllocateViewID();
+        var team = 1;
+
+        GameObject newPlayer;
+
+        if (player == Network.player && Network.isServer)
+        {
+            newPlayer = PlayerBuilder.GenerateServer(username, interpolationViewID, animationViewID);
+            PlayerBuilder.SetOwnership(newPlayer);
+        }
+        else
+        {
+            newPlayer = PlayerBuilder.GenerateServer(username, interpolationViewID, animationViewID);
+        }
+        return AddPlayer(newPlayer, username, player, interpolationViewID, animationViewID, team);
+    }
      
     /// <summary>
     /// Adds the player to the master player list. If a team number isn't given, a random team number is assigned.
@@ -39,7 +59,7 @@ public class PlayerManager
     /// <param name="gameObject">The new player's game object</param>
     /// <param name="player">The network player of the new player</param>
     /// <param name="team">[Optional] The team number of the new player. If not supplied, will be auto-assigned.</param>
-    public int AddPlayer(GameObject gameObject, NetworkPlayer player, int team = -1)
+    public PlayerRecord AddPlayer(GameObject gameObject, string username, NetworkPlayer player, NetworkViewID interpolationViewID, NetworkViewID animationViewID, int team = -1)
     {
         if (team==-1)
         {
@@ -49,7 +69,11 @@ public class PlayerManager
             {
                 gameObject = gameObject,
                 networkPlayer = player,
-                team = team
+                team = team,
+                interpolationViewID = interpolationViewID,
+                animationViewID = animationViewID,
+                username = username,
+
             };
         players.Add(newPlayer);
         Debug.Log("A new player has been added to team " + team);
@@ -62,7 +86,7 @@ public class PlayerManager
             evilPlayers.Add(gameObject);
         }
             
-        return team;
+        return newPlayer;
     }
 
     /// <summary>
@@ -74,13 +98,6 @@ public class PlayerManager
         return (numGoodPlayers <=  numEvilPlayers) ? 1 : 2;
     }
 
-    public class PlayerRecord
-    {
-        public GameObject gameObject;
-        public int team;
-        public NetworkPlayer networkPlayer;
-    }
-
     private PlayerRecord FindRecord(GameObject go)
     {
         foreach (PlayerRecord pr in players)
@@ -90,6 +107,20 @@ public class PlayerManager
                 return pr;
             }
         }
+        Debug.LogWarning("User not found.");
+        return null;
+    }
+
+    private PlayerRecord FindRecord(string username)
+    {
+        foreach (PlayerRecord pr in players)
+        {
+            if (pr.username == username)
+            {
+                return pr;
+            }
+        }
+        Debug.LogWarning("User not found.");
         return null;
     }
 
@@ -119,4 +150,15 @@ public class PlayerManager
         }
         this.FindRecord(gameObject).team = newTeam;
     }
+}
+
+public class PlayerRecord
+{
+    public GameObject gameObject;
+    public int team;
+    public NetworkPlayer networkPlayer;
+    public string username;
+
+    public NetworkViewID interpolationViewID;
+    public NetworkViewID animationViewID;
 }

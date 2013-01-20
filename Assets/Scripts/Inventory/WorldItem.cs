@@ -18,7 +18,7 @@ public class WorldItem : InteractableObject
     {
         GameObject interactor = NetworkView.Find(networkViewID).gameObject;
 
-        interactor.networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, itemName);
+        interactor.networkView.RPC("AddItemToInventory", RPCMode.All, itemName);
         Network.Destroy(this.gameObject);
     }
 }

@@ -123,7 +123,7 @@ public class ConnectGUI : MonoBehaviour {
     void ChangeUserName()
     {
 	    PlayerPrefs.SetString("username", username);
-        playerGO.networkView.RPC("ChangeName", RPCMode.AllBuffered, username);
+        playerGO.networkView.RPC("ChangeName", RPCMode.All, username);
     }
 
     /// <summary>

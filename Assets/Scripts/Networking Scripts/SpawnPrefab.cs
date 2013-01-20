@@ -15,9 +15,12 @@ public class SpawnPrefab : MonoBehaviour {
     void OnNetworkLoadedLevel ()
     {
         string username = PlayerPrefs.GetString("username", "DEFAULT_USERNAME");
+#if UNITY_EDITOR
+        username += "_Editor_";
+#endif
         if (Network.isServer)
         {
-            AuthoritativeServerSpawnPlayer(username, prefabName);
+            //AuthoritativeServerSpawnPlayer(username, prefabName);
         }
         else
         {
@@ -34,49 +37,46 @@ public class SpawnPrefab : MonoBehaviour {
         GUI.skin = Resources.Load("ISEGUISkin") as GUISkin;
     }
 
-    /// <summary>
-    /// This method is run on the server. Clients request it when they join the game.
-    /// </summary>
-    /// <param name="username">The username which is used to name the gameobject</param>
-    /// <param name="msg"></param>
-    [RPC]
-    void AuthoritativeServerSpawnPlayer(string username, string prefabName, NetworkMessageInfo msg)
-    {
-        Debug.Log("RPC call into group " + int.Parse(msg.sender.ToString()));
-        GameObject playerPrefab = Resources.Load("Player/" + prefabName) as GameObject;
-        GameObject newPlayer = Network.Instantiate(playerPrefab, this.transform.position, Quaternion.identity, int.Parse(msg.sender.ToString())) as GameObject;
-        newPlayer.gameObject.GetComponent<PlayerBuilder>().BuildCharacter();
-        ((PlayerStats)newPlayer.GetCharacterStats()).SetNetworkPlayer(msg.sender);
-        int team = MasterGameLogic.Main.PlayerManager.AddPlayer(newPlayer.gameObject, msg.sender);
+    ///// <summary>
+    ///// This method is run on the server. Clients request it when they join the game.
+    ///// </summary>
+    ///// <param name="username">The username which is used to name the gameobject</param>
+    ///// <param name="msg"></param>
+    //[RPC]
+    //void AuthoritativeServerSpawnPlayer(string username, string prefabName, NetworkMessageInfo msg)
+    //{
+    //    Debug.Log("RPC call into group " + int.Parse(msg.sender.ToString()));
+    //    GameObject playerPrefab = Resources.Load("Player/" + prefabName) as GameObject;
+    //    GameObject newPlayer = Network.Instantiate(playerPrefab, this.transform.position, Quaternion.identity, int.Parse(msg.sender.ToString())) as GameObject;
+    //    ((PlayerStats)newPlayer.GetCharacterStats()).SetNetworkPlayer(msg.sender);
 
-        newPlayer.gameObject.GetCharacterStats().TeamNumber = team;
-        ((PlayerStats)newPlayer.GetCharacterStats()).SetNetworkPlayer(msg.sender);
-        newPlayer.networkView.RPC("ChangeName", RPCMode.AllBuffered, username);
+    //    newPlayer.gameObject.GetCharacterStats().TeamNumber = team;
+    //    ((PlayerStats)newPlayer.GetCharacterStats()).SetNetworkPlayer(msg.sender);
+    //    newPlayer.networkView.RPC("ChangeName", RPCMode.AllBuffered, username);
 
-        newPlayer.GetComponent<PlayerBuilder>().GetAndAssignNewNetworkView(newPlayer.GetComponent<GraduallyUpdateState>(), NetworkStateSynchronization.ReliableDeltaCompressed);
+    //    newPlayer.networkView.RPC("SetOwnership", msg.sender);
+    //}
 
+    ///// <summary>
+    ///// Server version of AuthoritativeSpawnPlayer, only for instantiating the Server's player
+    ///// </summary>
+    //void AuthoritativeServerSpawnPlayer(string username, string prefabName)
+    //{
+    //    GameObject playerPrefab = Resources.Load("Player/" + prefabName) as GameObject;
 
-        newPlayer.networkView.RPC("SetOwnership", msg.sender);
-    }
+    //    GameObject newPlayer = Network.Instantiate(playerPrefab, this.transform.position, this.transform.rotation, 0) as GameObject;
+    //    newPlayer.gameObject.GetComponent<PlayerBuilder>().BuildCharacter();
+    //    newPlayer.gameObject.GetComponent<PlayerBuilder>().SetOwnership();
 
-    /// <summary>
-    /// Server version of AuthoritativeSpawnPlayer, only for instantiating the Server's player
-    /// </summary>
-    void AuthoritativeServerSpawnPlayer(string username, string prefabName)
-    {
-        GameObject playerPrefab = Resources.Load("Player/" + prefabName) as GameObject;
+    //    ((PlayerStats)newPlayer.GetCharacterStats()).SetNetworkPlayer(Network.player);
+    //    int team = MasterGameLogic.Main.PlayerManager.AddPlayer(newPlayer.gameObject, Network.player);
+    //    newPlayer.gameObject.GetCharacterStats().TeamNumber = team;
+    //    newPlayer.networkView.RPC("ChangeName", RPCMode.AllBuffered, username);
 
-        GameObject newPlayer = Network.Instantiate(playerPrefab, this.transform.position, this.transform.rotation, 0) as GameObject;
-        newPlayer.gameObject.GetComponent<PlayerBuilder>().BuildCharacter();
-        newPlayer.gameObject.GetComponent<PlayerBuilder>().SetOwnership();
+    //    newPlayer.GetComponent<PlayerBuilder>().GetAndAssignNewNetworkView(newPlayer.GetComponent<GraduallyUpdateState>(), NetworkStateSynchronization.ReliableDeltaCompressed);
+    //    newPlayer.GetComponent<PlayerBuilder>().GetAndAssignNewNetworkView(newPlayer.GetComponent<NetworkSyncAnimation>(), NetworkStateSynchronization.ReliableDeltaCompressed);
 
-        ((PlayerStats)newPlayer.GetCharacterStats()).SetNetworkPlayer(Network.player);
-        int team = MasterGameLogic.Main.PlayerManager.AddPlayer(newPlayer.gameObject, Network.player);
-        newPlayer.gameObject.GetCharacterStats().TeamNumber = team;
-        newPlayer.networkView.RPC("ChangeName", RPCMode.AllBuffered, username);
-
-        newPlayer.GetComponent<PlayerBuilder>().GetAndAssignNewNetworkView(newPlayer.GetComponent<GraduallyUpdateState>(), NetworkStateSynchronization.ReliableDeltaCompressed);
-    }
+    //}
 
     /// <summary>
     /// Cleans up player after he disconnects. Removes his GO and also removes his buffered RPCs.

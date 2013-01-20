@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using EternityGUI;
+using System;
 
 [PlayerComponent(PlayerScriptType.AllDisabled, PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerOwnerEnabled)]
 /// <summary>
@@ -27,7 +28,7 @@ public class Inventory : MonoBehaviour
     public GameObject currentShieldGameObject;
     public WeaponType CurrentWeaponType { get { if (currentWeapon != null) return currentWeapon.weaponType; else return WeaponType.None; } }
 
-    public event WeaponChangedEventHandler weaponChanged;
+    public event WeaponChangedEventHandler WeaponChanged;
 
     private InventoryPanel inventoryPanel;
 
@@ -53,18 +54,18 @@ public class Inventory : MonoBehaviour
 
     public void AddDefaultInventoryItems()
     {
-        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Simple Sword");
+        networkView.RPC("AddItemToInventory", RPCMode.All, "Simple Sword");
         TryEquipItem((Weapon)Items[0]);
 
-        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Health Potion");
-        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Health Potion");
-        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Health Potion");
-        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Mana Potion");
-        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Mana Potion");
-        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Mana Potion");
+        networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
+        networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
+        networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
+        networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
+        networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
+        networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
 
-        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Shielded Bow");
-        networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, "Shield of the Round");
+        networkView.RPC("AddItemToInventory", RPCMode.All, "Shielded Bow");
+        networkView.RPC("AddItemToInventory", RPCMode.All, "Shield of the Round");
         TryEquipItem((Shield)Items[8]);
 
 
@@ -103,7 +104,7 @@ public class Inventory : MonoBehaviour
         EquippableItem item;
         if ((item = (EquippableItem)this.Get(itemName)) !=null && item is EquippableItem)
         {
-            networkView.RPC("CommitEquipItem", RPCMode.AllBuffered, itemName, (int)item.itemType);
+            networkView.RPC("CommitEquipItem", RPCMode.All, itemName, (int)item.itemType);
         }
         else
         {
@@ -111,6 +112,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns the item in this inventory given the name
+    /// </summary>
+    /// <param name="itemName"></param>
+    /// <returns></returns>
     private Item Get(string itemName)
     {
         foreach (Item item in Items)
@@ -124,55 +130,53 @@ public class Inventory : MonoBehaviour
     [RPC] 
     void CommitEquipItem(string itemName, int itemType)
     {
-        Debug.Log("Trying to equip " + itemName + " of type " + ((ItemType)itemType).ToString());
-        EquippableItem item = new EquippableItem();
-        switch ((ItemType)itemType)
+        try
         {
-            case ItemType.Weapon:
-                item = Item.FromName<Weapon>(itemName);
-                break;
-            case ItemType.Shield:
-                item = Item.FromName<Shield>(itemName);
-                break;
-                // And so on....
+            EquippableItem item = Get(itemName) as EquippableItem;
 
+            Weapon oldWeapon = null;
 
+            var GO = item.Equip(gameObject);
+            if (item.itemType == ItemType.Weapon)
+            {
+                if (currentWeapon != null)
+                {
+                    oldWeapon = currentWeapon;
+                    CommitUnequipItem((int)ItemType.Weapon);
+
+                }
+                if (((Weapon)item).numHands == 2 && currentShield != null)
+                {
+                    CommitUnequipItem((int)ItemType.Shield);
+                }
+                currentWeapon = (Weapon)item;
+                currentWeaponGameobject = GO;
+                var traj = GetComponent<TrajectorySimulator>();
+                if (traj)
+                    traj.SetWeaponGameObject(GO);
+
+                if (WeaponChanged != null)
+                    WeaponChanged(this.gameObject, new WeaponChangedEventArgs() { oldWeapon = oldWeapon, newWeapon = currentWeapon });
+
+            }
+            if (item.itemType == ItemType.Shield)
+            {
+                if (currentWeapon != null && currentWeapon.numHands == 2)
+                {
+                    CommitUnequipItem((int)ItemType.Weapon);
+                }
+                if (currentShield != null)
+                {
+                    Destroy(currentShieldGameObject);
+                }
+                currentShield = (Shield)item;
+                currentShieldGameObject = GO;
+            }
         }
-        Weapon oldWeapon = null;
-        var GO = item.Equip(gameObject);
-        if (item is Weapon)
+        catch (InvalidCastException e)
         {
-            if (currentWeapon != null)
-            {
-                oldWeapon = currentWeapon;
-                CommitUnequipItem((int)ItemType.Weapon);
+            Debug.LogError(e.Message + "\n"+gameObject.name + " tried to equip something that was not valid.");
 
-            }
-            if (((Weapon)item).numHands == 2 && currentShield != null)
-            {
-                CommitUnequipItem((int)ItemType.Shield);
-            }
-            currentWeapon = (Weapon)item;
-            currentWeaponGameobject = GO;
-            var traj = GetComponent<TrajectorySimulator>();
-            traj.SetWeaponGameObject(GO);
-
-            if (weaponChanged!=null)
-            weaponChanged(new WeaponChangedEventArgs() { oldWeapon = oldWeapon, newWeapon = currentWeapon });
-
-        }
-        if (item is Shield)
-        {
-            if (currentWeapon!=null && currentWeapon.numHands == 2)
-            {
-                CommitUnequipItem((int)ItemType.Weapon);
-            }
-            if (currentShield != null)
-            {
-                Destroy(currentShieldGameObject);
-            }
-            currentShield = (Shield)item;
-            currentShieldGameObject = GO;
         }
     }
 
@@ -204,7 +208,7 @@ public class Inventory : MonoBehaviour
         var itemToPurchase = ItemDirectory.Get(itemName);
         if (itemToPurchase.goldCost <= this._gold)
         {
-            networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, itemName);
+            networkView.RPC("AddItemToInventory", RPCMode.All, itemName);
             NetworkView.Find(shopID).RPC("ItemPurchasedSound", RPCMode.All);
         }
         else
@@ -218,7 +222,7 @@ public class Inventory : MonoBehaviour
         var itemToPurchase = ItemDirectory.Get(itemName);
         if (itemToPurchase.goldCost <= this._gold)
         {
-            networkView.RPC("AddItemToInventory", RPCMode.AllBuffered, itemName);
+            networkView.RPC("AddItemToInventory", RPCMode.All, itemName);
             NetworkView.Find(shopID).RPC("ItemPurchasedSound", RPCMode.All);
         }
         else
@@ -257,7 +261,6 @@ public class Inventory : MonoBehaviour
     void AddItemToInventory(string itemName)
     {
         var newItem = ItemDirectory.Get(itemName);
-        Debug.Log("Adding item to inventory: " + itemName);
         Items.Add(newItem);
         if (this.gameObject.IsMyLocalPlayer())
         {
@@ -280,9 +283,29 @@ public class Inventory : MonoBehaviour
     {
         PopupMessage.LocalDisplay("You don't have enough gold to buy that!");
     }
+
+    /// <summary>
+    /// Sends all necessary information to synchronize this object with a newly connected player
+    /// </summary>
+    /// <param name="player"></param>
+    public void SynchronizePlayer(NetworkPlayer player)
+    {
+        if (Network.isClient) return;
+
+        //Add all currently-held items to remote client's inventory
+        foreach (Item i in Items)
+        {
+            networkView.RPC("AddItemToInventory", player, i.name);
+        }
+
+        //Equip items on remote client
+        networkView.RPC("CommitEquipItem", player, currentWeapon.name, (int)currentWeapon.itemType);
+        networkView.RPC("CommitEquipItem", player, currentShield.name, (int)currentShield.itemType);
+
+    }
 }
 
-public delegate void WeaponChangedEventHandler(WeaponChangedEventArgs e);
+public delegate void WeaponChangedEventHandler(GameObject sender, WeaponChangedEventArgs e);
 
 public class WeaponChangedEventArgs
 {

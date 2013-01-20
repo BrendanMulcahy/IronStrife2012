@@ -39,12 +39,4 @@ public class MessageTerminal : MonoBehaviour
         PopupMessage.Display("The game has started!", 3.0f);
     }
 
-    [RPC]
-    void GameEnded(int winningTeam)
-    {
-        Debug.Log("Team " + winningTeam + " has won!");
-        PopupMessage.Display("Team " + winningTeam + " has won!", 20.0f);
-        Util.MyLocalPlayerObject.DisableControls();
-    }
-
 }

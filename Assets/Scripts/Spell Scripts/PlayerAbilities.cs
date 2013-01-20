@@ -39,9 +39,11 @@ public static class PlayerAbilities
     [StaticAutoLoad]
     public static void Initialize()
     {
-        LoadAllSpells();
-
-        isInitialized = true;
+        if (!isInitialized)
+        {
+            LoadAllSpells();
+            isInitialized = true;
+        }
     }
 
     public static String StringList()

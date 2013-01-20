@@ -1164,12 +1164,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 400154}
   - 143: {fileID: 14300000}
-  - 114: {fileID: 11400016}
-  - 120: {fileID: 12000000}
   - 111: {fileID: 11100000}
   - 82: {fileID: 8200000}
-  - 114: {fileID: 11400000}
   - 148: {fileID: 14800000}
+  - 148: {fileID: 14800002}
   m_Layer: 0
   m_Name: PlayerPrefabMelee01
   m_TagString: Untagged
@@ -7517,27 +7515,6 @@ Animation:
   m_UserAABB:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c195014d8a18a4384e32518855ed4f, type: 3}
-  m_Name: 
---- !u!114 &11400016
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab93e5c9fe72ee544bcff1a9b31bfbb3, type: 3}
-  m_Name: 
-  index: 0
 --- !u!114 &11400026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7549,37 +7526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea862aea968761c41b373c9b12b86c5c, type: 3}
   m_Name: 
   target: {fileID: 400154}
---- !u!120 &12000000
-LineRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100154}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 2100000, guid: b4d8055067ce04d4c98367d69c10b358, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
-  m_Parameters:
-    startWidth: .5
-    endWidth: .100000001
-    m_StartColor:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_EndColor:
-      serializedVersion: 2
-      rgba: 4294967295
-  m_UseWorldSpace: 1
 --- !u!131 &13100000
 GUITexture:
   m_ObjectHideFlags: 1
@@ -8018,7 +7964,19 @@ NetworkView:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100154}
   m_Enabled: 1
-  m_StateSynchronization: 0
+  m_StateSynchronization: 2
+  m_Observed: {fileID: 0}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800002
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100154}
+  m_Enabled: 1
+  m_StateSynchronization: 2
   m_Observed: {fileID: 0}
   m_ViewID:
     m_ID: 0

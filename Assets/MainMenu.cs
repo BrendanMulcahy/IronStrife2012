@@ -359,7 +359,6 @@ public class MainMenu : MonoBehaviour
     {
         if (!invalidScore)
         {
-            new GameObject("MasterGameLogic").AddComponent<MasterGameLogic>();
             Network.InitializeServer(32, 25000, false);
             MasterServer.RegisterHost("IronStrife", gameName, gameDescription);
             GameState.Reset(parsedScore);

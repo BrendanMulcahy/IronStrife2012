@@ -334,4 +334,20 @@ public static class Util
         var allClasses = Assembly.GetExecutingAssembly().GetExportedTypes().Where(t => t.GetCustomAttributes(typeof(T), false).Length > 0).ToArray();
         return allClasses;
     }
+
+    private static string _username;
+    public static string Username
+    {
+        get
+        {
+            if (_username == null)
+            {
+                _username = PlayerPrefs.GetString("username", "default_username");
+#if UNITY_EDITOR
+                _username += "_Editor";
+#endif
+            }
+            return _username;
+        }
+    }
 }

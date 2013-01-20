@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Linq;
 
-[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerEnabled)]
+[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerEnabled, PlayerScriptType.AllDisabled)]
 public class ThirdPersonController : MonoBehaviour, IController
 {
 

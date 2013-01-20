@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using System.Linq;
 
-[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerDisabled)]
+[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerDisabled, PlayerScriptType.ServerOwnerDeleted)]
 public class NetworkController : MonoBehaviour
 {
     public PlayerInputManager targetController;
@@ -47,7 +47,7 @@ public class NetworkController : MonoBehaviour
         targetController = GetComponent<PlayerInputManager>();
     }
 
-    void OnSetOwnership() { StartMonitoringCameraMovement(); }
+    void OnSetOwnership() { if (Network.isClient) StartMonitoringCameraMovement(); }
 
     public void StartMonitoringCameraMovement()
     {

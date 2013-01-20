@@ -23,14 +23,14 @@ public class StaticDataLoader : MonoBehaviour
 
     private void FindAndCallStaticLoadingMethods(Type t)
     {
-        var allMethods = t.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+        var allMethods = t.GetMethods(BindingFlags.Static | BindingFlags.Public);
         foreach (MethodInfo method in allMethods)
         {
-            if (method.GetCustomAttributes(typeof(StaticAutoLoad), false).Length!=0 && !methodsCalled.Contains(method.Name))
+            if (method.GetCustomAttributes(typeof(StaticAutoLoad), false).Length != 0 && !methodsCalled.Contains(t.Name + "." + method.Name))
             {
                 Debug.Log("Invoking static loader " + t.Name + "." + method.Name);
                 method.Invoke(null, null);
-                methodsCalled.Add(method.Name);
+                methodsCalled.Add(t.Name + "." + method.Name);
             }
         }
     }

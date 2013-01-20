@@ -18,7 +18,7 @@ using System.Reflection;
 // choppyness. The delay needs to be higher is the ping time between the server
 // and client is larger than 100 ms.
 
-[PlayerComponent(PlayerScriptType.ClientEnabled, PlayerScriptType.ServerDisabled)]
+[PlayerComponent(PlayerScriptType.ClientEnabled)]
 public class GraduallyUpdateState : MonoBehaviour {
 	
 	ThirdPersonController targetController;
@@ -188,7 +188,7 @@ public class GraduallyUpdateState : MonoBehaviour {
 			Quaternion rot = transform.rotation;//Quaternion.identity;
 			stream.Serialize(ref pos);
 			stream.Serialize(ref rot);
-			
+
 			// Shift buffer contents, oldest data erased, 18 becomes 19, ... , 0 becomes 1
 			for (int i=m_BufferedState.Length-1;i>=1;i--)
 			{
@@ -216,7 +216,7 @@ public class GraduallyUpdateState : MonoBehaviour {
 		}
 	}
 	
-    public void StartMonitoringLocalMovement() {
+    public void OnSetOwnership() {
 		Debug.Log("Setting ownership for local player");
 		m_IsMine = true;
 		StartCoroutine(MonitorLocalMovement());

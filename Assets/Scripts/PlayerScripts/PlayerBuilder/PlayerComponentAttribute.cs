@@ -57,4 +57,10 @@ public enum PlayerScriptType
     /// Must be deleted from only the owning client
     /// </summary>
     ClientOwnerDeleted,
+
+    /// <summary>
+    /// Disabled from the owning client
+    /// </summary>
+    ClientOwnerDisabled,
+    ServerOwnerDeleted,
 }

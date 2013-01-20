@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Collections;
 
-[PlayerComponent(PlayerScriptType.ServerEnabled, PlayerScriptType.ClientEnabled, PlayerScriptType.ClientOwnerDeleted)]
+[PlayerComponent(PlayerScriptType.ServerEnabled, PlayerScriptType.ClientEnabled, PlayerScriptType.ClientOwnerDisabled)]
 /// <summary>
 /// Handles syncing animation information over the network. 
 /// The server will send continuous info that clients read and use to animate the player.
@@ -12,13 +12,10 @@ public class NetworkSyncAnimation : MonoBehaviour {
 
     private ArrayList animationList;
 
-    void Awake()
-    {
-        //ThirdPersonSimpleAnimation.InitializeAnimation(animation);
-    }
-
     void Start()
     {
+        if (this.animation.GetClipCount() == 0 )
+            ThirdPersonSimpleAnimation.InitializeAnimation(this.animation);
         animationList = Util.GetAnimationList(GetComponent<Animation>().animation);
     }
 
@@ -44,10 +41,11 @@ public class NetworkSyncAnimation : MonoBehaviour {
 		{
 			lastAnimation = currentAnimation;
 			animation.CrossFade((String)animationList[currentAnimation]);
+
 		}
 	}
-	
-	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+
+    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
 	{
 		if (stream.isWriting)
 		{
@@ -58,10 +56,10 @@ public class NetworkSyncAnimation : MonoBehaviour {
 		{
             char ani = (char)0;
 			stream.Serialize(ref ani);
-
             currentAnimation = ani;
+
 		}	
-	
 	}
+
 
 }

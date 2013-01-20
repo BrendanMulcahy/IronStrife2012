@@ -8,7 +8,7 @@ using System.Collections.Generic;
 /// Script that constructs a player GameObject by adding the appropriate MonoBehaviour components.
 /// Attach this to an empty GameObject and it should do the rest of the work
 /// </summary>
-public class PlayerBuilder : MonoBehaviour
+public static class PlayerBuilder
 {
     private static bool initialized = false;
     private static Dictionary<Type, PlayerComponentAttribute> _typeToAttributes = new Dictionary<Type, PlayerComponentAttribute>();
@@ -21,8 +21,11 @@ public class PlayerBuilder : MonoBehaviour
         }
     }
 
+    private static GameObject clientCharacterPrefab;
+    private static GameObject serverCharacterPrefab;
+
     [StaticAutoLoad]
-    private static void Initialize()
+    public static void Initialize()
     {
         _typeToAttributes = new Dictionary<Type, PlayerComponentAttribute>();
         var allPlayerComponents = Util.GetClassesWithAttribute<PlayerComponentAttribute>();
@@ -30,33 +33,33 @@ public class PlayerBuilder : MonoBehaviour
         {
             _typeToAttributes[t] = t.GetCustomAttributes(typeof(PlayerComponentAttribute), false)[0] as PlayerComponentAttribute;
         }
-        initialized = true;
-    }
 
-    void OnNetworkInstantiate(NetworkMessageInfo info)
-    {
-        if (Network.isClient)
-            BuildCharacter();
+        //clientCharacterPrefab = Resources.Load("Player/" + "PlayerPrefabMelee01") as GameObject;
+        //BuildCharacter("client", clientCharacterPrefab);
+        //serverCharacterPrefab = Resources.Load("Player/" + "PlayerPrefabMelee01") as GameObject;
+        //BuildCharacter("server", serverCharacterPrefab);
+
+        initialized = true;
     }
 
     /// <summary>
     /// Attaches the appropriate components to the player gameobject, depending on whether or not they are a server or client.
     /// </summary>
-    public void BuildCharacter()
+    private static void BuildCharacter(string type, GameObject gameObject)
     {
-        AddCommonComponents();
+        AddCommonComponents(gameObject);
 
-        if (Network.isServer)
+        if (type == "server")
         {
-            BuildServerCharacter();
+            BuildServerCharacter(gameObject);
         }
-        else if (Network.isClient)
+        else if (type == "client")
         {
-            BuildClientCharacter();
+            BuildClientCharacter(gameObject);
         }
     }
 
-    private void AddCommonComponents()
+    private static void AddCommonComponents(GameObject gameObject)
     {
         foreach (Type t in typeToAttributes.Keys)
         {
@@ -77,73 +80,99 @@ public class PlayerBuilder : MonoBehaviour
     /// Calls the OnSetOwnership method in all attached components.
     /// Also attaches the camera to this gameObject.
     /// </summary>
-    [RPC]
-    internal void SetOwnership()
+    internal static void SetOwnership(GameObject gameObject)
     {
-        Util.MyLocalPlayerObject = this.gameObject;
+        Util.MyLocalPlayerObject = gameObject;
 
         if (Network.isServer)
-            AddServerOwnerComponents();
+            AddServerOwnerComponents(gameObject);
         else
-            AddClientOwnerComponents();
+            AddClientOwnerComponents(gameObject);
 
         gameObject.SendMessage("OnSetOwnership", SendMessageOptions.DontRequireReceiver);
-        Camera.main.SendMessage("SetTarget", transform);
+        Camera.main.SendMessage("SetTarget", gameObject.transform);
 
     }
 
-    private void BuildServerCharacter()
+    private static void BuildServerCharacter(GameObject gameObject)
     {
         foreach (Type t in typeToAttributes.Keys)
         {
             if (typeToAttributes[t].types.Contains(PlayerScriptType.ServerDisabled))
             {
-                ((MonoBehaviour)gameObject.AddComponent(t)).enabled = false;
+                Debug.Log(t.Name + " is a server disabled component.");
+                Behaviour g;
+                if ((g = gameObject.GetComponent(t) as Behaviour) != null)
+                    g.enabled = false;
+                else
+                    ((MonoBehaviour)gameObject.AddComponent(t)).enabled = false;
             }
             if (typeToAttributes[t].types.Contains(PlayerScriptType.ServerEnabled))
             {
-                ((MonoBehaviour)gameObject.AddComponent(t)).enabled = true;
-            }
-        }
-    }
-
-    private void BuildClientCharacter()
-    {
-        foreach (Type t in typeToAttributes.Keys)
-        {
-            if (typeToAttributes[t].types.Contains(PlayerScriptType.ClientDisabled))
-            {
-                ((MonoBehaviour)gameObject.AddComponent(t)).enabled = false;
-            }
-            if (typeToAttributes[t].types.Contains(PlayerScriptType.ClientEnabled))
-            {
-                ((MonoBehaviour)gameObject.AddComponent(t)).enabled = true;
-            }
-        }
-    }
-
-    private void AddServerOwnerComponents()
-    {
-        foreach (Type t in typeToAttributes.Keys)
-        {
-            if (typeToAttributes[t].types.Contains(PlayerScriptType.ServerOwnerEnabled))
-            {
-                MonoBehaviour c = GetComponent(t) as MonoBehaviour;
-                if (c)
-                    c.enabled = true;
+                Behaviour g;
+                if ((g = gameObject.GetComponent(t) as Behaviour) != null)
+                    g.enabled = true;
                 else
                     ((MonoBehaviour)gameObject.AddComponent(t)).enabled = true;
             }
         }
     }
 
-    private void AddClientOwnerComponents()
+    private static void BuildClientCharacter(GameObject gameObject)
+    {
+        foreach (Type t in typeToAttributes.Keys)
+        {
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ClientDisabled))
+            {
+                Behaviour g;
+                if ((g = gameObject.GetComponent(t) as Behaviour) != null)
+                    g.enabled = false;
+                else
+                    ((MonoBehaviour)gameObject.AddComponent(t)).enabled = false;
+            }
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ClientEnabled))
+            {
+                Behaviour g;
+                if ((g = gameObject.GetComponent(t) as Behaviour) != null)
+                    g.enabled = true;
+                else
+                    ((MonoBehaviour)gameObject.AddComponent(t)).enabled = true;
+            }
+        }
+    }
+
+    private static void AddServerOwnerComponents(GameObject gameObject)
+    {
+        Debug.Log("Adding server owner components to " + gameObject);
+        foreach (Type t in typeToAttributes.Keys)
+        {
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ServerOwnerEnabled))
+            {
+                Behaviour g;
+                if ((g = gameObject.GetComponent(t) as Behaviour) != null)
+                    g.enabled = true;
+                else
+                    (g = (MonoBehaviour)gameObject.AddComponent(t)).enabled = true;
+
+            }
+
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ServerOwnerDeleted))
+            {
+                MonoBehaviour c = gameObject.GetComponent(t) as MonoBehaviour;
+                if (c)
+                    UnityEngine.Object.Destroy(c);
+
+            }
+        }
+    }
+
+    private static void AddClientOwnerComponents(GameObject gameObject)
     {
         foreach (Type t in typeToAttributes.Keys)
         {
             if (typeToAttributes[t].types.Contains(PlayerScriptType.ClientOwnerEnabled))
             {
-                MonoBehaviour c = GetComponent(t) as MonoBehaviour;
+                MonoBehaviour c = gameObject.GetComponent(t) as MonoBehaviour;
                 if (c)
                     c.enabled = true;
                 else
@@ -152,49 +181,64 @@ public class PlayerBuilder : MonoBehaviour
 
             if (typeToAttributes[t].types.Contains(PlayerScriptType.ClientOwnerDeleted))
             {
-                MonoBehaviour c = GetComponent(t) as MonoBehaviour;
+                MonoBehaviour c = gameObject.GetComponent(t) as MonoBehaviour;
                 if (c)
-                    Destroy(c);
+                    UnityEngine.Object.Destroy(c);
+
+            }
+
+            if (typeToAttributes[t].types.Contains(PlayerScriptType.ClientOwnerDisabled))
+            {
+                MonoBehaviour c = gameObject.GetComponent(t) as MonoBehaviour;
+                if (c)
+                    c.enabled = false;
 
             }
         }
     }
 
-    public void GetAndAssignNewNetworkView(Component target, NetworkStateSynchronization stateSync = NetworkStateSynchronization.Off)
+    internal static GameObject GenerateClient(string username, NetworkViewID interpolationViewID, NetworkViewID animationViewID)
     {
-        if (Network.isClient) throw new UnauthorizedAccessException("Clients cannot assign new network views.");
+        Debug.Log("Generating a Client-view character of " + username);
+        var gameObject = GameObject.Instantiate(Resources.Load("Player/PlayerPrefabMelee01")) as GameObject;
 
-        else
-        {
-            var newNetView = gameObject.AddComponent<NetworkView>();
-            newNetView.observed = target;
-            newNetView.stateSynchronization = stateSync;
-            newNetView.viewID = Network.AllocateViewID();
+        NetworkView interpolationView = gameObject.GetComponents<NetworkView>()[0];
+        interpolationView.viewID = interpolationViewID;
+        interpolationView.observed = gameObject.AddComponent<GraduallyUpdateState>();
 
-            networkView.RPC("AssignNewNetworkView", RPCMode.OthersBuffered, newNetView.viewID, (int)stateSync, target.GetType().Name);
-        }
+        NetworkView animationView = gameObject.GetComponents<NetworkView>()[1];
+        animationView.viewID = animationViewID;
+        animationView.observed = gameObject.AddComponent<NetworkSyncAnimation>();
+
+        gameObject.name = username;
+        BuildCharacter("client", gameObject);
+
+        Debug.Log("Setting networkViewIDs to  " + username + ". transform ID = " + interpolationViewID + " , animation ID = " + animationViewID);
+
+        return gameObject;
     }
 
-    /// <summary>
-    /// Assigns a new NetworkView to observe the given target.
-    /// </summary>
-    /// <param name="viewID">The NetworkViewID to use</param>
-    /// <param name="stateSync">The method of state sync to use</param>
-    /// <param name="targetTypeName">The name of the target type to observe. There must be only one attached</param>
-    [RPC]
-    void AssignNewNetworkView(NetworkViewID viewID, int stateSync, string targetTypeName)
+    internal static GameObject GenerateServer(string username, NetworkViewID interpolationViewID, NetworkViewID animationViewID)
     {
-        var newNetView = this.gameObject.AddComponent<NetworkView>();
-        if (this.gameObject.GetComponents(Type.GetType(targetTypeName)).Length > 1)
-        {
-            Debug.LogError("There should only be one " + targetTypeName + " attached to " + gameObject + "!");
-            return;
-        }
-        newNetView.observed = this.gameObject.GetComponent(targetTypeName);
-        newNetView.stateSynchronization = (NetworkStateSynchronization)stateSync;
-        newNetView.viewID = viewID;
+        Debug.Log("Generating a server-view character");
 
+        var gameObject = GameObject.Instantiate(Resources.Load("Player/PlayerPrefabMelee01")) as GameObject;
+
+        NetworkView interpolationView = gameObject.GetComponents<NetworkView>()[0];
+        interpolationView.viewID = interpolationViewID;
+        interpolationView.observed = gameObject.AddComponent<ServerUpdateState>();
+
+        NetworkView animationView = gameObject.GetComponents<NetworkView>()[1];
+        animationView.viewID = animationViewID;
+        animationView.observed = gameObject.AddComponent<NetworkSyncAnimation>();
+
+        gameObject.name = username;
+        BuildCharacter("server", gameObject);
+
+
+
+
+
+        return gameObject;
     }
-
-
 }

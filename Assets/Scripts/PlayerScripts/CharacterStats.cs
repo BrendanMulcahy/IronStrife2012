@@ -69,7 +69,7 @@ public class CharacterStats : MonoBehaviour
     public MoveSpeedStat MoveSpeed { get; set; }
 
     public int teamNumber = 0;
-    public int TeamNumber { get { return teamNumber; } set { networkView.RPC("ChangeTeam", RPCMode.AllBuffered, value); } }
+    public int TeamNumber { get { return teamNumber; } set { networkView.RPC("ChangeTeam", RPCMode.All, value); } }
 
     public KillReward reward;
 

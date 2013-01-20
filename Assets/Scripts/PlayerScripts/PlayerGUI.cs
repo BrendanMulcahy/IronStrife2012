@@ -213,10 +213,6 @@ public class PlayerGUI : MonoBehaviour
 
     private void DrawScoreboard()
     {
-        //var centeredStyle = GUI.skin.customStyles[0];
-        //centeredStyle.alignment = TextAnchor.UpperCenter;
-        //centeredStyle.contentOffset = new Vector2(0, 0);
-        //centeredStyle.font = regularFont;
         GUI.Label(scoreboardRect, "Good\t\t\tEvil\n" + "(+" + GameState.numGoodControlPoints + ") "
             + GameState.goodScore + "\t\t" + "(+" + GameState.numEvilControlPoints + ") " + GameState.evilScore, GUI.skin.customStyles[0]);
     }

@@ -54,7 +54,7 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<Inventory>().weaponChanged += ThirdPersonSimpleAnimation_weaponChanged;
+        GetComponent<Inventory>().WeaponChanged += ThirdPersonSimpleAnimation_weaponChanged;
         if (GetComponent<Inventory>().currentWeapon == null)
             numWeaponHands = 1;
         else
@@ -68,7 +68,7 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
 
     }
 
-    void ThirdPersonSimpleAnimation_weaponChanged(WeaponChangedEventArgs e)
+    void ThirdPersonSimpleAnimation_weaponChanged(GameObject sender, WeaponChangedEventArgs e)
     {
         numWeaponHands = e.newWeapon.numHands;
         if (GetComponent<Inventory>().currentWeapon.name.ToLower().Contains("bow"))
@@ -382,7 +382,7 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
     private void CrossFadeAndSync(string anim, float fadeLength = 0.0f)
     {
         animation.CrossFade(anim, fadeLength);
-        SendMessage("SyncAnimation", anim);
+        SendMessage("SyncAnimation", anim, SendMessageOptions.DontRequireReceiver);
     }
 
     private void BeganJump()

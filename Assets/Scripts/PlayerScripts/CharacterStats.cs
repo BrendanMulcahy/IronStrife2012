@@ -108,26 +108,22 @@ public class CharacterStats : MonoBehaviour
         Intelligence.BaseChanged += Mana.Intelligence_Changed;
         Intelligence.ChangeBaseValue(5);
 
-        PhysicalDefense = new PhysicalDefense(100);
+        PhysicalDefense = new PhysicalDefense(0);
         MagicalDefense = new MagicalDefense(0);
     }
 
-    // Use this for initialization
-    public virtual void Start()
-    {
-
-    }
+    protected virtual void Start() { }
 
     /// <summary>
     /// Causes damage to be received by this character. Is reduced by defenses and resistances.
     /// </summary>
     public void ApplyDamage(GameObject attacker, Damage damage)
     {
-        if (Network.isClient) return;
 
         var e = new DamageEventArgs() { damage = damage };
         if (Damaged != null)
         {
+            Debug.Log(this.gameObject.name + " took " + damage.amount + " damage before modifications.");
             Damaged(this.gameObject, e);
         }
 
@@ -152,7 +148,6 @@ public class CharacterStats : MonoBehaviour
                     Debug.LogError("Invalid damage type from attacker " + attacker.name);
                     break;
             }
-
 
             Health.CurrentValue = Mathf.Max(0, Health.CurrentValue - damage.amount);
 

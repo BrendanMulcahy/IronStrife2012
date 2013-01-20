@@ -19,9 +19,8 @@ public class PlayerStats : CharacterStats
     public event PlayerRespawnedEventHandler Respawned;
     public bool canRespawn;
 
-    public override void Start()
+    protected override void Start()
     {
-        base.Start();
         experienceNeeded = experiencePerLevel[0];
         Level = 1;
         Died += PlayerDied;

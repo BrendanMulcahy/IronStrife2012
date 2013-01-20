@@ -14,4 +14,12 @@ public class StrengthStat : BuffableStat
 
     public StrengthStat(int amount) : base(amount) { }
 
+    public int DamageModifier
+    {
+        get
+        {
+            return meleeDamagePerStrength * ModifiedValue;
+        }
+    }
+
 }

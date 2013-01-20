@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[PlayerComponent(PlayerScriptType.AllEnabled)]
 /// <summary>
 /// Class that acts as an interface for physical and magical attacks to apply their damage and effects to a player's game object.
 /// </summary>
@@ -19,7 +20,13 @@ public class DamageReceiver : MonoBehaviour {
 
     public virtual void ApplyHit(GameObject attacker)
     {
-       // playerMotor.ApplyForce(new Force((transform.position - attacker.transform.position).normalized/5 * attacker.GetCharacterStats().EffectiveStrength, .25f));
-        characterStats.ApplyDamage(attacker, new Damage(attacker.GetCharacterStats().Strength.ModifiedValue, attacker));
+        var attackerStats = attacker.GetCharacterStats();
+        var strengthMod = attackerStats.Strength.DamageModifier;
+        var weaponMod = attacker.GetInventory().currentWeapon.damage;
+
+        var damage = new Damage(strengthMod + weaponMod, attacker, DamageType.Physical);
+
+
+        characterStats.ApplyDamage(attacker, damage);
     }
 }

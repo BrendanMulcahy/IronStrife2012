@@ -66,7 +66,7 @@ public class GraduallyUpdateState : MonoBehaviour {
 	// highly unreliable and you might try to correct more errors than there really are.
 	public float m_TimeThreshold = 0.05F;
 		
-	Rect connInfo = new Rect (Screen.width-170,40,160,50);
+	//Rect connInfo = new Rect (Screen.width-170,40,160,50);
 	
 	// We need to grab a reference to the isMoving variable in the javascript ThirdPersonController script
 	void Start() {

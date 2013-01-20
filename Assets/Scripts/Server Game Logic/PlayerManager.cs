@@ -7,6 +7,11 @@ public class PlayerManager
     public List<GameObject> goodPlayers = new List<GameObject>();
     public List<GameObject> evilPlayers = new List<GameObject>();
 
+    public static PlayerManager Main
+    {
+        get { return MasterGameLogic.Main.PlayerManager; }
+    }
+
     private int numGoodPlayers
     {
         get
@@ -98,7 +103,7 @@ public class PlayerManager
         return (numGoodPlayers <=  numEvilPlayers) ? 1 : 2;
     }
 
-    private PlayerRecord FindRecord(GameObject go)
+    public PlayerRecord FindRecord(GameObject go)
     {
         foreach (PlayerRecord pr in players)
         {

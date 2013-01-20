@@ -13,5 +13,11 @@
             newChild.Container = this;
             elements.Add(newChild);
         }
+
+        internal void RemoveChild(BaseElement baseElement)
+        {
+            elements.Remove(baseElement);
+            Destroy(baseElement.gameObject);
+        }
     }
 }

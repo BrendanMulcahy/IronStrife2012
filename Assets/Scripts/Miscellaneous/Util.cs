@@ -343,11 +343,30 @@ public static class Util
             if (_username == null)
             {
                 _username = PlayerPrefs.GetString("username", "default_username");
-#if UNITY_EDITOR
+                #if UNITY_EDITOR
                 _username += "_Editor";
-#endif
+                #endif
             }
             return _username;
         }
     }
+
+    public static void RPCToGroup(this NetworkView networkView, string methodName, int group, RPCMode mode, params object[] parameters)
+    {
+        var previousGroup = networkView.group;
+        networkView.group = group;
+
+        networkView.RPC(methodName, mode, parameters);
+        networkView.group = previousGroup;
+    }
+
+    public static void RPCToGroup(this NetworkView networkView, string methodName, int group, NetworkPlayer player, params object[] parameters)
+    {
+        var previousGroup = networkView.group;
+        networkView.group = group;
+
+        networkView.RPC(methodName, player, parameters);
+        networkView.group = previousGroup;
+    }
+
 }

@@ -142,11 +142,11 @@ public class GraduallyUpdateState : MonoBehaviour {
 		}
 	}
 	
-	void OnGUI() {
-		if (m_IsMine) {
-			connInfo = GUILayout.Window(0, connInfo, MakeConnInfoWindow, "Local Player");
-		}
-	}
+    //void OnGUI() {
+    //    if (m_IsMine) {
+    //        connInfo = GUILayout.Window(0, connInfo, MakeConnInfoWindow, "Local Player");
+    //    }
+    //}
 	
 	void MakeConnInfoWindow(int windowID) {
 		GUILayout.Label(string.Format("{0} msg/s {1,4:f3} ms", m_MsgRate, m_MsgLatency));

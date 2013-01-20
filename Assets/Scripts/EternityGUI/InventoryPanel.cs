@@ -31,6 +31,8 @@
             inventoryPanel.gameObject.layer = 12;
             inventoryPanel.inventory = inventory;
             inventoryPanel.inventory.ItemAdded += inventoryPanel.inventory_ItemAdded;
+            inventoryPanel.inventory.ItemRemoved += inventoryPanel.inventory_ItemRemoved;
+
             inventoryPanel.width = 750;
 
             inventoryPanel.transform.position = position.ScreenToViewport();
@@ -58,6 +60,8 @@
             inventoryPanel.gameObject.SetActive(false);
             return inventoryPanel;
         }
+
+
 
         private void GenerateBackgroundImage()
         {
@@ -96,6 +100,26 @@
             itemElement.Dropped += itemElement_Dropped;
         }
 
+        private BaseElement GetElementFromItem(Item i)
+        {
+            foreach (ItemElement ie in itemGrid.elements)
+            {
+                if (ie.item == i)
+                    return ie;
+            }
+            return null;
+        }
+
+        private void inventory_ItemRemoved(Inventory sender, Item newItem)
+        {
+            RemoveItemFromGrid(newItem);
+        }
+
+        private void RemoveItemFromGrid(Item newItem)
+        {
+            itemGrid.RemoveChild(GetElementFromItem(newItem));
+        }
+
         void itemElement_Dropped(BaseElement sender, MouseDropEventArgs e)
         {
             if (e.handled) return;
@@ -108,6 +132,11 @@
 
                 itemGrid.elements[indexOfDragged] = e.dropTarget;
                 itemGrid.elements[indexOfDropped] = e.draggedObject;
+            }
+
+            if (e.dropTarget == null)
+            {
+                inventory.TryDropItem(((ItemElement)e.draggedObject).item);
             }
         }
 

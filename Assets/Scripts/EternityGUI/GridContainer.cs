@@ -95,6 +95,5 @@
             }
             revertToDefaultElementSize = false;
         }
-
     }
 }

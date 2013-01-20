@@ -2,17 +2,16 @@
 
 public class GameConnect : MonoBehaviour
 {
-    void OnNetworkLoadedLevel()
+
+    void OnServerInitialized()
     {
-        Debug.Log("doing stuff.");
-        if (Network.isServer)
-        {
-            HandleServerStartup();
-        }
-        else
-        {
-            HandleClientStartup();
-        }
+        HandleServerStartup();
+
+    }
+
+    void OnConnectedToServer()
+    {
+        networkView.RPC("NewClientConnection", RPCMode.Server, Util.Username);
     }
 
     void OnPlayerConnected(NetworkPlayer player)
@@ -23,14 +22,6 @@ public class GameConnect : MonoBehaviour
     void Awake()
     {
         networkView.group = 1;
-    }
-
-    private void HandleClientStartup()
-    {
-        networkView.RPC("NewClientConnection", RPCMode.Server, Util.Username);
-        //Send a request to the server to get info about other players, the world, etc.
-
-
     }
 
     private void HandleServerStartup()
@@ -51,12 +42,12 @@ public class GameConnect : MonoBehaviour
         networkView.RPC("LoadingStarted", msg.sender);
         ClientStartup(msg);
         AssignNewPlayerCharacter(username, msg);
-        yield return new WaitForSeconds(2.0f);
         SynchronizeGameObjects(msg.sender);
 
         Network.SetSendingEnabled(msg.sender, 0, true);
         networkView.RPC("LoadingFinished", msg.sender);
         MessageTerminal.Main.networkView.RPC("GameStarted", msg.sender);
+        yield break;
     }
 
     private void SynchronizeGameObjects(NetworkPlayer networkPlayer)
@@ -80,9 +71,6 @@ public class GameConnect : MonoBehaviour
         {
             networkView.RPC("SpawnCharacter", msg.sender, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);
         }
-
-
-
     }
 
     [RPC]
@@ -115,8 +103,7 @@ public class GameConnect : MonoBehaviour
     [RPC]
     void LoadingStarted()
     {
-        Network.SetReceivingEnabled(Network.connections[0], 0, false);
-        Debug.Log("Disabling Network receiving on the server.");
+
     }
 
     /// <summary>
@@ -125,8 +112,6 @@ public class GameConnect : MonoBehaviour
     [RPC]
     void LoadingFinished()
     {
-        Network.SetReceivingEnabled(Network.connections[0], 0, true);
-        Debug.Log("Re-enabling Network receiving on the server.");
 
     }
 

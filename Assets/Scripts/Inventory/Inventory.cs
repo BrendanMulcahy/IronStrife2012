@@ -36,8 +36,11 @@ public class Inventory : MonoBehaviour
     public int Gold { get { return _gold; } set { _gold = value; } }
 
     public delegate void ItemAddedEventHandler(Inventory sender, Item newItem);
+    public delegate void ItemRemovedEventHandler(Inventory sender, Item newItem);
 
     public event ItemAddedEventHandler ItemAdded;
+    public event ItemRemovedEventHandler ItemRemoved;
+
 
     void Awake()
     {
@@ -270,11 +273,28 @@ public class Inventory : MonoBehaviour
         OnItemAdded(newItem);
     }
 
+    [RPC]
+    void RemoveItemFromInventory(string itemName)
+    {
+        var toRemove = ItemDirectory.Get(itemName);
+        Items.Remove(toRemove);
+
+        OnItemRemoved(toRemove);
+    }
+
     private void OnItemAdded(Item newItem)
     {
         if (ItemAdded != null)
         {
             ItemAdded(this, newItem);
+        }
+    }
+
+    private void OnItemRemoved(Item removed)
+    {
+        if (ItemRemoved != null)
+        {
+            ItemRemoved(this, removed);
         }
     }
 
@@ -295,12 +315,51 @@ public class Inventory : MonoBehaviour
         //Add all currently-held items to remote client's inventory
         foreach (Item i in Items)
         {
-            networkView.RPC("AddItemToInventory", player, i.name);
+            networkView.RPCToGroup("AddItemToInventory", 2, player, i.name);
         }
 
         //Equip items on remote client
-        networkView.RPC("CommitEquipItem", player, currentWeapon.name, (int)currentWeapon.itemType);
-        networkView.RPC("CommitEquipItem", player, currentShield.name, (int)currentShield.itemType);
+        networkView.RPCToGroup("CommitEquipItem", 2, player, currentWeapon.name, (int)currentWeapon.itemType);
+        networkView.RPCToGroup("CommitEquipItem", 2, player, currentShield.name, (int)currentShield.itemType);
+
+    }
+
+    internal void TryDropItem(Item item)
+    {
+        if (Network.isServer)
+            ServerTryDropItem(item.name);
+        else
+        {
+            networkView.RPC("ServerTryDropItem", RPCMode.Server, item.name);
+        }
+    }
+
+    [RPC]
+    void ServerTryDropItem(string name)
+    {
+        var newItemView = Network.AllocateViewID();
+        networkView.RPC("CommitDropItem", RPCMode.All, name, newItemView);
+    }
+
+    [RPC]
+    void CommitDropItem(string name, NetworkViewID newItemView)
+    {
+        var toDrop = Get(name);
+        Debug.Log("You are trying to drop " + toDrop.name + " goldcost: " + toDrop.goldCost);
+
+        GameObject worldItemPrefab = Resources.Load("Items/WorldItems/" + name) as GameObject;
+        if (!worldItemPrefab)
+        {
+            worldItemPrefab = Resources.Load("Items/WorldItems/PlaceholderItem") as GameObject;
+            worldItemPrefab.name = name + "_Placeholder";
+            worldItemPrefab.AddComponent<WorldItem>().itemName = name;
+        }
+
+        var instance = GameObject.Instantiate(worldItemPrefab) as GameObject;
+        instance.transform.position = this.transform.position + this.transform.forward * 1.0f + Vector3.up * 2f;
+        instance.networkView.viewID = newItemView;
+
+        RemoveItemFromInventory(name);
 
     }
 }

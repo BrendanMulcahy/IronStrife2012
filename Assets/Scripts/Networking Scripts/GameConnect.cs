@@ -15,6 +15,16 @@ public class GameConnect : MonoBehaviour
         }
     }
 
+    void OnPlayerConnected(NetworkPlayer player)
+    {
+        Network.SetSendingEnabled(player, 0, false);
+    }
+
+    void Awake()
+    {
+        networkView.group = 1;
+    }
+
     private void HandleClientStartup()
     {
         networkView.RPC("NewClientConnection", RPCMode.Server, Util.Username);
@@ -38,15 +48,18 @@ public class GameConnect : MonoBehaviour
 
     private System.Collections.IEnumerator HandleNewClientConnection(string username, NetworkMessageInfo msg)
     {
+        networkView.RPC("LoadingStarted", msg.sender);
         ClientStartup(msg);
-        RequestCharacter(username, msg);
+        AssignNewPlayerCharacter(username, msg);
         yield return new WaitForSeconds(2.0f);
-        SynchronizeNewPlayer(msg.sender);
+        SynchronizeGameObjects(msg.sender);
 
+        Network.SetSendingEnabled(msg.sender, 0, true);
+        networkView.RPC("LoadingFinished", msg.sender);
         MessageTerminal.Main.networkView.RPC("GameStarted", msg.sender);
     }
 
-    private void SynchronizeNewPlayer(NetworkPlayer networkPlayer)
+    private void SynchronizeGameObjects(NetworkPlayer networkPlayer)
     {
         GameObject[] allGameObjects = FindObjectsOfType(typeof(GameObject)) as GameObject[];
 
@@ -80,7 +93,7 @@ public class GameConnect : MonoBehaviour
     }
 
     [RPC]
-    void RequestCharacter(string username, NetworkMessageInfo msg)
+    void AssignNewPlayerCharacter(string username, NetworkMessageInfo msg)
     {
         var pr = MasterGameLogic.Main.PlayerManager.GenerateNewPlayer(msg.sender, username);
         networkView.RPC("SpawnCharacterAndSetOwnership", msg.sender, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);
@@ -93,6 +106,27 @@ public class GameConnect : MonoBehaviour
         var go = PlayerBuilder.GenerateClient(username, interpolationViewID, animationViewID);
 
         PlayerBuilder.SetOwnership(go);
+
+    }
+
+    /// <summary>
+    /// Deactivates message receiving for the general channel (0)
+    /// </summary>
+    [RPC]
+    void LoadingStarted()
+    {
+        Network.SetReceivingEnabled(Network.connections[0], 0, false);
+        Debug.Log("Disabling Network receiving on the server.");
+    }
+
+    /// <summary>
+    /// Reactivates message receiving for the general channel (0)
+    /// </summary>
+    [RPC]
+    void LoadingFinished()
+    {
+        Network.SetReceivingEnabled(Network.connections[0], 0, true);
+        Debug.Log("Re-enabling Network receiving on the server.");
 
     }
 

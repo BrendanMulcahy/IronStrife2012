@@ -4322,6 +4322,56 @@ Transform:
   m_Children:
   - {fileID: 1462180096}
   m_Father: {fileID: 974421711}
+--- !u!1 &210008803
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 210008804}
+  - 114: {fileID: 210008805}
+  - 148: {fileID: 210008806}
+  m_Layer: 0
+  m_Name: GameConnect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &210008804
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 210008803}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 537.974182, y: 2.23177338, z: 850.988708}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &210008805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 210008803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa1da444395c254198b1bd138f16d57, type: 3}
+  m_Name: 
+--- !u!148 &210008806
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 210008803}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 0}
+  m_ViewID:
+    m_ID: 17
+    m_Type: 1
 --- !u!1001 &217955995
 Prefab:
   m_ObjectHideFlags: 0
@@ -41761,7 +41811,6 @@ GameObject:
   - 4: {fileID: 1855676573}
   - 114: {fileID: 1855676570}
   - 148: {fileID: 1855676571}
-  - 114: {fileID: 1855676572}
   m_Layer: 0
   m_Name: MessageTerminal
   m_TagString: Untagged
@@ -41791,16 +41840,6 @@ NetworkView:
   m_ViewID:
     m_ID: 16
     m_Type: 1
---- !u!114 &1855676572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1855676569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fa1da444395c254198b1bd138f16d57, type: 3}
-  m_Name: 
 --- !u!4 &1855676573
 Transform:
   m_ObjectHideFlags: 0

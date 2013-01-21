@@ -7,3 +7,5 @@
 !Assets/
 !ProjectSettings/
 ProjectSettings/QualitySettings.asset
+ProjectSettings/QualitySettings
+ProjectSettings/QualitySettings.*

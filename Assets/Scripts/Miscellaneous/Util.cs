@@ -181,7 +181,7 @@ public static class Util
     /// <returns></returns>
     internal static Vector3 FindClosestTeamRespawn(Vector3 requestedRespawnLocation, int teamNumber)
     {
-        var spawner = GameObject.Find("PrefabSpawner");
+        var spawner = GameObject.Find("GameConnect");
         return spawner.transform.position;
     }
 

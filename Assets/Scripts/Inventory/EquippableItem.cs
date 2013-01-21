@@ -29,6 +29,11 @@ public class EquippableItem : Item
     [XmlAttribute("equipLocationPath")]
     public string equipLocationPath;
 
+    public override void Use(GameObject target)
+    {
+        container.TryEquipItem(this);
+    }
+
     /// <summary>
     /// Equips the item on the target Game Object. Attempts to find the child object of the GO to attach it to according to the "equipLocationPath" field.
     /// Rotates and translates the item according to those fields, as well.

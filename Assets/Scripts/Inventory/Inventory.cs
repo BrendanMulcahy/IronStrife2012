@@ -258,6 +258,8 @@ public class Inventory : MonoBehaviour
         Item item = this.Get(itemName);
         ((Consumable)item).Consume(this.gameObject);
         Items.Remove(item);
+        OnItemRemoved(item);
+
     }
 
     [RPC]
@@ -269,6 +271,7 @@ public class Inventory : MonoBehaviour
         {
             PopupMessage.LocalDisplay("You picked up a " + itemName + ".");
         }
+        newItem.container = this;
 
         OnItemAdded(newItem);
     }

@@ -145,6 +145,7 @@
             if (ItemClicked != null)
                 ItemClicked(sender, e);
 
+            ((ItemElement)sender).item.Use(inventory.gameObject);
         }
 
         internal override void ResetSize()

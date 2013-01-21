@@ -27,6 +27,9 @@ public abstract class Item
     [XmlAttribute("availability")]
     public ItemAvailability availability;
 
+    [NonSerialized][XmlIgnore]
+    public Inventory container;
+
     private Texture2D _inventoryIcon;
     public Texture2D inventoryIcon
     {
@@ -65,6 +68,11 @@ public abstract class Item
             serializer.Serialize(writer, this);
         }
     }
+
+    /// <summary>
+    /// Uses this item.
+    /// </summary>
+    public abstract void Use(GameObject target);
 }
 
 /// <summary>

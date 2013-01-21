@@ -43,6 +43,7 @@ GameObject:
   - 114: {fileID: 11400054}
   - 114: {fileID: 11400056}
   - 114: {fileID: 11400058}
+  - 114: {fileID: 11400060}
   m_Layer: 0
   m_Name: PlaceholderItem
   m_TagString: Untagged
@@ -434,6 +435,17 @@ MonoBehaviour:
   m_Name: 
   itemName: Shield of the Round
 --- !u!114 &11400058
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dca39d704c7a918438c9f506ea77e358, type: 3}
+  m_Name: 
+  itemName: Shield of the Round
+--- !u!114 &11400060
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

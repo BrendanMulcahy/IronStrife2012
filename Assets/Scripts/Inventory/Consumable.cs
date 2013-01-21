@@ -10,4 +10,9 @@ public class Consumable : Item
     {
         consumer.AddComponent(buffScript);
     }
+
+    public override void Use(GameObject target)
+    {
+        container.TryConsumeItem(this.name);
+    }
 }

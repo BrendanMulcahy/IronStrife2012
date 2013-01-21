@@ -22,11 +22,7 @@ Material:
       data:
         first:
           name: _Outline
-<<<<<<< HEAD
         second: .0065130447
-=======
-        second: .00213445863
->>>>>>> started day/night cycle
     m_Colors:
       data:
         first:

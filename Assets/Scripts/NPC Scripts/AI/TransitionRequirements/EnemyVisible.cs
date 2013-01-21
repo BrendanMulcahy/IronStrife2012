@@ -17,6 +17,7 @@ public class EnemyVisible : TransitionRequirement
     private void AddEnemySearcher()
     {
         var sphereGO = new GameObject("EnemySearcher");
+        sphereGO.layer = 16;
         sphereGO.transform.SetParentAndCenter(gameObject.transform);
         var searcher = sphereGO.AddComponent<EnemySearcher>();
         searcher.enemyVisible = this;

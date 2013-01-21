@@ -174,7 +174,6 @@ public class RegularCamera : MonoBehaviour
 
         if (!DebugGUI.visible && !isScrollingDisabled)
         {
-            Debug.Log("Debug GUI is not visible.");
             var wheeldelta = Input.GetAxis("Mouse ScrollWheel");
             distance -= wheeldelta * 4;
 

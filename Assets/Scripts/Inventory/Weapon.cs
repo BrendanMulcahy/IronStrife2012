@@ -24,5 +24,12 @@ public class Weapon : EquippableItem
         equipLocationPath = "MainC/ROOTJ/Spine01J/Spine02J/Spine03J/Spine04J/rClavicleJ/rShoulderJ/rElbowJ/rWristJ";
 
     }
+
+    public override GameObject Equip(GameObject target)
+    {
+        var go = base.Equip(target);
+        go.SetLayerRecursively(17);
+        return go;
+    }
 }
 

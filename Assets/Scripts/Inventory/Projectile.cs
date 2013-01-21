@@ -27,7 +27,12 @@ public class Projectile : MonoBehaviour {
         transform.rotation = Quaternion.LookRotation(moveDirection);
         this.creator = creator;
     }
-	
+
+    void Awake()
+    {
+        Util.SetLayerRecursively(transform.root.gameObject, 15);
+    }
+
 	// Update is called once per frame
 	void Update () {
         velocity.y -= gravity * Time.deltaTime;

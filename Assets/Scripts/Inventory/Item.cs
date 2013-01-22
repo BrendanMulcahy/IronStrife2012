@@ -46,6 +46,11 @@ public abstract class Item
     /// </summary>
     [NonSerialized][XmlIgnore]
     public Inventory container;
+    /// <summary>
+    /// The NetworkViewID uniquely identifying this item.
+    /// </summary>
+    [NonSerialized][XmlIgnore]
+    public NetworkViewID viewID;
 
     private Texture2D _inventoryIcon;
     /// <summary>

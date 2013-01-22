@@ -25,6 +25,9 @@ namespace EternityGUI
 
         public bool dragging = false;
         public int layerOffset = 0;
+        private float dragDistance = 0;
+        private const float maxDragForClick = 25;
+        private Vector3 initialDragPosition = new Vector3();
 
         /// <summary>
         /// Creates a new BaseElement with the given texture and position. Must provide a fully qualified resource path as the image name.
@@ -69,6 +72,7 @@ namespace EternityGUI
             if (draggable)
             {
                 dragOffset = new Vector3(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height, 0) - gameObject.transform.position;
+                initialDragPosition = Input.mousePosition;
                 dragging = true;
             }
         }
@@ -92,7 +96,7 @@ namespace EternityGUI
         {
             Debug.Log("Dropped element " + gameObject.name + " at " + Input.mousePosition);
             var guiLayer = Camera.main.GetComponent<GUILayer>();
-
+            initialDragPosition = new Vector3();
             var beforePos = this.transform.position;
             this.transform.position = new Vector3(-100, -100, -100);
             var element = guiLayer.HitTest(Input.mousePosition);
@@ -122,7 +126,7 @@ namespace EternityGUI
             }
 
             lastClickTime = currentTime;
-            if (Click != null)
+            if (Click != null && !(dragDistance > maxDragForClick))
             {
                 Click(this, MouseEventArgs.Current);
             }
@@ -184,6 +188,7 @@ namespace EternityGUI
             var mousePos = Input.mousePosition;
             this.transform.position = new Vector3(mousePos.x / Screen.width, mousePos.y / Screen.height, EternityUtil.GetElementLayer(this.gameObject)) - dragOffset;
 
+            dragDistance = Vector3.Magnitude(mousePos - initialDragPosition);
         }
 
         internal abstract void ResetSize();

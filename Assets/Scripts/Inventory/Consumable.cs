@@ -27,6 +27,6 @@ public class Consumable : Item
     /// <param name="target"></param>
     public override void Use(GameObject target)
     {
-        container.TryConsumeItem(this.name);
+        container.TryConsumeItem(this);
     }
 }

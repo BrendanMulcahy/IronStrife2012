@@ -10,7 +10,7 @@ using System.Collections;
 /// </summary>
 public class NetworkSyncAnimation : MonoBehaviour {
 
-    private ArrayList animationList;
+    private List<string> animationList;
 
     void Start()
     {

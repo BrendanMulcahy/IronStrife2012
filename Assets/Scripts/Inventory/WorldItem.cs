@@ -7,20 +7,29 @@
 public class WorldItem : InteractableObject
 {
     public string itemName;
+    public Item item;
 
     public override void InteractWith(GameObject player)
     {
         if (Network.isServer)
-            CommitInteractWith(player.networkView.viewID);
-        networkView.RPC("CommitInteractWith", RPCMode.Server, player.networkView.viewID);
+            ServerInteractWith(player.networkView.viewID);
+        else
+            networkView.RPC("ServerInteractWith", RPCMode.Server, player.networkView.viewID);
     }
     
     [RPC]
-    void CommitInteractWith(NetworkViewID networkViewID)
+    void ServerInteractWith(NetworkViewID playerViewID)
     {
-        GameObject interactor = networkViewID.GetGameObject();
+        GameObject interactor = playerViewID.GetGameObject();
 
-        interactor.networkView.RPC("AddItemToInventory", RPCMode.All, itemName);
+        if (item == null)
+        {
+            Debug.Log("This item doesn't have a viewID yet. Assigning one.");
+            item = ItemFactory.CreateItemForPlayer(this.itemName);
+
+        }
+
+        interactor.networkView.RPC("CommitAddToInventory", RPCMode.All, item.viewID, itemName);
         Network.Destroy(this.gameObject);
     }
 }

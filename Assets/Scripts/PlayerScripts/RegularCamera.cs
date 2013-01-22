@@ -249,6 +249,16 @@ public class RegularCamera : MonoBehaviour
         DidChangeTarget();
     }
 
+    private void InitialSetTarget(Transform t)
+    {
+        target = t;
+
+        var rotation = Quaternion.Euler(-y, x, 0);
+        var desiredPosition = rotation * new Vector3(0.0f, 0.0f, -distance) + target.position;
+        desiredPosition.y += height;
+        this.transform.position = desiredPosition;
+    }
+
     public void SetTransform(Vector3 lookDirection)
     {
         y = lookDirection.normalized.y * 90;

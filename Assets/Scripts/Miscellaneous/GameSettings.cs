@@ -172,9 +172,6 @@ public class GameSettings
     private Resolution[] resolutions;
 
     private GUIContent[] list;
-    private bool showList = false;
-    private int listEntry = 0;
-    private bool picked = false;
     private GUIStyle listStyle;
     private Vector2 scrollPosition = new Vector2();
 
@@ -386,23 +383,6 @@ public class GameSettings
                 treeBillboardDistance = 2000;
                 treeCrossFadeLength = 200;
                 break;
-        }
-    }
-
-    /// <summary>
-    /// Does not work
-    /// </summary>
-    private void ShowResolutionOption()
-    {
-        if (Popup.List(new Rect(50, 100, 100, 20), ref showList, ref listEntry, new GUIContent("Change Resolution"), list, listStyle))
-        {
-            picked = true;
-        }
-        if (picked)
-        {
-            picked = false;
-            Screen.SetResolution(resolutions[listEntry].width, resolutions[listEntry].height, Screen.fullScreen, resolutions[listEntry].refreshRate);
-
         }
     }
 

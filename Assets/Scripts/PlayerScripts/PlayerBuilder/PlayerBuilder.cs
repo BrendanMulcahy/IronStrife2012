@@ -87,7 +87,7 @@ public static class PlayerBuilder
             AddClientOwnerComponents(gameObject);
 
         gameObject.SendMessage("OnSetOwnership", SendMessageOptions.DontRequireReceiver);
-        Camera.main.SendMessage("SetTarget", gameObject.transform);
+        Camera.main.SendMessage("InitialSetTarget", gameObject.transform);
 
     }
 

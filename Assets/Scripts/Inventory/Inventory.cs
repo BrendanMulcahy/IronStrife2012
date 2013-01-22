@@ -91,18 +91,20 @@ public class Inventory : MonoBehaviour
 
     public void AddDefaultInventoryItems()
     {
-        networkView.RPC("AddItemToInventory", RPCMode.All, "Simple Sword");
+        if (Network.isClient) return;
+
+        ServerAddItemToInventory("Simple Sword");
         TryEquipItem((Weapon)Items[0]);
 
-        networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
-        networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
-        networkView.RPC("AddItemToInventory", RPCMode.All, "Health Potion");
-        networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
-        networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
-        networkView.RPC("AddItemToInventory", RPCMode.All, "Mana Potion");
+        ServerAddItemToInventory("Health Potion");
+        ServerAddItemToInventory("Health Potion");
+        ServerAddItemToInventory("Health Potion");
+        ServerAddItemToInventory("Mana Potion");
+        ServerAddItemToInventory("Mana Potion");
+        ServerAddItemToInventory("Mana Potion");
 
-        networkView.RPC("AddItemToInventory", RPCMode.All, "Shielded Bow");
-        networkView.RPC("AddItemToInventory", RPCMode.All, "Shield of the Round");
+        ServerAddItemToInventory("Shielded Bow");
+        ServerAddItemToInventory("Shield of the Round");
         TryEquipItem((Shield)Items[8]);
 
 
@@ -131,21 +133,21 @@ public class Inventory : MonoBehaviour
     {
         if (Network.isServer)
         {
-            ServerTryEquipItem(item.name);
+            ServerTryEquipItem(item.viewID, item.name);
         }
         else
         {
-            networkView.RPC("ServerTryEquipItem", RPCMode.Server, item.name);
+            networkView.RPC("ServerTryEquipItem", RPCMode.Server, item.viewID, item.name);
         }
     }
 
     [RPC]
-    void ServerTryEquipItem(string itemName)
+    void ServerTryEquipItem(NetworkViewID viewID, string itemName)
     {
         EquippableItem item;
-        if ((item = (EquippableItem)this.Get(itemName)) != null && item is EquippableItem)
+        if ((item = (EquippableItem)ItemFactory.GetFromViewID(viewID, itemName)) != null && item is EquippableItem)
         {
-            networkView.RPC("CommitEquipItem", RPCMode.All, itemName, (int)item.itemType);
+            networkView.RPC("CommitEquipItem", RPCMode.All, viewID, itemName, (int)item.itemType);
         }
         else
         {
@@ -153,27 +155,12 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Returns the item in this inventory given the name
-    /// </summary>
-    /// <param name="itemName"></param>
-    /// <returns></returns>
-    private Item Get(string itemName)
-    {
-        foreach (Item item in Items)
-        {
-            if (item.name == itemName)
-                return item;
-        }
-        return null;
-    }
-
     [RPC]
-    void CommitEquipItem(string itemName, int itemType)
+    void CommitEquipItem(NetworkViewID viewID, string itemName, int itemType)
     {
         try
         {
-            EquippableItem item = Get(itemName) as EquippableItem;
+            EquippableItem item = ItemFactory.GetFromViewID(viewID, itemName) as EquippableItem;
 
             Weapon oldWeapon = null;
 
@@ -249,7 +236,7 @@ public class Inventory : MonoBehaviour
         var itemToPurchase = ItemFactory.Get(itemName);
         if (itemToPurchase.goldCost <= this._gold)
         {
-            networkView.RPC("AddItemToInventory", RPCMode.All, itemName);
+            ServerAddItemToInventory(itemName);
             NetworkView.Find(shopID).RPC("ItemPurchasedSound", RPCMode.All);
         }
         else
@@ -268,7 +255,7 @@ public class Inventory : MonoBehaviour
         var itemToPurchase = ItemFactory.Get(itemName);
         if (itemToPurchase.goldCost <= this._gold)
         {
-            networkView.RPC("AddItemToInventory", RPCMode.All, itemName);
+            ServerAddItemToInventory(itemName);
             NetworkView.Find(shopID).RPC("ItemPurchasedSound", RPCMode.All);
         }
         else
@@ -281,32 +268,38 @@ public class Inventory : MonoBehaviour
     /// Attempts to consume the given item from this inventory.
     /// </summary>
     /// <param name="itemName"></param>
-    public void TryConsumeItem(string itemName)
+    public void TryConsumeItem(Item item)
     {
         if (Network.isServer)
-            ServerTryConsumeItem(itemName);
+            ServerTryConsumeItem(item.viewID, item.name);
         else
-            networkView.RPC("ServerTryConsumeItem", RPCMode.Server, itemName);
+            networkView.RPC("ServerTryConsumeItem", RPCMode.Server, item.viewID, item.name);
     }
 
     [RPC]
-    void ServerTryConsumeItem(string itemName)
+    void ServerTryConsumeItem(NetworkViewID viewID, string itemName)
     {
-        Item item = this.Get(itemName);
+        Item item = ItemFactory.GetFromViewID(viewID, itemName);
         if (item != null && item.itemType == ItemType.Consumable)
         {
-            networkView.RPC("ConsumeItem", RPCMode.All, itemName);
+            networkView.RPC("CommitConsumeItem", RPCMode.All, viewID, itemName);
         }
     }
 
     [RPC]
-    void CommitConsumeItem(string itemName)
+    void CommitConsumeItem(NetworkViewID viewID, string itemName)
     {
-        Item item = this.Get(itemName);
+        Item item = ItemFactory.GetFromViewID(viewID, itemName);
         ((Consumable)item).Consume(this.gameObject);
         Items.Remove(item);
         OnItemRemoved(item);
 
+    }
+
+    void ServerAddItemToInventory(string itemName)
+    {
+        var item = ItemFactory.CreateItemForPlayer(itemName);
+        networkView.RPC("CommitAddToInventory", RPCMode.All, item.viewID, itemName);
     }
 
     /// <summary>
@@ -314,9 +307,9 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="itemName"></param>
     [RPC]
-    void AddItemToInventory(string itemName)
+    void CommitAddToInventory(NetworkViewID viewID, string itemName)
     {
-        var newItem = ItemFactory.Get(itemName);
+        var newItem = ItemFactory.GetFromViewID(viewID, itemName);
         Items.Add(newItem);
         if (this.gameObject.IsMyLocalPlayer())
         {
@@ -332,9 +325,9 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="itemName"></param>
     [RPC]
-    void RemoveItemFromInventory(string itemName)
+    void RemoveItemFromInventory(NetworkViewID viewID, string itemName)
     {
-        var toRemove = ItemFactory.Get(itemName);
+        var toRemove = ItemFactory.GetFromViewID(viewID, itemName);
         Items.Remove(toRemove);
 
         OnItemRemoved(toRemove);
@@ -373,12 +366,12 @@ public class Inventory : MonoBehaviour
         //Add all currently-held items to remote client's inventory
         foreach (Item i in Items)
         {
-            networkView.RPCToGroup("AddItemToInventory", 2, player, i.name);
+            networkView.RPCToGroup("CommitAddToInventory", 2, player, i.viewID, i.name);
         }
 
         //Equip items on remote client
-        networkView.RPCToGroup("CommitEquipItem", 2, player, currentWeapon.name, (int)currentWeapon.itemType);
-        networkView.RPCToGroup("CommitEquipItem", 2, player, currentShield.name, (int)currentShield.itemType);
+        networkView.RPCToGroup("CommitEquipItem", 2, player, currentWeapon.viewID, currentWeapon.name, (int)currentWeapon.itemType);
+        networkView.RPCToGroup("CommitEquipItem", 2, player, currentShield.viewID, currentShield.name, (int)currentShield.itemType);
 
     }
 
@@ -388,40 +381,41 @@ public class Inventory : MonoBehaviour
     /// <param name="item"></param>
     internal void TryDropItem(Item item)
     {
+        Debug.Log("Trying to drop " + item.name);
         if (Network.isServer)
-            ServerTryDropItem(item.name);
+            ServerTryDropItem(item.viewID, item.name);
         else
         {
-            networkView.RPC("ServerTryDropItem", RPCMode.Server, item.name);
+            networkView.RPC("ServerTryDropItem", RPCMode.Server, item.viewID, item.name);
         }
     }
 
     [RPC]
-    void ServerTryDropItem(string name)
+    void ServerTryDropItem(NetworkViewID viewID, string itemName)
     {
-        var newItemView = Network.AllocateViewID();
-        networkView.RPC("CommitDropItem", RPCMode.All, name, newItemView);
+        networkView.RPC("CommitDropItem", RPCMode.All, viewID, itemName);
     }
 
     [RPC]
-    void CommitDropItem(string name, NetworkViewID newItemView)
+    void CommitDropItem(NetworkViewID viewID, string itemName)
     {
-        var toDrop = Get(name);
+        var toDrop = ItemFactory.GetFromViewID(viewID, itemName);
         Debug.Log("You are trying to drop " + toDrop.name + " goldcost: " + toDrop.goldCost);
 
-        GameObject worldItemPrefab = Resources.Load("Items/WorldItems/" + name) as GameObject;
+        GameObject worldItemPrefab = Resources.Load("Items/WorldItems/" + toDrop.name) as GameObject;
         if (!worldItemPrefab)
         {
             worldItemPrefab = Resources.Load("Items/WorldItems/PlaceholderItem") as GameObject;
-            worldItemPrefab.name = name + "_Placeholder";
-            worldItemPrefab.AddComponent<WorldItem>().itemName = name;
         }
 
         var instance = GameObject.Instantiate(worldItemPrefab) as GameObject;
+        instance.name = toDrop.name + "_Placeholder";
         instance.transform.position = this.transform.position + this.transform.forward * 1.0f + Vector3.up * 2f;
-        instance.networkView.viewID = newItemView;
+        instance.networkView.viewID = toDrop.viewID;
+        instance.GetComponent<WorldItem>().itemName = toDrop.name;
+        instance.GetComponent<WorldItem>().item = toDrop;
 
-        RemoveItemFromInventory(name);
+        RemoveItemFromInventory(viewID, itemName);
 
     }
 }

@@ -53,7 +53,16 @@ public class PlayerStats : CharacterStats
     private IEnumerator TimedDeathAnimation()
     {
         if (Network.isServer)
-            networkView.RPC("BeginDying", RPCMode.All);
+        {
+            if (this.gameObject.IsMyLocalPlayer())
+            {
+                this.SendMessage("BeginDying");
+            }
+            else
+            {
+                networkView.RPC("BeginDying", networkPlayer);
+            }
+        }
         yield return new WaitForSeconds(8.0f);
         transform.position = Vector3.zero;
     }

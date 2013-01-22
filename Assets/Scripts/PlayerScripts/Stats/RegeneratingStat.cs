@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Base class for regenerating stats (Health, Mana, Stamina)
+/// </summary>
 [System.Serializable]
 public abstract class RegeneratingStat : MonoBehaviour
 {
@@ -11,6 +14,9 @@ public abstract class RegeneratingStat : MonoBehaviour
     protected float maxStatRegenTime = 5.0f;
     public int statRegenRate = 1;
 
+    /// <summary>
+    /// Returns the current value of this Stat
+    /// </summary>
     public int CurrentValue
     {
         get { return _currentValue; }
@@ -27,6 +33,9 @@ public abstract class RegeneratingStat : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns the current percentage of this Stat (current / max)
+    /// </summary>
     public float CurrentPercentage { get { return ((float)_currentValue / (float)_maxValue); } } 
 
     private void StopRegeneration()
@@ -35,8 +44,14 @@ public abstract class RegeneratingStat : MonoBehaviour
         timeTilStatRegenerating = maxStatRegenTime;
     }
 
+    /// <summary>
+    /// Returns the max value of this stat
+    /// </summary>
     public int MaxValue { get { return _maxValue; } set { _maxValue = value; } }
 
+    /// <summary>
+    /// Event that is fired when this stat's current value is changed.
+    /// </summary>
     public event StatChangedEventHandler Changed;
 
     public void SetInitialValues(int current, int max)

@@ -6,7 +6,9 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Script that constructs a player GameObject by adding the appropriate MonoBehaviour components.
-/// Attach this to an empty GameObject and it should do the rest of the work
+/// Uses reflection to determine the appropriate components to add to the GameObject, based on whether
+/// this is a client or a server view of the character. Also handles adding specific components for the owner
+/// of the player character, such as input managers and GUI components.
 /// </summary>
 public static class PlayerBuilder
 {
@@ -33,17 +35,12 @@ public static class PlayerBuilder
         {
             _typeToAttributes[t] = t.GetCustomAttributes(typeof(PlayerComponentAttribute), false)[0] as PlayerComponentAttribute;
         }
-
-        //clientCharacterPrefab = Resources.Load("Player/" + "PlayerPrefabMelee01") as GameObject;
-        //BuildCharacter("client", clientCharacterPrefab);
-        //serverCharacterPrefab = Resources.Load("Player/" + "PlayerPrefabMelee01") as GameObject;
-        //BuildCharacter("server", serverCharacterPrefab);
-
         initialized = true;
     }
 
     /// <summary>
     /// Attaches the appropriate components to the player gameobject, depending on whether or not they are a server or client.
+    /// Uses reflection to check the PlayerComponent attribute and add appropriate components.
     /// </summary>
     private static void BuildCharacter(string type, GameObject gameObject)
     {
@@ -94,6 +91,10 @@ public static class PlayerBuilder
 
     }
 
+    /// <summary>
+    /// Adds server-specific components
+    /// </summary>
+    /// <param name="gameObject"></param>
     private static void BuildServerCharacter(GameObject gameObject)
     {
         foreach (Type t in typeToAttributes.Keys)
@@ -118,6 +119,10 @@ public static class PlayerBuilder
         }
     }
 
+    /// <summary>
+    /// Adds client specific components
+    /// </summary>
+    /// <param name="gameObject"></param>
     private static void BuildClientCharacter(GameObject gameObject)
     {
         foreach (Type t in typeToAttributes.Keys)
@@ -141,6 +146,10 @@ public static class PlayerBuilder
         }
     }
 
+    /// <summary>
+    /// Adds server-owner specific components
+    /// </summary>
+    /// <param name="gameObject"></param>
     private static void AddServerOwnerComponents(GameObject gameObject)
     {
         Debug.Log("Adding server owner components to " + gameObject);
@@ -166,6 +175,10 @@ public static class PlayerBuilder
         }
     }
 
+    /// <summary>
+    /// Adds client-owner specific components
+    /// </summary>
+    /// <param name="gameObject"></param>
     private static void AddClientOwnerComponents(GameObject gameObject)
     {
         foreach (Type t in typeToAttributes.Keys)
@@ -197,6 +210,13 @@ public static class PlayerBuilder
         }
     }
 
+    /// <summary>
+    /// Generates a new Client character, assigns it NetworkViewIDs.
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="interpolationViewID"></param>
+    /// <param name="animationViewID"></param>
+    /// <returns></returns>
     internal static GameObject GenerateClient(string username, NetworkViewID interpolationViewID, NetworkViewID animationViewID)
     {
         Debug.Log("Generating a Client-view character of " + username);
@@ -234,10 +254,6 @@ public static class PlayerBuilder
 
         gameObject.name = username;
         BuildCharacter("server", gameObject);
-
-
-
-
 
         return gameObject;
     }

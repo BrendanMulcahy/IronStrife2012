@@ -20,4 +20,13 @@ public class IntelligenceStat : BuffableStat
 
     public IntelligenceStat(int amount) : base(amount) { }
 
+    /// <summary>
+    /// Returns the total damage modifier that this Intelligence stat gives to spell attacks
+    /// </summary>
+    /// <returns></returns>
+    public int DamageModifier()
+    {
+        return ModifiedValue * spellDamagePerIntelligence;
+    }
+
 }

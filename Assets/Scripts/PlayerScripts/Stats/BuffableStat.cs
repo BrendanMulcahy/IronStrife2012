@@ -19,16 +19,22 @@ public abstract class BuffableStat
         ChangeBaseValue(baseValue);
     }
 
-    public event StatChangedEventHandler BaseChanged;
-    public event StatChangedEventHandler Changed;
+    /// <summary>
+    /// Event that is fired when the base value of this Stat is changed
+    /// </summary>
+    public event StatChangedEventHandler BaseValueChanged;
+    /// <summary>
+    /// Event that is fired when the Modified value of this Stat is changed. Does not fire when the base value changes
+    /// </summary>
+    public event StatChangedEventHandler ModifiedValueChanged;
 
     public BuffableStat() { }
 
     public virtual void ChangeModifierValue(int value)
     {
-        if (this.Changed != null)
+        if (this.ModifiedValueChanged != null)
         {
-            Changed(null, new StatChangedEventArgs() { oldValue = ModifiedValue, newValue = ModifiedValue + value });
+            ModifiedValueChanged(null, new StatChangedEventArgs() { oldValue = ModifiedValue, newValue = ModifiedValue + value });
         }
         this.totalModifiedValue += value;
 
@@ -36,9 +42,9 @@ public abstract class BuffableStat
 
     public virtual void ChangeBaseValue(int value)
     {
-        if (this.BaseChanged != null)
+        if (this.BaseValueChanged != null)
         {
-            BaseChanged(null, new StatChangedEventArgs() { oldValue = baseValue, newValue = baseValue + value });
+            BaseValueChanged(null, new StatChangedEventArgs() { oldValue = baseValue, newValue = baseValue + value });
         }
         this.baseValue += value;
     }

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// This effect heals the user for some amount.
+/// </summary>
 public class HealthPotion : MonoBehaviour
 {
     GameObject particle;

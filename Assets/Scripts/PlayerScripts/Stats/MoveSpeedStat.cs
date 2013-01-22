@@ -1,4 +1,4 @@
-﻿public class MoveSpeedStat
+﻿public class MoveSpeedStat //Doesnt extend buffable stat because MoveSpeed is a float
 {
         public float baseValue;
     protected float totalModifiedValue;

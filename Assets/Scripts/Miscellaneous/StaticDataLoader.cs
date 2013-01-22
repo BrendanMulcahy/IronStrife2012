@@ -38,7 +38,7 @@ public class StaticDataLoader : MonoBehaviour
 
 /// <summary>
 /// Marks a method that should be called on scene load
-/// Classes implementing this should st
+/// Classes implementing this should still make sure that static data is initialized before using it.
 /// </summary>
 [AttributeUsage(AttributeTargets.Method)]
 public class StaticAutoLoad : Attribute { }

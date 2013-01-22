@@ -8,7 +8,7 @@ using System.Collections.Generic;
 /// </summary>
 public class GameSettings
 {
-    Terrain _terrain;				// This needs to be assigned in the editor.
+    Terrain _terrain;
     Terrain terrain
     {
         get

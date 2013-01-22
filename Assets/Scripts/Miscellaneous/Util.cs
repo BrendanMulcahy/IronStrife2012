@@ -3,27 +3,28 @@ using System;
 using System.Collections;
 using System.Reflection;
 using System.Linq;
+using System.Collections.Generic;
 
 /// <summary>
 /// Static utility class containing many useful static methods.
 /// </summary>
 public static class Util
 {
+    // TODO : Move this to a Globals class
     public const float MaxExperienceRange = 20.0f;
+    /// <summary>
+    /// The team that the local player is on.
+    /// </summary>
     public static int MyLocalPlayerTeam;
-    public static void Spawn(String objectName, Vector3 position = new Vector3())
-    {
-        if (Network.isServer)
-        {
-            (Network.Instantiate(Resources.Load(objectName), Vector3.zero, Quaternion.identity, 0) as Transform).MoveToWorldGroundPosition(position);
-        }
-    }
 
-    private static GameObject MainTerrain
+    /// <summary>
+    /// Gets the main terrain object in the scene.
+    /// </summary>
+    public static GameObject MainTerrain
     {
         get
         {
-            var mainTerrain = GameObject.Find("ValleyOfTheKnight_Terrain");
+            var mainTerrain = GameObject.Find("Terrain");
             return mainTerrain;
         }
     }
@@ -33,10 +34,10 @@ public static class Util
     /// </summary>
     /// <param name="animation">The animation object to parse</param>
     /// <returns>A list of the names of animations in the object</returns>
-    public static ArrayList GetAnimationList(Animation animation)
+    public static List<string> GetAnimationList(Animation animation)
     {
         // make an Array that can grow
-        var tmpList = new ArrayList();
+        var tmpList = new List<string>();
 
         // enumerate all states
         foreach (AnimationState state in animation)
@@ -168,6 +169,9 @@ public static class Util
             go.GetComponent<NetworkController>().enabled = true;
     }
 
+    /// <summary>
+    /// Toggles the scrolling of the player's camera distance
+    /// </summary>
     public static void TogglePlayerScrollZoom()
     {
         Camera.main.GetComponent<RegularCamera>().ToggleScrollingEnabled();
@@ -228,6 +232,12 @@ public static class Util
 
     }
 
+    /// <summary>
+    /// Fades out a given audio source over time
+    /// </summary>
+    /// <param name="audio"></param>
+    /// <param name="p"></param>
+    /// <returns></returns>
     internal static IEnumerator FadeOutSoundInSeconds(AudioSource audio, float p)
     {
         float initialVolume = audio.volume;
@@ -241,6 +251,14 @@ public static class Util
         }
     }
 
+    /// <summary>
+    /// Fades in a given audio source over time.
+    /// </summary>
+    /// <param name="audio"></param>
+    /// <param name="songToFade"></param>
+    /// <param name="maxVolume"></param>
+    /// <param name="fadeTime"></param>
+    /// <returns></returns>
     internal static IEnumerator FadeInSoundInSeconds(AudioSource audio, AudioClip songToFade, float maxVolume, float fadeTime)
     {
         audio.clip = songToFade;
@@ -257,6 +275,11 @@ public static class Util
         yield break;
     }
 
+    /// <summary>
+    /// Returns true if this GameObject is the player's GameObject.
+    /// </summary>
+    /// <param name="go"></param>
+    /// <returns></returns>
     internal static bool IsMyLocalPlayer(this GameObject go)
     {
         if (Util.MyLocalPlayerObject == go)
@@ -266,6 +289,11 @@ public static class Util
         return false;
     }
 
+    /// <summary>
+    /// Sets this transform to be the child of the given transform, and centers it at that parent.
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="other"></param>
     internal static void SetParentAndCenter(this Transform t, Transform other)
     {
         t.parent = other.transform;
@@ -277,6 +305,11 @@ public static class Util
     private static GUISkin skin;
     public static GUISkin ISEGUISkin { get { if (!skin) skin = Resources.Load("ISEGUISkin") as GUISkin; return skin; } }
 
+    /// <summary>
+    /// Sets the layer of this GameObject and all of its children.
+    /// </summary>
+    /// <param name="go"></param>
+    /// <param name="layerNumber"></param>
     public static void SetLayerRecursively(this GameObject go, int layerNumber)
     {
         foreach (Transform trans in go.GetComponentsInChildren<Transform>(true))
@@ -285,11 +318,10 @@ public static class Util
         }
     }
 
-    public static void Destroy(UnityEngine.Object o)
-    {
-        UnityEngine.Object.Destroy(o);
-    }
-
+    /// <summary>
+    /// Destroys all objects in the given Object array
+    /// </summary>
+    /// <param name="o"></param>
     public static void Destroy(UnityEngine.Object[] o)
     {
         for (int g = 0; g < o.Length; g++)
@@ -298,24 +330,39 @@ public static class Util
         }
     }
 
-    
-    internal static IEnumerator DisableInSeconds(Behaviour comp, float p)
+    /// <summary>
+    /// Disables a component after a given time
+    /// </summary>
+    /// <param name="comp">The component to disable</param>
+    /// <param name="delay">The time to wait</param>
+    /// <returns></returns>
+    internal static IEnumerator DisableInSeconds(Behaviour comp, float delay)
     {
-        yield return new WaitForSeconds(p);
+        yield return new WaitForSeconds(delay);
         if (comp != null)
             comp.enabled = false;
     }
 
-    public static NetworkViewID GetNetworkViewID(this GameObject go)
+    /// <summary>
+    /// Gets the NetworkViewID of the first NetworkView attached to this GameObject.
+    /// </summary>
+    /// <param name="gameObject"></param>
+    /// <returns></returns>
+    public static NetworkViewID GetNetworkViewID(this GameObject gameObject)
     {
-        if (!go) Debug.Log("Null");
-        var networkViewID = go.GetComponent<NetworkView>();
+        if (!gameObject) Debug.Log("Null");
+        var networkViewID = gameObject.GetComponent<NetworkView>();
         if (networkViewID) 
             return networkViewID.viewID;
         else 
             return NetworkViewID.unassigned;
     }
 
+    /// <summary>
+    /// Gets the GameObject that this NetworkViewID is attached to
+    /// </summary>
+    /// <param name="viewID"></param>
+    /// <returns></returns>
     public static GameObject GetGameObject(this NetworkViewID viewID)
     {
         if (viewID == NetworkViewID.unassigned) return null;
@@ -323,12 +370,22 @@ public static class Util
         return NetworkView.Find(viewID).gameObject;
     }
 
+    /// <summary>
+    /// Gets all of the subclasses of a given type, using reflection
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Type[] GetSubclasses<T>()
     {
         var allClasses = Assembly.GetExecutingAssembly().GetExportedTypes().Where(t => t.IsSubclassOf(typeof(T))).ToArray();
         return allClasses;
     }
 
+    /// <summary>
+    /// Gets all classes with the given attribute, using reflection
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Type[] GetClassesWithAttribute<T>()
     {
         var allClasses = Assembly.GetExecutingAssembly().GetExportedTypes().Where(t => t.GetCustomAttributes(typeof(T), false).Length > 0).ToArray();
@@ -336,6 +393,9 @@ public static class Util
     }
 
     private static string _username;
+    /// <summary>
+    /// Gets the local player's username
+    /// </summary>
     public static string Username
     {
         get
@@ -351,6 +411,14 @@ public static class Util
         }
     }
 
+    /// <summary>
+    /// Sends an RPC to a specific group over this NetworkView.
+    /// </summary>
+    /// <param name="networkView"></param>
+    /// <param name="methodName"></param>
+    /// <param name="group"></param>
+    /// <param name="mode"></param>
+    /// <param name="parameters"></param>
     public static void RPCToGroup(this NetworkView networkView, string methodName, int group, RPCMode mode, params object[] parameters)
     {
         var previousGroup = networkView.group;
@@ -360,6 +428,14 @@ public static class Util
         networkView.group = previousGroup;
     }
 
+    /// <summary>
+    /// Sends an RPC to a specific group over this NetworkView to a specific NetworkPlayer
+    /// </summary>
+    /// <param name="networkView"></param>
+    /// <param name="methodName"></param>
+    /// <param name="group"></param>
+    /// <param name="player"></param>
+    /// <param name="parameters"></param>
     public static void RPCToGroup(this NetworkView networkView, string methodName, int group, NetworkPlayer player, params object[] parameters)
     {
         var previousGroup = networkView.group;
@@ -368,5 +444,4 @@ public static class Util
         networkView.RPC(methodName, player, parameters);
         networkView.group = previousGroup;
     }
-
 }

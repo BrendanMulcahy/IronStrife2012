@@ -24,7 +24,7 @@ public class Shop : InteractableObject {
         sellingAbility = ItemAvailability.Regular;
 
         itemsForSale = new LinkedList<Item>();
-        var dict = ItemDirectory.GetAllItems();
+        var dict = ItemFactory.GetAllItems();
         foreach (Item i in dict.Values)
         {
             if (i.availability == sellingAbility)

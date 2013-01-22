@@ -14,6 +14,9 @@ public class StrengthStat : BuffableStat
 
     public StrengthStat(int amount) : base(amount) { }
 
+    /// <summary>
+    /// Returns the total damage modifier that this Strength stat gives to physical attacks
+    /// </summary>
     public int DamageModifier
     {
         get

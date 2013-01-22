@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Handles game initialization upon server creation or connection to server
+/// </summary>
 public class GameConnect : MonoBehaviour
 {
 
@@ -16,6 +19,7 @@ public class GameConnect : MonoBehaviour
 
     void OnPlayerConnected(NetworkPlayer player)
     {
+        // When a player connects, disable regular communication with him until they are fully loaded
         Network.SetSendingEnabled(player, 0, false);
     }
 
@@ -26,32 +30,35 @@ public class GameConnect : MonoBehaviour
 
     private void HandleServerStartup()
     {
+        // Add a master game logic object and create the server's player.
         new GameObject("MasterGameLogic").AddComponent<MasterGameLogic>();
-        MasterGameLogic.Main.PlayerManager.GenerateNewPlayer(Network.player, Util.Username);
+        PlayerManager.Main.GenerateNewPlayer(Network.player, Util.Username);
     }
 
     [RPC]
     void NewClientConnection(string username, NetworkMessageInfo msg)
     {
         StartCoroutine(HandleNewClientConnection(username, msg));
-
     }
 
     private System.Collections.IEnumerator HandleNewClientConnection(string username, NetworkMessageInfo msg)
     {
+        // Send all player character information to the player 
         networkView.RPC("LoadingStarted", msg.sender);
         ClientStartup(msg);
         AssignNewPlayerCharacter(username, msg);
-        SynchronizeGameObjects(msg.sender);
+        SynchronizeGameObjects(msg.sender); // Synchronize all GameObjects we just sent.
 
+        // Resume state updates to the newly connected client 
         Network.SetSendingEnabled(msg.sender, 0, true);
-        networkView.RPC("LoadingFinished", msg.sender);
-        MessageTerminal.Main.networkView.RPC("GameStarted", msg.sender);
+        networkView.RPC("LoadingFinished", msg.sender); // Notify the client that they are finished loading
+
         yield break;
     }
 
     private void SynchronizeGameObjects(NetworkPlayer networkPlayer)
     {
+        // Sends a message to all GameObjects and tells them to synchronize with the newly connected player
         GameObject[] allGameObjects = FindObjectsOfType(typeof(GameObject)) as GameObject[];
 
         foreach (GameObject go in allGameObjects)
@@ -73,6 +80,14 @@ public class GameConnect : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Run on the client to spawn another player's character.
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="player"></param>
+    /// <param name="team"></param>
+    /// <param name="interpolationViewID"></param>
+    /// <param name="animationViewID"></param>
     [RPC]
     void SpawnCharacter(string username, NetworkPlayer player, int team, NetworkViewID interpolationViewID, NetworkViewID animationViewID)
     {
@@ -80,6 +95,11 @@ public class GameConnect : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Run on the server. Generates a new player character for a newly connected player.
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="msg"></param>
     [RPC]
     void AssignNewPlayerCharacter(string username, NetworkMessageInfo msg)
     {
@@ -88,6 +108,14 @@ public class GameConnect : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Run on the client. Spawns the client's player and gives them ownership
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="player"></param>
+    /// <param name="team"></param>
+    /// <param name="interpolationViewID"></param>
+    /// <param name="animationViewID"></param>
     [RPC]
     void SpawnCharacterAndSetOwnership(string username, NetworkPlayer player, int team, NetworkViewID interpolationViewID, NetworkViewID animationViewID)
     {
@@ -97,18 +125,12 @@ public class GameConnect : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// Deactivates message receiving for the general channel (0)
-    /// </summary>
     [RPC]
     void LoadingStarted()
     {
 
     }
 
-    /// <summary>
-    /// Reactivates message receiving for the general channel (0)
-    /// </summary>
     [RPC]
     void LoadingFinished()
     {

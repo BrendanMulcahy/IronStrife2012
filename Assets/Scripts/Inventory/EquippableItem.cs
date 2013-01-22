@@ -23,12 +23,23 @@ public class EquippableItem : Item
     [XmlAttribute("positionZ")]
     public float positionZ = 0;
 
+    /// <summary>
+    /// The name of this item's model
+    /// </summary>
     [XmlAttribute("modelAssetName")]
     public string modelAssetName;
 
+    /// <summary>
+    /// The transform equip location to use.
+    /// </summary>
     [XmlAttribute("equipLocationPath")]
     public string equipLocationPath;
+    // TODO : Replace this with a smart tag system for equip locations. Automatically find a child with some tag and equip an item to that location.
 
+    /// <summary>
+    /// Use this item from the inventory. AKA equip it to your player.
+    /// </summary>
+    /// <param name="target"></param>
     public override void Use(GameObject target)
     {
         container.TryEquipItem(this);

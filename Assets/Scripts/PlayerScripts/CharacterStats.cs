@@ -91,21 +91,21 @@ public class CharacterStats : MonoBehaviour
         Stamina.SetInitialValues(50, 50);
 
         Strength = new StrengthStat(0);
-        Strength.Changed += Health.Strength_Changed;
-        Strength.BaseChanged += Health.Strength_Changed;
+        Strength.ModifiedValueChanged += Health.Strength_Changed;
+        Strength.BaseValueChanged += Health.Strength_Changed;
         Strength.ChangeBaseValue(5);
 
         MoveSpeed = new MoveSpeedStat(10.0f);
         Agility = new AgilityStat(0);
-        Agility.Changed += Stamina.Agility_Changed;
-        Agility.BaseChanged += Stamina.Agility_Changed;
-        Agility.Changed += MoveSpeed.Agility_Changed;
-        Agility.BaseChanged += MoveSpeed.Agility_Changed;
+        Agility.ModifiedValueChanged += Stamina.Agility_Changed;
+        Agility.BaseValueChanged += Stamina.Agility_Changed;
+        Agility.ModifiedValueChanged += MoveSpeed.Agility_Changed;
+        Agility.BaseValueChanged += MoveSpeed.Agility_Changed;
         Agility.ChangeBaseValue(5);
 
         Intelligence = new IntelligenceStat(0);
-        Intelligence.Changed += Mana.Intelligence_Changed;
-        Intelligence.BaseChanged += Mana.Intelligence_Changed;
+        Intelligence.ModifiedValueChanged += Mana.Intelligence_Changed;
+        Intelligence.BaseValueChanged += Mana.Intelligence_Changed;
         Intelligence.ChangeBaseValue(5);
 
         PhysicalDefense = new PhysicalDefense(0);

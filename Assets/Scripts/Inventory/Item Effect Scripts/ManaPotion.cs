@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// This effect restores the user's mana for some amount
+/// </summary>
 public class ManaPotion : MonoBehaviour
 {
     GameObject particle;

@@ -7,30 +7,50 @@ using I18N;
 using System.Xml;
 
 /// <summary>
-/// Represents the base class for a player item. Other classes like EquippableItem implement these features.
+/// Represents the base class for a player item. Other classes like EquippableItem and Consumable implement these features.
 /// </summary>
 public abstract class Item
 {
-
+    /// <summary>
+    /// The item's name
+    /// </summary>
     [XmlAttribute("name")]
     public string name;
 
+    /// <summary>
+    /// A description of the item. Displayed when looking at the item in a shop or your inventory
+    /// </summary>
     [XmlAttribute("description")]
     public string description;
 
+    /// <summary>
+    /// The type of this item
+    /// </summary>
     [XmlAttribute("itemType")]
     public ItemType itemType;
 
+    /// <summary>
+    /// Cost to purchase this item from a shop
+    /// </summary>
     [XmlAttribute("goldCost")]
     public int goldCost;
 
+    /// <summary>
+    /// The rarity of this item. Determines which shops carry it.
+    /// </summary>
     [XmlAttribute("availability")]
     public ItemAvailability availability;
 
+    /// <summary>
+    /// The inventory this item is contained in
+    /// </summary>
     [NonSerialized][XmlIgnore]
     public Inventory container;
 
     private Texture2D _inventoryIcon;
+    /// <summary>
+    /// The 2D icon of this item
+    /// </summary>
     public Texture2D inventoryIcon
     {
         get 
@@ -46,6 +66,12 @@ public abstract class Item
         }
     }
 
+    /// <summary>
+    /// Creates an item from a name.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="itemName"></param>
+    /// <returns></returns>
     public static T FromName<T>(string itemName) where T : Item
     {
         var type = typeof(T);

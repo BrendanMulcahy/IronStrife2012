@@ -46,22 +46,19 @@ public class Projectile : MonoBehaviour {
         CollideWith(other);
     }
 
+    /// <summary>
+    /// Called when this projectile hits another object.
+    /// </summary>
+    /// <param name="other"></param>
     public virtual void CollideWith(Collider other)
     {
         collider.enabled = false;
-        var logic = other.transform.root.GetComponent<DamageReceiver>();
-        if (logic!=null)
-            logic.ApplyHit(creator.gameObject);
+        var dr = other.transform.root.GetComponent<DamageReceiver>();
+        if (dr!=null)
+            dr.ApplyHit(creator.gameObject);
         this.enabled = false;
         this.stuckIn = other.gameObject;
         this.transform.parent = other.transform;
-        StartCoroutine(DestroyInSeconds(30.0f));
-
-    }
-
-    private IEnumerator DestroyInSeconds(float p)
-    {
-        yield return new WaitForSeconds(p);
-        Destroy(this.gameObject);
+        Destroy(this.gameObject, 30.0f);
     }
 }

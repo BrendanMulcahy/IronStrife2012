@@ -1,6 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// Attribute that designates a component to be added to a player character
+/// Used by the PlayerBuilder class to dynamically build player characters on the client and server
+/// </summary>
 [AttributeUsage(AttributeTargets.Class,AllowMultiple=false)]
 public class PlayerComponentAttribute : Attribute
 {

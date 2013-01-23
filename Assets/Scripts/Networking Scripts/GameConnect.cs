@@ -14,9 +14,9 @@ public class GameConnect : MonoBehaviour
 
     void OnConnectedToServer()
     {
-        networkView.RPC("NewClientConnection", RPCMode.Server, Util.Username);
         var fader = this.gameObject.AddComponent<CameraFade>();
-        fader.FadeToSolid(3.0f);
+        fader.FadeToSolid(1.0f);
+        networkView.RPC("NewClientConnection", RPCMode.Server, Util.Username);
     }
 
     void OnPlayerConnected(NetworkPlayer player)

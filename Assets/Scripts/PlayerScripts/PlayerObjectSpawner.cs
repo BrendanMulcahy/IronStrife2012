@@ -66,4 +66,14 @@ public class PlayerObjectSpawner : MonoBehaviour
         ISelfSpell toCast = (PlayerAbilities.AllSpells()[spellId]) as ISelfSpell;
         toCast.Execute(this.gameObject);
     }
+
+    [RPC]
+    private void SimulateISelfSpellWithViewIDExecute(int spellID, NetworkViewID viewID)
+    {
+        if (gameObject.IsMyLocalPlayer()) return;
+
+        ISelfSpellWithViewID toCast = (PlayerAbilities.AllSpells()[spellID]) as ISelfSpellWithViewID;
+        toCast.Execute(this.gameObject, viewID);
+
+    }
 }

@@ -15,8 +15,6 @@ public class GameTime : MonoBehaviour {
 	
 	private const float DEGREES_PER_SECOND = 360/DAY;
 	
-	private float degreeRotation;
-
 	public float timeOfDay;
 
     public Material skyboxMaterial;
@@ -53,7 +51,6 @@ public class GameTime : MonoBehaviour {
         initialRotations[1] = Quaternion.Euler(270, 0, 0);
 		
 		timeOfDay = 7.5f; // Start at 7:30 AM
-		degreeRotation = DEGREES_PER_SECOND * DAY / (dayCycleInMinutes * MINUTE);
 	}
 	
 	// Update is called once per frame

@@ -21,10 +21,9 @@ public class DamageReceiver : MonoBehaviour {
     public virtual void ApplyHit(GameObject attacker)
     {
         var attackerStats = attacker.GetCharacterStats();
-        var strengthMod = attackerStats.Strength.DamageModifier;
-        var weaponMod = attacker.GetInventory().currentWeapon.damage;
+        var totalDamageMod = attackerStats.PhysicalDamageModifier;
 
-        var damage = new Damage(strengthMod + weaponMod, attacker, DamageType.Physical);
+        var damage = new Damage(totalDamageMod, attacker, DamageType.Physical);
 
 
         characterStats.ApplyDamage(attacker, damage);

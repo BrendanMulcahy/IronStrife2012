@@ -11,50 +11,6 @@ using System.Collections.Generic;
 /// </summary>
 public class CharacterStats : MonoBehaviour
 {
-
-    #region Deprecated Stats Code
-    //public int Health { get; set; }
-    //public int MaxHealth { get; set; }
-    //public int Mana { get; set; }
-    //public int MaxMana { get; set; }
-    //public void ReduceMana(int amount) { Mana -= amount; manaRegenerating = false; timeTilManaRegenerating = maxManaRegenerationTime; }
-
-    //private float _stamina;
-    //public int Stamina { get { return (int)_stamina; } set { _stamina = value; } }
-    //public int MaxStamina { get; set; }
-    //public void ReduceStamina(float amount) { _stamina -= amount; staminaRegenerating = false; timeTilStaminaRegenerating = maxStaminaRegenerationTime; }
-
-    ////public bool healthRegenerating;
-    ////public float timeTilHealthRegenerating;
-    ////private float maxHealthRegenerationTime = 5.0f;
-    ////public int healthRegenerationRate = 1;
-
-    ////private bool manaRegenerating;
-    ////private int manaRegenerationRate = 1;
-    ////private float maxManaRegenerationTime = 5.0f;
-    ////private float timeTilManaRegenerating;
-
-    ////private bool staminaRegenerating;
-    ////private int staminaRegenerationRate = 3;
-    ////private float maxStaminaRegenerationTime = 1.5f;
-    ////private float timeTilStaminaRegenerating;
-
-    //public int Strength;
-    ///// <summary>
-    ///// Attack strength, including all modifiers, such as weapon damage, buffs, etc.
-    ///// </summary>
-    //public int EffectiveStrength
-    //{
-    //    get
-    //    {
-    //        var effectiveStr = Strength;
-    //        if (inventory != null)
-    //            effectiveStr += inventory.currentWeapon.damage;
-    //        return effectiveStr;
-    //    }
-    //}
-    #endregion
-
     public Health Health { get; set; }
     public Mana Mana { get; set; }
     public Stamina Stamina { get; set; }
@@ -68,6 +24,7 @@ public class CharacterStats : MonoBehaviour
 
     public MoveSpeedStat MoveSpeed { get; set; }
 
+    public Inventory inventory;
     public int teamNumber = 0;
     public int TeamNumber { get { return teamNumber; } set { networkView.RPC("ChangeTeam", RPCMode.All, value); } }
 
@@ -75,6 +32,14 @@ public class CharacterStats : MonoBehaviour
 
     public event UnitDiedEventHandler Died;
     public event DamageEventHandler Damaged;
+
+    public virtual int PhysicalDamageModifier
+    {
+        get
+        {
+            return Strength.ModifiedValue * StrengthStat.meleeDamagePerStrength + ((inventory) ? inventory.currentWeapon.damage : 0);
+        }
+    }
 
     protected virtual void Awake()
     {
@@ -112,7 +77,7 @@ public class CharacterStats : MonoBehaviour
         MagicalDefense = new MagicalDefense(0);
     }
 
-    protected virtual void Start() { }
+    protected virtual void Start() { inventory = gameObject.GetInventory(); }
 
     /// <summary>
     /// Causes damage to be received by this character. Is reduced by defenses and resistances.
@@ -123,7 +88,6 @@ public class CharacterStats : MonoBehaviour
         var e = new DamageEventArgs() { damage = damage };
         if (Damaged != null)
         {
-            Debug.Log(this.gameObject.name + " took " + damage.amount + " damage before modifications.");
             Damaged(this.gameObject, e);
         }
 
@@ -150,6 +114,8 @@ public class CharacterStats : MonoBehaviour
             }
 
             Health.CurrentValue = Mathf.Max(0, Health.CurrentValue - damage.amount);
+            Debug.Log(this.gameObject.name + " took " + damage.amount + " damage after modifications. He now has " + Health.CurrentValue);
+
 
             if (Health.CurrentValue <= 0)
             {
@@ -160,6 +126,7 @@ public class CharacterStats : MonoBehaviour
 
     protected void OnDeath(UnitDiedEventArgs unitDiedEventArgs)
     {
+        Debug.Log("Calling OnDeath : " + name);
         if (Died != null)
         {
             Died(gameObject, unitDiedEventArgs);
@@ -274,21 +241,21 @@ public class CharacterStats : MonoBehaviour
 public class KillReward
 {
     public int experience;
-    public int iron;
+    public int gold;
 
-    public KillReward(int setExperience, int setIron)
+    public KillReward(int setExperience, int setGold)
     {
         experience = setExperience;
-        iron = setIron;
+        gold = setGold;
     }
 
     public static KillReward operator /(KillReward reward, int divisor)
     {
-        return new KillReward(reward.experience / divisor, reward.iron / divisor);
+        return new KillReward(reward.experience / divisor, reward.gold / divisor);
     }
 
     public static KillReward operator *(KillReward reward, int factor)
     {
-        return new KillReward(reward.experience * factor, reward.iron * factor);
+        return new KillReward(reward.experience * factor, reward.gold * factor);
     }
 }

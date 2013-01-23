@@ -12,8 +12,6 @@ public class PlayerStats : CharacterStats
 
     static int[] experiencePerLevel = { 1000, 2000, 3000, 5000, 8000, 13000 };
 
-    private int iron = 0;
-
     private NetworkPlayer networkPlayer;
 
     public event PlayerRespawnedEventHandler Respawned;
@@ -100,13 +98,13 @@ public class PlayerStats : CharacterStats
     public void RewardKill(KillReward reward)
     {
         this.experience += reward.experience;
-        this.iron += reward.iron;
+        this.inventory.Gold += reward.gold;
         if (experience > experienceNeeded)
         {
             LevelUp();
         }
         if (gameObject != Util.MyLocalPlayerObject) 
-        networkView.RPC("BroadcastReward", this.networkPlayer, reward.experience, reward.iron);
+        networkView.RPC("BroadcastReward", this.networkPlayer, reward.experience, reward.gold);
     }
 
     [RPC] void BroadcastDeath(NetworkViewID killerID)
@@ -138,11 +136,11 @@ public class PlayerStats : CharacterStats
     /// Received by the client when he kills an enemy and receives a reward.
     /// </summary>
     [RPC]
-    void BroadcastReward(int xp, int ironReward)
+    void BroadcastReward(int xp, int goldReward)
     {
         //	Debug.Log("You have obtained "+xp + " experience and " + iron + " iron.");
         experience += xp;
-        iron += ironReward;
+        inventory.Gold += goldReward;
     }
 
     void LevelUp()

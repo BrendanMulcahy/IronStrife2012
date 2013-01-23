@@ -138,6 +138,7 @@ public class GameConnect : MonoBehaviour
     {
         var fader = this.gameObject.GetComponent<CameraFade>();
         fader.FadeToTransparent(3.0f);
+        Destroy(fader, 3.1f);
     }
 
 }

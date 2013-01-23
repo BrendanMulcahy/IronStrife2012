@@ -57,6 +57,9 @@
             rte.transform.parent = inventoryPanel.transform;
             rte.transform.position = new Vector3(40, 50).ScreenToViewport();
 
+            rte.MouseDown += inventoryPanel.baseElement_MouseDown;
+            rte.MouseUp += inventoryPanel.baseElement_MouseUp;
+
             inventoryPanel.gameObject.SetActive(false);
             return inventoryPanel;
         }

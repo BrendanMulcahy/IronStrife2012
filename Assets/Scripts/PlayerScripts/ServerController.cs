@@ -66,7 +66,8 @@ public class ServerController : MonoBehaviour
         }
         GameObject newHomingTarget = null;
         RaycastHit[] hits;
-        hits = Physics.RaycastAll(transform.position + Vector3.up * 2f, transform.forward, 100).OrderBy(h => h.distance).ToArray();
+        int layerMask = 1 << 9;
+        hits = Physics.RaycastAll(transform.position + Vector3.up * 2f, transform.forward, 100, layerMask).OrderBy(h => h.distance).ToArray();
         foreach (RaycastHit hit in hits)
         {
             var collidedTarget = hit.collider.transform.root.gameObject;

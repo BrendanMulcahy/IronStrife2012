@@ -3,10 +3,13 @@ using System.Collections;
 
 public class GameTime : MonoBehaviour {
 	public Transform[] suns;
+	
+	public Transform[] moons;
+	
 	private Sun sunBright;
     public Quaternion[] initialRotations;
 	
-	public float dayCycleInMinutes = 1;
+	public float dayCycleInMinutes = 6;
 	
 	private const float SECOND = 1;
 	private const float MINUTE = 60 * SECOND;
@@ -33,17 +36,31 @@ public class GameTime : MonoBehaviour {
     }
 
     public static float CurrentTime { get { return Main.timeOfDay; } }
-	
 
 	// Use this for initialization
 	void Start () {
-		Sun temp = suns[0].GetComponent<Sun>();
-		if (temp == null)
+		for (int i = 0; i < suns.Length; i++)
 		{
-			Debug.Log("SunScript not found. Adding it");
-			suns[0].gameObject.AddComponent<Sun>();
-			temp = suns[0].GetComponent<Sun>();
+			Sun temp = suns[i].GetComponent<Sun>();
+			if (temp == null)
+			{
+				Debug.Log("SunScript not found. Adding it");
+				suns[i].gameObject.AddComponent<Sun>();
+				temp = suns[i].GetComponent<Sun>();
+			}
 		}
+		
+		for (int i = 0; i < moons.Length; i++)
+		{
+			Moon temp = moons[i].GetComponent<Moon>();
+			if (temp == null)
+			{
+				Debug.Log("MoonScript not found. Adding it");
+				moons[i].gameObject.AddComponent<Moon>();
+				temp = moons[i].GetComponent<Moon>();
+			}
+		}
+		
         skyboxMaterial = RenderSettings.skybox;
 
         initialRotations = new Quaternion[2];
@@ -58,13 +75,16 @@ public class GameTime : MonoBehaviour {
         timeOfDay += (Time.deltaTime / HOUR) * (1440f / dayCycleInMinutes);
         timeOfDay = timeOfDay % 24;
         
-		for (int i = 0; i < suns.Length; i++)
-		{
-            float rotationAmount = (CurrentTime / 24f) * 360f;
-            suns[i].transform.rotation = initialRotations[i];
-            suns[i].Rotate(new Vector3(1, 0, 0), rotationAmount);
+        float rotationAmount = (CurrentTime / 24f) * 360f;
+		moons[0].transform.rotation = initialRotations[0];
+        moons[0].Rotate(new Vector3(1, 0, 0), rotationAmount);
+		
+        suns[0].transform.rotation = initialRotations[1];
+        suns[0].Rotate(new Vector3(1, 0, 0), rotationAmount);
+		
+		
 
-		}
+		
 
         UpdateSkybox();
 	}

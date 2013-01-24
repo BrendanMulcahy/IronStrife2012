@@ -22,7 +22,11 @@ Material:
       data:
         first:
           name: _Outline
+<<<<<<< HEAD
         second: .00720789796
+=======
+        second: .000240736277
+>>>>>>> ab93e91fd5d938cf89ccc872138b44a77d88395d
     m_Colors:
       data:
         first:

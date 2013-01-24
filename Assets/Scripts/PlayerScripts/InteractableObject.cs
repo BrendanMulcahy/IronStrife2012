@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 
-public class InteractableObject : MonoBehaviour
+public abstract class InteractableObject : MonoBehaviour
 {
-    public virtual void InteractWith(GameObject player)
-    {
-        PopupMessage.LocalDisplay("You have interacted with " + gameObject.name);
-    }
+    public abstract void InteractWith(GameObject player);
 }

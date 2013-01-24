@@ -130,9 +130,12 @@ public class ThirdPersonController : MonoBehaviour, IController
     private PlayerInputManager inputManager;
     private CharacterStats characterStats;
 
+    private NetworkViewID currentSpellView;
+
     public bool isLocallyControlledPlayer = false;
     private float arrowFireVelocity = 30.0f;
     public float maxLockRange = 35.0f;
+    private NetworkPlayer networkPlayer;
     public float ArrowFireVelocity { get { return arrowFireVelocity; } }
 
     public float VerticalInput { get { return inputManager.verticalInput; } set { inputManager.verticalInput = value; } }
@@ -290,8 +293,29 @@ public class ThirdPersonController : MonoBehaviour, IController
     {
         if (spell.manaCost <= characterStats.Mana.CurrentValue && !isCasting)
         {
+            if (spell is ISelfSpellWithViewID)
+            {
+                if (Network.isServer)
+                {
+                    currentSpellView = Network.AllocateViewID();
+
+                    if (!gameObject.IsMyLocalPlayer())
+                        networkView.RPC("SetSpellViewID", PlayerManager.Main.FindRecord(gameObject).networkPlayer, currentSpellView);
+                }
+                else
+                {
+                    currentSpellView = NetworkViewID.unassigned;
+                }
+            }
             StartCoroutine(SelfSpellCastTimer(spell));
         }
+    }
+
+    [RPC]
+    void SetSpellViewID(NetworkViewID viewID)
+    {
+        Debug.Log("Received spell View ID: " + viewID);
+        this.currentSpellView = viewID;
     }
 
     private IEnumerator SelfSpellCastTimer(Spell spell)
@@ -303,15 +327,23 @@ public class ThirdPersonController : MonoBehaviour, IController
         {
             yield return null;
             startTime += Time.deltaTime;
-            if (startTime > endTime) Debug.Log("Cast time complete.");
             if (isMoving || IsJumping()) { isCasting = false; inputManager.spellButton = false; inputManager.spellBeingCast = null; yield break; }
         }
         characterStats.Mana.CurrentValue -= spell.manaCost;
+        if (spell is ISelfSpell)
+        {
+            ((ISelfSpell)spell).Execute(this.gameObject);
+            if (Network.isServer)
+                networkView.RPC("SimulateISelfSpellExecute", RPCMode.Others, (int)spell);
+        }
+        else if (spell is ISelfSpellWithViewID)
+        {
+            ((ISelfSpellWithViewID)spell).Execute(this.gameObject, currentSpellView);
+            if (Network.isServer)
+                networkView.RPC("SimulateISelfSpellWithViewIDExecute", RPCMode.Others, (int)spell, currentSpellView);
 
-        ((ISelfSpell)spell).Execute(this.gameObject);
-        if (Network.isServer)
-        networkView.RPC("SimulateISelfSpellExecute", RPCMode.Others, (int)spell);
 
+        }
         isCasting = false;
         inputManager.spellButton = false;
         inputManager.spellBeingCast = null;

@@ -12,7 +12,7 @@ public class PlayerStats : CharacterStats
 
     static int[] experiencePerLevel = { 1000, 2000, 3000, 5000, 8000, 13000 };
 
-    private NetworkPlayer networkPlayer;
+    public NetworkPlayer networkPlayer;
 
     public event PlayerRespawnedEventHandler Respawned;
     public bool canRespawn;

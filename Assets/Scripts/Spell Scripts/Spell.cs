@@ -8,9 +8,6 @@ public abstract class Spell
     //Initialize these values in InitializeSpellValues()
     public float castTime;
     public int manaCost;
-
-
-
     public GameObject caster;
     public Texture2D spellImage;
 
@@ -57,7 +54,7 @@ public abstract class Spell
         {
             if (this is ITargetSpell)
                 return SpellTargetType.Target;
-            if (this is ISelfSpell)
+            if (this is ISelfSpell || this is ISelfSpellWithViewID)
                 return SpellTargetType.Self;
             if (this is IPointSpell)
                 return SpellTargetType.Point;

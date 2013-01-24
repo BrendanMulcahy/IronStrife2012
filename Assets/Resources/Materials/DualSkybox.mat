@@ -106,11 +106,7 @@ Material:
       data:
         first:
           name: _Blend
-<<<<<<< HEAD
-        second: .363273919
-=======
         second: .397398293
->>>>>>> ab93e91fd5d938cf89ccc872138b44a77d88395d
     m_Colors:
       data:
         first:

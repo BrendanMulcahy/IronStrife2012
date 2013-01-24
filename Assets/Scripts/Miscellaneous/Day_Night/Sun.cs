@@ -11,5 +11,10 @@ public class Sun : MonoBehaviour {
 	public float minFlareBrightness;
 	
 	
+	void Awake()
+    {
+        SunManager.Main.AddLight(this);  // Register with the night light manager.
+    }
+	
 	
 }

@@ -114,8 +114,6 @@ public class CharacterStats : MonoBehaviour
             }
 
             Health.CurrentValue = Mathf.Max(0, Health.CurrentValue - damage.amount);
-            Debug.Log(this.gameObject.name + " took " + damage.amount + " damage after modifications. He now has " + Health.CurrentValue);
-
 
             if (Health.CurrentValue <= 0)
             {
@@ -126,7 +124,6 @@ public class CharacterStats : MonoBehaviour
 
     protected void OnDeath(UnitDiedEventArgs unitDiedEventArgs)
     {
-        Debug.Log("Calling OnDeath : " + name);
         if (Died != null)
         {
             Died(gameObject, unitDiedEventArgs);

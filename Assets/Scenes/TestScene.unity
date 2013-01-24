@@ -215,6 +215,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 20678661}
   - 108: {fileID: 20678662}
+  - 114: {fileID: 20678663}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -269,6 +270,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &20678663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 929505468}
+  m_GameObject: {fileID: 20678660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1001 &24015394
 Prefab:
   m_ObjectHideFlags: 0
@@ -3268,6 +3284,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 141081681}
   - 108: {fileID: 141081680}
+  - 114: {fileID: 141081682}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -3322,6 +3339,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 39020260}
+--- !u!114 &141081682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1054617559}
+  m_GameObject: {fileID: 141081679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &150759872
 GameObject:
   m_ObjectHideFlags: 0
@@ -8713,6 +8745,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 419479010}
   - 108: {fileID: 419479009}
+  - 114: {fileID: 419479011}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -8767,6 +8800,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1640268383}
+--- !u!114 &419479011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 899237236}
+  m_GameObject: {fileID: 419479008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1001 &422660233
 Prefab:
   m_ObjectHideFlags: 0
@@ -12630,6 +12678,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 602603827}
   - 108: {fileID: 602603828}
+  - 114: {fileID: 602603829}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -12684,6 +12733,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &602603829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 623545074}
+  m_GameObject: {fileID: 602603826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &603672616
 GameObject:
   m_ObjectHideFlags: 0
@@ -13587,6 +13651,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 632438317}
   - 108: {fileID: 632438316}
+  - 114: {fileID: 632438318}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -13641,6 +13706,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1411209362}
+--- !u!114 &632438318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 969196525}
+  m_GameObject: {fileID: 632438315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &636286223
 GameObject:
   m_ObjectHideFlags: 0
@@ -14019,6 +14099,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 652782957}
   - 108: {fileID: 652782956}
+  - 114: {fileID: 652782958}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -14073,6 +14154,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 641159933}
+--- !u!114 &652782958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1658007529}
+  m_GameObject: {fileID: 652782955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &653108775
 GameObject:
   m_ObjectHideFlags: 0
@@ -16009,6 +16105,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 760245215}
   - 108: {fileID: 760245216}
+  - 114: {fileID: 760245217}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -16063,6 +16160,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &760245217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1308689419}
+  m_GameObject: {fileID: 760245214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &760430409
 GameObject:
   m_ObjectHideFlags: 0
@@ -16945,6 +17057,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 798903238}
   - 108: {fileID: 798903239}
+  - 114: {fileID: 798903240}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -16999,6 +17112,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &798903240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 441306728}
+  m_GameObject: {fileID: 798903237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1001 &800764731
 Prefab:
   m_ObjectHideFlags: 0
@@ -18645,6 +18773,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 858206924}
   - 108: {fileID: 858206925}
+  - 114: {fileID: 858206926}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -18699,6 +18828,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &858206926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 270200064}
+  m_GameObject: {fileID: 858206923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &858973535
 GameObject:
   m_ObjectHideFlags: 0
@@ -19049,6 +19193,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 867503159}
   - 108: {fileID: 867503160}
+  - 114: {fileID: 867503161}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -19103,6 +19248,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &867503161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 732394738}
+  m_GameObject: {fileID: 867503158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &874007969
 GameObject:
   m_ObjectHideFlags: 0
@@ -19229,6 +19389,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 877723787}
   - 108: {fileID: 877723788}
+  - 114: {fileID: 877723789}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -19283,6 +19444,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &877723789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 33173326}
+  m_GameObject: {fileID: 877723786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &880413707
 GameObject:
   m_ObjectHideFlags: 0
@@ -19891,6 +20067,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 890903392}
   - 108: {fileID: 890903391}
+  - 114: {fileID: 890903393}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -19945,6 +20122,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 983178097}
+--- !u!114 &890903393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 741776519}
+  m_GameObject: {fileID: 890903390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &894269497
 GameObject:
   m_ObjectHideFlags: 0
@@ -20996,6 +21188,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 939240282}
   - 108: {fileID: 939240281}
+  - 114: {fileID: 939240283}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -21050,6 +21243,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1355929105}
+--- !u!114 &939240283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1934505388}
+  m_GameObject: {fileID: 939240280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &939271048
 GameObject:
   m_ObjectHideFlags: 0
@@ -28025,19 +28233,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f38e0e8eddb91ac4483101bffc58ae26, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -5.49274293e-19
+      value: -5.49274345e-19
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f38e0e8eddb91ac4483101bffc58ae26, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -.00634336052
+      value: -.00634336099
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f38e0e8eddb91ac4483101bffc58ae26, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -8.65938656e-17
+      value: -8.65938723e-17
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f38e0e8eddb91ac4483101bffc58ae26, type: 2}
       propertyPath: m_LocalRotation.w
-      value: .999979854
+      value: .999979913
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f38e0e8eddb91ac4483101bffc58ae26, type: 2}
       propertyPath: m_LocalScale.z
@@ -28196,6 +28404,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1272525229}
   - 108: {fileID: 1272525230}
+  - 114: {fileID: 1272525231}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -28250,6 +28459,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &1272525231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1831892671}
+  m_GameObject: {fileID: 1272525228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &1273213503
 GameObject:
   m_ObjectHideFlags: 0
@@ -28364,6 +28588,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1278181467}
   - 108: {fileID: 1278181468}
+  - 114: {fileID: 1278181469}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -28418,6 +28643,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &1278181469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1224307572}
+  m_GameObject: {fileID: 1278181466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1001 &1279043963
 Prefab:
   m_ObjectHideFlags: 0
@@ -29727,6 +29967,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1348433941}
   - 108: {fileID: 1348433942}
+  - 114: {fileID: 1348433943}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -29781,6 +30022,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &1348433943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1246008182}
+  m_GameObject: {fileID: 1348433940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1001 &1349109263
 Prefab:
   m_ObjectHideFlags: 0
@@ -34347,6 +34603,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1540677722}
   - 108: {fileID: 1540677723}
+  - 114: {fileID: 1540677724}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -34401,6 +34658,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &1540677724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1162735490}
+  m_GameObject: {fileID: 1540677721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &1543329211
 GameObject:
   m_ObjectHideFlags: 0
@@ -35702,6 +35974,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1623534477}
   - 108: {fileID: 1623534478}
+  - 114: {fileID: 1623534479}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -35756,6 +36029,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &1623534479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1590447000}
+  m_GameObject: {fileID: 1623534476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1001 &1623984894
 Prefab:
   m_ObjectHideFlags: 0
@@ -36841,6 +37129,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1666379151}
   - 108: {fileID: 1666379150}
+  - 114: {fileID: 1666379152}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -36895,6 +37184,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 598077015}
+--- !u!114 &1666379152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 2062726037}
+  m_GameObject: {fileID: 1666379149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &1667654304
 GameObject:
   m_ObjectHideFlags: 0
@@ -37681,6 +37985,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1697452103}
   - 108: {fileID: 1697452102}
+  - 114: {fileID: 1697452104}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -37735,6 +38040,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1888830689}
+--- !u!114 &1697452104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1075796422}
+  m_GameObject: {fileID: 1697452101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &1699713973
 GameObject:
   m_ObjectHideFlags: 0
@@ -40043,6 +40363,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1787782226}
   - 108: {fileID: 1787782227}
+  - 114: {fileID: 1787782228}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -40097,6 +40418,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &1787782228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 2008846236}
+  m_GameObject: {fileID: 1787782225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &1789409600
 GameObject:
   m_ObjectHideFlags: 0
@@ -40857,6 +41193,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1818626224}
   - 108: {fileID: 1818626225}
+  - 114: {fileID: 1818626226}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -40911,6 +41248,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &1818626226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 757739386}
+  m_GameObject: {fileID: 1818626223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1001 &1819618504
 Prefab:
   m_ObjectHideFlags: 0
@@ -42661,6 +43013,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1897547728}
   - 108: {fileID: 1897547729}
+  - 114: {fileID: 1897547730}
   m_Layer: 13
   m_Name: Spotlight
   m_TagString: Untagged
@@ -42715,6 +43068,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &1897547730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1258842327}
+  m_GameObject: {fileID: 1897547727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1001 &1900149944
 Prefab:
   m_ObjectHideFlags: 0
@@ -45006,19 +45374,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f38e0e8eddb91ac4483101bffc58ae26, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -5.49274293e-19
+      value: -5.49274345e-19
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f38e0e8eddb91ac4483101bffc58ae26, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -.00634336052
+      value: -.00634336099
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f38e0e8eddb91ac4483101bffc58ae26, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -8.65938656e-17
+      value: -8.65938723e-17
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f38e0e8eddb91ac4483101bffc58ae26, type: 2}
       propertyPath: m_LocalRotation.w
-      value: .999979854
+      value: .999979913
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f38e0e8eddb91ac4483101bffc58ae26, type: 2}
       propertyPath: m_LocalScale.z
@@ -46056,6 +46424,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 2048741418}
   - 108: {fileID: 2048741419}
+  - 114: {fileID: 2048741420}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -46110,6 +46479,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &2048741420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 1243583355}
+  m_GameObject: {fileID: 2048741417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1001 &2049019209
 Prefab:
   m_ObjectHideFlags: 0
@@ -47414,6 +47798,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 2115678521}
   - 108: {fileID: 2115678522}
+  - 114: {fileID: 2115678523}
   m_Layer: 11
   m_Name: Spotlight
   m_TagString: Untagged
@@ -47468,6 +47853,21 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &2115678523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f38e0e8eddb91ac4483101bffc58ae26,
+    type: 2}
+  m_PrefabInternal: {fileID: 2043880717}
+  m_GameObject: {fileID: 2115678520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65db061319688248acda4ca146405db, type: 3}
+  m_Name: 
+  dayIntensity: 0
+  nightIntensity: 1
+  dayRange: 0
+  nightRange: 25
 --- !u!1 &2119495192
 GameObject:
   m_ObjectHideFlags: 0

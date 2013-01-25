@@ -25,22 +25,28 @@ public class SunManager : MonoBehaviour {
         return _instance;
     }
     }
-	
+
 	//Update is called once per frame
 	void Update () {
 		
 		float currentTime = GameTime.CurrentTime;
-
-        if (currentTime > 17 && currentTime < 18)
+		
+		//SunSet
+        if (currentTime > 17 && currentTime < 17.8)
         {
             float currentPercentage = currentTime - 17f;
             foreach (Sun light in suns)
             {
                 light.light.intensity = Mathf.Lerp(light.maxLightBrightness, light.minLightBrightness, currentPercentage);
 				light.GetComponent<LensFlare>().brightness = Mathf.Lerp(light.maxFlareBrightness, light.minFlareBrightness, currentPercentage);
+				//Change flare color and color of the light over time
+				light.GetComponent<LensFlare>().color = Color.Lerp(Color.yellow, Color.red,currentPercentage);
+				light.light.color = Color.Lerp(Color.white, Color.red, currentPercentage);
+				
             }
 			
         }
+		//MoonRise
 		else if (currentTime > 18.2 && currentTime < 19.2)
 		{
 			float currentPercentage = currentTime - 18.2f;
@@ -51,7 +57,7 @@ public class SunManager : MonoBehaviour {
             }
 			
 		}
-		
+		//MoonSet
 		else if (currentTime > 4.7 && currentTime < 5.7)
 		{
 			float currentPercentage = currentTime - 4.7f;
@@ -62,6 +68,7 @@ public class SunManager : MonoBehaviour {
             }
 			
 		}
+		//SunRise
 		else if (currentTime > 6.3 && currentTime < 7.3)
 		{
 			float currentPercentage = currentTime - 6.3f;
@@ -69,6 +76,9 @@ public class SunManager : MonoBehaviour {
             {
                 light.light.intensity = Mathf.Lerp(light.minLightBrightness, light.maxLightBrightness, currentPercentage);
 				light.GetComponent<LensFlare>().brightness = Mathf.Lerp(light.minFlareBrightness, light.maxFlareBrightness, currentPercentage);
+				//Change flare color and color of the light over time
+				light.GetComponent<LensFlare>().color = Color.Lerp(Color.red, Color.yellow,currentPercentage);
+				light.light.color = Color.Lerp(Color.red, Color.white, currentPercentage);
             }
 			
 		}

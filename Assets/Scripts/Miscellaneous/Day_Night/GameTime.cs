@@ -1,6 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
+
+
+/// <summary>
+/// Game time.
+/// Class Handles the movement of the sun and moon in the sky, as well as the changing of the skybox over time.
+/// </summary>
 public class GameTime : MonoBehaviour {
 	public Transform[] suns;
 	
@@ -9,6 +15,7 @@ public class GameTime : MonoBehaviour {
 	private Sun sunBright;
     public Quaternion[] initialRotations;
 	
+	//Full day cycle 
 	public float dayCycleInMinutes = 6;
 	
 	private const float SECOND = 1;
@@ -112,9 +119,9 @@ public class GameTime : MonoBehaviour {
 
         }
 
-        else if (CurrentTime > 18 && CurrentTime < 21)
+        else if (CurrentTime > 18 && CurrentTime < 20)
         {
-            float currentPercentage = (CurrentTime - 18f) / 3f;
+            float currentPercentage = (CurrentTime - 18f) / 2f;
             currentVal = currentPercentage;
             skyboxMaterial.SetFloat("_Blend", currentVal);
 

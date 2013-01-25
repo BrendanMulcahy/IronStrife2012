@@ -14,6 +14,7 @@ public class Sun : MonoBehaviour {
 	void Awake()
     {
         SunManager.Main.AddLight(this);  // Register with the night light manager.
+		this.GetComponent<LensFlare>().color = Color.yellow;
     }
 	
 	

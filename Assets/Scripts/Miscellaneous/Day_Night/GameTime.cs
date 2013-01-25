@@ -111,9 +111,9 @@ public class GameTime : MonoBehaviour {
     {
         float currentVal;
 
-        if (CurrentTime >6 && CurrentTime < 9)
+        if (CurrentTime >6 && CurrentTime < 8)
         {
-            float currentPercentage = (CurrentTime - 6f) / 3f ;
+            float currentPercentage = (CurrentTime - 6f) / 2f ;
             currentVal = 1 - currentPercentage;
             skyboxMaterial.SetFloat("_Blend", currentVal);
 

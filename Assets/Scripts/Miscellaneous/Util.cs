@@ -444,4 +444,25 @@ public static class Util
         networkView.RPC(methodName, player, parameters);
         networkView.group = previousGroup;
     }
+
+    public static void RPCToServer(this NetworkView networkView, MonoBehaviour behaviour, string methodName, params object[] parameters)
+    {
+        if (Network.isServer)
+        {
+            var allMethods = behaviour.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            foreach (MethodInfo method in allMethods)
+            {
+                if (method.Name == methodName)
+                {
+                    method.Invoke(behaviour, parameters);
+                    break;
+                }
+            }
+
+        }
+        else
+        {
+            networkView.RPC(methodName, RPCMode.Server, parameters);
+        }
+    }
 }

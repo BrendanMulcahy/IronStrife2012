@@ -100,6 +100,11 @@ public abstract class Item
         }
     }
 
+    public char GetItemID()
+    {
+        return ItemFactory.GetIndex(this.name);
+    }
+
     /// <summary>
     /// Uses this item.
     /// </summary>

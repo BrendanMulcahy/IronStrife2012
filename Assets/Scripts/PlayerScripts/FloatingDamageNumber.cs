@@ -9,8 +9,17 @@ public class FloatingDamageNumber : SimpleObjectLabel
     {
         base.Start();
         Destroy(this.gameObject, 3.0f);
-
-        guiText.text = damage.amount.ToString();
+        if (damage != null)
+        {
+            float percentage = ((float)damage.amount / (float)transform.root.gameObject.GetCharacterStats().Health.MaxValue);
+            guiText.text = damage.amount.ToString();
+            if (percentage > .33f)
+            {
+                guiText.fontSize = (int)(guiText.fontSize * 2f);
+                guiText.fontStyle = FontStyle.Italic;
+                guiText.material.color = Color.red;
+            }
+        }
         offset += Vector3.forward * Random.Range(-.1f, .1f);
         offset += Vector3.right * Random.Range(-.1f, .1f);
 

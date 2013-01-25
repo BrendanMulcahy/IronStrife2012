@@ -1167,7 +1167,6 @@ GameObject:
   - 111: {fileID: 11100000}
   - 82: {fileID: 8200000}
   - 148: {fileID: 14800000}
-  - 148: {fileID: 14800002}
   m_Layer: 0
   m_Name: PlayerPrefabMelee01
   m_TagString: Untagged
@@ -7523,9 +7522,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 100544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea862aea968761c41b373c9b12b86c5c, type: 3}
+  m_Script: {fileID: 11500000, guid: f3842b8f1190b0d42a855a1e8d6f4005, type: 3}
   m_Name: 
-  target: {fileID: 400154}
+  target: {fileID: 0}
 --- !u!131 &13100000
 GUITexture:
   m_ObjectHideFlags: 1
@@ -7958,18 +7957,6 @@ CharacterController:
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 1.29999995, z: 0}
 --- !u!148 &14800000
-NetworkView:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100154}
-  m_Enabled: 1
-  m_StateSynchronization: 1
-  m_Observed: {fileID: 0}
-  m_ViewID:
-    m_ID: 0
-    m_Type: 0
---- !u!148 &14800002
 NetworkView:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

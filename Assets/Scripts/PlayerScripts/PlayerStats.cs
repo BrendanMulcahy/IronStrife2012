@@ -120,7 +120,7 @@ public class PlayerStats : CharacterStats
         }
         else
         {
-            transform.FindChild("Name Label").GetComponent<ObjectLabel>().DisableLabels();
+            transform.FindChild("Name Label").GetComponent<CharacterLabel>().DisableLabels();
             if (Util.MyLocalPlayerObject.GetCharacterStats().TeamNumber != this.teamNumber)
             {
                 PopupMessage.LocalDisplay(gameObject.name + " has been killed by " + NetworkView.Find(killerID).gameObject.name + "!", 2.5f, 0, 1, 0);
@@ -213,7 +213,7 @@ public class PlayerStats : CharacterStats
         {
             if (transform.FindChild("Name Label"))
             {
-                transform.FindChild("Name Label").GetComponent<ObjectLabel>().EnableLabels();
+                transform.FindChild("Name Label").GetComponent<CharacterLabel>().EnableLabels();
             }
         }
     }

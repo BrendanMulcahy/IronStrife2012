@@ -129,6 +129,19 @@ public class PlayerManager
         return null;
     }
 
+    private PlayerRecord FindRecord(NetworkPlayer player)
+    {
+        foreach (PlayerRecord pr in players)
+        {
+            if (pr.networkPlayer == player)
+            {
+                return pr;
+            }
+        }
+        Debug.LogWarning("User not found.");
+        return null;
+    }
+
 
     internal GameObject GetPlayerGameObject(NetworkPlayer player)
     {
@@ -154,6 +167,12 @@ public class PlayerManager
             goodPlayers.Add(gameObject);
         }
         this.FindRecord(gameObject).team = newTeam;
+    }
+
+    internal void RemovePlayer(NetworkPlayer player)
+    {
+        var record = FindRecord(player);
+        players.Remove(record);
     }
 }
 

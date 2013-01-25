@@ -5,13 +5,15 @@ public class DreamVessel : Spell,  ISelfSpellWithViewID
     {
         Debug.Log("Instantiating the vessel");
         var vesselPrefab = Resources.Load("SpellEffects/DreamVessel") as GameObject;
-        var go = GameObject.Instantiate(vesselPrefab, caster.transform.position + caster.transform.forward * 2f, Quaternion.identity) as GameObject;
-        go.AddComponent<DreamVesselObject>().team = caster.GetCharacterStats().TeamNumber;
-
+        var go = GameObject.Instantiate(vesselPrefab) as GameObject;
         if (!go.networkView)
             go.AddComponent<NetworkView>();
         go.networkView.viewID = viewID;
         go.networkView.observed = go.transform;
+        go.networkView.stateSynchronization = NetworkStateSynchronization.ReliableDeltaCompressed;
+        go.AddComponent<DreamVesselObject>().team = caster.GetCharacterStats().TeamNumber;
+        go.transform.position = caster.transform.position + caster.transform.forward * 2f;
+
     }
 
     public override string name
@@ -58,8 +60,6 @@ public class DreamVesselObject : InteractableObject
         Debug.Log("Trying to enter vessel");
         if (!rider)
         {
-            GameObject player = playerViewID.GetGameObject();
-            var networkPlayer = PlayerManager.Main.FindRecord(player).networkPlayer;
             networkView.RPC("CommitEnterVessel", RPCMode.All, playerViewID);
         }
     }
@@ -74,17 +74,16 @@ public class DreamVesselObject : InteractableObject
         this.transform.position += Vector3.up * 1.5f;
         this.rider = entered;
 
-        if (entered.IsMyLocalPlayer())
+        if (entered.IsMyLocalPlayer() || Network.isServer)
         {
-            Util.MyLocalPlayerObject.GetComponent<ThirdPersonController>().enabled = false;
-            Util.MyLocalPlayerObject.AddComponent<VesselController>().vessel = this;
+            entered.GetComponent<ThirdPersonController>().enabled = false;
+            entered.AddComponent<VesselController>().vessel = this;
         }
     }
 
     [RPC]
     internal void CommitExitVessel(NetworkViewID networkViewID)
     {
-        GameObject player = networkViewID.GetGameObject();
         this.transform.parent = null;
         this.rider = null;
     }
@@ -93,13 +92,11 @@ public class DreamVesselObject : InteractableObject
 public class VesselController : MonoBehaviour
 {
     private PlayerInputManager input;
-    private Transform thisTransform;
     public DreamVesselObject vessel;
 
     void Awake()
     {
         this.input = GetComponent<PlayerInputManager>();
-        this.thisTransform = this.transform;
     }
 
     void Update()
@@ -130,7 +127,7 @@ public class VesselController : MonoBehaviour
                 }
                 else
                 {
-                    vessel.networkView.RPC("TryExitVessel", RPCMode.Server, this.networkView.viewID);
+                    this.networkView.RPC("TryExitVessel", RPCMode.Server, this.networkView.viewID);
                 }
             }
         }
@@ -148,6 +145,8 @@ public class VesselController : MonoBehaviour
         }
         else
         {
+            if (Network.isServer)
+                ExitVessel();
             networkView.RPC("ExitVessel", PlayerManager.Main.FindRecord(player).networkPlayer);
         }
     }

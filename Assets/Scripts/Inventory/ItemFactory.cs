@@ -10,6 +10,8 @@ public static class ItemFactory
     private static bool initialized = false;
     private static Dictionary<string, ItemType> itemTypes = new Dictionary<string, ItemType>();
 
+    private static List<string> itemNames = new List<string>();
+
     /// <summary>
     /// Returns an item given the name
     /// </summary>
@@ -66,6 +68,7 @@ public static class ItemFactory
             Weapon w = Item.FromName<Weapon>(ta.name);
             items.Add(ta.name, w);
             itemTypes.Add(ta.name, w.itemType);
+            itemNames.Add(ta.name);
         }
         Object[] shieldXML = Resources.LoadAll("Items/Shield", typeof(TextAsset));
         foreach (Object o in shieldXML)
@@ -74,6 +77,8 @@ public static class ItemFactory
             Shield s = Item.FromName<Shield>(ta.name);
             items.Add(ta.name, s);
             itemTypes.Add(ta.name, s.itemType);
+            itemNames.Add(ta.name);
+
         }
         Object[] consumableXML = Resources.LoadAll("Items/Consumable", typeof(TextAsset));
         foreach (Object o in consumableXML)
@@ -82,6 +87,8 @@ public static class ItemFactory
             Consumable c = Item.FromName<Consumable>(ta.name);
             items.Add(ta.name, c);
             itemTypes.Add(ta.name, c.itemType);
+                        itemNames.Add(ta.name);
+
         }
         initialized = true;
     }
@@ -122,8 +129,6 @@ public static class ItemFactory
             var item = ItemFactory.Get(itemName);
             item.viewID = viewID;
             ItemViewIDs[viewID] = item;
-            Debug.LogWarning("Setting " + viewID + " to the item " + item.name + " created from itemName " + itemName);
-
 
         }
         if (ItemViewIDs[viewID].name != itemName)
@@ -132,5 +137,15 @@ public static class ItemFactory
         }
 
         return ItemViewIDs[viewID];
+    }
+
+    internal static char GetIndex(string name)
+    {
+        return (char)itemNames.IndexOf(name);
+    }
+
+    internal static string GetItemNameFromID(char id)
+    {
+        return itemNames[id];
     }
 }

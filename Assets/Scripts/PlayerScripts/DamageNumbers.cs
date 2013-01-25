@@ -13,6 +13,7 @@ public class DamageNumbers : MonoBehaviour
 
     void DamageNumbers_Damaged(GameObject sender, DamageEventArgs e)
     {
+        if (e == null) Debug.Log("ITS NULL LOLOLOZZ");
         AddFloatingDamageNumber(e);
     }
 

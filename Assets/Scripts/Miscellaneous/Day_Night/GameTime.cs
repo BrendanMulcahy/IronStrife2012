@@ -89,6 +89,17 @@ public class GameTime : MonoBehaviour {
         UpdateSkybox();
 	}
 
+    void SynchronizePlayer(NetworkPlayer player)
+    {
+        networkView.RPC("InitializeGameTime", player, CurrentTime);
+    }
+
+    [RPC]
+    void InitializeGameTime(float time)
+    {
+        timeOfDay = time;
+    }
+
     private void UpdateSkybox()
     {
         float currentVal;

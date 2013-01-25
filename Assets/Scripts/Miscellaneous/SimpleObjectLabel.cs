@@ -23,7 +23,7 @@ public class SimpleObjectLabel : MonoBehaviour
         thisTransform = transform;
         cam = Camera.main;
         camTransform = cam.transform;
-        offset = new Vector3(0, 3, 0);
+        offset = new Vector3(0, 3f, 0);
 
         if (!guiText)
         {

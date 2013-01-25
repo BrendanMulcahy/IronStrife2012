@@ -7,10 +7,9 @@ using System;
 [RequireComponent(typeof(CharacterStats))]
 [RequireComponent(typeof(GUIText))]
 [RequireComponent(typeof(GUITexture))]
-public class ObjectLabel : MonoBehaviour {
+public class CharacterLabel : MonoBehaviour {
 
 	public Transform target;		// Object that this label should follow
-	float height  = 2.8f;	// Height above player to display label
 	private Vector3 offset;	// Units in world space to offset; 1 unit above object by default
 	private Camera cam;
 	private Transform thisTransform;
@@ -22,15 +21,26 @@ public class ObjectLabel : MonoBehaviour {
  
 	void Start () 
 	{
+        if (!target)
+        {
+            target = this.transform.root;
+        }
 		thisTransform = transform;
 		cam = Camera.main;
 		camTransform = cam.transform;
 		var inset = guiTexture.pixelInset;
 		inset.y = -35;
+        inset.height = 15;
 		guiTexture.pixelInset = inset;
-		offset = new Vector3(0, height, 0);
+        var targetHeight = ((CharacterController)target.collider).center.y + ((CharacterController)target.collider).height *.7f;
+        Debug.Log("Target height is " + targetHeight);
+        offset = new Vector3(0, targetHeight, 0); 
         stats = transform.root.gameObject.GetCharacterStats();
+        guiTexture.texture = Resources.Load("WhiteSquare") as Texture2D;
+        thisTransform.localScale = new Vector3();
 	}
+
+    void OnSetOwnership() { Destroy(this); }
 	 
 	void LateUpdate () 
 	{	
@@ -74,7 +84,7 @@ public class ObjectLabel : MonoBehaviour {
         color.a = 1f - (Vector3.Distance(camTransform.position, transform.root.position) / maxDisplayDistance);
         guiText.material.color = color;
 
-		double healthPercentage = double.Parse(stats.Health.CurrentValue.ToString()) / double.Parse(stats.Health.MaxValue.ToString());
+        double healthPercentage = stats.Health.CurrentPercentage;
 		var inset = guiTexture.pixelInset;
 		inset.width = (float ) (maxHealthWidth * healthPercentage);
 		inset.x = -(maxHealthWidth / 2);

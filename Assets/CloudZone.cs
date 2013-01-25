@@ -74,7 +74,6 @@ public class CloudZone : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.gameObject + "has triggered the cloudzone");
         if (clouds.Contains(other.gameObject))
         {
             Debug.Log("A cloud has exited the cloud zone. Making a new one.");

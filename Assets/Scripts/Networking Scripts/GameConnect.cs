@@ -25,6 +25,21 @@ public class GameConnect : MonoBehaviour
         Network.SetSendingEnabled(player, 0, false);
     }
 
+    void OnPlayerDisconnected(NetworkPlayer player)
+    {
+        networkView.RPC("PlayerDisconnected", RPCMode.All, PlayerManager.Main.GetPlayerGameObject(player).GetNetworkViewID());
+        PlayerManager.Main.RemovePlayer(player);
+    }
+
+    [RPC]
+    void PlayerDisconnected(NetworkViewID viewID)
+    {
+        GameObject player = viewID.GetGameObject();
+        player.SendMessage("PlayerDisconnected");
+        Destroy(player);
+
+    }
+
     void Awake()
     {
         networkView.group = 1;

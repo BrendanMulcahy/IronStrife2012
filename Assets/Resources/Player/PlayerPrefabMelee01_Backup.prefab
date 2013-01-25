@@ -4115,27 +4115,11 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400546}
-  - 114: {fileID: 11400032}
-  - 114: {fileID: 11400030}
   - 143: {fileID: 14300000}
-  - 114: {fileID: 11400028}
-  - 114: {fileID: 11400026}
-  - 114: {fileID: 11400024}
-  - 114: {fileID: 11400022}
-  - 114: {fileID: 11400020}
-  - 114: {fileID: 11400018}
-  - 114: {fileID: 11400016}
-  - 148: {fileID: 14800000}
-  - 120: {fileID: 12000000}
-  - 114: {fileID: 11400014}
-  - 114: {fileID: 11400012}
-  - 114: {fileID: 11400010}
   - 111: {fileID: 11100000}
-  - 114: {fileID: 11400008}
-  - 114: {fileID: 11400006}
   - 82: {fileID: 8200000}
-  - 114: {fileID: 11400004}
-  - 114: {fileID: 11400002}
+  - 148: {fileID: 14800002}
+  - 148: {fileID: 14800000}
   m_Layer: 0
   m_Name: PlayerPrefabMelee01_Backup
   m_TagString: Untagged
@@ -7421,7 +7405,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 469.265686, y: 19.6484165, z: 846.992676}
+  m_LocalPosition: {x: 438.593079, y: 19.6484165, z: 853.240723}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400544}
@@ -7542,237 +7526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea862aea968761c41b373c9b12b86c5c, type: 3}
   m_Name: 
   target: {fileID: 400546}
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be08af1cd5ea60949954e8d089434a30, type: 3}
-  m_Name: 
-  targetController: {fileID: 0}
-  regularCamera: {fileID: 0}
-  tpController: {fileID: 0}
---- !u!114 &11400004
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50095eb00d8d4cc47998868de1713684, type: 3}
-  m_Name: 
-  targetController: {fileID: 0}
-  regularCamera: {fileID: 0}
-  abilityManager: {fileID: 0}
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47fdb07083cbd4fcaaf266ea956cd853, type: 3}
-  m_Name: 
-  curAni: 
---- !u!114 &11400008
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2204074481bb8c044ba3b2627882db0a, type: 3}
-  m_Name: 
-  numWeaponHands: 0
-  animationPrefix: idle
---- !u!114 &11400010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d762d10c9fe7564db0534266d463483, type: 3}
-  m_Name: 
---- !u!114 &11400012
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38415fca6bc64b34cb42e2caf9476616, type: 3}
-  m_Name: 
-  healthBar: {fileID: 0}
---- !u!114 &11400014
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34383dd865cf6c944987e429eeec6397, type: 3}
-  m_Name: 
---- !u!114 &11400016
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd3c569c6fe8a864393c3d730f3ddc01, type: 3}
-  m_Name: 
---- !u!114 &11400018
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab93e5c9fe72ee544bcff1a9b31bfbb3, type: 3}
-  m_Name: 
-  index: 0
---- !u!114 &11400020
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbba7a6bdfa19444dbd7aa1b99efe0d4, type: 3}
-  m_Name: 
-  teamNumber: 0
-  username: default_username
-  experience: 0
-  experienceNeeded: 0
-  canRespawn: 0
---- !u!114 &11400022
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2260b1eef86d2064592b14bc8dc79c7f, type: 3}
-  m_Name: 
---- !u!114 &11400024
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 481939e0f601bf0439cb1647d50947c9, type: 3}
-  m_Name: 
-  isClientView: 0
---- !u!114 &11400026
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fbb0f1b8d2495f45b7acf6336a85ccf, type: 3}
-  m_Name: 
-  currentWeaponGameobject: {fileID: 0}
-  currentShieldGameObject: {fileID: 0}
---- !u!114 &11400028
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f6fe6396bcd1a24ba701ddc38e0b6d9, type: 3}
-  m_Name: 
-  equippedSpells: ffffffffffffffffffffffffffffffffffffffff
-  spellButtons: 3100000032000000330000003400000035000000
---- !u!114 &11400030
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00ed48600c2b2014aad1689faae3aa41, type: 3}
-  m_Name: 
-  verticalInput: 0
-  horizontalInput: 0
-  jumpButton: 0
-  sprintButton: 0
-  attackButton: 0
-  defendButton: 0
-  aimButton: 0
-  forwardCameraDirection: {x: 0, y: 0, z: 0}
-  lockButton: 0
-  cameraMode: 1
-  homingTarget: {fileID: 0}
-  targetClickLocation: {x: 0, y: 0, z: 0}
-  spellButton: 0
---- !u!114 &11400032
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c855b850510331647bc7cc1734c2da08, type: 3}
-  m_Name: 
-  attacktimer: 0
-  isBowShooting: 0
-  moveDirection: {x: 0, y: 0, z: 0}
-  isMoving: 0
-  isLocallyControlledPlayer: 0
-  maxLockRange: 35
---- !u!120 &12000000
-LineRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100546}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 2100000, guid: b4d8055067ce04d4c98367d69c10b358, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
-  m_Parameters:
-    startWidth: .5
-    endWidth: .100000001
-    m_StartColor:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_EndColor:
-      serializedVersion: 2
-      rgba: 4294967295
-  m_UseWorldSpace: 1
 --- !u!131 &13100000
 GUITexture:
   m_ObjectHideFlags: 1
@@ -8212,7 +7965,19 @@ NetworkView:
   m_GameObject: {fileID: 100546}
   m_Enabled: 1
   m_StateSynchronization: 1
-  m_Observed: {fileID: 400546}
+  m_Observed: {fileID: 0}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14800002
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100546}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 0}
   m_ViewID:
     m_ID: 0
     m_Type: 0

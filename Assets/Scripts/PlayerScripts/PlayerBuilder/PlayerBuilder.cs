@@ -86,7 +86,10 @@ public static class PlayerBuilder
         else
             AddClientOwnerComponents(gameObject);
 
-        gameObject.SendMessage("OnSetOwnership", SendMessageOptions.DontRequireReceiver);
+        foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
+        {
+            child.SendMessage("OnSetOwnership", SendMessageOptions.DontRequireReceiver);
+        }
         Camera.main.SendMessage("InitialSetTarget", gameObject.transform);
 
     }
@@ -222,13 +225,17 @@ public static class PlayerBuilder
         Debug.Log("Generating a Client-view character of " + username);
         var gameObject = GameObject.Instantiate(Resources.Load("Player/PlayerPrefabMelee01")) as GameObject;
 
-        NetworkView interpolationView = gameObject.GetComponents<NetworkView>()[0];
-        interpolationView.viewID = interpolationViewID;
-        interpolationView.observed = gameObject.AddComponent<GraduallyUpdateState>();
+        //NetworkView interpolationView = gameObject.GetComponents<NetworkView>()[0];
+        //interpolationView.viewID = interpolationViewID;
+        //interpolationView.observed = gameObject.AddComponent<GraduallyUpdateState>();
 
-        NetworkView animationView = gameObject.GetComponents<NetworkView>()[1];
-        animationView.viewID = animationViewID;
-        animationView.observed = gameObject.AddComponent<NetworkSyncAnimation>();
+        //NetworkView animationView = gameObject.GetComponents<NetworkView>()[1];
+        //animationView.viewID = animationViewID;
+        //animationView.observed = gameObject.AddComponent<NetworkSyncAnimation>();
+
+        NetworkView masterView = gameObject.GetComponents<NetworkView>()[0];
+        masterView.viewID = interpolationViewID;
+        masterView.observed = gameObject.AddComponent<MasterNetworkSerializer>();
 
         gameObject.name = username;
         BuildCharacter("client", gameObject);
@@ -244,13 +251,17 @@ public static class PlayerBuilder
 
         var gameObject = GameObject.Instantiate(Resources.Load("Player/PlayerPrefabMelee01")) as GameObject;
 
-        NetworkView interpolationView = gameObject.GetComponents<NetworkView>()[0];
-        interpolationView.viewID = interpolationViewID;
-        interpolationView.observed = gameObject.AddComponent<ServerUpdateState>();
+        //NetworkView interpolationView = gameObject.GetComponents<NetworkView>()[0];
+        //interpolationView.viewID = interpolationViewID;
+        //interpolationView.observed = gameObject.AddComponent<ServerUpdateState>();
 
-        NetworkView animationView = gameObject.GetComponents<NetworkView>()[1];
-        animationView.viewID = animationViewID;
-        animationView.observed = gameObject.AddComponent<NetworkSyncAnimation>();
+        //NetworkView animationView = gameObject.GetComponents<NetworkView>()[1];
+        //animationView.viewID = animationViewID;
+        //animationView.observed = gameObject.AddComponent<NetworkSyncAnimation>();
+
+        NetworkView masterView = gameObject.GetComponents<NetworkView>()[0];
+        masterView.viewID = interpolationViewID;
+        masterView.observed = gameObject.AddComponent<MasterNetworkSerializer>();
 
         gameObject.name = username;
         BuildCharacter("server", gameObject);

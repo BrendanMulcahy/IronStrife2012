@@ -27,6 +27,7 @@
 
         public static InventoryPanel Create(Inventory inventory, Vector3 position)
         {
+            Debug.Log("Making an inventory panel");
             var inventoryPanel = new GameObject(inventory.gameObject.name + "InventoryPanel").AddComponent<InventoryPanel>();
             inventoryPanel.gameObject.layer = 12;
             inventoryPanel.inventory = inventory;

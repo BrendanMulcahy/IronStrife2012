@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [PlayerComponent(PlayerScriptType.ServerEnabled)]
-public class ServerUpdateState : MonoBehaviour
+public class GraduallyUpdateState_Server : MonoBehaviour
 {
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)

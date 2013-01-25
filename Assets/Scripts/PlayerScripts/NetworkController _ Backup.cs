@@ -3,8 +3,8 @@ using System.Collections;
 using System;
 using System.Linq;
 
-[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerDisabled, PlayerScriptType.ServerOwnerDeleted)]
-public class NetworkController : MonoBehaviour
+//[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerDisabled, PlayerScriptType.ServerOwnerDeleted)]
+public class NetworkController_Backup : MonoBehaviour
 {
     public PlayerInputManager targetController;
     public RegularCamera regularCamera;
@@ -27,6 +27,18 @@ public class NetworkController : MonoBehaviour
     //NOT SYNCED
     private bool lockButton;
 
+    private bool lastJumpButton;
+    private float lastVerticalInput;
+    private float lastHorizontalInput;
+    private Vector3 lastForwardCameraDirection;
+    private bool lastsprintButton;
+    private bool lastdefendButton;
+    private bool lastattackButton;
+    private bool lastAimButton;
+    private CameraMode lastCameraMode;
+    private bool lastSpellButton;
+    private int lastSpellBeingCast;
+
     void Awake()
     {
         regularCamera = Camera.main.GetComponent<RegularCamera>();
@@ -35,32 +47,11 @@ public class NetworkController : MonoBehaviour
         targetController = GetComponent<PlayerInputManager>();
     }
 
-    void OnSetOwnership()
-    {
-        if (Network.isServer) Destroy(this);
-        else
-            GenerateNetworkView();
-    }
+    void OnSetOwnership() { if (Network.isClient) StartMonitoringCameraMovement(); }
 
-    private void GenerateNetworkView()
+    public void StartMonitoringCameraMovement()
     {
-        var previousNetworkView = networkView;
-        var viewID = Network.AllocateViewID();
-        var nv = gameObject.AddComponent<NetworkView>();
-        nv.observed = this;
-        nv.stateSynchronization = NetworkStateSynchronization.ReliableDeltaCompressed;
-        nv.viewID = viewID;
-        previousNetworkView.RPC("SetControllerNetworkView", RPCMode.Server, viewID);
-    }
-
-    [RPC]
-    void SetControllerNetworkView(NetworkViewID viewID)
-    {
-        Debug.Log("Receiving " + gameObject.name + "'s viewID for his network controller. The viewID is " + viewID.ToString());
-        var nv = gameObject.AddComponent<NetworkView>();
-        nv.observed = this;
-        nv.stateSynchronization = NetworkStateSynchronization.ReliableDeltaCompressed;
-        nv.viewID = viewID;
+        StartCoroutine(MonitorCameraMovement());
     }
 
     void Update()
@@ -75,7 +66,6 @@ public class NetworkController : MonoBehaviour
         defendButton = Input.GetKey(KeyCode.LeftAlt);
         lockButton = Input.GetKeyDown(KeyCode.Tab);
         cameraMode = regularCamera.CameraMode;
-        forwardCameraDirection = Camera.main.transform.TransformDirection(Vector3.forward);
 
         //targetController.spellButton = false;
         for (int i = 0; i < 5; i++)
@@ -87,6 +77,27 @@ public class NetworkController : MonoBehaviour
                 targetController.spellButton = true;
                 networkView.RPC("SendSpellCastInfo", RPCMode.Server, abilityManager.equippedSpells[i]);
             }
+        }
+
+
+
+        int tmpVal = 0;
+        if (jumpButton) tmpVal = 1;
+
+        if (verticalInput != lastVerticalInput || horizontalInput != lastHorizontalInput || lastJumpButton != jumpButton)
+        {
+            if (networkView.viewID != NetworkViewID.unassigned)
+                networkView.RPC("SendMovementInput", RPCMode.Server, horizontalInput, verticalInput, tmpVal);
+        }
+        if (sprintButton != lastsprintButton || defendButton != lastdefendButton || lastattackButton != attackButton || lastAimButton != aimButton)
+        {
+            networkView.RPC("SendMiscInput", RPCMode.Server, sprintButton, attackButton, defendButton, aimButton);
+        }
+
+        if (lastCameraMode != cameraMode)
+        {
+            Debug.Log("Syncing camera mode.");
+            networkView.RPC("SendCameraMode", RPCMode.Server, (int)cameraMode);
         }
 
         if (lockButton)
@@ -123,6 +134,15 @@ public class NetworkController : MonoBehaviour
             }
         }
 
+        lastJumpButton = jumpButton;
+        lastVerticalInput = verticalInput;
+        lastHorizontalInput = horizontalInput;
+        lastsprintButton = sprintButton;
+        lastattackButton = attackButton;
+        lastdefendButton = defendButton;
+        lastAimButton = aimButton;
+        lastCameraMode = cameraMode;
+
         targetController.forwardCameraDirection = forwardCameraDirection;
         targetController.jumpButton = jumpButton;
         targetController.verticalInput = verticalInput;
@@ -133,54 +153,6 @@ public class NetworkController : MonoBehaviour
         targetController.aimButton = aimButton;
         targetController.cameraMode = cameraMode;
 
-    }
-
-    [DontAutoSerialize]
-    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
-    {
-        if (stream.isWriting)
-        {
-            stream.Serialize(ref verticalInput);
-            stream.Serialize(ref horizontalInput);
-            stream.Serialize(ref jumpButton);
-            stream.Serialize(ref sprintButton);
-            stream.Serialize(ref attackButton);
-            stream.Serialize(ref aimButton);
-            stream.Serialize(ref defendButton);
-            int camMode = (int)cameraMode;
-            stream.Serialize(ref camMode);
-            stream.Serialize(ref forwardCameraDirection);
-        }
-        else if (stream.isReading)
-        {
-
-            stream.Serialize(ref verticalInput);
-            stream.Serialize(ref horizontalInput);
-            stream.Serialize(ref jumpButton);
-            stream.Serialize(ref sprintButton);
-            stream.Serialize(ref attackButton);
-            stream.Serialize(ref aimButton);
-            stream.Serialize(ref defendButton);
-            int camMode = (int)cameraMode;
-            stream.Serialize(ref camMode);
-            cameraMode = (CameraMode)camMode;
-            stream.Serialize(ref forwardCameraDirection);
-
-            SetTargetControllerValues();
-        }
-    }
-
-    private void SetTargetControllerValues()
-    {
-        targetController.forwardCameraDirection = forwardCameraDirection;
-        targetController.jumpButton = jumpButton;
-        targetController.verticalInput = verticalInput;
-        targetController.horizontalInput = horizontalInput;
-        targetController.sprintButton = sprintButton;
-        targetController.attackButton = attackButton;
-        targetController.defendButton = defendButton;
-        targetController.aimButton = aimButton;
-        targetController.cameraMode = cameraMode;
     }
 
     private GameObject FindLockableTarget()
@@ -211,6 +183,50 @@ public class NetworkController : MonoBehaviour
         return closestTarget;
     }
 
+    private IEnumerator MonitorCameraMovement()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(.033f);
+            forwardCameraDirection = Camera.main.transform.TransformDirection(Vector3.forward);
+            if (forwardCameraDirection != lastForwardCameraDirection)
+            {
+                networkView.RPC("SendUserForwardVector", RPCMode.Server, forwardCameraDirection);
+
+            }
+            lastForwardCameraDirection = forwardCameraDirection;
+        }
+    }
+
+    [RPC]
+    void SendMovementInput(float h, float v, int j)
+    {
+        targetController.horizontalInput = h;
+        targetController.verticalInput = v;
+        targetController.jumpButton = (j == 1);
+    }
+
+    [RPC]
+    void SendUserForwardVector(Vector3 forwardVector)
+    {
+        targetController.forwardCameraDirection = forwardVector;
+    }
+
+    [RPC]
+    void SendMiscInput(bool sprint, bool attack, bool defend, bool aim)
+    {
+        targetController.sprintButton = sprint;
+        targetController.attackButton = attack;
+        targetController.defendButton = defend;
+        targetController.aimButton = aim;
+    }
+
+    [RPC]
+    void SendCameraMode(int cameraMode)
+    {
+        targetController.cameraMode = (CameraMode)cameraMode;
+    }
+
     [RPC]
     void SendSpellCastInfo(int spellID)
     {
@@ -239,5 +255,3 @@ public class NetworkController : MonoBehaviour
         targetController.lockButton = false;
     }
 }
-
-public class DontAutoSerializeAttribute : Attribute { }

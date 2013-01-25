@@ -115,7 +115,7 @@ public class CharacterStats : MonoBehaviour
 
             Health.CurrentValue = Mathf.Max(0, Health.CurrentValue - damage.amount);
 
-            if (Health.CurrentValue <= 0)
+            if (Health.CurrentValue <= 0 && Network.isServer)
             {
                 OnDeath(new UnitDiedEventArgs() { killer = attacker, deathPosition = transform.position, reward = this.reward });
             }

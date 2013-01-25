@@ -6,7 +6,7 @@ public class Cure : Spell, ISelfSpell
     public void Execute(GameObject caster)
     {
         caster.GetCharacterStats().CureHealth(30);
-        var particle = GameObject.Instantiate(Resources.Load("Particles/HealthRegen") as GameObject) as GameObject;
+        var particle = GameObject.Instantiate(Resources.Load("Particles/SparkleRising") as GameObject) as GameObject;
 
         particle.transform.SetParentAndCenter(caster.transform.root);
         particle.transform.localPosition += Vector3.up * 1.7f;

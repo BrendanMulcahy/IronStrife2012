@@ -45,6 +45,10 @@ public class FlameburstEffect : MonoBehaviour
         sphereCollider = gameObject.AddComponent<SphereCollider>();
         sphereCollider.radius = radius;
         sphereCollider.isTrigger = true;
+
+        var rigidbody = gameObject.AddComponent<Rigidbody>();
+        rigidbody.isKinematic = true;
+        rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         Destroy(this.gameObject);
     }
 

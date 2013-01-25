@@ -12948,7 +12948,7 @@ LensFlare:
   m_Brightness: .200000003
   m_IgnoreLayers:
     serializedVersion: 2
-    m_Bits: 262150
+    m_Bits: 6
   m_Directional: 1
 --- !u!114 &609425835
 MonoBehaviour:
@@ -46105,7 +46105,7 @@ MonoBehaviour:
   moons:
   - {fileID: 609425833}
   initialRotations: []
-  dayCycleInMinutes: 5
+  dayCycleInMinutes: 6
   timeOfDay: 0
   skyboxMaterial: {fileID: 0}
 --- !u!148 &2039607876

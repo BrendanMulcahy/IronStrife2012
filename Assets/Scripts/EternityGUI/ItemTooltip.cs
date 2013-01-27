@@ -1,14 +1,14 @@
 ﻿namespace EternityGUI
 {
     using UnityEngine;
+    using System.Linq;
+    using System.Collections;
 
-    public class ItemTooltip : Panel
+    public class ItemTooltip : Tooltip
     {
         public BaseText text;
         private ItemElement itemElement;
         Vector3 mouseOffset = new Vector3(.02f, 0, 0);
-        float height;
-        float width;
 
         public static ItemTooltip Create(ItemElement itemElement)
         {
@@ -27,15 +27,14 @@
             tooltip.text.transform.parent = tooltip.transform;
             tooltip.text.transform.localScale = new Vector3();
             tooltip.text.layerOffset = 50;
-            tooltip.text.guiText.material.color = Color.black;
             tooltip.text.guiText.pixelOffset = new Vector2(5, -5);
 
             tooltip.height = (int)tooltip.text.guiText.GetScreenRect().height;
             tooltip.width = (int)tooltip.text.guiText.GetScreenRect().width;
 
             var actualTextRect = EternityUtil.FormatGuiTextArea(tooltip.text.guiText, 300);
-            tooltip.width = actualTextRect.width;
-            tooltip.height = actualTextRect.height;
+            tooltip.width = (int)actualTextRect.width;
+            tooltip.height = (int)actualTextRect.height;
 
             tooltip.background.GetComponent<BaseImage>().preserveAspectRatio = false;
             tooltip.background.GetComponent<BaseImage>().Resize((int)(tooltip.width * 1.1f), (int)tooltip.height);
@@ -44,6 +43,7 @@
 
             itemElement.Destroyed += tooltip.itemRemovedFromInventory;
 
+            EternityUtil.CurrentTooltip = tooltip;
             return tooltip;
         }
 
@@ -68,6 +68,11 @@
         public override void Update()
         {
             this.transform.position = Input.mousePosition.ScreenToViewport() + mouseOffset;
+
+            if (!EternityUtil.HitTestAll(Input.mousePosition).ToList().Contains(itemElement.guiTexture))
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }

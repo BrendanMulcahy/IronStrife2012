@@ -28,7 +28,6 @@ public class StaticDataLoader : MonoBehaviour
         {
             if (method.GetCustomAttributes(typeof(StaticAutoLoad), false).Length != 0 && !methodsCalled.Contains(t.Name + "." + method.Name))
             {
-                Debug.Log("Invoking static loader " + t.Name + "." + method.Name);
                 method.Invoke(null, null);
                 methodsCalled.Add(t.Name + "." + method.Name);
             }

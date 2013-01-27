@@ -12,4 +12,14 @@ public class Shield : EquippableItem
     {
         equipLocationPath = "MainC/ROOTJ/Spine01J/Spine02J/Spine03J/Spine04J/lClavicleJ/lShoulderJ/lElbowJ/lForearmJ";
     }
+
+    public override string TooltipText
+    {
+        get
+        {
+            var text = base.TooltipText;
+            text += "\n Block Amount: " + blockAmount;
+            return text;
+        }
+    }
 }

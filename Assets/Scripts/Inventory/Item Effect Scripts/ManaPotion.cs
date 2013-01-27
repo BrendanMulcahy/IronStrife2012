@@ -3,12 +3,13 @@
 /// <summary>
 /// This effect restores the user's mana for some amount
 /// </summary>
-public class ManaPotion : MonoBehaviour
+public class ManaPotion : ItemEffect
 {
     GameObject particle;
-    void Start()
+    
+    public override void ActivateEffect()
     {
-        gameObject.GetCharacterStats().Mana.CurrentValue += 50;
+        gameObject.GetCharacterStats().Mana.CurrentValue += (int)parameters[0];
 
         particle = GameObject.Instantiate(Resources.Load("Particles/SparkleRising") as GameObject) as GameObject;
         particle.transform.SetParentAndCenter(this.transform.root);

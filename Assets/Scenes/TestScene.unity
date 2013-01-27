@@ -1768,6 +1768,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca39d704c7a918438c9f506ea77e358, type: 3}
   m_Name: 
+  interactionRange: 5
   itemName: Mana Potion
 --- !u!148 &74124367
 NetworkView:
@@ -2898,6 +2899,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca39d704c7a918438c9f506ea77e358, type: 3}
   m_Name: 
+  interactionRange: 5
   itemName: Shielded Bow
 --- !u!148 &127504104
 NetworkView:
@@ -18445,6 +18447,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca39d704c7a918438c9f506ea77e358, type: 3}
   m_Name: 
+  interactionRange: 5
   itemName: Health Potion
 --- !u!148 &849757728
 NetworkView:
@@ -23735,6 +23738,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca39d704c7a918438c9f506ea77e358, type: 3}
   m_Name: 
+  interactionRange: 5
   itemName: Mana Potion
 --- !u!148 &1074893159
 NetworkView:
@@ -26574,6 +26578,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 962d775ad0b63b24ab7e73d4b9752d2a, type: 3}
   m_Name: 
+  interactionRange: 5
   lookTarget: {fileID: 0}
   isShopping: 0
   sellingAbility: 0
@@ -39769,6 +39774,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca39d704c7a918438c9f506ea77e358, type: 3}
   m_Name: 
+  interactionRange: 5
   itemName: Health Potion
 --- !u!148 &1771286069
 NetworkView:
@@ -41079,6 +41085,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca39d704c7a918438c9f506ea77e358, type: 3}
   m_Name: 
+  interactionRange: 5
   itemName: Trident Buckler
 --- !u!148 &1808514070
 NetworkView:
@@ -44053,6 +44060,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca39d704c7a918438c9f506ea77e358, type: 3}
   m_Name: 
+  interactionRange: 5
   itemName: Health Potion
 --- !u!148 &1950821783
 NetworkView:
@@ -45809,6 +45817,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca39d704c7a918438c9f506ea77e358, type: 3}
   m_Name: 
+  interactionRange: 5
   itemName: Mana Potion
 --- !u!148 &2034409624
 NetworkView:
@@ -47230,6 +47239,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca39d704c7a918438c9f506ea77e358, type: 3}
   m_Name: 
+  interactionRange: 5
   itemName: Simple Sword
 --- !u!148 &2088947792
 NetworkView:

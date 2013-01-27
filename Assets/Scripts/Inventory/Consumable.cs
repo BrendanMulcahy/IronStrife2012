@@ -12,13 +12,24 @@ public class Consumable : Item
     [XmlAttribute("buffScript")]
     public string buffScript;
 
+    [XmlAttribute("buffParameters")]
+    public float[] buffParameters;
+
+    /// <summary>
+    /// names of the parameters for display in the tooltip.
+    /// </summary>
+    [XmlAttribute("parameterNames")]
+    public string[] parameterNames;
+
     /// <summary>
     /// Called when a player consumes this item.
     /// </summary>
     /// <param name="consumer"></param>
     public virtual void Consume(GameObject consumer)
     {
-        consumer.AddComponent(buffScript);
+        var buff = consumer.AddComponent(buffScript) as ItemEffect;
+        buff.parameters = buffParameters;
+
     }
 
     /// <summary>
@@ -28,5 +39,19 @@ public class Consumable : Item
     public override void Use(GameObject target)
     {
         container.TryConsumeItem(this);
+    }
+
+    public override string TooltipText
+    {
+        get
+        {
+            var text =  base.TooltipText;
+            for (int g = 0; g < buffParameters.Length; g++)
+            {
+                text += "\n";
+                text += parameterNames[g].Replace('_', ' ') + ": " + buffParameters[g];
+            }
+            return text;
+        }
     }
 }

@@ -81,7 +81,6 @@ public class PlayerManager
 
             };
         players.Add(newPlayer);
-        Debug.Log("A new player has been added to team " + team);
         if (newPlayer.team == 1)
         {
             goodPlayers.Add(gameObject);
@@ -100,7 +99,7 @@ public class PlayerManager
     /// <returns>The team with less players on it</returns>
     private int GetAutoAssignTeamNumber()
     {
-        return (numGoodPlayers <=  numEvilPlayers) ? 1 : 2;
+        return 1;
     }
 
     public PlayerRecord FindRecord(GameObject go)

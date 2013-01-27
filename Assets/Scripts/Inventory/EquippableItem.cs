@@ -54,7 +54,6 @@ public class EquippableItem : Item
     public virtual GameObject Equip(GameObject target)
     {
         var itemPrefab = Resources.Load(modelAssetName) as Object;
-        Debug.Log("You are trying to instantiate " + modelAssetName);
         var itemGameObject = GameObject.Instantiate(itemPrefab) as GameObject;
         var location = target.transform.Find(equipLocationPath);
         itemGameObject.transform.parent = location;

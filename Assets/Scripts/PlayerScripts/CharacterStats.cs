@@ -32,6 +32,7 @@ public class CharacterStats : MonoBehaviour
 
     public event UnitDiedEventHandler Died;
     public event DamageEventHandler Damaged;
+    public event HealedEventHandler Healed;
 
     public virtual int PhysicalDamageModifier
     {
@@ -85,7 +86,7 @@ public class CharacterStats : MonoBehaviour
     public void ApplyDamage(GameObject attacker, Damage damage)
     {
 
-        var e = new DamageEventArgs() { damage = damage };
+        var e = new DamageEventArgs() { damage = damage, attacker = attacker };
         if (Damaged != null)
         {
             Damaged(this.gameObject, e);
@@ -119,6 +120,20 @@ public class CharacterStats : MonoBehaviour
             {
                 OnDeath(new UnitDiedEventArgs() { killer = attacker, deathPosition = transform.position, reward = this.reward });
             }
+        }
+    }
+
+    public void ApplyHealing(GameObject healer, int amount)
+    {
+        var e = new HealedEventArgs() { healAmount = amount, healer = healer };
+        if (Healed != null)
+        {
+            Healed(this.gameObject, e);
+        }
+
+        if (!e.handled)
+        {
+            Health.CurrentValue = Mathf.Min(Health.MaxValue, Health.CurrentValue + e.healAmount);
         }
     }
 
@@ -222,17 +237,6 @@ public class CharacterStats : MonoBehaviour
         }
         particles.startColor = teamNumber == 1 ? Color.blue : Color.red;
     }
-
-    internal void CureHealth(int healthToAdd)
-    {
-        if (Network.isServer)
-        {
-            Debug.Log("Healing here.");
-            Health.CurrentValue = Math.Min(Health.CurrentValue + healthToAdd, Health.MaxValue);
-        }
-    }
-
-
 }
 
 public class KillReward

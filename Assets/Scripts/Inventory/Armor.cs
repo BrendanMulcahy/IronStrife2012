@@ -16,5 +16,15 @@ public class Armor : EquippableItem
     {
         name = "defaultArmor";
     }
+
+    public override string TooltipText
+    {
+        get
+        {
+            var text = base.TooltipText;
+            text += "\nPhysical Resistance: " + defense;
+            return text;
+        }
+    }
 }
 

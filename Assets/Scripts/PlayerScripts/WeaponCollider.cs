@@ -45,7 +45,6 @@ public class WeaponCollider : MonoBehaviour
             transform.root.gameObject.GetComponent<PlayerSoundGenerator>().PlaySwingAttackHitSound(other);
         }
         gameObjectsHitThisSwing.Add(other.transform.root);
-        Debug.Log(other.transform.root.gameObject.name + " has been hit now.");
         DamageReceiver dr;
         if (dr = other.transform.root.gameObject.GetDamageReceiver())
         {

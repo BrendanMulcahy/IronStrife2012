@@ -34,7 +34,6 @@ public class MasterGameLogic : MonoBehaviour
     {
         npcManager = new NPCManager();
         playerManager = new PlayerManager(); 
-        Debug.Log("initializing master game logic");
 
     }
 

@@ -8,6 +8,7 @@ public class FloatingDamageNumber : SimpleObjectLabel
     protected override void Start()
     {
         base.Start();
+        guiText.fontSize = 36;
         Destroy(this.gameObject, 3.0f);
         if (damage != null)
         {
@@ -15,15 +16,14 @@ public class FloatingDamageNumber : SimpleObjectLabel
             guiText.text = damage.amount.ToString();
             if (percentage > .33f)
             {
-                guiText.fontSize = (int)(guiText.fontSize * 2f);
-                guiText.fontStyle = FontStyle.Italic;
+                guiText.fontSize = (int)(guiText.fontSize * 1.33f);
+                guiText.fontStyle = FontStyle.Bold;
                 guiText.material.color = Color.red;
             }
         }
         offset += Vector3.forward * Random.Range(-.1f, .1f);
         offset += Vector3.right * Random.Range(-.1f, .1f);
 
-        guiText.fontSize = 26;
 
     }
 

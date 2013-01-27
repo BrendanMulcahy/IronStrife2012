@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerObjectInteractor : MonoBehaviour
 {
     const float interactionRayDistance = 25f;
-    const float maxInteractionDistance = 5f;
 
     public GameObject selectedGO;
 
@@ -27,7 +26,7 @@ public class PlayerObjectInteractor : MonoBehaviour
             if (Physics.Raycast(ray, out hit, interactionRayDistance))
             {
                 var io = hit.collider.gameObject.GetComponent<InteractableObject>();
-                if (io && Vector3.Distance(this.transform.position, collider.transform.position) < maxInteractionDistance)
+                if (io && Vector3.Distance(this.transform.position, collider.bounds.center) < io.interactionRange)
                 {
                     io.InteractWith(this.gameObject);
                 }

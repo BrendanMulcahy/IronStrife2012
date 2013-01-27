@@ -29,6 +29,7 @@ public class PlayerRespawnedEventArgs
 
 public class HealedEventArgs
 {
+    public bool handled = false;
     public GameObject healer;
     public int healAmount;
 }
@@ -37,6 +38,7 @@ public class DamageEventArgs
 {
     public bool handled = false;
     public Damage damage;
+    public GameObject attacker;
 }
 
 public class StatChangedEventArgs

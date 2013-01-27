@@ -5,7 +5,7 @@ public class Cure : Spell, ISelfSpell
 
     public void Execute(GameObject caster)
     {
-        caster.GetCharacterStats().CureHealth(30);
+        caster.GetCharacterStats().ApplyHealing(caster, 30);
         var particle = GameObject.Instantiate(Resources.Load("Particles/SparkleRising") as GameObject) as GameObject;
 
         particle.transform.SetParentAndCenter(caster.transform.root);

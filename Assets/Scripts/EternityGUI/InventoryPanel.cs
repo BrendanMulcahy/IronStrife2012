@@ -27,7 +27,6 @@
 
         public static InventoryPanel Create(Inventory inventory, Vector3 position)
         {
-            Debug.Log("Making an inventory panel");
             var inventoryPanel = new GameObject(inventory.gameObject.name + "InventoryPanel").AddComponent<InventoryPanel>();
             inventoryPanel.gameObject.layer = 12;
             inventoryPanel.inventory = inventory;
@@ -130,7 +129,6 @@
 
             if (e.dropTarget is ItemElement)
             {
-                Debug.Log("You dropped onto another item.");
                 var indexOfDragged = itemGrid.elements.IndexOf(e.draggedObject);
                 var indexOfDropped = itemGrid.elements.IndexOf(e.dropTarget);
 
@@ -177,6 +175,15 @@
             background.guiTexture.pixelInset = newInset;
             this.height = (int)newInset.height;
             this.width = (int)newInset.width;
+        }
+
+        void OnDisable()
+        {
+            if (EternityUtil.CurrentTooltip)
+            {
+                Destroy(EternityUtil.CurrentTooltip.gameObject);
+                EternityUtil.CurrentTooltip = null;
+            }
         }
 
     }

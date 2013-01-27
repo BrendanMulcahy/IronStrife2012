@@ -4,6 +4,9 @@
 
     public class BaseText : BaseElement
     {
+        float textWidth;
+        float textHeight;
+
         void Start()
         {
             this.draggable = false;
@@ -14,13 +17,16 @@
             Color rarityColor = Color.black;
             if (i.availability == ItemAvailability.Unavailable) rarityColor = Color.red;
             else if (i.availability == ItemAvailability.Rare) rarityColor = Color.yellow;
-
+            
             var go = new GameObject(i.name + "TooltipText");
             var text = go.AddComponent<GUIText>();
             var baseText = go.AddComponent<BaseText>();
-            text.font = Util.OFLGoudyStMTT;
-            text.text = "<size=24>" + i.name + "</size> " + "<i><size=14>" + i.availability + " " + i.itemType + "</size></i>\n" + i.description + "\nGold Cost: " + i.goldCost;
 
+            text.font = Util.OFLGoudyStMTT;
+            text.material.color = Color.black;
+            text.tabSize = 20;
+
+            text.text = i.TooltipText;
             text.fontSize = 18;
             text.anchor = TextAnchor.UpperLeft;
             text.alignment = TextAlignment.Left;

@@ -39,6 +39,11 @@ public class DreamVesselObject : InteractableObject
     public float moveSpeed = 15.0f;
     public GameObject rider;
 
+    void Start()
+    {
+        interactionRange = 1.0f;
+    }
+
     public override void InteractWith(GameObject player)
     {
         if (player.GetCharacterStats().TeamNumber != this.team) return;

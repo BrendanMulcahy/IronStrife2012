@@ -31,5 +31,15 @@ public class Weapon : EquippableItem
         go.SetLayerRecursively(17);
         return go;
     }
+
+    public override string TooltipText
+    {
+        get
+        {
+            var text = base.TooltipText;
+            text += "\nDamage: " + damage;
+            return text;
+        }
+    }
 }
 

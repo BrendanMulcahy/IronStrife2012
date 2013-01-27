@@ -33,7 +33,6 @@ public class CharacterLabel : MonoBehaviour {
         inset.height = 15;
 		guiTexture.pixelInset = inset;
         var targetHeight = ((CharacterController)target.collider).center.y + ((CharacterController)target.collider).height *.7f;
-        Debug.Log("Target height is " + targetHeight);
         offset = new Vector3(0, targetHeight, 0); 
         stats = transform.root.gameObject.GetCharacterStats();
         guiTexture.texture = Resources.Load("WhiteSquare") as Texture2D;

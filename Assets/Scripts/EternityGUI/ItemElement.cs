@@ -21,14 +21,15 @@ namespace EternityGUI
             itemElement.item = item;
 
             itemElement.MouseEnter += itemElement.baseElement_MouseEnter;
-            itemElement.MouseLeave += itemElement.itemElement_MouseLeave;
+            //itemElement.MouseLeave += itemElement.itemElement_MouseLeave;
 
             return itemElement;
         }
 
         void itemElement_MouseLeave(BaseElement sender, MouseEventArgs e)
         {
-            Destroy(tooltip.gameObject);
+            if (tooltip)
+                Destroy(tooltip.gameObject);
         }
 
         void baseElement_MouseEnter(BaseElement sender, MouseEventArgs e)

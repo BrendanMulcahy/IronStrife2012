@@ -28,7 +28,7 @@ namespace EternityGUI
         public bool dragging = false;
         public int layerOffset = 0;
         private float dragDistance = 0;
-        private const float maxDragForClick = 25;
+        private const float maxDragForClick = 13;
         private Vector3 initialDragPosition = new Vector3();
 
         internal virtual void OnMouseDown()
@@ -63,7 +63,6 @@ namespace EternityGUI
 
         private void OnDragRelease()
         {
-            Debug.Log("Dropped element " + gameObject.name + " at " + Input.mousePosition);
             var guiLayer = Camera.main.GetComponent<GUILayer>();
             initialDragPosition = new Vector3();
             var beforePos = this.transform.position;

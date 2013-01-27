@@ -104,7 +104,6 @@ public static class PlayerBuilder
         {
             if (typeToAttributes[t].types.Contains(PlayerScriptType.ServerDisabled))
             {
-                Debug.Log(t.Name + " is a server disabled component.");
                 Behaviour g;
                 if ((g = gameObject.GetComponent(t) as Behaviour) != null)
                     g.enabled = false;
@@ -155,7 +154,6 @@ public static class PlayerBuilder
     /// <param name="gameObject"></param>
     private static void AddServerOwnerComponents(GameObject gameObject)
     {
-        Debug.Log("Adding server owner components to " + gameObject);
         foreach (Type t in typeToAttributes.Keys)
         {
             if (typeToAttributes[t].types.Contains(PlayerScriptType.ServerOwnerEnabled))
@@ -222,7 +220,6 @@ public static class PlayerBuilder
     /// <returns></returns>
     internal static GameObject GenerateClient(string username, NetworkViewID interpolationViewID, NetworkViewID animationViewID)
     {
-        Debug.Log("Generating a Client-view character of " + username);
         var gameObject = GameObject.Instantiate(Resources.Load("Player/PlayerPrefabMelee01")) as GameObject;
 
         //NetworkView interpolationView = gameObject.GetComponents<NetworkView>()[0];
@@ -247,7 +244,6 @@ public static class PlayerBuilder
 
     internal static GameObject GenerateServer(string username, NetworkViewID interpolationViewID, NetworkViewID animationViewID)
     {
-        Debug.Log("Generating a server-view character");
 
         var gameObject = GameObject.Instantiate(Resources.Load("Player/PlayerPrefabMelee01")) as GameObject;
 

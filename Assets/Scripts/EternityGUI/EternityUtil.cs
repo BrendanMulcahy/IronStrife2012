@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using UnityEngine;
+    using System.Text.RegularExpressions;
 
     public static class EternityUtil
     {
@@ -64,6 +65,53 @@
             return toReturn.ToArray();
         }
 
+        private static GUILayer _mainGuiLayer;
+        public static GUILayer MainGUILayer
+        {
+            get
+            {
+                if (!_mainGuiLayer)
+                {
+                    _mainGuiLayer = Camera.main.GetComponent<GUILayer>();
+                }
+                return _mainGuiLayer;
+            }
+
+        }
+
+        /// <summary>
+        /// Returns all GUIElements under the mouse, in order from front to back, using the default guiLayer.
+        /// </summary>
+        /// <param name="guiLayer">The layer to test the hit on</param>
+        /// <param name="position">The position in screen space (Input.mouseposition works)</param>
+        /// <returns>All GUIElements under the given position, in order from front to back</returns>
+        public static GUIElement[] HitTestAll(Vector3 position)
+        {
+            var guiLayer = MainGUILayer;
+            var toReturn = new List<GUIElement>();
+            var previousPositions = new List<Vector3>();
+            GUIElement element;
+            while ((element = guiLayer.HitTest(position)) != null)
+            {
+                toReturn.Add(element);
+                previousPositions.Add(element.gameObject.transform.position);
+                element.transform.position = new Vector3(-100, -100, -100);
+            }
+
+            for (int g = 0; g < previousPositions.Count; g++)
+            {
+                toReturn[g].transform.position = previousPositions[g];
+            }
+            return toReturn.ToArray();
+        }
+
+        const string HTML_TAG_PATTERN = "<.*?>";
+        public static string StripHTML(string inputString)
+        {
+            return Regex.Replace
+              (inputString, HTML_TAG_PATTERN, string.Empty);
+        }
+
         public static Rect FormatGuiTextArea(GUIText guiText, float maxAreaWidth)
         {
             string[] words = guiText.text.Split(' ');
@@ -87,6 +135,7 @@
                     result = guiText.text;
                 }
             }
+            guiText.text = guiText.text.Replace('_', ' ');
             return textArea;
         }
 
@@ -126,11 +175,13 @@
             var e = GetHex((int)Mathf.Floor(blue / 16f));
             var f = GetHex((int)Mathf.Round(blue % 16f));
             //var g = GetHex((int)Mathf.Floor(alpha / 16f));
-           // var h = GetHex((int)Mathf.Round(alpha % 16f));
+            // var h = GetHex((int)Mathf.Round(alpha % 16f));
 
             var z = a + b + c + d + e + f;
 
             return z;
         }
+
+        internal static Tooltip CurrentTooltip;
     }
 }

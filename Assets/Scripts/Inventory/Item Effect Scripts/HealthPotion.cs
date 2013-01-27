@@ -3,12 +3,13 @@
 /// <summary>
 /// This effect heals the user for some amount.
 /// </summary>
-public class HealthPotion : MonoBehaviour
+public class HealthPotion : ItemEffect
 {
     GameObject particle;
-    void Start()
+
+    public override void ActivateEffect()
     {
-        gameObject.GetCharacterStats().Health.CurrentValue += 30;
+        gameObject.GetCharacterStats().ApplyHealing(this.gameObject, (int)parameters[0]);
 
         particle = GameObject.Instantiate(Resources.Load("Particles/SparkleRising") as GameObject) as GameObject;
         particle.transform.SetParentAndCenter(this.transform.root);

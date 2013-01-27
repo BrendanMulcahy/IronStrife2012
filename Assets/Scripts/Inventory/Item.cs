@@ -44,12 +44,14 @@ public abstract class Item
     /// <summary>
     /// The inventory this item is contained in
     /// </summary>
-    [NonSerialized][XmlIgnore]
+    [NonSerialized]
+    [XmlIgnore]
     public Inventory container;
     /// <summary>
     /// The NetworkViewID uniquely identifying this item.
     /// </summary>
-    [NonSerialized][XmlIgnore]
+    [NonSerialized]
+    [XmlIgnore]
     public NetworkViewID viewID;
 
     private Texture2D _inventoryIcon;
@@ -58,13 +60,13 @@ public abstract class Item
     /// </summary>
     public Texture2D inventoryIcon
     {
-        get 
+        get
         {
             if (_inventoryIcon == null)
             {
                 _inventoryIcon = Resources.Load("Items/Icons/" + name) as Texture2D;
 
-                if (_inventoryIcon == null) 
+                if (_inventoryIcon == null)
                     _inventoryIcon = Resources.Load("Items/Icons/DefaultIcon") as Texture2D;
             }
             return _inventoryIcon;
@@ -109,6 +111,14 @@ public abstract class Item
     /// Uses this item.
     /// </summary>
     public abstract void Use(GameObject target);
+
+    public virtual string TooltipText
+    {
+        get
+        {
+            return String.Format("<size=26>{0}</size>\tValue: {1}\n<i>{2}_{3}</i>\n{4}", name, goldCost, availability, itemType, description);
+        }
+    }
 }
 
 /// <summary>

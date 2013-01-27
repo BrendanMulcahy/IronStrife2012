@@ -24,9 +24,11 @@ public class IntelligenceStat : BuffableStat
     /// Returns the total damage modifier that this Intelligence stat gives to spell attacks
     /// </summary>
     /// <returns></returns>
-    public int DamageModifier()
+    public int DamageModifier
     {
-        return ModifiedValue * spellDamagePerIntelligence;
+        get
+        {
+            return ModifiedValue * spellDamagePerIntelligence;
+        }
     }
-
 }

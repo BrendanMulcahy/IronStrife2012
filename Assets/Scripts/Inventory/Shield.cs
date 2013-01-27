@@ -18,7 +18,7 @@ public class Shield : EquippableItem
         get
         {
             var text = base.TooltipText;
-            text += "\n Block Amount: " + blockAmount;
+            text += "\nBlock_Amount: " + blockAmount;
             return text;
         }
     }

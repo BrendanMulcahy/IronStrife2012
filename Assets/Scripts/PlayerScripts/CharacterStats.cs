@@ -67,12 +67,12 @@ public class CharacterStats : MonoBehaviour
         Agility.BaseValueChanged += Stamina.Agility_Changed;
         Agility.ModifiedValueChanged += MoveSpeed.Agility_Changed;
         Agility.BaseValueChanged += MoveSpeed.Agility_Changed;
-        Agility.ChangeBaseValue(5);
+        Agility.ChangeBaseValue(25);
 
         Intelligence = new IntelligenceStat(0);
         Intelligence.ModifiedValueChanged += Mana.Intelligence_Changed;
         Intelligence.BaseValueChanged += Mana.Intelligence_Changed;
-        Intelligence.ChangeBaseValue(5);
+        Intelligence.ChangeBaseValue(25);
 
         PhysicalDefense = new PhysicalDefense(0);
         MagicalDefense = new MagicalDefense(0);

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class FloatingDamageNumber : SimpleObjectLabel
+public class FloatingHealNumber : SimpleObjectLabel
 {
     public int amount;
     float heightPerSecond = 1f;
@@ -9,6 +9,7 @@ public class FloatingDamageNumber : SimpleObjectLabel
     {
         base.Start();
         guiText.fontSize = 36;
+        guiText.material.color = Color.green;
         Destroy(this.gameObject, 3.0f);
 
         float percentage = ((float)amount / (float)transform.root.gameObject.GetCharacterStats().Health.MaxValue);
@@ -17,7 +18,7 @@ public class FloatingDamageNumber : SimpleObjectLabel
         {
             guiText.fontSize = (int)(guiText.fontSize * 1.33f);
             guiText.fontStyle = FontStyle.Bold;
-            guiText.material.color = Color.red;
+            guiText.material.color = Color.cyan;
         }
 
         offset += Vector3.forward * Random.Range(-.1f, .1f);

@@ -703,7 +703,6 @@ public class ThirdPersonController : MonoBehaviour, IController
 
     private IEnumerator CastTargetSpell()
     {
-        Debug.Log("Starting coroutine CastTargetSpell");
         isCasting = true;
         isBowShooting = true;
         if (isLocallyControlledPlayer)

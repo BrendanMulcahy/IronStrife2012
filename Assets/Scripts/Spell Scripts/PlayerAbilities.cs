@@ -25,7 +25,7 @@ public static class PlayerAbilities
         {
             foreach (Type t in allAssemblyTypes)
             {
-                if (t.IsSubclassOf(typeof(Spell)))
+                if (t.IsSubclassOf(typeof(Spell)) && !t.IsAbstract)
                 {
                     Spell instance = Activator.CreateInstance(t) as Spell;
                     spells.Add(instance);

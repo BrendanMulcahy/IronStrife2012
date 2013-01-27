@@ -476,4 +476,24 @@ public static class Util
             return _OFLGoudyStMTT;
         }
     }
+
+    public static IEnumerator TurnOffParticles(ParticleEmitter[] emitters, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        TurnOffParticles(emitters);
+    }
+
+    public static IEnumerator TurnOffParticlesInChildren(GameObject go, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        TurnOffParticles(go.GetComponentsInChildren<ParticleEmitter>());
+    }
+
+    private static void TurnOffParticles(ParticleEmitter[] emitters)
+    {
+        foreach (ParticleEmitter pe in emitters)
+        {
+            pe.emit = false;
+        }
+    }
 }

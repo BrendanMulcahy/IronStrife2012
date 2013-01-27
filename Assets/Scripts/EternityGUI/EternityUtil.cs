@@ -116,11 +116,18 @@
         {
             string[] words = guiText.text.Split(' ');
             string result = "";
+            LinkedList<int> lineBreaks = new LinkedList<int>();
 
             Rect textArea = new Rect();
 
             for (int i = 0; i < words.Length; i++)
             {
+                if (Regex.IsMatch(words[i], HTML_TAG_PATTERN))
+                {
+                    guiText.text = (result + words[i] + " ");
+                    result = guiText.text;
+                    continue;
+                }
                 // set the gui text to the current string including new word
                 guiText.text = (result + words[i] + " ");
                 // measure it
@@ -129,6 +136,7 @@
                 if (textArea.width > maxAreaWidth)
                 {
                     result += ("\n" + words[i] + " ");
+                    lineBreaks.AddLast(i);
                 }
                 else
                 {

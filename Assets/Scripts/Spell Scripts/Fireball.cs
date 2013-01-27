@@ -59,12 +59,11 @@ public class FireballEffect : Projectile
         rb.isKinematic = true; rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         this.homingTarget = homingTarget;
 
-        //StartCoroutine(Util.DestroyInSeconds(this.gameObject, 5.0f));
     }
     public override void CollideWith(Collider other)
     {
         if (other.transform.root != caster.transform.root) 
-        Explode();
+            Explode();
     }
 
     void Explode()

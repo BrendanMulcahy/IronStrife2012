@@ -14,7 +14,7 @@ public class HealthPotion : ItemEffect
         particle = GameObject.Instantiate(Resources.Load("Particles/SparkleRising") as GameObject) as GameObject;
         particle.transform.SetParentAndCenter(this.transform.root);
         particle.transform.localPosition += Vector3.up * 1.7f;
-        Invoke("TurnOffParticles", 1.1f);
+        StartCoroutine(Util.TurnOffParticlesInChildren(particle, 1.0f));
         Destroy(particle, 5.0f);
         Destroy(this, 5.0f);
     }

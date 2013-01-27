@@ -52,7 +52,6 @@ public class AbilityManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            Debug.Log("E pressed");
             visible = true;
             gameObject.DisableControls();
         }

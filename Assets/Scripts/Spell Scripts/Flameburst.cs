@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
-using System;
-using System.Collections.Generic;
 
-public class Flameburst : Spell, IPointSpell
+public class Flameburst : PointAreaSpell
 {
-    public void Execute(GameObject caster, Vector3 targetPoint)
+    public override void ApplyEffectsToTarget(GameObject caster, GameObject target)
     {
-        //caster.networkView.RPC("SpawnSpellEffectAtPosition", RPCMode.Others, "Flameburst", targetPoint);
-        var spellObj = new GameObject(caster.name + "'s Flameburst");
-        spellObj.transform.position = targetPoint;
-        spellObj.AddComponent<FlameburstEffect>().SetCaster(caster);
+        var targetStats = target.GetCharacterStats();
+        if (targetStats)
+        {
+            var casterStats = caster.GetCharacterStats();
+            var spellDamage = casterStats.Intelligence.DamageModifier;
+            var totalDamage = (int)(spellDamage * (1.33f));
+            targetStats.ApplyDamage(caster, new Damage(totalDamage, caster, DamageType.Magical));
+        }
     }
 
     public override string name
@@ -25,49 +27,11 @@ public class Flameburst : Spell, IPointSpell
     protected override void InitializeSpellValues()
     {
         manaCost = 25;
-        castTime = 2.0f;
-    }
-}
-
-public class FlameburstEffect : MonoBehaviour
-{
-    public float radius = 4.0f;
-    SphereCollider sphereCollider;
-    float forceMagnitude = 25.0f;
-    int damage = 35;
-    GameObject caster;
-    List<Transform> targetsHit = new List<Transform>();
-
-    void Start()
-    {
-        (Instantiate(new GameObject(), transform.position, Quaternion.identity) as GameObject).AddComponent<DetonatorShockwave>();
-
-        sphereCollider = gameObject.AddComponent<SphereCollider>();
-        sphereCollider.radius = radius;
-        sphereCollider.isTrigger = true;
-
-        var rigidbody = gameObject.AddComponent<Rigidbody>();
-        rigidbody.isKinematic = true;
-        rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        Destroy(this.gameObject);
+        castTime = 1.5f;
     }
 
-    void OnTriggerEnter(Collider other)
+    public override float Radius
     {
-        CharacterStats cs;
-        if ((cs = other.gameObject.GetCharacterStats()) != null && !targetsHit.Contains(other.transform.root))
-        {
-            cs.ApplyDamage(caster, new Damage(damage, caster, DamageType.Magical));
-            var force = new Force((other.transform.position - transform.position).normalized*forceMagnitude, .4f);
-            other.gameObject.GetPlayerMotor().ApplyForce(force);
-            other.gameObject.GetPlayerMotor().ApplyForce(new Force(Vector3.up * forceMagnitude * 1f, .4f));
-            targetsHit.Add(other.transform.root);
-        }
-    }
-
-
-    internal void SetCaster(GameObject caster)
-    {
-        this.caster = caster;
+        get { return 4.0f; }
     }
 }

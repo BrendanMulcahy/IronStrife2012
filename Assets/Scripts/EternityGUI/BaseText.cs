@@ -14,22 +14,22 @@
 
         public static BaseText Create(Item i)
         {
-            Color rarityColor = Color.black;
-            if (i.availability == ItemAvailability.Unavailable) rarityColor = Color.red;
-            else if (i.availability == ItemAvailability.Rare) rarityColor = Color.yellow;
+            //Color rarityColor = Color.black;
+            //if (i.availability == ItemAvailability.Unavailable) rarityColor = Color.red;
+            //else if (i.availability == ItemAvailability.Rare) rarityColor = Color.yellow;
             
-            var go = new GameObject(i.name + "TooltipText");
-            var text = go.AddComponent<GUIText>();
-            var baseText = go.AddComponent<BaseText>();
+            //var go = new GameObject(i.name + "TooltipText");
+            //var text = go.AddComponent<GUIText>();
+            //var baseText = go.AddComponent<BaseText>();
 
-            text.font = Util.OFLGoudyStMTT;
-            text.material.color = Color.black;
-            text.tabSize = 20;
+            //text.font = Util.OFLGoudyStMTT;
+            //text.material.color = Color.black;
+            //text.tabSize = 20;
 
-            text.text = i.TooltipText;
-            text.fontSize = 18;
-            text.anchor = TextAnchor.UpperLeft;
-            text.alignment = TextAlignment.Left;
+            var go = GameObject.Instantiate(Resources.Load("GUI/TooltipText") as GameObject) as GameObject;
+            var baseText = go.GetComponent<BaseText>();
+            baseText.guiText.text = i.TooltipText;
+            baseText.guiText.material.color = Color.black;
 
             return baseText;
         }

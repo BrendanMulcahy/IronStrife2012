@@ -33,11 +33,11 @@
             tooltip.width = (int)tooltip.text.guiText.GetScreenRect().width;
 
             var actualTextRect = EternityUtil.FormatGuiTextArea(tooltip.text.guiText, 300);
-            tooltip.width = (int)actualTextRect.width;
+            tooltip.width = (int)(actualTextRect.width * 1.1f);
             tooltip.height = (int)actualTextRect.height;
 
             tooltip.background.GetComponent<BaseImage>().preserveAspectRatio = false;
-            tooltip.background.GetComponent<BaseImage>().Resize((int)(tooltip.width * 1.1f), (int)tooltip.height);
+            tooltip.background.GetComponent<BaseImage>().Resize((int)(tooltip.width), (int)tooltip.height);
 
             tooltip.background.transform.position -= new Vector3(0, tooltip.height, 0).ScreenToViewport();
 
@@ -68,6 +68,21 @@
         public override void Update()
         {
             this.transform.position = Input.mousePosition.ScreenToViewport() + mouseOffset;
+
+            if (Input.mousePosition.y - height < 0)
+            {
+                var pos = this.transform.position;
+                var verticalOffset = height - Input.mousePosition.y;
+                pos.y += verticalOffset / Screen.height;
+                this.transform.position = pos;
+            }
+            if (Input.mousePosition.x + width > Screen.width)
+            {
+                var pos = this.transform.position;
+                var horizontalOffset = Input.mousePosition.x + width - Screen.width;
+                pos.x -= horizontalOffset / Screen.width;
+                this.transform.position = pos;
+            }
 
             if (!EternityUtil.HitTestAll(Input.mousePosition).ToList().Contains(itemElement.guiTexture))
             {

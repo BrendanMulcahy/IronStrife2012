@@ -34,7 +34,16 @@ namespace EternityGUI
 
         void baseElement_MouseEnter(BaseElement sender, MouseEventArgs e)
         {
-            tooltip = ItemTooltip.Create(this);
+            if (!tooltip)
+            {
+                tooltip = ItemTooltip.Create(this);
+                tooltip.Destroyed += tooltip_Destroyed;
+            }
+        }
+
+        void tooltip_Destroyed(BaseElement sender)
+        {
+            tooltip = null;
         }
     }
 }

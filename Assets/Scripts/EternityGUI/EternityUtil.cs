@@ -63,5 +63,74 @@
             }
             return toReturn.ToArray();
         }
+
+        public static Rect FormatGuiTextArea(GUIText guiText, float maxAreaWidth)
+        {
+            string[] words = guiText.text.Split(' ');
+            string result = "";
+
+            Rect textArea = new Rect();
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                // set the gui text to the current string including new word
+                guiText.text = (result + words[i] + " ");
+                // measure it
+                textArea = guiText.GetScreenRect();
+                // if it didn't fit, put word onto next line, otherwise keep it
+                if (textArea.width > maxAreaWidth)
+                {
+                    result += ("\n" + words[i] + " ");
+                }
+                else
+                {
+                    result = guiText.text;
+                }
+            }
+            return textArea;
+        }
+
+        public static string ColorToHex(this Color color)
+        {
+            string hex = color.r.ToString("X2") + color.g.ToString("X2") + color.b.ToString("X2");
+            return hex;
+        }
+
+        public static Color HexToColor(string hex)
+        {
+            byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+            byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+            byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+            return new Color32(r, g, b, 255);
+        }
+
+        private static string GetHex(int dec)
+        {
+            var alpha = "0123456789ABCDEF";
+            var toReturn = "" + alpha[dec];
+            return toReturn;
+        }
+
+        public static string RGBToHex(Color color)
+        {
+            float red = color.r * 255f;
+            float green = color.g * 255f;
+            float blue = color.b * 255f;
+            //float alpha = color.a * 255f;
+
+
+            var a = GetHex((int)Mathf.Floor(red / 16f));
+            var b = GetHex((int)Mathf.Round(red % 16f));
+            var c = GetHex((int)Mathf.Floor(green / 16f));
+            var d = GetHex((int)Mathf.Round(green % 16f));
+            var e = GetHex((int)Mathf.Floor(blue / 16f));
+            var f = GetHex((int)Mathf.Round(blue % 16f));
+            //var g = GetHex((int)Mathf.Floor(alpha / 16f));
+           // var h = GetHex((int)Mathf.Round(alpha % 16f));
+
+            var z = a + b + c + d + e + f;
+
+            return z;
+        }
     }
 }

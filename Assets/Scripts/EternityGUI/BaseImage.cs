@@ -21,6 +21,39 @@
             }
         }
 
+        /// <summary>
+        /// Creates a new BaseImage with the given texture and position. Must provide a fully qualified resource path as the image name.
+        /// </summary>
+        /// <param name="imageName">Full Resources folder path and name of file to use as the texture</param>
+        /// <param name="position">Screen position to place the element at</param>
+        public static BaseImage Create(string imageName, Vector3 position)
+        {
+            var go = new GameObject(imageName + "BaseElement");
+            go.layer = 12;
+            var gt = go.AddComponent<GUITexture>();
+            var tex = Resources.Load(imageName) as Texture2D;
+            var baseImage = go.AddComponent<BaseImage>();
+            gt.texture = tex;
+            gt.pixelInset = new Rect(0, 0, tex.width, tex.height);
+            gt.transform.position = position.ScreenToViewport();
+            gt.transform.localScale = new Vector3();
+
+            return baseImage;
+        }
+
+        public static BaseImage Create(Texture2D tex, Vector3 position)
+        {
+            var go = new GameObject(tex.name + "BaseElement");
+            var gt = go.AddComponent<GUITexture>();
+            var baseImage = go.AddComponent<BaseImage>();
+            gt.texture = tex;
+            gt.pixelInset = new Rect(0, 0, tex.width, tex.height);
+            gt.transform.position = position;
+            gt.transform.localScale = new Vector3();
+
+            return baseImage;
+        }
+
         void Start() { draggable = true; }
 
         internal override void ResetSize()
@@ -45,6 +78,16 @@
                 }
             }
             this.guiTexture.pixelInset = newInset;
+        }
+
+        internal void SetHeight(int newHeight)
+        {
+            Resize((int)this.guiTexture.pixelInset.width, newHeight);
+        }
+
+        internal void SetWidth(int newWidth)
+        {
+            Resize(newWidth, (int)this.guiTexture.pixelInset.height);
         }
     }
 }

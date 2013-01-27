@@ -4,6 +4,7 @@ namespace EternityGUI
     public class ItemElement : BaseImage
     {
         public Item item;
+        public ItemTooltip tooltip;
 
         public static ItemElement Create(Item item)
         {
@@ -11,15 +12,28 @@ namespace EternityGUI
             go.layer = 12;
             var gt = go.AddComponent<GUITexture>();
             var tex = item.inventoryIcon;
-            var baseElement = go.AddComponent<ItemElement>();
+            var itemElement = go.AddComponent<ItemElement>();
             gt.texture = tex;
             gt.pixelInset = new Rect(0, 0, tex.width, tex.height);
             gt.transform.position = new Vector3();
             gt.transform.localScale = new Vector3();
 
-            baseElement.item = item;
+            itemElement.item = item;
 
-            return baseElement;
+            itemElement.MouseEnter += itemElement.baseElement_MouseEnter;
+            itemElement.MouseLeave += itemElement.itemElement_MouseLeave;
+
+            return itemElement;
+        }
+
+        void itemElement_MouseLeave(BaseElement sender, MouseEventArgs e)
+        {
+            Destroy(tooltip.gameObject);
+        }
+
+        void baseElement_MouseEnter(BaseElement sender, MouseEventArgs e)
+        {
+            tooltip = ItemTooltip.Create(this);
         }
     }
 }

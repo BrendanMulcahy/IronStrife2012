@@ -465,4 +465,15 @@ public static class Util
             networkView.RPC(methodName, RPCMode.Server, parameters);
         }
     }
+
+    private static Font _OFLGoudyStMTT;
+    public static Font OFLGoudyStMTT
+    {
+        get
+        {
+            if (_OFLGoudyStMTT == null)
+                _OFLGoudyStMTT = Resources.Load("Fonts/OFLGoudyStMTT") as Font;
+            return _OFLGoudyStMTT;
+        }
+    }
 }

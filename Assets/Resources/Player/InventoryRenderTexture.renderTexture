@@ -6,8 +6,8 @@ RenderTexture:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: InventoryRenderTexture
-  m_Width: 295
-  m_Height: 295
+  m_Width: 497
+  m_Height: 497
   m_DepthFormat: 2
   m_ColorFormat: 0
   m_MipMap: 0

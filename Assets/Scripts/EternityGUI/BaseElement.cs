@@ -12,6 +12,8 @@ namespace EternityGUI
         //public event MouseEventHandler MouseWheelChanged;
         public event MouseDropEventHandler Dropped;
 
+        public event ElementDestroyedEventHandler Destroyed;
+
         public bool draggable = false;
         float lastClickTime = 0;
         float maxDoubleClickInterval = .25f;
@@ -29,45 +31,12 @@ namespace EternityGUI
         private const float maxDragForClick = 25;
         private Vector3 initialDragPosition = new Vector3();
 
-        /// <summary>
-        /// Creates a new BaseElement with the given texture and position. Must provide a fully qualified resource path as the image name.
-        /// </summary>
-        /// <param name="imageName">Full Resources folder path and name of file to use as the texture</param>
-        /// <param name="position">Screen position to place the element at</param>
-        public static BaseImage Create(string imageName, Vector3 position)
-        {
-            var go = new GameObject(imageName + "BaseElement");
-            go.layer = 12;
-            var gt = go.AddComponent<GUITexture>();
-            var tex = Resources.Load(imageName) as Texture2D;
-            var baseElement = go.AddComponent<BaseImage>();
-            gt.texture = tex;
-            gt.pixelInset = new Rect(0, 0, tex.width, tex.height);
-            gt.transform.position = position.ScreenToViewport();
-            gt.transform.localScale = new Vector3();
-
-            return baseElement;
-        }
-
-        public static BaseImage Create(Texture2D tex, Vector3 position)
-        {
-            var go = new GameObject(tex.name + "BaseElement");
-            var gt = go.AddComponent<GUITexture>();
-            var baseElement = go.AddComponent<BaseImage>();
-            gt.texture = tex;
-            gt.pixelInset = new Rect(0, 0, tex.width, tex.height);
-            gt.transform.position = position;
-            gt.transform.localScale = new Vector3();
-
-            return baseElement;
-        }
-
         internal virtual void OnMouseDown()
         {
             if (MouseDown != null)
             {
                 MouseDown(this, MouseEventArgs.Current);
-            }
+            }   
 
             if (draggable)
             {
@@ -158,7 +127,13 @@ namespace EternityGUI
             }
         }
 
-        public void Update()
+        internal void OnDestroy()
+        {
+            if (Destroyed != null)
+                Destroyed(this);
+        }
+
+        public virtual void Update()
         {
             if (dragging)
                 HandleDragging();
@@ -195,4 +170,6 @@ namespace EternityGUI
 
         internal abstract void Resize(int newWidth, int newHeight);
     }
+
+    public delegate void ElementDestroyedEventHandler(BaseElement sender);
 }

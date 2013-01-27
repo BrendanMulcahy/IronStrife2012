@@ -68,6 +68,7 @@ public class ServerController : MonoBehaviour
                 if (glow)
                     Destroy(glow);
             }
+            return;
         }
         GameObject newHomingTarget = null;
         RaycastHit[] hits;

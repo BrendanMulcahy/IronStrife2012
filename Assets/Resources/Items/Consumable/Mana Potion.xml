@@ -1,2 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Consumable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Mana Potion" itemType="Consumable" goldCost="50" availability="Regular" buffScript="ManaPotion" />
+<Consumable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Mana Potion" itemType="Consumable" goldCost="50" availability="Regular" buffScript="ManaPotion" description="A regular mana potion, made from ordinary-quality ingredients. Restores 50 mana to the player." />

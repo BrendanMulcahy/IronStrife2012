@@ -400,7 +400,6 @@ public class Inventory : MonoBehaviour
     void CommitDropItem(NetworkViewID viewID, string itemName)
     {
         var toDrop = ItemFactory.GetFromViewID(viewID, itemName);
-        Debug.Log("You are trying to drop " + toDrop.name + " goldcost: " + toDrop.goldCost);
 
         GameObject worldItemPrefab = Resources.Load("Items/WorldItems/" + toDrop.name) as GameObject;
         if (!worldItemPrefab)

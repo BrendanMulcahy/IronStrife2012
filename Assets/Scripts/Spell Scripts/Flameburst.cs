@@ -32,6 +32,6 @@ public class Flameburst : PointAreaSpell
 
     public override float Radius
     {
-        get { return 4.0f; }
+        get { return 15.0f; }
     }
 }

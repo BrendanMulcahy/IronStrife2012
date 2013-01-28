@@ -127,7 +127,7 @@ public class PlayerGUI : MonoBehaviour
     private void DrawHealth()
     {
         float leftMargin = 0.0557291666666667f * Screen.width;
-        float topmargin = 0.6476190476190476f * Screen.height;
+        float topmargin = (0.6476190476190476f + .05f) * Screen.height;
         float width = Screen.width * 0.1901140684410646f;
         float height = (width / elements["HealthBackground"].width) * elements["HealthBackground"].height;
 
@@ -138,7 +138,7 @@ public class PlayerGUI : MonoBehaviour
     private void DrawMana()
     {
         float leftMargin = 0.0557291666666667f * Screen.width;
-        float topmargin = 0.6978835978835979f * Screen.height;
+        float topmargin = (0.6978835978835979f + .05f) * Screen.height;
         float width = Screen.width * 0.1901140684410646f;
         float height = (width / elements["ManaBackground"].width) * elements["ManaBackground"].height;
         GUI.DrawTexture(new Rect(leftMargin, topmargin, width, height), elements["ManaBackground"]);
@@ -148,7 +148,7 @@ public class PlayerGUI : MonoBehaviour
     private void DrawStamina()
     {
         float leftMargin = 0.0557291666666667f * Screen.width;
-        float topmargin = 0.7481481481481481f * Screen.height;
+        float topmargin = (0.7481481481481481f + .05f) * Screen.height;
         float width = Screen.width * 0.1901140684410646f;
         float height = (width / elements["StaminaBackground"].width) * elements["StaminaBackground"].height;
         GUI.DrawTexture(new Rect(leftMargin, topmargin, width, height), elements["StaminaBackground"]);
@@ -170,7 +170,7 @@ public class PlayerGUI : MonoBehaviour
     private void DrawSpellIcons()
     {
         float leftMargin = 0.047f * Screen.width;
-        float topMargin = 0.8240740740740741f * Screen.height;
+        float topMargin = (0.8240740740740741f + .05f) * Screen.height;
         float width = Screen.width * 0.2f;
         float height = (width / elements["ActionSocketBezel"].width) * elements["ActionSocketBezel"].height;
         float bezelScale = width / elements["ActionSocketBezel"].width;

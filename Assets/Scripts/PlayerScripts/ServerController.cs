@@ -13,11 +13,21 @@ public class ServerController : MonoBehaviour
     public RegularCamera regularCamera;
     public AbilityManager abilityManager;
 
-    void Start()
+    private GameObject spellTargetReticle;
+    private ParticleSystem particleSys;
+    private float initialParticleSpeed;
+    private float initialParticleSize;
+
+    void Awake()
     {
         targetController = GetComponent<PlayerInputManager>();
         regularCamera = Camera.main.GetComponent<RegularCamera>();
         abilityManager = GetComponent<AbilityManager>();
+        spellTargetReticle = Instantiate(Resources.Load("SpellEffects/SpellTarget") as GameObject) as GameObject;
+        particleSys = spellTargetReticle.GetComponent<ParticleSystem>();
+        initialParticleSize = particleSys.startSize;
+        initialParticleSpeed = particleSys.startSpeed;
+        spellTargetReticle.SetActive(false);
     }
 
     void Update()
@@ -40,6 +50,10 @@ public class ServerController : MonoBehaviour
             {
                 targetController.spellButton = true;
                 targetController.spellBeingCast = (Spell)abilityManager.equippedSpells[i];
+                if ((Spell)abilityManager.equippedSpells[i] is IPointSpell)
+                {
+                    ShowSpellTargetReticle((IPointSpell)((Spell)abilityManager.equippedSpells[i]));
+                }
             }
         }
 
@@ -55,6 +69,43 @@ public class ServerController : MonoBehaviour
         }
 
         UpdateHomingTarget();
+    }
+
+    private void ShowSpellTargetReticle(IPointSpell spell)
+    {
+        StartCoroutine(SpellTargetReticle(spell));
+    }
+
+    private IEnumerator SpellTargetReticle(IPointSpell spell)
+    {
+        spellTargetReticle.SetActive(true);
+        var diameter = spell.Radius * 2f;
+        spellTargetReticle.transform.localScale = new Vector3(diameter, .001f, diameter);
+        spellTargetReticle.particleSystem.startSize = initialParticleSize * diameter;
+        spellTargetReticle.particleSystem.startSpeed = initialParticleSpeed * diameter;
+
+        while (true)
+        {
+            if (!(targetController.spellBeingCast is IPointSpell) || Input.GetButtonDown("Fire1"))
+            {
+                HideSpellTargetReticle();
+                yield break;
+            }
+            RaycastHit hit;
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            int layerMask = (1 << 11) | (1 << 13);
+            if (Physics.Raycast(ray, out hit, 100f, layerMask))
+            {
+                spellTargetReticle.transform.position = Util.SampleFloorIncludingObjects(hit.point);
+            }
+
+            yield return null;
+        }
+    }
+
+    private void HideSpellTargetReticle()
+    {
+        spellTargetReticle.SetActive(false);
     }
 
     private void UpdateHomingTarget()

@@ -89,10 +89,6 @@ public class GameTime : MonoBehaviour {
         suns[0].transform.rotation = initialRotations[1];
         suns[0].Rotate(new Vector3(1, 0, 0), rotationAmount);
 		
-		
-
-		
-
         UpdateSkybox();
 	}
 
@@ -128,6 +124,11 @@ public class GameTime : MonoBehaviour {
         }
 
 
+    }
+
+    internal static void SetTime(float gameTime)
+    {
+        Main.timeOfDay = gameTime;
     }
 }
 

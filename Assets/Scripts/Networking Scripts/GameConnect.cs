@@ -23,6 +23,7 @@ public class GameConnect : MonoBehaviour
     {
         // When a player connects, disable regular communication with him until they are fully loaded
         Network.SetSendingEnabled(player, 0, false);
+        networkView.RPCToGroup("SynchronizeGameTime", 1, player, GameTime.CurrentTime);
     }
 
     void OnPlayerDisconnected(NetworkPlayer player)
@@ -156,4 +157,9 @@ public class GameConnect : MonoBehaviour
         Destroy(fader, 3.1f);
     }
 
+    [RPC]
+    void SynchronizeGameTime(float gameTime)
+    {
+        GameTime.SetTime(gameTime);
+    }
 }

@@ -24,6 +24,9 @@ public class NetworkController : MonoBehaviour
     private bool spellButton;
     private int spellBeingCast;
 
+    private GameObject spellTargetReticle;
+
+
     //NOT SYNCED
     private bool lockButton;
 
@@ -39,7 +42,11 @@ public class NetworkController : MonoBehaviour
     {
         if (Network.isServer) Destroy(this);
         else
+        {
             GenerateNetworkView();
+            spellTargetReticle = Instantiate(Resources.Load("SpellEffects/SpellTarget") as GameObject) as GameObject;
+            spellTargetReticle.SetActive(false);
+        }
     }
 
     private void GenerateNetworkView()

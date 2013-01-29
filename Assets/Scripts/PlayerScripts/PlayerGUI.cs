@@ -55,7 +55,7 @@ public class PlayerGUI : MonoBehaviour
 
         StartCoroutine(LoadNetworkRequiredComponents());
 
-        skin = Resources.Load("ISEGUISkin") as GUISkin;
+        skin = Util.ISEGUISkin;
 
     }
 

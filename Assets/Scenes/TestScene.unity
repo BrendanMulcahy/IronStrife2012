@@ -45894,7 +45894,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400004, guid: 582e0fc7901d5e945835c1e00b2ff8b6, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 673.015442
+      value: 674.247498
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 582e0fc7901d5e945835c1e00b2ff8b6, type: 2}
       propertyPath: m_LocalPosition.y
@@ -45902,7 +45902,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 582e0fc7901d5e945835c1e00b2ff8b6, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 34.6016235
+      value: 34.1152344
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 582e0fc7901d5e945835c1e00b2ff8b6, type: 2}
       propertyPath: m_LocalRotation.x
@@ -45910,7 +45910,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 582e0fc7901d5e945835c1e00b2ff8b6, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: .781471729
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 582e0fc7901d5e945835c1e00b2ff8b6, type: 2}
       propertyPath: m_LocalRotation.z
@@ -45918,7 +45918,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 582e0fc7901d5e945835c1e00b2ff8b6, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: .623940706
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 582e0fc7901d5e945835c1e00b2ff8b6, type: 2}
       propertyPath: m_Layer
@@ -46853,8 +46853,8 @@ Transform:
   m_PrefabParentObject: {fileID: 400004, guid: 582e0fc7901d5e945835c1e00b2ff8b6, type: 2}
   m_PrefabInternal: {fileID: 2034560966}
   m_GameObject: {fileID: 2062398841}
-  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 673.015442, y: 241.173447, z: 34.6016235}
+  m_LocalRotation: {x: 0, y: .781471729, z: 0, w: .623940706}
+  m_LocalPosition: {x: 674.247498, y: 241.173447, z: 34.1152344}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 595305811}

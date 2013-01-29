@@ -86,7 +86,7 @@ public class CharacterStats : MonoBehaviour
     public void ApplyDamage(GameObject attacker, Damage damage)
     {
 
-        var e = new DamageEventArgs() { damage = damage, attacker = attacker };
+        var e = new DamageEventArgs() { damage = damage, attacker = attacker, damageLocation = damage.location };
         if (Damaged != null)
         {
             Damaged(this.gameObject, e);

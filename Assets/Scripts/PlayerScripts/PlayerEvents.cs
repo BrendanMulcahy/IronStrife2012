@@ -39,6 +39,7 @@ public class DamageEventArgs
     public bool handled = false;
     public Damage damage;
     public GameObject attacker;
+    public Vector3 damageLocation;
 }
 
 public class StatChangedEventArgs

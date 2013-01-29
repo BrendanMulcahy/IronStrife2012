@@ -2,7 +2,7 @@
 
 public class Flameburst : PointAreaSpell
 {
-    public override void ApplyEffectsToTarget(GameObject caster, GameObject target)
+    public override void ApplyEffectsToTarget(GameObject caster, GameObject target, Vector3 location)
     {
         var targetStats = target.GetCharacterStats();
         if (targetStats)
@@ -10,7 +10,7 @@ public class Flameburst : PointAreaSpell
             var casterStats = caster.GetCharacterStats();
             var spellDamage = casterStats.Intelligence.DamageModifier;
             var totalDamage = (int)(spellDamage * (1.33f));
-            targetStats.ApplyDamage(caster, new Damage(totalDamage, caster, DamageType.Magical));
+            targetStats.ApplyDamage(caster, new Damage(totalDamage, caster, location, DamageType.Magical));
         }
     }
 

@@ -129,6 +129,18 @@ public class GameTime : MonoBehaviour {
     internal static void SetTime(float gameTime)
     {
         Main.timeOfDay = gameTime;
+
+        if (gameTime > 8 && gameTime < 18)
+            Main.skyboxMaterial.SetFloat("_Blend", 0);
+        else if (gameTime > 20 && gameTime < 6)
+            Main.skyboxMaterial.SetFloat("_Blend", 1);
+
+
+    }
+
+    internal static void Reset()
+    {
+        SetTime(6.0f);  //Set time to the start of dawn.
     }
 }
 

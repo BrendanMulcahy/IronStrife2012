@@ -55,7 +55,7 @@ public class MainMenu : MonoBehaviour
 
     void Awake()
     {
-        skin = Resources.Load("ISEGUISkin") as GUISkin;
+        skin = Util.ISEGUISkin;
         logoImage = Resources.Load("GUI/MainMenuLogo") as Texture2D;
         mainMenuSong = Resources.Load("BGM/Iron Strife Theme") as AudioClip;
     }

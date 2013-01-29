@@ -17,10 +17,16 @@ public class Damage
     /// </summary>
     public GameObject source;
 
-    public Damage(int amount, GameObject source, DamageType damageType = DamageType.Physical)
+    /// <summary>
+    /// The location where this damage was taken
+    /// </summary>
+    public Vector3 location;
+
+    public Damage(int amount, GameObject source, Vector3 location, DamageType damageType = DamageType.Physical)
     {
         this.amount = amount;
         this.source = source;
         this.damageType = damageType;
+        this.location = location;
     }
 }

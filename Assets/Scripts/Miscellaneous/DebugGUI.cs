@@ -53,7 +53,7 @@ public class DebugGUI : MonoBehaviour {
     {
         entries = new ArrayList();
         LoadAllConsoleCommands();
-        skin = Resources.Load("ISEGUISkin") as GUISkin;
+        skin = Util.ISEGUISkin;
     }
 
     // Use this for initialization
@@ -78,14 +78,11 @@ public class DebugGUI : MonoBehaviour {
     private void LoadAllConsoleCommands()
     {
         commands = new Dictionary<string, ConsoleCommand>();
-        foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
+        Debug.Log("number of console commands: " + Util.GetSubclasses<ConsoleCommand>().Length);
+        foreach (Type t in Util.GetSubclasses<ConsoleCommand>())
         {
-            if (t.IsSubclassOf(typeof(ConsoleCommand)))
-            {
-                ConsoleCommand cc = Activator.CreateInstance(t) as ConsoleCommand;
-                foreach (string s in cc.Names)
-                    commands[s] = cc;
-            }
+            var cc =  Activator.CreateInstance(t) as ConsoleCommand;
+            commands.Add(cc.Names[0], cc);
         }
     }
 
@@ -150,16 +147,6 @@ public class DebugGUI : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             BackQuotePressed();
-        }
-
-        if (consoleInputFieldFocused && Input.GetKeyDown(KeyCode.DownArrow))
-        {   
-            if (selectedHistory!=null)
-            {
-                selectedHistory = selectedHistory.Previous;
-                if (selectedHistory != null)
-                    consoleInputField = selectedHistory.Value;
-            }
         }
 	}
 

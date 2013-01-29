@@ -48,6 +48,9 @@ public class GameConnect : MonoBehaviour
 
     private void HandleServerStartup()
     {
+        // Reset the game time (time passes in the main menu)
+        GameTime.Reset();
+
         // Add a master game logic object and create the server's player.
         new GameObject("MasterGameLogic").AddComponent<MasterGameLogic>();
         PlayerManager.Main.GenerateNewPlayer(Network.player, Util.Username);

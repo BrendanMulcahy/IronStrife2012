@@ -319,14 +319,24 @@ public static class Util
     }
 
     /// <summary>
-    /// Destroys all objects in the given Object array
+    /// Destroys all objects in the given Object array after time t
     /// </summary>
     /// <param name="o"></param>
-    public static void Destroy(UnityEngine.Object[] o)
+    public static void Destroy(UnityEngine.Object[] o, float time = 0f)
     {
-        for (int g = 0; g < o.Length; g++)
+        if (time != 0)
         {
-            UnityEngine.Object.Destroy(o[g]);
+            for (int g = 0; g < o.Length; g++)
+            {
+                UnityEngine.Object.Destroy(o[g], time);
+            }
+        }
+        else
+        {
+            for (int g = 0; g < o.Length; g++)
+            {
+                UnityEngine.Object.Destroy(o[g]);
+            }
         }
     }
 
@@ -377,7 +387,7 @@ public static class Util
     /// <returns></returns>
     public static Type[] GetSubclasses<T>()
     {
-        var allClasses = Assembly.GetExecutingAssembly().GetExportedTypes().Where(t => t.IsSubclassOf(typeof(T))).ToArray();
+        var allClasses = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(T))).ToArray();
         return allClasses;
     }
 

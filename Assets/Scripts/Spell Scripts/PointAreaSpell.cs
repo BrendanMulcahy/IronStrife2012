@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class PointAreaSpell : Spell, IPointSpell
 {
     public abstract float Radius { get; }
-    public abstract void ApplyEffectsToTarget(GameObject caster, GameObject target);
+    public abstract void ApplyEffectsToTarget(GameObject caster, GameObject target, Vector3 location);
 
     public virtual GameObject ParticleEffect
     {
@@ -64,7 +64,7 @@ public class PointAreaSpellEffect : MonoBehaviour
         if (!targetsHit.Contains(other.transform.root))
         {// TODO : Check spell affect type and make sure it only hits allies or enemies, or both
             targetsHit.Add(other.transform.root);
-            spell.ApplyEffectsToTarget(caster, other.transform.root.gameObject);
+            spell.ApplyEffectsToTarget(caster, other.transform.root.gameObject, this.transform.position);
         }
     }
 }

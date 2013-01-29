@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using System;
 
 public class MasterNetworkSerializer : MonoBehaviour {
 
-    class SerializerMethod
+     class SerializerMethod
     {
         public MethodInfo method;
         public MonoBehaviour behaviour;
@@ -37,5 +38,6 @@ public class MasterNetworkSerializer : MonoBehaviour {
         {
             sm.method.Invoke(sm.behaviour, parameters);
         }
+
     }
 }

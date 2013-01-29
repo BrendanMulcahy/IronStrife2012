@@ -23,7 +23,7 @@ public class DamageReceiver : MonoBehaviour {
         var attackerStats = attacker.GetCharacterStats();
         var totalDamageMod = attackerStats.PhysicalDamageModifier;
 
-        var damage = new Damage(totalDamageMod, attacker, DamageType.Physical);
+        var damage = new Damage(totalDamageMod, attacker, attacker.transform.position, DamageType.Physical);
 
 
         characterStats.ApplyDamage(attacker, damage);

@@ -100,7 +100,7 @@ public class GameTime : MonoBehaviour {
     [RPC]
     void InitializeGameTime(float time)
     {
-        timeOfDay = time;
+        SetTime(time);
     }
 
     private void UpdateSkybox()
@@ -126,6 +126,12 @@ public class GameTime : MonoBehaviour {
 
     }
 
+
+    internal static void SetDayCycleInMinutes(float dayCycle)
+    {
+        Main.dayCycleInMinutes = dayCycle;
+    }
+
     internal static void SetTime(float gameTime)
     {
         Main.timeOfDay = gameTime;
@@ -135,7 +141,7 @@ public class GameTime : MonoBehaviour {
         else if (gameTime > 20 && gameTime < 6)
             Main.skyboxMaterial.SetFloat("_Blend", 1);
 
-
+        SunManager.SetTime(gameTime);
     }
 
     internal static void Reset()

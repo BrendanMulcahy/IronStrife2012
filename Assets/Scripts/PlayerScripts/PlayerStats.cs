@@ -201,7 +201,7 @@ public class PlayerStats : CharacterStats
     [RPC]
     void BroadcastRespawn(Vector3 respawnLocation)
     {
-        Debug.Log(gameObject.name + "has respawned.");
+        Debug.Log(gameObject.name + " has respawned.");
 
         if (Util.MyLocalPlayerObject == gameObject)
         {

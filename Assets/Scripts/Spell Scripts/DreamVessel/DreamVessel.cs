@@ -41,7 +41,7 @@ public class DreamVesselObject : InteractableObject
 
     void Start()
     {
-        interactionRange = 1.0f;
+        interactionRange = 5.0f;
     }
 
     public override void InteractWith(GameObject player)
@@ -62,8 +62,7 @@ public class DreamVesselObject : InteractableObject
     [RPC]
     void TryEnterVessel(NetworkViewID playerViewID)
     {
-        Debug.Log("Trying to enter vessel");
-        if (!rider)
+        if (!rider && !playerViewID.GetGameObject().GetComponent<VesselController>())
         {
             networkView.RPC("CommitEnterVessel", RPCMode.All, playerViewID);
         }

@@ -95,4 +95,38 @@ public class SunManager : MonoBehaviour {
 	{
 		moons.AddLast(m);
 	}
+
+    internal static void SetTime(float gameTime)
+    {
+        if (gameTime > 7.3 && gameTime < 17)
+        {
+            foreach (Sun light in Main.suns)
+            {
+                light.light.intensity = light.maxLightBrightness;
+				light.GetComponent<LensFlare>().brightness = light.maxFlareBrightness;
+				light.light.color = Color.white;
+            }
+            foreach (Moon light in Main.moons)
+            {
+                light.light.intensity = light.minLightBrightness;
+				light.GetComponent<LensFlare>().brightness = light.minFlareBrightness;
+            }
+        }
+
+        else if (gameTime > 19.2 && gameTime < 6.3)
+        {
+            foreach (Sun light in Main.suns)
+            {
+                light.light.intensity = light.minLightBrightness;
+                light.GetComponent<LensFlare>().brightness = light.minFlareBrightness;
+                light.light.color = Color.red;
+            }
+            foreach (Moon light in Main.moons)
+            {
+                light.light.intensity = light.maxLightBrightness;
+                light.GetComponent<LensFlare>().brightness = light.maxFlareBrightness;
+            }
+        }
+
+    }
 }

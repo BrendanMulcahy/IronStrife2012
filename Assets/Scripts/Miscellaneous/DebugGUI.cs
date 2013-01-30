@@ -78,7 +78,6 @@ public class DebugGUI : MonoBehaviour {
     private void LoadAllConsoleCommands()
     {
         commands = new Dictionary<string, ConsoleCommand>();
-        Debug.Log("number of console commands: " + Util.GetSubclasses<ConsoleCommand>().Length);
         foreach (Type t in Util.GetSubclasses<ConsoleCommand>())
         {
             var cc =  Activator.CreateInstance(t) as ConsoleCommand;

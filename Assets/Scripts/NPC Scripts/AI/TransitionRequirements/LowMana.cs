@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
-{
-    class LowMana : TransitionRequirement
+
+    public class LowMana : TransitionRequirement
     {
         private const float LOWMANA_THRESHOLD = 0.33f;
 
@@ -24,4 +23,3 @@ namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
             }
         }
     }
-}

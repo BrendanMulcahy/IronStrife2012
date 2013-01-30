@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
-{
-    class LowHealth : TransitionRequirement
+
+    public class LowHealth : TransitionRequirement
     {
-        private const float LOWHEALTH_THRESHOLD = 0.33f;
+        private const float LOWHEALTH_THRESHOLD = 0.3f;
 
         public LowHealth(NPCStats npcStats)
         {
@@ -14,7 +13,7 @@ namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
 
         public override bool IsSatisfied()
         {
-            if (npcStats.Health.CurrentValue < LOWHEALTH_THRESHOLD * npcStats.Health.MaxValue)
+            if (npcStats.Health.CurrentPercentage < LOWHEALTH_THRESHOLD)
             {
                 return true;
             }
@@ -24,4 +23,4 @@ namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
             }
         }
     }
-}
+

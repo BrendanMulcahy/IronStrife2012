@@ -16,12 +16,12 @@ public class NPC_AI : MonoBehaviour
         set { walkSpeed = value; }
     }
 
-    private GameObject lastSeenEnemy;
+    private EnemySearcher enemySearcher;
 
-    public GameObject LastSeenEnemy
+    public EnemySearcher Searcher
     {
-        get { return lastSeenEnemy; }
-        set { lastSeenEnemy = value; }
+        get { return enemySearcher; }
+        set { enemySearcher = value; }
     }
 
     public NPC_BehaviorState currentState; //the current behavior of the AI is dependent on its state
@@ -35,31 +35,16 @@ public class NPC_AI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        currentState = GetComponent<NPC_BehaviorState>();
-        lastSeenEnemy = GameObject.Find("Brendan");
+        AddEnemySearcher();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+		if (currentState == null) return;
         currentState.Run();
         TransitionState();
-        CheckForEnemy();
-    }
-
-    private void CheckForEnemy()
-    {
-        //not sure if this layer mask is correct, just copied it from elsewhere
-        var layerMask = 1 << 8;
-        layerMask += (1 << 9);
-        layerMask += (1 << 10);
-        layerMask = ~layerMask;
-
-        //if there is obstacle in front
-        //RaycastHit hit;
-       // if (Physics.SphereCast(transform.position, out hit, transform.rotation, 4.0f, layerMask))
-       // {
     }
 
     private void TransitionState()
@@ -76,4 +61,18 @@ public class NPC_AI : MonoBehaviour
             }
         }
     }
+	
+	    private void AddEnemySearcher()
+    {
+        var sphereGO = new GameObject("EnemySearcher");
+        sphereGO.layer = 16;
+        sphereGO.transform.SetParentAndCenter(gameObject.transform);
+        var searcher = sphereGO.AddComponent<EnemySearcher>();
+		enemySearcher = searcher;
+    }
+	
+	public void SetInitialState(NPC_BehaviorState behavior)
+	{
+		this.currentState = behavior;	
+	}
 }

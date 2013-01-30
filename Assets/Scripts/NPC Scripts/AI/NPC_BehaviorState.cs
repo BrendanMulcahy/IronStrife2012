@@ -13,5 +13,12 @@ public abstract class NPC_BehaviorState : MonoBehaviour
     public abstract void Enable();
     public abstract void Disable();
 //    public abstract NPC_BehaviorState NextState();
+	
+	protected virtual void Start()
+	{
+		npcController = GetComponent<NPC_Controller>();
+		npcAI = GetComponent<NPC_AI>();
+		npcStats = GetComponent<NPCStats>();
+	}
 
 }

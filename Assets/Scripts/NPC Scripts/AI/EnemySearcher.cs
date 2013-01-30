@@ -52,6 +52,13 @@ public class EnemySearcher : MonoBehaviour {
 		while (true)
 		{
 			charactersNearby = charactersNearby.OrderBy(x => (x.transform.position - this.transform.position).magnitude).ToList();
+<<<<<<< HEAD
+=======
+			foreach( GameObject go in charactersNearby)
+			{
+				Debug.Log(go.name);	
+			}
+>>>>>>> nothing big
 			yield return new WaitForSeconds(1.0f);
 		}
 		

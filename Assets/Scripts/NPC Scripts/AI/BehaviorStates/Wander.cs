@@ -17,7 +17,11 @@ using System.Collections.Generic;
 
         public override void Disable()
         {
+<<<<<<< HEAD
            StopCoroutine("CheckIfContinueWandering");
+=======
+           StopCoroutine("CheckifContinueWandering");
+>>>>>>> nothing big
         }
 
         /// <summary>

@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
-{
-    class LowStamina : TransitionRequirement
+
+    public class LowStamina : TransitionRequirement
     {
         private const float LOWSTAMINA_THRESHOLD = 0.33f;
         
@@ -24,4 +23,3 @@ namespace Assets.Scripts.NPC_Scripts.AI.TransitionRequirements
             }
         }
     }
-}

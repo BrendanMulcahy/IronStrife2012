@@ -86,7 +86,7 @@ public class NPC_Controller : MonoBehaviour
 
     private void UpdateMoveDirection()
     {
-        moveDirection = Vector3.RotateTowards(moveDirection, targetMoveDirection, 3.14f * Time.deltaTime, 1f);
+        moveDirection = Vector3.RotateTowards(moveDirection, targetMoveDirection.normalized, 3.14f * Time.deltaTime, 1f);
         transform.rotation = Quaternion.LookRotation(moveDirection);
     }
 }

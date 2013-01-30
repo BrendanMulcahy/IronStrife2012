@@ -5,7 +5,7 @@ public class IntelligenceStat : BuffableStat
     /// <summary>
     /// Amount of spell damage given per point of intelligence.
     /// </summary>
-    public const int spellDamagePerIntelligence = 5;
+    public const int spellDamagePerIntelligence = 1;
     
     /// <summary>
     /// Amount of mana given per point of intelligence

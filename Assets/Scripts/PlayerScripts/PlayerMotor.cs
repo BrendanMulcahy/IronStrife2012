@@ -35,4 +35,12 @@ public class PlayerMotor : MonoBehaviour
         // consumes the impact energy each cycle:
         impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
     }
+
+    public float TotalImpactMagnitude
+    {
+        get
+        {
+            return impact.magnitude;
+        }
+    }
 }

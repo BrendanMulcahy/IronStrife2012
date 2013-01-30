@@ -13,6 +13,8 @@ public class WeaponCollider : MonoBehaviour
     {
         isActive = false;
         gameObjectsHitThisSwing = new ArrayList();
+        collider.isTrigger = true;
+        gameObject.layer = 17;
     }
 
     public void StartSwingCollisionChecking()
@@ -50,5 +52,10 @@ public class WeaponCollider : MonoBehaviour
         {
             dr.ApplyHit(transform.root.gameObject);
         }
+    }
+
+    internal void StopSwingCollisionChecking()
+    {
+        isActive = false;
     }
 }

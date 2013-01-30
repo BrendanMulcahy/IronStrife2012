@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 
+
 public class EnemySearcher : MonoBehaviour {
 	public List<GameObject> charactersNearby = new List<GameObject>();
 	public float searchradius = 20f;
 	
 	// Use this for initialization
-	void Start () {
-		var collider = this.gameObject.AddComponent<SphereCollider>();
-		gameObject.layer = 16;
-        collider.isTrigger = true;
-		collider.radius = searchradius;
+	void Awake () {
+        if (!collider)
+        {
+            var sphere = this.gameObject.AddComponent<SphereCollider>();
+            gameObject.layer = 16;
+            sphere.isTrigger = true;
+            sphere.radius = searchradius;
+        }
 		StartCoroutine(CheckForClosestEnemy());
 	}
 	
@@ -26,8 +30,15 @@ public class EnemySearcher : MonoBehaviour {
 		if (other.GetComponent<CharacterStats>() && (other.transform.root != this.transform.root))
 		{
 			charactersNearby.Add(other.gameObject);
+            other.gameObject.GetCharacterStats().Died += EnemySearcher_Died;
 		}
 	}
+
+    void EnemySearcher_Died(GameObject deadUnit, UnitDiedEventArgs e)
+    {
+        if (charactersNearby.Contains(deadUnit.gameObject))
+            charactersNearby.Remove(deadUnit.gameObject);	
+    }
 	
 	void OnTriggerExit(Collider other)
 	{
@@ -41,10 +52,6 @@ public class EnemySearcher : MonoBehaviour {
 		while (true)
 		{
 			charactersNearby = charactersNearby.OrderBy(x => (x.transform.position - this.transform.position).magnitude).ToList();
-			foreach( GameObject go in charactersNearby)
-			{
-				Debug.Log(go.name);	
-			}
 			yield return new WaitForSeconds(1.0f);
 		}
 		

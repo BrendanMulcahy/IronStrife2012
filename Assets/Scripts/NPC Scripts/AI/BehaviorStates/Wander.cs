@@ -2,17 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
-
     public class Wander : NPC_BehaviorState
     {
-
-
-	protected override void Start()
-	{
-		base.Start();
-    }
-
         public override void Run()
         {
             npcController.Move();
@@ -26,7 +17,7 @@ using System.Collections.Generic;
 
         public override void Disable()
         {
-           StopCoroutine("CheckifContinueWandering");
+           StopCoroutine("CheckIfContinueWandering");
         }
 
         /// <summary>
@@ -51,8 +42,10 @@ using System.Collections.Generic;
         {
             while (true)
             {
+                if (!npcController) yield return null;
                 if (ShouldWaitBriefly())
                 {
+                    npcController.TargetMoveDirection = new Vector3(1, 0, 0);
                     npcController.MoveSpeed = 0.0f;
                 }
                 else

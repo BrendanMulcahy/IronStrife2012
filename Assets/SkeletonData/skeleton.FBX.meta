@@ -109,7 +109,7 @@ ModelImporter:
       takeName: 
       firstFrame: 0
       lastFrame: 240
-      wrapMode: 0
+      wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
@@ -131,7 +131,7 @@ ModelImporter:
       takeName: 
       firstFrame: 241
       lastFrame: 263
-      wrapMode: 0
+      wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
@@ -175,7 +175,7 @@ ModelImporter:
       takeName: 
       firstFrame: 315
       lastFrame: 350
-      wrapMode: 0
+      wrapMode: 1
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
@@ -195,9 +195,9 @@ ModelImporter:
       skeletonMaskElements: []
     - name: gethit
       takeName: 
-      firstFrame: 351
+      firstFrame: 365
       lastFrame: 386
-      wrapMode: 0
+      wrapMode: 1
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
@@ -219,7 +219,7 @@ ModelImporter:
       takeName: 
       firstFrame: 387
       lastFrame: 457
-      wrapMode: 0
+      wrapMode: 8
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
@@ -241,7 +241,7 @@ ModelImporter:
       takeName: 
       firstFrame: 458
       lastFrame: 1275
-      wrapMode: 0
+      wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0

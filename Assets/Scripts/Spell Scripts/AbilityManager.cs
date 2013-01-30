@@ -74,7 +74,7 @@ public class AbilityManager : MonoBehaviour
         {
             if (spell == null)
                 continue;
-            if (GUILayout.Button(spell.name, "smallButton") && !lookingForSpellKey)
+            if (GUILayout.Button(spell.Name, "smallButton") && !lookingForSpellKey)
             {
                 lookingForSpellKey = true;
                 lookingToBindSpell = spell;
@@ -90,7 +90,7 @@ public class AbilityManager : MonoBehaviour
         {
             if (Input.GetKeyDown(spellButtons[i]))
             {
-                Debug.Log("Bound " + lookingToBindSpell.name + " to key " + (i + 1) + ".");
+                Debug.Log("Bound " + lookingToBindSpell.Name + " to key " + (i + 1) + ".");
                 equippedSpells[i] = (int)lookingToBindSpell;
                 GetComponent<PlayerGUI>().UpdateSpellIcons(i, lookingToBindSpell); //draw the new spell 
                 lookingToBindSpell = null;

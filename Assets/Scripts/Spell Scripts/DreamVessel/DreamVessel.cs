@@ -16,7 +16,7 @@ public class DreamVessel : Spell,  ISelfSpellWithViewID
 
     }
 
-    public override string name
+    public override string Name
     {
         get { return "Dream Vessel"; }
     }

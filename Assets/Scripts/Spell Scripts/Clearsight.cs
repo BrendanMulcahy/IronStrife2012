@@ -4,7 +4,7 @@ using System.Linq;
 public class Clearsight : Spell, ISelfSpell
 {
 
-    public override string name
+    public override string Name
     {
         get { return "Clearsight"; }
     }

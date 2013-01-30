@@ -22,6 +22,7 @@ public abstract class RegeneratingStat : MonoBehaviour
         get { return _currentValue; }
         set
         {
+            if (Network.isClient) return;   // Clients aren't permitted to set stat values.
             var temp = _currentValue;
             var e = new StatChangedEventArgs() { newValue = value, oldValue = temp };
             OnChanged(this.gameObject, e);
@@ -68,14 +69,9 @@ public abstract class RegeneratingStat : MonoBehaviour
 
     protected void Awake()
     {
-        StartCoroutine(Regenerate());
-        if (Network.isServer)
-        {
-            StartCoroutine(Monitor());
-        }
+        if(Network.isServer)
+            StartCoroutine(Regenerate());
     }
-
-    protected abstract System.Collections.IEnumerator Monitor();
 
     protected System.Collections.IEnumerator Regenerate()
     {

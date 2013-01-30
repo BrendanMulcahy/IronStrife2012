@@ -14,7 +14,7 @@ public class Flameburst : PointAreaSpell
         }
     }
 
-    public override string name
+    public override string Name
     {
         get { return "Flameburst"; }
     }

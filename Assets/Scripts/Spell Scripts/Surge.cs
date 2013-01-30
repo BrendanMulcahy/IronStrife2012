@@ -2,7 +2,7 @@
 
 public class Surge : Spell, ISelfSpell
 {
-    public override string name
+    public override string Name
     {
         get { return "Surge"; }
     }

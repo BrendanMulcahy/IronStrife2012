@@ -11,7 +11,7 @@ public abstract class Spell
     public GameObject caster;
     public Texture2D spellImage;
 
-    public abstract String name { get; }
+    public abstract String Name { get; }
     public abstract SpellAffectType AffectType { get; }
 
     public Spell()
@@ -38,7 +38,7 @@ public abstract class Spell
     public void GetSpellIcon()
     {
         string teamColor = Util.MyLocalPlayerTeam == 1 ? "Blue" : "Red";
-        spellImage = Resources.Load("SpellIcons/" + name + teamColor) as Texture2D;
+        spellImage = Resources.Load("SpellIcons/" + Name + teamColor) as Texture2D;
 
         if (spellImage == null)
         {

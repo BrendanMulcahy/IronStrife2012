@@ -29,7 +29,7 @@ public static class PlayerAbilities
                 {
                     Spell instance = Activator.CreateInstance(t) as Spell;
                     spells.Add(instance);
-                    spellDictionary.Add(instance.name, instance);
+                    spellDictionary.Add(instance.Name, instance);
                     
                 }
             }
@@ -54,7 +54,7 @@ public static class PlayerAbilities
         foreach (Spell spell in spells)
         {
             if (spell == null) continue;
-            s += spells.IndexOf(spell) + ") " + spell.name + "\n";
+            s += spells.IndexOf(spell) + ") " + spell.Name + "\n";
         }
         return s;
     }

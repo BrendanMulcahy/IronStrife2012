@@ -75,6 +75,7 @@ public class PlayerSelectorBox : MonoBehaviour
         collider.isTrigger = true;
         var rigid = gameObject.AddComponent<Rigidbody>();
         rigid.isKinematic = true;
+        gameObject.layer = 19;
     }
 
     void OnTriggerEnter(Collider other)

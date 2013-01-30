@@ -6,6 +6,7 @@ public class NPC_Controller : MonoBehaviour
 {
     CharacterController characterController;
     float moveSpeed;
+    NPCStats stats;
 
     public float MoveSpeed
     {
@@ -13,8 +14,8 @@ public class NPC_Controller : MonoBehaviour
         set { moveSpeed = value; }
     }
 
-    Vector3 moveDirection;
-    Vector3 targetMoveDirection;
+    Vector3 moveDirection = new Vector3();
+    Vector3 targetMoveDirection = new Vector3();
 
     public Vector3 TargetMoveDirection
     {
@@ -28,11 +29,15 @@ public class NPC_Controller : MonoBehaviour
         set { moveDirection = value; }
     }
 
+    private PlayerMotor motor;
+
 	// Use this for initialization
 	void Start ()
     {
         characterController = GetComponent<CharacterController>();
         moveDirection = Vector3.forward;
+        motor = GetComponent<PlayerMotor>();
+        stats = gameObject.GetCharacterStats() as NPCStats;
 	}
 	
 	// Update is called once per frame
@@ -81,12 +86,38 @@ public class NPC_Controller : MonoBehaviour
     /// </summary>
     public void Move()
     {
+        if (motor.TotalImpactMagnitude >= .2f)
+            return;
         characterController.SimpleMove(moveDirection * moveSpeed);
     }
 
     private void UpdateMoveDirection()
     {
         moveDirection = Vector3.RotateTowards(moveDirection, targetMoveDirection.normalized, 3.14f * Time.deltaTime, 1f);
+        if (moveDirection != Vector3.zero)
         transform.rotation = Quaternion.LookRotation(moveDirection);
+    }
+
+    [RPC]
+    public void BeginSwingAttack()
+    {
+        if (Network.isServer) networkView.RPC("BeginSwingAttack", RPCMode.Others);
+
+        StartCoroutine(SwingAttack());
+    }
+
+    private IEnumerator SwingAttack()
+    {
+        
+        SendMessage("StartAttacking", SendMessageOptions.DontRequireReceiver);
+        var swingLength = stats.attackLength;
+        yield return new WaitForSeconds(swingLength*.25f);
+        GetComponentInChildren<WeaponCollider>().StartSwingCollisionChecking();
+
+        yield return new WaitForSeconds(swingLength *.45f);
+        GetComponentInChildren<WeaponCollider>().StopSwingCollisionChecking();
+        SendMessage("StopAttacking", SendMessageOptions.DontRequireReceiver);
+
+        yield break;
     }
 }

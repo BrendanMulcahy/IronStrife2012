@@ -12,7 +12,7 @@ public class Cure : Spell, ISelfSpell
         particle.transform.localPosition += Vector3.up * 1.7f;
     }
 
-    public override string name
+    public override string Name
     {
         get { return "Cure"; }
     }

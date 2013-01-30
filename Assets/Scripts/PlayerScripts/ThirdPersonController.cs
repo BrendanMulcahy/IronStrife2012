@@ -369,7 +369,6 @@ public class ThirdPersonController : MonoBehaviour, IController
         {
             yield return null;
             startTime += Time.deltaTime;
-            if (startTime > endTime) Debug.Log("Cast time complete.");
             if (isMoving || IsJumping()) { isCasting = false; inputManager.spellButton = false; inputManager.spellBeingCast = null; yield break; }
         }
 
@@ -650,7 +649,7 @@ public class ThirdPersonController : MonoBehaviour, IController
         try { GetComponentInChildren<WeaponCollider>().StartSwingCollisionChecking(); }
         catch { isAttacking = false; yield break; }
         yield return new WaitForSeconds(swingLength - .15f);
-        try { GetComponentInChildren<WeaponCollider>().isActive = false; }
+        try { GetComponentInChildren<WeaponCollider>().StopSwingCollisionChecking(); }
         catch { isAttacking = false; yield break; }
         isAttacking = false;
         yield break;

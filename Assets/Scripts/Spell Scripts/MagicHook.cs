@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MagicHook : Spell, ITargetSpell
 {
-    public override string name
+    public override string Name
     {
         get { return "Magic Hook"; }
     }

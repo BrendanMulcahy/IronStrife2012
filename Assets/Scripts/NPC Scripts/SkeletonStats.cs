@@ -7,6 +7,7 @@ public class SkeletonStats : NPCStats
         base.Start();
         Died += SkeletonStats_Died;
         reward = new KillReward(500, 500);
+        attackRange = 1.5f;
     }
 
     void SkeletonStats_Died(GameObject deadUnit, UnitDiedEventArgs e)

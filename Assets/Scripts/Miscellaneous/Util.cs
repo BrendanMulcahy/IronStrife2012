@@ -216,10 +216,10 @@ public static class Util
         var layerMask = 1 << 8;
         layerMask += (1 << 9);
         layerMask += (1 << 10);
-        layerMask = ~layerMask; 
+        layerMask = ~layerMask;
         if (Physics.Raycast(position, Vector3.down, out hit, 500, layerMask))
         {
-            return hit.point + new Vector3(0, .05f,0);
+            return hit.point + new Vector3(0, .05f, 0);
         }
         else return new Vector3();
     }
@@ -227,8 +227,8 @@ public static class Util
     internal static IEnumerator DestroyInSeconds(UnityEngine.Object toDestroy, float p)
     {
         yield return new WaitForSeconds(p);
-        if (toDestroy!=null)
-         UnityEngine.Object.Destroy(toDestroy);
+        if (toDestroy != null)
+            UnityEngine.Object.Destroy(toDestroy);
 
     }
 
@@ -362,9 +362,9 @@ public static class Util
     {
         if (!gameObject) Debug.Log("Null");
         var networkViewID = gameObject.GetComponent<NetworkView>();
-        if (networkViewID) 
+        if (networkViewID)
             return networkViewID.viewID;
-        else 
+        else
             return NetworkViewID.unassigned;
     }
 
@@ -413,9 +413,9 @@ public static class Util
             if (_username == null)
             {
                 _username = PlayerPrefs.GetString("username", "default_username");
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 _username += "_Editor";
-                #endif
+#endif
             }
             return _username;
         }
@@ -504,6 +504,52 @@ public static class Util
         foreach (ParticleEmitter pe in emitters)
         {
             pe.emit = false;
+        }
+    }
+
+    public static void SerializeRegeneratingStat(this BitStream stream, RegeneratingStat stat)
+    {
+        if (stream.isWriting)
+        {
+            var current = stat.CurrentValue;
+            stream.Serialize(ref current);
+
+            var max = stat.MaxValue;
+            stream.Serialize(ref max);
+        }
+        else
+        {
+            int current = stat.CurrentValue;
+            stream.Serialize(ref current);
+            stat.CurrentValue = current;
+
+            int max = stat.MaxValue;
+            stream.Serialize(ref max);
+            stat.MaxValue = max;
+        }
+    }
+
+    public static void SerializeBuffableStat(this BitStream stream, BuffableStat stat)
+    {
+        if (stream.isWriting)
+        {
+            var baseVal = stat.baseValue;
+            stream.Serialize(ref baseVal);
+
+            var mod = stat.ModifiedValue;
+            stream.Serialize(ref mod);
+        }
+        else
+        {
+            var baseVal = stat.baseValue;
+            var previousVal = baseVal;
+            stream.Serialize(ref baseVal);
+            stat.ChangeBaseValue(baseVal - previousVal);
+
+            var mod = stat.ModifiedValue;
+            var previous = mod;
+            stream.Serialize(ref mod);
+            stat.ChangeModifierValue(mod - previous);
         }
     }
 }

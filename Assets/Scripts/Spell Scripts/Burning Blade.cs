@@ -3,7 +3,7 @@
 public class BurningBlade : Spell, ISelfSpell
 {
 
-    public override string name
+    public override string Name
     {
         get { return "Burning Blade"; }
     }

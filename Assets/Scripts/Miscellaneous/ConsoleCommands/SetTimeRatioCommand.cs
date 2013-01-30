@@ -11,6 +11,6 @@ class SetTimeRatioCommand : ConsoleCommand
 
     public override void Execute(params string[] parameters)
     {
-        GameTime.SetDayCycleInMinutes(float.Parse(parameters[0]));
+        GameTime.SetDayCycleInMinutes(float.Parse(parameters[0], System.Globalization.NumberStyles.Any));
     }
 }

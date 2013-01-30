@@ -36,7 +36,14 @@ public class NPC_AI : MonoBehaviour
     void Start()
     {
         AddEnemySearcher();
+        gameObject.GetCharacterStats().Died += NPC_AI_Died;
 
+    }
+
+    void NPC_AI_Died(GameObject deadUnit, UnitDiedEventArgs e)
+    {
+        Util.Destroy(GetComponents<NPC_BehaviorState>());
+        currentState = null;
     }
 
     // Update is called once per frame
@@ -73,6 +80,7 @@ public class NPC_AI : MonoBehaviour
 	
 	public void SetInitialState(NPC_BehaviorState behavior)
 	{
-		this.currentState = behavior;	
+        this.currentState = behavior;
+        currentState.Enable();
 	}
 }

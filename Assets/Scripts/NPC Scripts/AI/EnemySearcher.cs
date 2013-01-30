@@ -38,12 +38,15 @@ public class EnemySearcher : MonoBehaviour {
 	
     private IEnumerator CheckForClosestEnemy()
 	{
-		charactersNearby = charactersNearby.OrderBy(x => (x.transform.position - this.transform.position)).ToList();
-		foreach( GameObject go in charactersNearby)
+		while (true)
 		{
-			Debug.Log(go.name);	
+			charactersNearby = charactersNearby.OrderBy(x => (x.transform.position - this.transform.position).magnitude).ToList();
+			foreach( GameObject go in charactersNearby)
+			{
+				Debug.Log(go.name);	
+			}
+			yield return new WaitForSeconds(1.0f);
 		}
-		yield return new WaitForSeconds(1.0f);
 		
 	}
 }

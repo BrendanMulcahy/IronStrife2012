@@ -26,7 +26,7 @@ using System.Collections.Generic;
 
         public override void Disable()
         {
-           StopAllCoroutines();
+           StopCoroutine("CheckifContinueWandering");
         }
 
         /// <summary>

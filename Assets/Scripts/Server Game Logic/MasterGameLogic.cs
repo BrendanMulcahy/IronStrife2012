@@ -32,8 +32,12 @@ public class MasterGameLogic : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        npcManager = new NPCManager();
-        playerManager = new PlayerManager(); 
+        npcManager = gameObject.AddComponent<NPCManager>();
+        playerManager = new PlayerManager();
+        foreach (GameObject go in GameObject.FindObjectsOfType(typeof(GameObject)))
+        {
+            go.SendMessage("OnMasterGameLogicAdded",SendMessageOptions.DontRequireReceiver);
+        }
 
     }
 

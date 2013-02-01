@@ -1,15 +1,44 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-public class NPCManager
+public class NPCManager : MonoBehaviour
 {
     public List<NPCRecord> NPCs = new List<NPCRecord>();
+    public List<NPCSpawnCamp> spawnCamps = new List<NPCSpawnCamp>();
+    public const float RESPAWNINTERVAL = 4.0f;
+    public bool debugMessages = false;
+
+    private float lastSpawntime;
 
     public static NPCManager Main
     {
         get
         {
             return MasterGameLogic.Main.NPCManager;
+        }
+    }
+
+    void Start()
+    {
+        spawnCamps = FindObjectsOfType(typeof(NPCSpawnCamp)).Cast<NPCSpawnCamp>().ToList();
+        lastSpawntime = GameTime.CurrentTime;
+        TrySpawnNeutrals();
+    }
+
+    void Update()
+    {
+        if (IsRespawnTime())
+        {
+            TrySpawnNeutrals();
+        }
+    }
+
+    private void TrySpawnNeutrals()
+    {
+        foreach (NPCSpawnCamp camp in spawnCamps)
+        {
+            camp.SpawnNeutrals();
         }
     }
 
@@ -53,6 +82,22 @@ public class NPCManager
             
         }
         return null;
+    }
+
+    /// <summary>
+    /// Checks the current game time to see if it is time to respawn the neutral units in this camp
+    /// </summary>
+    private bool IsRespawnTime()
+    {
+        float currentTime = GameTime.CurrentTime;
+        if (currentTime - lastSpawntime >= RESPAWNINTERVAL)
+        {
+            if (debugMessages) { Debug.Log("It is time to spawn neutrals: " + GameTime.CurrentTime); }
+            lastSpawntime = currentTime;
+            return true;
+        }
+
+        return false;
     }
 }
 

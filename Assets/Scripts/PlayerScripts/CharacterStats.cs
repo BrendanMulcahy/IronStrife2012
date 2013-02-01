@@ -24,7 +24,6 @@ public class CharacterStats : MonoBehaviour
 
     public MoveSpeedStat MoveSpeed { get; set; }
 
-    public Inventory inventory;
     public int teamNumber = 0;
     public int TeamNumber { get { return teamNumber; } set { networkView.RPC("ChangeTeam", RPCMode.All, value); } }
 
@@ -38,7 +37,7 @@ public class CharacterStats : MonoBehaviour
     {
         get
         {
-            return Strength.ModifiedValue * StrengthStat.meleeDamagePerStrength + ((inventory) ? inventory.currentWeapon.damage : 0);
+            return Strength.ModifiedValue * StrengthStat.meleeDamagePerStrength;
         }
     }
 
@@ -78,7 +77,10 @@ public class CharacterStats : MonoBehaviour
         MagicalDefense = new MagicalDefense(0);
     }
 
-    protected virtual void Start() { inventory = gameObject.GetInventory(); }
+    protected virtual void Start() 
+    {
+
+    }
 
     /// <summary>
     /// Causes damage to be received by this character. Is reduced by defenses and resistances.

@@ -42,8 +42,8 @@ public class NPC_AI : MonoBehaviour
 
     void NPC_AI_Died(GameObject deadUnit, UnitDiedEventArgs e)
     {
-        Util.Destroy(GetComponents<NPC_BehaviorState>());
-        currentState = null;
+            Util.Destroy(GetComponents<NPC_BehaviorState>());
+            currentState = null;
     }
 
     // Update is called once per frame

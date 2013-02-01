@@ -11427,7 +11427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e23eaee06191e1439f7d9625461fab7, type: 3}
   m_Name: 
   neutralType: {fileID: 100076, guid: 296034e3724c49049a52a12e6148ae13, type: 2}
-  debug: 1
+  debugMessages: 1
   amountToSpawn: 3
 --- !u!1 &501880608
 GameObject:

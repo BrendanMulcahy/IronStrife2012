@@ -17,12 +17,25 @@ public class PlayerStats : CharacterStats
     public event PlayerRespawnedEventHandler Respawned;
     public bool canRespawn;
 
+    public override int PhysicalDamageModifier
+    {
+        get
+        {
+            return base.PhysicalDamageModifier + inventory.currentWeapon.damage;
+        }
+
+    }
+
+    private Inventory inventory;
+
     protected override void Start()
     {
         experienceNeeded = experiencePerLevel[0];
         Level = 1;
         Died += PlayerDied;
         UpdateKillReward();
+        TeamNumber = 1;
+        inventory = gameObject.GetInventory();
     }
 
     internal void SetNetworkPlayer(NetworkPlayer networkPlayer)

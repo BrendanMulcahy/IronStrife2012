@@ -21,9 +21,9 @@ public class Chase : NPC_BehaviorState
         }
         else if (!isAttacking)
         {
-            if (npcAI.Searcher.charactersNearby.Count > 0)
+            if (npcAI.Searcher.enemiesNearby.Count > 0)
             {
-                var target = npcAI.Searcher.charactersNearby[0];
+                var target = npcAI.Searcher.enemiesNearby[0];
                 npcController.TargetMoveDirection = (target.transform.position - this.transform.position);
                 npcController.MoveSpeed = npcAI.WalkSpeed;
                 npcController.Move();
@@ -49,9 +49,9 @@ public class Chase : NPC_BehaviorState
 
     bool IsInRangeToAttack()
     {
-        if (npcAI.Searcher.charactersNearby.Count > 0)
+        if (npcAI.Searcher.enemiesNearby.Count > 0)
         {
-            return (Vector3.Distance(npcAI.Searcher.charactersNearby[0].transform.position, this.transform.position) < stats.attackRange);
+            return (Vector3.Distance(npcAI.Searcher.enemiesNearby[0].transform.position, this.transform.position) < stats.attackRange);
         }
         return false;
     }

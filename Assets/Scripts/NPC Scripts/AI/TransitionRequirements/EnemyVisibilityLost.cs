@@ -26,7 +26,7 @@ public class EnemyVisibilityLost : TransitionRequirement {
 	
 	public override bool IsSatisfied()
     {
-        if (enemySearcher && enemySearcher.charactersNearby.Count == 0)
+        if (enemySearcher && enemySearcher.enemiesNearby.Count == 0)
         {
             return true;
         }

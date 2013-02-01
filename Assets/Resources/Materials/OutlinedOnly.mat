@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Outlined Only
+  m_Name: OutlinedOnly
   m_Shader: {fileID: 4800000, guid: f0cd9f6b21856854d9932293d4476e5b, type: 3}
   m_SavedProperties:
     serializedVersion: 2
@@ -22,7 +22,7 @@ Material:
       data:
         first:
           name: _Outline
-        second: .00656295894
+        second: .00792418234
     m_Colors:
       data:
         first:

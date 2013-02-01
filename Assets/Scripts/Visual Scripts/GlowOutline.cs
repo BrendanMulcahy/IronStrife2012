@@ -31,7 +31,7 @@ public class GlowOutline : MonoBehaviour
         clone.transform.SetParentAndCenter(this.transform);
         clone.SetLayerRecursively(14);
         clone.AddComponent<GlowCloneScript>();
-        outlineMat = Resources.Load("Materials/Outlined Only") as Material;
+        outlineMat = Resources.Load("Materials/OutlinedOnly") as Material;
 
         Renderer[] renderers = clone.GetComponentsInChildren<Renderer>();
         foreach (Renderer r in renderers)

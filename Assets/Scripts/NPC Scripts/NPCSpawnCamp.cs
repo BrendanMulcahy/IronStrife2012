@@ -7,22 +7,24 @@ public class NPCSpawnCamp : MonoBehaviour {
     public GameObject neutralType;
     //public Collider spawnZone;
     public const float RESPAWNINTERVAL = 4.0f;
+    public bool debug = false;
+    public int amountToSpawn = 3;
 
-    private LinkedList<GameObject> charactersWithinArea;
+    private LinkedList<GameObject> charactersWithinArea = new LinkedList<GameObject>();
     private float lastSpawntime;
 
 	// Use this for initialization
 	private void Start () {
         lastSpawntime = GameTime.CurrentTime;
         collider.isTrigger = true;
-        this.gameObject.layer = 1 << 16; //puts this on the PlayerSearch layer
+        this.gameObject.layer = 16; //puts this on the PlayerSearch layer
 	}
 	
 	// Update is called once per frame
 	private void Update () {
         if (IsRespawnTime() && CanRespawn())
         {
-
+            SpawnNeutrals();
         }
 	}
 
@@ -34,7 +36,7 @@ public class NPCSpawnCamp : MonoBehaviour {
         float currentTime = GameTime.CurrentTime;
         if (currentTime - lastSpawntime >= RESPAWNINTERVAL)
         {
-            Debug.Log("It is time to spawn neutrals.");
+            if (debug) { Debug.Log("It is time to spawn neutrals."); }
             lastSpawntime = currentTime;
             return true;
         }
@@ -48,18 +50,34 @@ public class NPCSpawnCamp : MonoBehaviour {
     private bool CanRespawn()
     {
         bool canSpawn = charactersWithinArea.Count == 0;
-        if (canSpawn)
+
+        if (debug)
         {
-            Debug.Log("It is time to spawn neutrals.");
-        }
-        else
-        {
-            foreach (GameObject g in charactersWithinArea)
+            if (canSpawn)
             {
-                Debug.Log(g.name + " is in the spawn zone.");
+                Debug.Log("Can spawn neutrals.");
+            }
+            else
+            {
+                foreach (GameObject g in charactersWithinArea)
+                {
+                    Debug.Log(g.name + " is in the spawn zone.");
+                }
             }
         }
+
         return canSpawn;
+    }
+
+    /// <summary>
+    /// Spawns new neutral units in the camp of the type and amount specified
+    /// </summary>
+    private void SpawnNeutrals()
+    {
+        for (int i = amountToSpawn; i > 0; i--)
+        {
+            NPCManager.Main.ServerSpawnNPC("SkeletonNPC", transform.position);
+        }
     }
 
     //Keep track of the npcs and players in the area

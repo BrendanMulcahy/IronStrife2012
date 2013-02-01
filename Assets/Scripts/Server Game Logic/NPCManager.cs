@@ -21,7 +21,7 @@ public class NPCManager
     /// <param name="zone"></param>
     public GameObject ServerSpawnNPC(string type, Vector3 location)
     {
-        GameObject newNPC = GameObject.Instantiate(Resources.Load(type)) as GameObject;
+        GameObject newNPC = GameObject.Instantiate(Resources.Load("NPCs/" + type)) as GameObject;
         newNPC.transform.position = Util.SampleFloorIncludingObjects(location);
         NetworkViewID animationID = Network.AllocateViewID();
         NetworkViewID transformID = Network.AllocateViewID();

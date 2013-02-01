@@ -105,7 +105,7 @@ public class NPCManager : MonoBehaviour
     {
         foreach (NPCRecord record in NPCs)
         {
-            MessageTerminal.Main.networkView.RPCToGroup("SpawnNPC", 1, player, record.type, record.gameObject.transform.position, record.animationViewID, record.transformViewID);
+            MessageTerminal.Main.networkView.RPCToGroup("SpawnNPC", 2, player, record.type, record.gameObject.transform.position, record.animationViewID, record.transformViewID);
         }
     }
 }

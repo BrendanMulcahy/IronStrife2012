@@ -94,7 +94,7 @@ public static class ItemFactory
     }
 
     /// <summary>
-    /// Gets an item and allocates it a networkviewid so it can be uniquely identified over the network.
+    /// Gets an item and allocates it a NetworkViewID so it can be uniquely identified over the network.
     /// </summary>
     /// <param name="itemName"></param>
     /// <returns></returns>

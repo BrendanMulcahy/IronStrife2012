@@ -47,4 +47,9 @@
         var difference = e.newValue - e.oldValue;
         this.ChangeModifierValue(difference * AgilityStat.moveSpeedPerAgility);
     }
+
+    public override string ToString()
+    {
+        return "Move Speed: " + baseValue + " + " + totalModifiedValue;
+    }
 }

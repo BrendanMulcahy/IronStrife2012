@@ -5,7 +5,6 @@ using System.Collections;
 /// <summary>
 /// A basic AI that uses a typical finite state machine to determine AI behavior
 /// </summary>
-[RequireComponent(typeof(NPC_Controller))]
 public class NPC_AI : MonoBehaviour
 {
     private float walkSpeed = 5.0f;  //the speed this AI typically walks at
@@ -35,6 +34,13 @@ public class NPC_AI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (Network.isClient)
+        {
+            Util.Destroy(GetComponents<NPC_BehaviorState>());
+            Destroy(GetComponent<NPC_Controller>());
+            Destroy(this);
+        }
+
         AddEnemySearcher();
         gameObject.GetCharacterStats().Died += NPC_AI_Died;
 
@@ -42,8 +48,11 @@ public class NPC_AI : MonoBehaviour
 
     void NPC_AI_Died(GameObject deadUnit, UnitDiedEventArgs e)
     {
-            Util.Destroy(GetComponents<NPC_BehaviorState>());
+        if (deadUnit)
+        {
+            Util.Destroy(deadUnit.GetComponents<NPC_BehaviorState>());
             currentState = null;
+        }
     }
 
     // Update is called once per frame

@@ -60,6 +60,7 @@ public class NPCManager : MonoBehaviour
         newNPC.GetCharacterStats().Died += NPC_Died;
         NPCs.Add(new NPCRecord()
         {
+            type = type,
             gameObject = newNPC,
             animationViewID = animationID,
             transformViewID = transformID
@@ -79,7 +80,7 @@ public class NPCManager : MonoBehaviour
         {
             if (rec.gameObject == go)
                 return rec;
-            
+
         }
         return null;
     }
@@ -99,10 +100,19 @@ public class NPCManager : MonoBehaviour
 
         return false;
     }
+
+    void SynchronizePlayer(NetworkPlayer player)
+    {
+        foreach (NPCRecord record in NPCs)
+        {
+            MessageTerminal.Main.networkView.RPCToGroup("SpawnNPC", 1, player, record.type, record.gameObject.transform.position, record.animationViewID, record.transformViewID);
+        }
+    }
 }
 
 public class NPCRecord
 {
+    public string type;
     public GameObject gameObject;
     public NetworkViewID animationViewID;
     public NetworkViewID transformViewID;

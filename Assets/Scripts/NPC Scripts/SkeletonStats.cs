@@ -11,6 +11,14 @@ public class SkeletonStats : NPCStats
         teamNumber = 0;
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+    }
+
+    public override int PhysicalDamageModifier { get { return 15; } }
+
     void SkeletonStats_Died(GameObject deadUnit, UnitDiedEventArgs e)
     {
         RewardPlayersInArea(e.deathPosition, e.killer, e.reward);

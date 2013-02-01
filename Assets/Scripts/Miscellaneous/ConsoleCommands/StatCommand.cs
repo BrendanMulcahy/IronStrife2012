@@ -31,11 +31,6 @@ class StatCommand : ConsoleCommand
         var stats = player.GetCharacterStats();
 
         Debug.Log("Stats for " + player.name + ":");
-        Debug.Log(stats.Health);
-        Debug.Log(stats.Mana);
-        Debug.Log(stats.Stamina);
-        Debug.Log(stats.Strength);
-        Debug.Log(stats.Agility);
-        Debug.Log(stats.Intelligence);
+        Debug.Log(stats.ToString());
     }
 }

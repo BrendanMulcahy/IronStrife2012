@@ -5,6 +5,7 @@ public class Skeleton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        if (Network.isClient) return;
 		var npcStats = this.gameObject.GetComponent<NPCStats>();
 		
 		var wander = this.gameObject.AddComponent<Wander>();

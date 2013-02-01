@@ -15,16 +15,12 @@ public class CharacterStats : MonoBehaviour
     public Mana Mana { get; set; }
     public Stamina Stamina { get; set; }
 
-    public StrengthStat Strength { get; set; }
-    public AgilityStat Agility { get; set; }
-    public IntelligenceStat Intelligence { get; set; }
-
     public PhysicalDefense PhysicalDefense { get; set; }
     public MagicalDefense MagicalDefense { get; set; }
 
     public MoveSpeedStat MoveSpeed { get; set; }
 
-    public int teamNumber = 0;
+    protected int teamNumber = 0;
     public int TeamNumber { get { return teamNumber; } set { networkView.RPC("ChangeTeam", RPCMode.All, value); } }
 
     public KillReward reward;
@@ -37,7 +33,7 @@ public class CharacterStats : MonoBehaviour
     {
         get
         {
-            return Strength.ModifiedValue * StrengthStat.meleeDamagePerStrength;
+            return 0;
         }
     }
 
@@ -55,26 +51,11 @@ public class CharacterStats : MonoBehaviour
             Stamina = gameObject.AddComponent<Stamina>();
         Stamina.SetInitialValues(50, 50);
 
-        Strength = new StrengthStat(0);
-        Strength.ModifiedValueChanged += Health.Strength_Changed;
-        Strength.BaseValueChanged += Health.Strength_Changed;
-        Strength.ChangeBaseValue(5);
-
-        MoveSpeed = new MoveSpeedStat(10.0f);
-        Agility = new AgilityStat(0);
-        Agility.ModifiedValueChanged += Stamina.Agility_Changed;
-        Agility.BaseValueChanged += Stamina.Agility_Changed;
-        Agility.ModifiedValueChanged += MoveSpeed.Agility_Changed;
-        Agility.BaseValueChanged += MoveSpeed.Agility_Changed;
-        Agility.ChangeBaseValue(25);
-
-        Intelligence = new IntelligenceStat(0);
-        Intelligence.ModifiedValueChanged += Mana.Intelligence_Changed;
-        Intelligence.BaseValueChanged += Mana.Intelligence_Changed;
-        Intelligence.ChangeBaseValue(25);
-
         PhysicalDefense = new PhysicalDefense(0);
         MagicalDefense = new MagicalDefense(0);
+
+        MoveSpeed = new MoveSpeedStat(8.0f);
+
     }
 
     protected virtual void Start() 
@@ -250,6 +231,22 @@ public class CharacterStats : MonoBehaviour
        /// stream.SerializeBuffableStat(Agility);
         //stream.SerializeBuffableStat(Intelligence);
 
+    }
+
+    public override string ToString()
+    {
+        var toReturn = "";
+        toReturn += Health.ToString() + "\n";
+        toReturn += Mana.ToString() + "\n";
+        toReturn += Stamina.ToString() + "\n";
+
+        toReturn += PhysicalDefense.ToString() + "\n";
+        toReturn += MagicalDefense.ToString() + "\n";
+        toReturn += MoveSpeed.ToString() + "\n";
+
+        toReturn += "Team: " + TeamNumber + "\n";
+
+        return toReturn;
     }
 }
 

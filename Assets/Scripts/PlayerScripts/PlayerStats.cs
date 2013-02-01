@@ -10,6 +10,10 @@ public class PlayerStats : CharacterStats
     public int Level { get; set; }
     public int experienceNeeded;
 
+    public StrengthStat Strength { get; set; }
+    public AgilityStat Agility { get; set; }
+    public IntelligenceStat Intelligence { get; set; }
+
     static int[] experiencePerLevel = { 1000, 2000, 3000, 5000, 8000, 13000 };
 
     public NetworkPlayer networkPlayer;
@@ -21,9 +25,53 @@ public class PlayerStats : CharacterStats
     {
         get
         {
-            return base.PhysicalDamageModifier + inventory.currentWeapon.damage;
+            return Strength.ModifiedValue * StrengthStat.meleeDamagePerStrength + inventory.currentWeapon.damage;
         }
 
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        SetInitialStats();
+
+    }
+
+
+    private void SetInitialStats()
+    {
+        if ((Health = GetComponent<Health>()) == null)
+            Health = gameObject.AddComponent<Health>();
+        Health.SetInitialValues(50, 50);
+
+        if ((Mana = GetComponent<Mana>()) == null)
+            Mana = gameObject.AddComponent<Mana>();
+        Mana.SetInitialValues(50, 50);
+
+        if ((Stamina = GetComponent<Stamina>()) == null)
+            Stamina = gameObject.AddComponent<Stamina>();
+        Stamina.SetInitialValues(50, 50);
+
+        Strength = new StrengthStat(0);
+        Strength.ModifiedValueChanged += Health.Strength_Changed;
+        Strength.BaseValueChanged += Health.Strength_Changed;
+        Strength.ChangeBaseValue(5);
+
+        MoveSpeed = new MoveSpeedStat(10.0f);
+        Agility = new AgilityStat(0);
+        Agility.ModifiedValueChanged += Stamina.Agility_Changed;
+        Agility.BaseValueChanged += Stamina.Agility_Changed;
+        Agility.ModifiedValueChanged += MoveSpeed.Agility_Changed;
+        Agility.BaseValueChanged += MoveSpeed.Agility_Changed;
+        Agility.ChangeBaseValue(25);
+
+        Intelligence = new IntelligenceStat(0);
+        Intelligence.ModifiedValueChanged += Mana.Intelligence_Changed;
+        Intelligence.BaseValueChanged += Mana.Intelligence_Changed;
+        Intelligence.ChangeBaseValue(25);
+
+        PhysicalDefense = new PhysicalDefense(0);
+        MagicalDefense = new MagicalDefense(0);
     }
 
     private Inventory inventory;
@@ -116,11 +164,12 @@ public class PlayerStats : CharacterStats
         {
             LevelUp();
         }
-        if (gameObject != Util.MyLocalPlayerObject) 
-        networkView.RPC("BroadcastReward", this.networkPlayer, reward.experience, reward.gold);
+        if (gameObject != Util.MyLocalPlayerObject)
+            networkView.RPC("BroadcastReward", this.networkPlayer, reward.experience, reward.gold);
     }
 
-    [RPC] void BroadcastDeath(NetworkViewID killerID)
+    [RPC]
+    void BroadcastDeath(NetworkViewID killerID)
     {
         if (gameObject == Util.MyLocalPlayerObject)
         {
@@ -220,7 +269,7 @@ public class PlayerStats : CharacterStats
         {
             gameObject.EnableControls();
             DisableRespawnCamera();
-            
+
         }
         else
         {
@@ -235,5 +284,16 @@ public class PlayerStats : CharacterStats
     {
         base.ChangeName(newName);
         username = newName;
+    }
+
+    public override string ToString()
+    {
+        var toReturn = base.ToString();
+        toReturn += Strength.ToString() + "\n";
+        toReturn += Agility.ToString() + "\n";
+        toReturn += Intelligence.ToString() + "\n";
+
+        return toReturn;
+        
     }
 }

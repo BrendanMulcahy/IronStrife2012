@@ -27,10 +27,12 @@ public abstract class PointAreaSpell : Spell, IPointSpell, IAreaEffectSpell
             spellObj = new GameObject(caster + "'s " + typeName);
         }
         spellObj.transform.position = targetPoint;
-        var effect = spellObj.AddComponent<AreaSpellEffect>();
-        effect.radius = Radius;
-        effect.spell = this;
-        effect.caster = caster;
+
+        var objectsInRange = Physics.OverlapSphere(targetPoint, this.Radius, 1 << 9);
+        foreach (Collider other in objectsInRange)
+        {
+            ApplyEffectsToTarget(caster, other.transform.root.gameObject, targetPoint);
+        }
     }
 
     public abstract float Radius { get; }

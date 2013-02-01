@@ -44,6 +44,7 @@ public class NetworkController : MonoBehaviour
         else
         {
             GenerateNetworkView();
+
             spellTargetReticle = Instantiate(Resources.Load("SpellEffects/SpellTarget") as GameObject) as GameObject;
             spellTargetReticle.SetActive(false);
         }
@@ -55,7 +56,7 @@ public class NetworkController : MonoBehaviour
         var viewID = Network.AllocateViewID();
         var nv = gameObject.AddComponent<NetworkView>();
         nv.observed = this;
-        nv.stateSynchronization = NetworkStateSynchronization.ReliableDeltaCompressed;
+        nv.stateSynchronization = NetworkStateSynchronization.Unreliable;
         nv.viewID = viewID;
         previousNetworkView.RPC("SetControllerNetworkView", RPCMode.Server, viewID);
     }
@@ -66,7 +67,7 @@ public class NetworkController : MonoBehaviour
         Debug.Log("Receiving " + gameObject.name + "'s viewID for his network controller. The viewID is " + viewID.ToString());
         var nv = gameObject.AddComponent<NetworkView>();
         nv.observed = this;
-        nv.stateSynchronization = NetworkStateSynchronization.ReliableDeltaCompressed;
+        nv.stateSynchronization = NetworkStateSynchronization.Unreliable;
         nv.viewID = viewID;
     }
 

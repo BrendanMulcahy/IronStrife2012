@@ -20,9 +20,9 @@ public class MessageTerminal : MonoBehaviour
     void SpawnNPC(string type, Vector3 position, NetworkViewID animationID, NetworkViewID transformID)
     {
         Debug.Log("Spawning new NPC of type " + type + " at  ["+position.x + ", "+position.y + " +, "+position.z + "]");
-        GameObject newNPC = GameObject.Instantiate(Resources.Load(type)) as GameObject;
-        newNPC.GetComponents<NetworkView>()[0].viewID = animationID;
-        newNPC.GetComponents<NetworkView>()[1].viewID = transformID;
+        GameObject newNPC = GameObject.Instantiate(Resources.Load("NPCs/" + type)) as GameObject;
+        newNPC.GetComponents<NetworkView>()[0].viewID = transformID;
+        newNPC.GetComponents<NetworkView>()[1].viewID = animationID;
     }
 
     [RPC]

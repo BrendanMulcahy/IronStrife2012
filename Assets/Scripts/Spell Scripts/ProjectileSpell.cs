@@ -126,10 +126,13 @@ public class AreaSpellProjectileCollider : SpellProjectileCollider
             spellObj = new GameObject(caster + "'s " + typeName);
         }
         spellObj.transform.position = this.transform.position;
-        var effect = spellObj.AddComponent<AreaSpellEffect>();
-        effect.radius = ((IAreaEffectSpell)spell).Radius;
-        effect.spell = (IAreaEffectSpell)this.spell;
-        effect.caster = caster;
+
+        var objectsInRange = Physics.OverlapSphere(this.transform.position, ((IAreaEffectSpell)spell).Radius, 1 << 9);
+        foreach (Collider collider in objectsInRange)
+        {
+            ((IAreaEffectSpell)spell).ApplyEffectsToTarget(caster, collider.transform.root.gameObject, this.transform.position);
+        }
+
         Destroy(this.gameObject);
     }
 }

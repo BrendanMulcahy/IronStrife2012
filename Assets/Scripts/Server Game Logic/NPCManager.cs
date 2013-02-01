@@ -5,6 +5,14 @@ public class NPCManager
 {
     public List<NPCRecord> NPCs = new List<NPCRecord>();
 
+    public static NPCManager Main
+    {
+        get
+        {
+            return MasterGameLogic.Main.NPCManager;
+        }
+    }
+
     /// <summary>
     /// Server-side method for allocating a new NPC
     /// </summary>
@@ -17,8 +25,8 @@ public class NPCManager
         newNPC.transform.position = Util.SampleFloorIncludingObjects(location);
         NetworkViewID animationID = Network.AllocateViewID();
         NetworkViewID transformID = Network.AllocateViewID();
-        newNPC.GetComponents<NetworkView>()[0].viewID = animationID;
-        newNPC.GetComponents<NetworkView>()[1].viewID = transformID;
+        newNPC.GetComponents<NetworkView>()[0].viewID = transformID;
+        newNPC.GetComponents<NetworkView>()[1].viewID = animationID;
 
         newNPC.GetCharacterStats().Died += NPC_Died;
         NPCs.Add(new NPCRecord()

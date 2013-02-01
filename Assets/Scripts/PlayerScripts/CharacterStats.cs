@@ -238,15 +238,15 @@ public class CharacterStats : MonoBehaviour
         particles.startColor = teamNumber == 1 ? Color.blue : Color.red;
     }
 
-    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+    protected void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
         stream.SerializeRegeneratingStat(Health);
         stream.SerializeRegeneratingStat(Mana);
         stream.SerializeRegeneratingStat(Stamina);
 
-        stream.SerializeBuffableStat(Strength);
-        stream.SerializeBuffableStat(Agility);
-        stream.SerializeBuffableStat(Intelligence);
+       // stream.SerializeBuffableStat(Strength);
+       /// stream.SerializeBuffableStat(Agility);
+        //stream.SerializeBuffableStat(Intelligence);
 
     }
 }

@@ -48,4 +48,9 @@ public abstract class BuffableStat
         }
         this.baseValue += value;
     }
+
+    public override string ToString()
+    {
+        return GetType().Name + ": " + baseValue + " + " + totalModifiedValue;
+    }
 }

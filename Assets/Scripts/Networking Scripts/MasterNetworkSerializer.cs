@@ -19,7 +19,7 @@ public class MasterNetworkSerializer : MonoBehaviour {
         foreach (MonoBehaviour b in allMonoBehaviours)
         {
             if (b == this) continue;
-            foreach (MethodInfo method in b.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+            foreach (MethodInfo method in b.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
             {
                 if (method.Name == "OnSerializeNetworkView" && method.GetCustomAttributes(typeof(DontAutoSerializeAttribute), false).Length == 0)
                 {

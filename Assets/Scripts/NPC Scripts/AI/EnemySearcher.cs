@@ -51,7 +51,7 @@ public class EnemySearcher : MonoBehaviour {
 	{
 		while (true)
 		{
-			charactersNearby = charactersNearby.OrderBy(x => (x.transform.position - this.transform.position).magnitude).ToList();
+			charactersNearby = charactersNearby.OrderBy(x => ( x ? x.transform.position : new Vector3() - this.transform.position).magnitude).ToList();
 			yield return new WaitForSeconds(1.0f);
 		}
 		

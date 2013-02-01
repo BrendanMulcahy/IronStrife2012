@@ -89,4 +89,35 @@ public abstract class RegeneratingStat : MonoBehaviour
             yield return new WaitForSeconds(.25f);
         }
     }
+
+    /// <summary>
+    /// Called from serialized values received from server
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetCurrentValue(int value)
+    {
+        _currentValue = value;
+    }
+
+    /// <summary>
+    /// Called from serialized values received from server
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetMaxValue(int value)
+    {
+        Debug.Log("Setting the max value < "+value+ " > for " + GetType().Name);
+        _maxValue = value;
+    }
+
+    public override string ToString()
+    {
+        return GetType().Name + ": " + CurrentValue + " / " + MaxValue;
+    }
+
+    internal void SetValues(int current, int max)
+    {
+        _currentValue = current;
+        _maxValue = max;
+        MaxValue = max;
+    }
 }

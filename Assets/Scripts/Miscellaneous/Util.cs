@@ -509,9 +509,10 @@ public static class Util
 
     public static void SerializeRegeneratingStat(this BitStream stream, RegeneratingStat stat)
     {
+        int current;
         if (stream.isWriting)
         {
-            var current = stat.CurrentValue;
+            current = stat.CurrentValue;
             stream.Serialize(ref current);
 
             var max = stat.MaxValue;
@@ -519,13 +520,12 @@ public static class Util
         }
         else
         {
-            int current = stat.CurrentValue;
+            current = stat.CurrentValue;
             stream.Serialize(ref current);
-            stat.CurrentValue = current;
-
             int max = stat.MaxValue;
             stream.Serialize(ref max);
-            stat.MaxValue = max;
+
+            stat.SetValues(current, max);
         }
     }
 

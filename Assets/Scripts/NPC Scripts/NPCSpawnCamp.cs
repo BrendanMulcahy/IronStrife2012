@@ -6,6 +6,7 @@ public class NPCSpawnCamp : MonoBehaviour {
 
     public GameObject neutralType;
     //public Collider spawnZone;
+    public string enemyType = "SkeletonGuard";
 
     public bool debugMessages = false;
     public int amountToSpawn = 3;
@@ -60,7 +61,8 @@ public class NPCSpawnCamp : MonoBehaviour {
         {
             for (int i = amountToSpawn; i > 0; i--)
             {
-                NPCManager.Main.ServerSpawnNPC("SkeletonNPC", transform.position);
+                Vector3 offset = new Vector3(Random.Range(-2.0f, 2.0f), 0,  Random.Range(-2.0f, 2.0f));
+                NPCManager.Main.ServerSpawnNPC(enemyType, transform.position + offset);
             }
         }
     }

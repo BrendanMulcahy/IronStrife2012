@@ -105,7 +105,6 @@ public abstract class RegeneratingStat : MonoBehaviour
     /// <param name="value"></param>
     public void SetMaxValue(int value)
     {
-        Debug.Log("Setting the max value < "+value+ " > for " + GetType().Name);
         _maxValue = value;
     }
 

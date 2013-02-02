@@ -50,8 +50,9 @@ public class NPCManager : MonoBehaviour
     /// <param name="zone"></param>
     public GameObject ServerSpawnNPC(string type, Vector3 location)
     {
-        GameObject newNPC = GameObject.Instantiate(Resources.Load("NPCs/" + type)) as GameObject;
-        newNPC.transform.position = Util.SampleFloorIncludingObjects(location);
+        var pos = Util.SampleFloorIncludingObjects(location);
+
+        GameObject newNPC = GameObject.Instantiate(Resources.Load("NPCs/" + type), pos, Quaternion.identity) as GameObject;
         NetworkViewID animationID = Network.AllocateViewID();
         NetworkViewID transformID = Network.AllocateViewID();
         newNPC.GetComponents<NetworkView>()[0].viewID = transformID;

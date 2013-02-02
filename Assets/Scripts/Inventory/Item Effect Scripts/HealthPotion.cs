@@ -9,7 +9,7 @@ public class HealthPotion : ItemEffect
 
     public override void ActivateEffect()
     {
-        gameObject.GetCharacterStats().ApplyHealing(this.gameObject, (int)parameters[0]);
+        gameObject.GetCharacterStats().ApplyHealing(this.gameObject, int.Parse(parameters[0]));
 
         particle = GameObject.Instantiate(Resources.Load("Particles/SparkleRising") as GameObject) as GameObject;
         particle.transform.SetParentAndCenter(this.transform.root);

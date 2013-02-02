@@ -2,7 +2,8 @@
 
 public abstract class ItemEffect : MonoBehaviour
 {
-    public float[] parameters;
+    public string[] parameters;
+    public string[] stringParameters;
 
     public abstract void ActivateEffect();
 

@@ -26,17 +26,41 @@ public class PopupMessage : MonoBehaviour
             return _guiText;
         }
     }
+    private static GUIText _shadowGUIText;
+    private static GUIText shadowGUIText
+    {
+        get
+        {
+            if (_shadowGUIText == null)
+            {
+                var go = GameObject.Find("PopupMessage");
+                _shadowGUIText = go.transform.FindChild("ShadowText").GetComponent<GUIText>();
+            }
+            return _shadowGUIText;
+        }
+    }
 
     private static PopupMessage Main { get { return mainGUIText.gameObject.GetComponent<PopupMessage>(); } }
+
+    void Start()
+    {
+        shadowGUIText.material.color = Color.black;
+    }
 
     [RPC]
     public static void Display(string message, float fadeTime = 2.5f, float r = 1, float g = 1, float b = 1)
     {
+        Main.StopAllCoroutines();
         // Set the color / transparency for the text.
         Color c = mainGUIText.material.color;
         c.a = 1f; c.r = r; c.g = g; c.b = b;
         mainGUIText.material.color = c;
         mainGUIText.text = message;
+
+        c = shadowGUIText.material.color;
+        c.a = 1f;
+        shadowGUIText.material.color = c;
+        shadowGUIText.text = message;
         Main.StartCoroutine(FadeInSeconds(fadeTime));
     }
 
@@ -45,14 +69,24 @@ public class PopupMessage : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         float remaining = seconds;
         Material material = mainGUIText.material;
+        Material shadowMat = shadowGUIText.material;
         while (remaining > 0)
         {
             Color c = material.color;
+            Color c2 = shadowMat.color;
             c.a = 1 * (remaining / seconds);
+            c2.a = 1 * (remaining / seconds);
             material.color = c;
+            shadowMat.color = c2;
             yield return null;
             remaining -= Time.deltaTime;
         }
+        Color col = material.color;
+        col.a = 0f;
+        Color col2 = shadowMat.color;
+        col2.a = 0f;
+        material.color = col;
+        shadowMat.color = col2;
     }
 
     internal static void NetworkDisplay(string p, float fadeTime = 2.5f)

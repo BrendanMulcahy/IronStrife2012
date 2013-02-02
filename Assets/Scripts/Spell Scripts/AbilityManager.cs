@@ -11,12 +11,25 @@ public class AbilityManager : MonoBehaviour
     private bool visible;
     private bool lookingForSpellKey;
     private Spell lookingToBindSpell;
+    private List<Spell> knownSpells = new List<Spell>();
 
     private Rect abilityWindowRect = new Rect(70, 70, 600, 400);
 
     void Start()
     {
-        EquipStartingSpells();
+        AddStartingSpells();
+    }
+
+    private void AddStartingSpells()
+    {
+        if (knownSpells.Count == 0)
+        {
+            knownSpells.Add(PlayerAbilities.GetSpell("Surge"));
+            knownSpells.Add(PlayerAbilities.GetSpell("Clearsight"));
+            knownSpells.Add(PlayerAbilities.GetSpell("Flameburst"));
+            knownSpells.Add(PlayerAbilities.GetSpell("Magic Platform"));
+            knownSpells.Add(PlayerAbilities.GetSpell("Magic Hook"));
+        }
     }
 
     void OnSetOwnership()
@@ -26,15 +39,35 @@ public class AbilityManager : MonoBehaviour
 
     private void EquipStartingSpells()
     {
-        equippedSpells[4] = (int)PlayerAbilities.GetSpell("Surge");
-        equippedSpells[1] = (int)PlayerAbilities.GetSpell("Clearsight");
-        equippedSpells[3] = (int)PlayerAbilities.GetSpell("Flameburst");
-        equippedSpells[2] = (int)PlayerAbilities.GetSpell("Fireball");
-        equippedSpells[0] = (int)PlayerAbilities.GetSpell("Magic Hook");
+        AddStartingSpells();
+
+        equippedSpells[4] = (int)knownSpells[0];
+        equippedSpells[1] = (int)knownSpells[1];
+        equippedSpells[3] = (int)knownSpells[2];
+        equippedSpells[2] = (int)knownSpells[3];
+        equippedSpells[0] = (int)knownSpells[4];
 
         for (int g = 0; g < 5; g++)
         {
             GetComponent<PlayerGUI>().UpdateSpellIcons(g, (Spell)equippedSpells[g]);
+        }
+    }
+
+    [RPC]
+    void TryLearnSpell(int spellID)
+    {
+        networkView.RPC("CommitLearnSpell", RPCMode.All, spellID);
+    }
+
+    [RPC]
+    public void CommitLearnSpell(int toLearn)
+    {
+        var spell = PlayerAbilities.GetSpell(toLearn);
+        knownSpells.Add(spell);
+
+        if (this.gameObject.IsMyLocalPlayer())
+        {
+            PopupMessage.LocalDisplay("You learned " + spell.Name + "!", .1f);
         }
     }
 
@@ -44,7 +77,7 @@ public class AbilityManager : MonoBehaviour
         GUI.skin = Util.ISEGUISkin;
         if (visible)
         {
-            GUI.Window("abilities".GetHashCode(), abilityWindowRect, ShowAbilityWindow, "Spells & Abilities", GUI.skin.GetStyle("smallWindow"));
+            abilityWindowRect = GUI.Window("abilities".GetHashCode(), abilityWindowRect, ShowAbilityWindow, "Spells & Abilities", GUI.skin.GetStyle("smallWindow"));
         }
     }
 
@@ -70,7 +103,7 @@ public class AbilityManager : MonoBehaviour
     private void ShowAbilityWindow(int id)
     {
         GUILayout.BeginVertical();
-        foreach (Spell spell in PlayerAbilities.AllSpells())
+        foreach (Spell spell in knownSpells)
         {
             if (spell == null)
                 continue;

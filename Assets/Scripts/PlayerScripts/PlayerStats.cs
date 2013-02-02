@@ -9,10 +9,12 @@ public class PlayerStats : CharacterStats
     public int experience = 0;
     public int Level { get; set; }
     public int experienceNeeded;
+    public int unusedStatPoints = 0;
 
     public StrengthStat Strength { get; set; }
     public AgilityStat Agility { get; set; }
     public IntelligenceStat Intelligence { get; set; }
+
 
     static int[] experiencePerLevel = { 1000, 2000, 3000, 5000, 8000, 13000 };
 
@@ -21,13 +23,18 @@ public class PlayerStats : CharacterStats
     public event PlayerRespawnedEventHandler Respawned;
     public bool canRespawn;
 
+    private bool visible = false;
+    private Inventory inventory;
+    Rect windowRect;
+    private Vector2 scrollPos = new Vector2();
+
+
     public override int PhysicalDamageModifier
     {
         get
         {
             return Strength.ModifiedValue * StrengthStat.meleeDamagePerStrength + inventory.currentWeapon.damage;
         }
-
     }
 
     protected override void Awake()
@@ -37,6 +44,17 @@ public class PlayerStats : CharacterStats
 
     }
 
+    protected override void Start()
+    {
+        experienceNeeded = experiencePerLevel[0];
+        Level = 1;
+        Died += PlayerDied;
+        UpdateKillReward();
+        TeamNumber = 1;
+        inventory = gameObject.GetInventory();
+
+        windowRect = new Rect(Screen.width * .2f, Screen.height * .2f, Screen.width * .35f, Screen.height * .6f);
+    }
 
     private void SetInitialStats()
     {
@@ -55,7 +73,7 @@ public class PlayerStats : CharacterStats
         Strength = new StrengthStat(0);
         Strength.ModifiedValueChanged += Health.Strength_Changed;
         Strength.BaseValueChanged += Health.Strength_Changed;
-        Strength.ChangeBaseValue(5);
+        Strength.ChangeBaseValue(10);
 
         MoveSpeed = new MoveSpeedStat(10.0f);
         Agility = new AgilityStat(0);
@@ -63,27 +81,102 @@ public class PlayerStats : CharacterStats
         Agility.BaseValueChanged += Stamina.Agility_Changed;
         Agility.ModifiedValueChanged += MoveSpeed.Agility_Changed;
         Agility.BaseValueChanged += MoveSpeed.Agility_Changed;
-        Agility.ChangeBaseValue(25);
+        Agility.ChangeBaseValue(10);
 
         Intelligence = new IntelligenceStat(0);
         Intelligence.ModifiedValueChanged += Mana.Intelligence_Changed;
         Intelligence.BaseValueChanged += Mana.Intelligence_Changed;
-        Intelligence.ChangeBaseValue(25);
+        Intelligence.ChangeBaseValue(10);
 
         PhysicalDefense = new PhysicalDefense(0);
         MagicalDefense = new MagicalDefense(0);
     }
 
-    private Inventory inventory;
-
-    protected override void Start()
+    void Update()
     {
-        experienceNeeded = experiencePerLevel[0];
-        Level = 1;
-        Died += PlayerDied;
-        UpdateKillReward();
-        TeamNumber = 1;
-        inventory = gameObject.GetInventory();
+        if (Input.GetKeyDown(KeyCode.F1))
+            visible = !visible;
+    }
+
+    void OnGUI()
+    {
+        if (visible)
+        {
+            windowRect = GUI.Window("stats".GetHashCode(), windowRect, StatsWindow, GUIContent.none);
+        }
+    }
+
+    private void StatsWindow(int id)
+    {
+        scrollPos = GUILayout.BeginScrollView(scrollPos);
+        GUILayout.BeginVertical();
+        GUILayout.Label("Level " + Level);
+        GUILayout.Label("Experience: " + experience + " / " + experienceNeeded);
+        GUILayout.Space(10);
+
+        GUILayout.Label(Health.ToString());
+        GUILayout.Label(Mana.ToString());
+        GUILayout.Label(Stamina.ToString());
+        GUILayout.Space(10);
+
+        GUILayout.Label(MoveSpeed.ToString());
+        GUILayout.Space(10);
+
+        GUILayout.Label("Unused Attribute Points: " + unusedStatPoints);
+        GUILayout.Space(6);
+        if (GUILayout.Button(Strength.ToString())) ButtonPressed("strength");
+        if (GUILayout.Button(Agility.ToString())) ButtonPressed("agility");
+        if (GUILayout.Button(Intelligence.ToString())) ButtonPressed("intelligence");
+
+        GUILayout.Space(10);
+
+        GUILayout.EndVertical();
+        GUILayout.EndScrollView();
+        GUI.DragWindow();
+    }
+
+    private void ButtonPressed(string name)
+    {
+        if (unusedStatPoints <= 0) PopupMessage.LocalDisplay("You don't have any points to spend!", 0.2f);
+        switch (name)
+        {
+            case "strength":
+                networkView.RPCToServer(this, "TryUpgradeStat", 0);
+                break;
+            case "agility":
+                networkView.RPCToServer(this, "TryUpgradeStat", 1);
+                break;
+            case "intelligence":
+                networkView.RPCToServer(this, "TryUpgradeStat", 2);
+                break;
+
+        }
+    }
+
+    [RPC]
+    void TryUpgradeStat(int type)
+    {
+        if (unusedStatPoints <= 0) return;
+        networkView.RPC("CommitUpgradeStat", RPCMode.All, type);
+
+    }
+
+    [RPC]
+    void CommitUpgradeStat(int type)
+    {
+        switch (type)
+        {
+            case 0:
+                Strength.ChangeBaseValue(1);
+                break;
+            case 1:
+                Agility.ChangeBaseValue(1);
+                break;
+            case 2:
+                Intelligence.ChangeBaseValue(1);
+                break;
+        }
+        unusedStatPoints--;
     }
 
     internal void SetNetworkPlayer(NetworkPlayer networkPlayer)
@@ -160,7 +253,7 @@ public class PlayerStats : CharacterStats
     {
         this.experience += reward.experience;
         this.inventory.Gold += reward.gold;
-        if (experience > experienceNeeded)
+        if (experience >= experienceNeeded)
         {
             LevelUp();
         }
@@ -208,9 +301,10 @@ public class PlayerStats : CharacterStats
     void LevelUp()
     {
         Level++;
-        Strength.ChangeBaseValue(5);
-        Agility.ChangeBaseValue(5);
-        Intelligence.ChangeBaseValue(5);
+        Strength.ChangeBaseValue(1);
+        Agility.ChangeBaseValue(1);
+        Intelligence.ChangeBaseValue(1);
+        unusedStatPoints += 2;
 
         //	Debug.Log(this.gameObject.name + " has leveled up.");
         experience -= experienceNeeded;
@@ -234,6 +328,7 @@ public class PlayerStats : CharacterStats
         Strength.ChangeBaseValue(5);
         Agility.ChangeBaseValue(5);
         Intelligence.ChangeBaseValue(5);
+        unusedStatPoints += 2;
 
         experience -= experienceNeeded;
         experienceNeeded = experiencePerLevel[Level - 1];
@@ -294,6 +389,6 @@ public class PlayerStats : CharacterStats
         toReturn += Intelligence.ToString() + "\n";
 
         return toReturn;
-        
+
     }
 }

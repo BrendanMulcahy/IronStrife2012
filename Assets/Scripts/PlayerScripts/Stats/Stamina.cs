@@ -6,9 +6,9 @@ public class Stamina : RegeneratingStat
     {
         var difference = e.newValue - e.oldValue;
         float currentPercentage = (float)CurrentValue / MaxValue;
-        this.MaxValue = Mathf.Max(1, CurrentValue + (difference * AgilityStat.staminaPerAgility));
+        this.SetMaxValue(Mathf.Max(1, MaxValue + (difference * AgilityStat.staminaPerAgility)));
 
         //Retain percentage on stat gain (dota-esque)
-        this.CurrentValue = (int)(this.MaxValue * currentPercentage);
+        this.SetCurrentValue((int)(this.MaxValue * currentPercentage));
     }
 }

@@ -37,7 +37,7 @@ public class NPC_AI : MonoBehaviour
         if (Network.isClient)
         {
             Util.Destroy(GetComponents<NPC_BehaviorState>());
-            Destroy(GetComponent<NPC_Controller>());
+            Destroy(GetComponent<NPCGenericAnimation>());
             Destroy(this);
         }
 

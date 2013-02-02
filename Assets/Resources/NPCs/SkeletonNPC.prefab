@@ -1257,7 +1257,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100076}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 720bccfe6b8834a46817ebc3b1345b84, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f17b33da0b389f46afef3f1bf0c2bad, type: 3}
   m_Name: 
 --- !u!114 &11400008
 MonoBehaviour:
@@ -1280,8 +1280,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33cd9eb4c4685d8409a61cd8e64a2999, type: 3}
   m_Name: 
-  inventory: {fileID: 0}
-  teamNumber: 0
   attackRange: 1.5
   attackLength: 1.5
 --- !u!114 &11400012

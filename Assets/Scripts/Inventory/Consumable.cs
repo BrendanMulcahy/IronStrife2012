@@ -13,7 +13,7 @@ public class Consumable : Item
     public string buffScript;
 
     [XmlAttribute("buffParameters")]
-    public float[] buffParameters;
+    public string[] buffParameters;
 
     /// <summary>
     /// names of the parameters for display in the tooltip.

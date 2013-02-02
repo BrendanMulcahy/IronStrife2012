@@ -9,7 +9,7 @@ public class ManaPotion : ItemEffect
     
     public override void ActivateEffect()
     {
-        gameObject.GetCharacterStats().Mana.CurrentValue += (int)parameters[0];
+        gameObject.GetCharacterStats().Mana.CurrentValue += int.Parse(parameters[0]);
 
         particle = GameObject.Instantiate(Resources.Load("Particles/SparkleRising") as GameObject) as GameObject;
         particle.transform.SetParentAndCenter(this.transform.root);

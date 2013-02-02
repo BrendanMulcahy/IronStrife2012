@@ -10,7 +10,7 @@ public class StrengthStat : BuffableStat
     /// <summary>
     /// Amount of melee damage increase per strength point
     /// </summary>
-    public const int meleeDamagePerStrength = 5;
+    public const int meleeDamagePerStrength = 1;
 
     public StrengthStat(int amount) : base(amount) { }
 

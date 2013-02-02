@@ -227,8 +227,8 @@ public class CharacterStats : MonoBehaviour
         stream.SerializeRegeneratingStat(Mana);
         stream.SerializeRegeneratingStat(Stamina);
 
-       // stream.SerializeBuffableStat(Strength);
-       /// stream.SerializeBuffableStat(Agility);
+        //stream.SerializeBuffableStat(Strength);
+        //stream.SerializeBuffableStat(Agility);
         //stream.SerializeBuffableStat(Intelligence);
 
     }

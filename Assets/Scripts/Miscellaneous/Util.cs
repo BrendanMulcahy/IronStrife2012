@@ -476,6 +476,30 @@ public static class Util
         }
     }
 
+    public static void RPCToServer(this NetworkView networkView, string methodName, params object[] parameters)
+    {
+        if (Network.isServer)
+        {
+            foreach (MonoBehaviour behaviour in networkView.gameObject.GetComponents<MonoBehaviour>())
+            {
+
+                var allMethods = behaviour.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                foreach (MethodInfo method in allMethods)
+                {
+                    if (method.Name == methodName)
+                    {
+                        method.Invoke(behaviour, parameters);
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            networkView.RPC(methodName, RPCMode.Server, parameters);
+        }
+    }
+
     private static Font _OFLGoudyStMTT;
     public static Font OFLGoudyStMTT
     {
@@ -515,17 +539,12 @@ public static class Util
             current = stat.CurrentValue;
             stream.Serialize(ref current);
 
-            var max = stat.MaxValue;
-            stream.Serialize(ref max);
         }
         else
         {
             current = stat.CurrentValue;
             stream.Serialize(ref current);
-            int max = stat.MaxValue;
-            stream.Serialize(ref max);
-
-            stat.SetValues(current, max);
+            stat.SetCurrentValue(current);
         }
     }
 

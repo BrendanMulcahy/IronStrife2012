@@ -6,9 +6,10 @@ public class Mana : RegeneratingStat
     {
         var difference = e.newValue - e.oldValue;
         float currentPercentage = (float)CurrentValue / MaxValue;
-        this.MaxValue = Mathf.Max(1, CurrentValue + (difference * IntelligenceStat.manaPerIntel));
+        this.SetMaxValue(Mathf.Max(1, MaxValue + (difference * IntelligenceStat.manaPerIntel)));
+
         //Retain percentage on stat gain (dota-esque)
-        this.CurrentValue = (int)(this.MaxValue * currentPercentage);
+        this.SetCurrentValue((int)(this.MaxValue * currentPercentage));
     }
 
 }

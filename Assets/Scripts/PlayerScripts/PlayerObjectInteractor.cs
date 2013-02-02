@@ -46,16 +46,16 @@ public class PlayerObjectInteractor : MonoBehaviour
     {
         if (selectedGO)
         {
-            Destroy(selectedGO.GetComponent<GlowOutline>());
+            Destroy(selectedGO.GetComponent<SelectorOutline>());
         }
         selectedGO = go;
-        selectedGO.AddComponent<GlowOutline>().color = Color.green;
+        selectedGO.AddComponent<SelectorOutline>();
     }
 
     internal void DeselectObject()
     {
-        if (selectedGO.GetComponent<GlowOutline>())
-            Destroy(selectedGO.GetComponent<GlowOutline>());
+        if (selectedGO.GetComponent<SelectorOutline>())
+            Destroy(selectedGO.GetComponent<SelectorOutline>());
         selectedGO = null;
 
     }

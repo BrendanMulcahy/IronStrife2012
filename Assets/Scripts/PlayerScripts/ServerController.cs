@@ -114,7 +114,7 @@ public class ServerController : MonoBehaviour
         {
             if (targetController.homingTarget)
             {
-                var glow = targetController.homingTarget.GetComponent<GlowOutline>();
+                var glow = targetController.homingTarget.GetComponent<SelectorOutline>();
                 if (glow)
                     Destroy(glow);
             }
@@ -135,7 +135,7 @@ public class ServerController : MonoBehaviour
         }
         if (newHomingTarget == null && targetController.homingTarget != null)
         {
-            var glow = targetController.homingTarget.GetComponent<GlowOutline>();
+            var glow = targetController.homingTarget.GetComponent<SelectorOutline>();
             if (glow)
                 Destroy(glow);
         }
@@ -144,11 +144,11 @@ public class ServerController : MonoBehaviour
         {
             if (targetController.homingTarget)
             {
-                var glow = targetController.homingTarget.GetComponent<GlowOutline>();
+                var glow = targetController.homingTarget.GetComponent<SelectorOutline>();
                 if (glow)
                     Destroy(glow);
             }
-            newHomingTarget.AddComponent<GlowOutline>();
+            newHomingTarget.AddComponent<SelectorOutline>();
         }
 
         targetController.homingTarget = newHomingTarget;

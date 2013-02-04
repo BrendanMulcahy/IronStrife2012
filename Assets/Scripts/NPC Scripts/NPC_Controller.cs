@@ -2,11 +2,28 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(CharacterController))]
-public class NPC_Controller : MonoBehaviour 
+public class NPC_Controller : MonoBehaviour
 {
     CharacterController characterController;
     float moveSpeed;
     NPCStats stats;
+
+    Vector3 targetLocation;
+    Transform targetTransform;
+    private NavMeshAgent navMeshAgent;
+
+    public void SetTarget(Vector3 location)
+    {
+        this.targetLocation = location; 
+        this.targetTransform = null; 
+        UpdatePath();
+    }
+    public void SetTarget(Transform transform)
+    {
+        this.targetTransform = transform; 
+        this.targetLocation = new Vector3(); 
+        UpdatePath();
+    }
 
     public float MoveSpeed
     {
@@ -31,21 +48,51 @@ public class NPC_Controller : MonoBehaviour
 
     private PlayerMotor motor;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
+        navMeshAgent = GetComponent<NavMeshAgent>();
         characterController = GetComponent<CharacterController>();
         moveDirection = Vector3.forward;
         motor = GetComponent<PlayerMotor>();
         stats = gameObject.GetCharacterStats() as NPCStats;
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        stats.Damaged += stats_Damaged;
+
+        navMeshAgent.speed = stats.MoveSpeed.ModifiedValue;
+        navMeshAgent.stoppingDistance = 1.0f;
+        navMeshAgent.angularSpeed = 220;
+    }
+
+    void stats_Damaged(GameObject sender, DamageEventArgs e)
     {
-        UpdateMoveDirection();
-        AvoidObstacles();
-	}
+        StartCoroutine(StopMovingForSeconds(.5f));
+    }
+
+    private IEnumerator StopMovingForSeconds(float time)
+    {
+        navMeshAgent.Stop();
+        yield return new WaitForSeconds(time);
+        navMeshAgent.Resume();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //UpdatePath();
+        //UpdateMoveDirection();
+        //AvoidObstacles();
+    }
+
+    private void UpdatePath()
+    {
+        navMeshAgent.ResetPath();
+
+        if (targetTransform != null)
+            navMeshAgent.SetDestination(targetTransform.position);
+        else
+            navMeshAgent.SetDestination(targetLocation);
+
+    }
 
     private void AvoidObstacles()
     {
@@ -95,7 +142,7 @@ public class NPC_Controller : MonoBehaviour
     {
         moveDirection = Vector3.RotateTowards(moveDirection, targetMoveDirection.normalized, 3.14f * Time.deltaTime, 1f);
         if (moveDirection != Vector3.zero)
-        transform.rotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.LookRotation(moveDirection);
     }
 
     [RPC]
@@ -108,16 +155,16 @@ public class NPC_Controller : MonoBehaviour
 
     private IEnumerator SwingAttack()
     {
-        
+        navMeshAgent.Stop();
         SendMessage("StartAttacking", SendMessageOptions.DontRequireReceiver);
         var swingLength = stats.attackLength;
-        yield return new WaitForSeconds(swingLength*.25f);
+        yield return new WaitForSeconds(swingLength * .25f);
         GetComponentInChildren<WeaponCollider>().StartSwingCollisionChecking();
 
-        yield return new WaitForSeconds(swingLength *.45f);
+        yield return new WaitForSeconds(swingLength * .45f);
         GetComponentInChildren<WeaponCollider>().StopSwingCollisionChecking();
         SendMessage("StopAttacking", SendMessageOptions.DontRequireReceiver);
-
+        navMeshAgent.Resume();
         yield break;
     }
 }

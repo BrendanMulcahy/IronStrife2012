@@ -14,11 +14,11 @@ public class SkeletonGuard : MonoBehaviour
         LinkedList<TransitionRequirement> chaseRequirement = new LinkedList<TransitionRequirement>();
         guard.transitions.Add(new StateTransition(chase, chaseRequirement));
         chaseRequirement.AddLast(new EnemyVisible(this.gameObject));
-        chaseRequirement.AddLast(new ProximityToLocation(this.transform.position, this.transform, 15f));
+        chaseRequirement.AddLast(new ProximityToLocation(this.transform.position, this.transform, 25));
 
         LinkedList<TransitionRequirement> chaseToGuardRequirement = new LinkedList<TransitionRequirement>();
         chase.transitions.Add(new StateTransition(guard, chaseToGuardRequirement));
-        chaseToGuardRequirement.AddLast(new DistanceFromLocation(this.transform.position, this.transform, 15f));
+        chaseToGuardRequirement.AddLast(new DistanceFromLocation(this.transform.position, this.transform, 60f));
 
 
         //set initial state to wander

@@ -221,7 +221,7 @@ public class CharacterStats : MonoBehaviour
         particles.startColor = teamNumber == 1 ? Color.blue : Color.red;
     }
 
-    protected void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+    protected virtual void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
         stream.SerializeRegeneratingStat(Health);
         stream.SerializeRegeneratingStat(Mana);

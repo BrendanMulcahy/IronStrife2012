@@ -571,4 +571,14 @@ public static class Util
             stat.ChangeModifierValue(mod - previous);
         }
     }
+
+    public static NetworkPlayer GetNetworkPlayer(this GameObject go)
+    {
+        if (Network.isClient) return new NetworkPlayer();
+
+        else
+        {
+            return PlayerManager.Main.FindRecord(go).networkPlayer;
+        }
+    }
 }

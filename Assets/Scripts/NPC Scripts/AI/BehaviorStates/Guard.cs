@@ -9,12 +9,11 @@ public class Guard : NPC_BehaviorState
     {
         if (Vector3.Distance(guardLocation, this.transform.position) > .1f)
         {
-            npcController.TargetMoveDirection = guardLocation - this.transform.position;
-            npcController.Move();
+            npcController.SetTarget(guardLocation);
         }
         else
         {
-            npcController.TargetMoveDirection = new Vector3();
+
         }
     }
 

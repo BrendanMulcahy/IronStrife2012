@@ -16,24 +16,23 @@ public class Chase : NPC_BehaviorState
     {
         if (IsInRangeToAttack() && !isAttacking)
         {
-
             StartSwinging();
         }
+
         else if (!isAttacking)
         {
             if (npcAI.Searcher.enemiesNearby.Count > 0)
             {
-                var target = npcAI.Searcher.enemiesNearby[0];
-                npcController.TargetMoveDirection = (target.transform.position - this.transform.position);
-                npcController.MoveSpeed = npcAI.WalkSpeed;
-                npcController.Move();
+
+                npcController.SetTarget(npcAI.Searcher.enemiesNearby[0].transform.position);
             }
         }
+
         else
         {
-            npcController.TargetMoveDirection = new Vector3();
-            npcController.MoveSpeed = 0;
+
         }
+
     }
 
     private void StartSwinging()

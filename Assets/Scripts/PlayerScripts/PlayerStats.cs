@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-[PlayerComponent(PlayerScriptType.AllEnabled)]
+[PlayerComponent(PlayerScriptType.AllDisabled, PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerOwnerEnabled)]
 public class PlayerStats : CharacterStats
 {
     public string username = "default_username";
@@ -15,10 +15,7 @@ public class PlayerStats : CharacterStats
     public AgilityStat Agility { get; set; }
     public IntelligenceStat Intelligence { get; set; }
 
-
     static int[] experiencePerLevel = { 1000, 2000, 3000, 5000, 8000, 13000 };
-
-    public NetworkPlayer networkPlayer;
 
     public event PlayerRespawnedEventHandler Respawned;
     public bool canRespawn;
@@ -33,6 +30,8 @@ public class PlayerStats : CharacterStats
     {
         get
         {
+            if (inventory.currentWeapon == null) Debug.Log("weapon is null");
+            if (Strength == null) Debug.Log("strength is null");
             return Strength.ModifiedValue * StrengthStat.meleeDamagePerStrength + inventory.currentWeapon.damage;
         }
     }
@@ -40,6 +39,7 @@ public class PlayerStats : CharacterStats
     protected override void Awake()
     {
         base.Awake();
+        inventory = GetComponent<Inventory>();
         SetInitialStats();
 
     }
@@ -179,11 +179,6 @@ public class PlayerStats : CharacterStats
         unusedStatPoints--;
     }
 
-    internal void SetNetworkPlayer(NetworkPlayer networkPlayer)
-    {
-        this.networkPlayer = networkPlayer;
-    }
-
     void OnRespawn(Vector3 requestedRespawnLocation)
     {
         if (Respawned != null)
@@ -212,7 +207,7 @@ public class PlayerStats : CharacterStats
             }
             else
             {
-                networkView.RPC("BeginDying", networkPlayer);
+                networkView.RPC("BeginDying", this.gameObject.GetNetworkPlayer());
             }
         }
         yield return new WaitForSeconds(8.0f);
@@ -258,7 +253,7 @@ public class PlayerStats : CharacterStats
             LevelUp();
         }
         if (gameObject != Util.MyLocalPlayerObject)
-            networkView.RPC("BroadcastReward", this.networkPlayer, reward.experience, reward.gold);
+            networkView.RPC("BroadcastReward", this.gameObject.GetNetworkPlayer(), reward.experience, reward.gold);
     }
 
     [RPC]
@@ -313,7 +308,7 @@ public class PlayerStats : CharacterStats
         if (gameObject == Util.MyLocalPlayerObject)
             PopupMessage.Display("You have reached level " + Level);
         else
-            networkView.RPC("ClientLevelUp", this.networkPlayer);
+            networkView.RPC("ClientLevelUp", this.gameObject.GetNetworkPlayer());
     }
 
     private void UpdateKillReward()
@@ -379,6 +374,16 @@ public class PlayerStats : CharacterStats
     {
         base.ChangeName(newName);
         username = newName;
+    }
+
+    protected override void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+    {
+        base.OnSerializeNetworkView(stream, info);
+
+        stream.SerializeBuffableStat(Strength);
+        stream.SerializeBuffableStat(Agility);
+        stream.SerializeBuffableStat(Intelligence);
+
     }
 
     public override string ToString()

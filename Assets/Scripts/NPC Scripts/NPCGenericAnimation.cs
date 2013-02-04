@@ -5,6 +5,7 @@ public class NPCGenericAnimation : MonoBehaviour
     public NPCAnimationState state;
     private Animation ani;
     private NPC_Controller controller;
+    private NavMeshAgent navMeshAgent;
 
     void Start()
     {
@@ -13,6 +14,7 @@ public class NPCGenericAnimation : MonoBehaviour
 
         controller = GetComponent<NPC_Controller>();
         ani = this.GetComponent<Animation>();
+        navMeshAgent = this.GetComponent<NavMeshAgent>();
     }
 
     void NPCGenericAnimation_Died(GameObject deadUnit, UnitDiedEventArgs e)
@@ -29,7 +31,7 @@ public class NPCGenericAnimation : MonoBehaviour
     {
         if (state == NPCAnimationState.Idle || state == NPCAnimationState.Moving)
         {
-            if (controller.MoveSpeed > 0)
+            if (navMeshAgent.velocity.magnitude >= .4f)
             {
                 state = NPCAnimationState.Moving;
             }

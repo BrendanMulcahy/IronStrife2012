@@ -29,6 +29,13 @@ public class GameTime : MonoBehaviour {
 
     public Material skyboxMaterial;
 
+    public event DawnEventHandler Dawn;
+    public event DuskEventHandler Dusk;
+    public bool isDay = false;
+    public int currentDayNumber = 0;
+    public delegate void DawnEventHandler();
+    public delegate void DuskEventHandler();
+
     private static GameTime _instance;
     public static GameTime Main
     {
@@ -75,12 +82,36 @@ public class GameTime : MonoBehaviour {
         initialRotations[1] = Quaternion.Euler(270, 0, 0);
 		
 		timeOfDay = 7.5f; // Start at 7:30 AM
+
+        Dawn += GameTime_Dawn;
+        Dusk += GameTime_Dusk;
 	}
+
+    void GameTime_Dusk()
+    {
+        PopupMessage.LocalDisplay("Night of Day <b>" + currentDayNumber + "</b>", 5.0f, 0.15f, .3f, 1f, 48);
+    }
+
+    void GameTime_Dawn()
+    {
+        PopupMessage.LocalDisplay("Dawn of Day <b>" + currentDayNumber + "</b>", 5.0f, .98f, .1f, 0, 48);
+    }
 	
+    [ExecuteInEditMode]
 	// Update is called once per frame
 	void Update () {
         timeOfDay += (Time.deltaTime / HOUR) * (1440f / dayCycleInMinutes);
         timeOfDay = timeOfDay % 24;
+
+        if (!isDay && timeOfDay >= 6 && timeOfDay <18)
+        {
+            currentDayNumber++;
+            OnDawn();
+        }
+        else if (isDay &&  (timeOfDay >= 18 || timeOfDay < 6))
+        {
+            OnDusk();
+        }
         
         float rotationAmount = (CurrentTime / 24f) * 360f;
 		moons[0].transform.rotation = initialRotations[0];
@@ -91,6 +122,20 @@ public class GameTime : MonoBehaviour {
 		
         UpdateSkybox();
 	}
+
+    private void OnDusk()
+    {
+        if (Dusk!= null)
+            Dusk();
+        isDay = false;
+    }
+
+    private void OnDawn()
+    {
+        if (Dawn != null)
+            Dawn();
+        isDay = true;
+    }
 
     void SynchronizePlayer(NetworkPlayer player)
     {
@@ -146,7 +191,7 @@ public class GameTime : MonoBehaviour {
 
     internal static void Reset()
     {
-        SetTime(6.0f);  //Set time to the start of dawn.
+        SetTime(7.0f);  //Set time to the start of dawn.
     }
 }
 

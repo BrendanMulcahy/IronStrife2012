@@ -48,7 +48,7 @@ public class PopupMessage : MonoBehaviour
     }
 
     [RPC]
-    public static void Display(string message, float fadeTime = 2.5f, float r = 1, float g = 1, float b = 1)
+    public static void Display(string message, float fadeTime = 2.5f, float r = 1, float g = 1, float b = 1, int fontsize = 26)
     {
         Main.StopAllCoroutines();
         // Set the color / transparency for the text.
@@ -56,11 +56,17 @@ public class PopupMessage : MonoBehaviour
         c.a = 1f; c.r = r; c.g = g; c.b = b;
         mainGUIText.material.color = c;
         mainGUIText.text = message;
+        mainGUIText.fontSize = fontsize;
 
-        c = shadowGUIText.material.color;
-        c.a = 1f;
-        shadowGUIText.material.color = c;
+        Color c2;
+        if (c == Color.white)
+            c2 = Color.black;
+        else
+            c2 = Color.Lerp(c, Color.black, .75f);
+        c2.a = 1f;
+        shadowGUIText.material.color = c2;
         shadowGUIText.text = message;
+        shadowGUIText.fontSize = fontsize;
         Main.StartCoroutine(FadeInSeconds(fadeTime));
     }
 
@@ -103,8 +109,8 @@ public class PopupMessage : MonoBehaviour
         PopupMessage.Display(p, fadeTime);
     }
 
-    public static void LocalDisplay(string message, float fadeTime = 2.5f, float r = 1, float g = 1, float b = 1)
+    public static void LocalDisplay(string message, float fadeTime = 2.5f, float r = 1, float g = 1, float b = 1, int fontSize = 26)
     {
-        Display(message, fadeTime, r, g, b);
+        Display(message, fadeTime, r, g, b, fontSize);
     }
 }

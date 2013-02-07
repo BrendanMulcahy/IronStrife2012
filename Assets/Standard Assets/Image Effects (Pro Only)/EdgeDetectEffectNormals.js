@@ -22,11 +22,6 @@ class EdgeDetectEffectNormals extends PostEffectsBase {
 	public var edgeDetectShader : Shader;
 	private var edgeDetectMaterial : Material = null;
 
-    function OnDisable()
-    {
-        if (edgeDetectMaterial)
-            DestroyImmediate(edgeDetectMaterial);
-    }
 	function CheckResources () : boolean {	
 		CheckSupport (true);
 	

@@ -23,12 +23,6 @@ class ScreenOverlay extends PostEffectsBase {
 	
 	private var overlayMaterial : Material = null;
 	
-	function OnDisable()
-	{
-	    if (overlayMaterial)
-	        DestroyImmediate(overlayMaterial);
-	}
-	
 	function CheckResources () : boolean {
 		CheckSupport (false);
 		

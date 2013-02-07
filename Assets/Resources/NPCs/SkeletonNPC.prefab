@@ -592,6 +592,8 @@ GameObject:
   - 114: {fileID: 11400014}
   - 148: {fileID: 14800002}
   - 195: {fileID: 19500000}
+  - 114: {fileID: 11400020}
+  - 114: {fileID: 11400022}
   m_Layer: 9
   m_Name: SkeletonNPC
   m_TagString: Lockable
@@ -1324,6 +1326,30 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fa9a1dda43e5ee469ce5bfd68faf896, type: 3}
   m_Name: 
+--- !u!114 &11400020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99cfc6c7c10b7b0439d06cae87f885b1, type: 3}
+  m_Name: 
+--- !u!114 &11400022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e214b311f2e9f47bfe6f8158d477fb, type: 3}
+  m_Name: 
+  m_InterpolationBackTime: .10000000000000001
+  m_PredictionThreshold: .850000024
+  m_TimeThreshold: .0500000007
+  m_InstantFixThreshold: 2.29999995
 --- !u!131 &13100000
 GUITexture:
   m_ObjectHideFlags: 1
@@ -1444,7 +1470,7 @@ NetworkView:
   m_GameObject: {fileID: 100076}
   m_Enabled: 1
   m_StateSynchronization: 1
-  m_Observed: {fileID: 400076}
+  m_Observed: {fileID: 11400020}
   m_ViewID:
     m_ID: 0
     m_Type: 0

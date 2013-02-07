@@ -51,22 +51,6 @@ class ColorCorrectionCurves extends PostEffectsBase
 	
 	function Awake () {	}
 	
-	function OnDisable()
-	{
-		if (ccMaterial)
-		    DestroyImmediate(ccMaterial);
-		if (ccDepthMaterial)
-		    DestroyImmediate(ccDepthMaterial);
-		if (selectiveCcMaterial)
-		    DestroyImmediate(selectiveCcMaterial);
-		if (rgbChannelTex)
-			DestroyImmediate(rgbChannelTex); 
-		if (rgbDepthChannelTex)
-			DestroyImmediate(rgbDepthChannelTex);
-		if (zCurveTex)
-		    DestroyImmediate(zCurveTex);
-	}
-	
 	function CheckResources () : boolean {		
 		CheckSupport (mode == ColorCorrectionMode.Advanced);
 	

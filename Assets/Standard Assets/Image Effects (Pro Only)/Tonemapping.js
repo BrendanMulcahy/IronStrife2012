@@ -48,12 +48,6 @@ class Tonemapping extends PostEffectsBase {
 	private var tonemapMaterial : Material = null;	
 	private var rt : RenderTexture = null;
 	
-	function OnDisable()
-	{
-	    if (tonemapMaterial)
-	        DestroyImmediate(tonemapMaterial);
-	}
-	
 	function CheckResources () : boolean {	
 		CheckSupport (false, true);	
 	

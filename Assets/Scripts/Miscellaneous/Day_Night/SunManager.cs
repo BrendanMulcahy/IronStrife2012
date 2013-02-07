@@ -34,7 +34,7 @@ public class SunManager : MonoBehaviour {
 		//SunSet
         if (currentTime > 17 && currentTime < 17.8)
         {
-            float currentPercentage = currentTime - 17f;
+            float currentPercentage = (currentTime - 17f) / .8f;
             foreach (Sun light in suns)
             {
                 light.light.intensity = Mathf.Lerp(light.maxLightBrightness, light.minLightBrightness, currentPercentage);

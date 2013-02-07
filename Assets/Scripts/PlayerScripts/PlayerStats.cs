@@ -246,6 +246,8 @@ public class PlayerStats : CharacterStats
     /// </summary>
     public void RewardKill(KillReward reward)
     {
+        if (Network.isClient) return;
+
         this.experience += reward.experience;
         this.inventory.Gold += reward.gold;
         if (experience >= experienceNeeded)
@@ -288,7 +290,7 @@ public class PlayerStats : CharacterStats
     [RPC]
     void BroadcastReward(int xp, int goldReward)
     {
-        //	Debug.Log("You have obtained "+xp + " experience and " + iron + " iron.");
+        Debug.Log("You have obtained "+xp + " experience and " + goldReward + " gold.");
         experience += xp;
         inventory.Gold += goldReward;
     }
@@ -302,13 +304,12 @@ public class PlayerStats : CharacterStats
         unusedStatPoints += 2;
 
         //	Debug.Log(this.gameObject.name + " has leveled up.");
-        experience -= experienceNeeded;
-        experienceNeeded = experiencePerLevel[Level - 1];
+        experienceNeeded += experiencePerLevel[Level - 1];
         UpdateKillReward();
         if (gameObject == Util.MyLocalPlayerObject)
             PopupMessage.Display("You have reached level " + Level);
         else
-            networkView.RPC("ClientLevelUp", this.gameObject.GetNetworkPlayer());
+            networkView.RPC("ClientLevelUp", this.gameObject.GetNetworkPlayer(), experience);
     }
 
     private void UpdateKillReward()
@@ -317,7 +318,7 @@ public class PlayerStats : CharacterStats
     }
 
     [RPC]
-    void ClientLevelUp()
+    void ClientLevelUp(int newExperience)
     {
         Level++;
         Strength.ChangeBaseValue(5);
@@ -325,7 +326,7 @@ public class PlayerStats : CharacterStats
         Intelligence.ChangeBaseValue(5);
         unusedStatPoints += 2;
 
-        experience -= experienceNeeded;
+        experience = newExperience;
         experienceNeeded = experiencePerLevel[Level - 1];
         PopupMessage.Display("You have reached level " + Level);
     }
@@ -388,7 +389,8 @@ public class PlayerStats : CharacterStats
 
     public override string ToString()
     {
-        var toReturn = base.ToString();
+        var toReturn = "Level: " + Level;
+        toReturn+= "\n"+ base.ToString();
         toReturn += Strength.ToString() + "\n";
         toReturn += Agility.ToString() + "\n";
         toReturn += Intelligence.ToString() + "\n";

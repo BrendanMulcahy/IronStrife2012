@@ -16,16 +16,25 @@ public class DamageReceiver : MonoBehaviour {
         characterStats = gameObject.GetCharacterStats();
         inventory = gameObject.GetInventory();
         playerMotor = gameObject.GetPlayerMotor();
+        characterStats.Died += characterStats_Died;
+    }
+
+    void characterStats_Died(GameObject deadUnit, UnitDiedEventArgs e)
+    {
+        this.enabled = false;
     }
 
     public virtual void ApplyHit(GameObject attacker)
     {
-        var attackerStats = attacker.GetCharacterStats();
-        var totalDamageMod = attackerStats.PhysicalDamageModifier;
+        if (this.enabled)
+        {
+            var attackerStats = attacker.GetCharacterStats();
+            var totalDamageMod = attackerStats.PhysicalDamageModifier;
 
-        var damage = new Damage(totalDamageMod, attacker, attacker.transform.position, DamageType.Physical);
+            var damage = new Damage(totalDamageMod, attacker, attacker.transform.position, DamageType.Physical);
 
 
-        characterStats.ApplyDamage(attacker, damage);
+            characterStats.ApplyDamage(attacker, damage);
+        }
     }
 }

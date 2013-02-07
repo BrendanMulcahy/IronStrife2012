@@ -4,7 +4,6 @@ public class NPCGenericAnimation : MonoBehaviour
 {
     public NPCAnimationState state;
     private Animation ani;
-    private NPC_Controller controller;
     private NavMeshAgent navMeshAgent;
 
     void Start()
@@ -12,7 +11,6 @@ public class NPCGenericAnimation : MonoBehaviour
         gameObject.GetCharacterStats().Damaged += NPCGenericAnimation_Damaged;
         gameObject.GetCharacterStats().Died += NPCGenericAnimation_Died;
 
-        controller = GetComponent<NPC_Controller>();
         ani = this.GetComponent<Animation>();
         navMeshAgent = this.GetComponent<NavMeshAgent>();
     }

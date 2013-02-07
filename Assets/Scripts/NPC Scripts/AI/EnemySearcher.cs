@@ -34,7 +34,6 @@ public class EnemySearcher : MonoBehaviour {
 		{
             if (other.gameObject.GetCharacterStats().TeamNumber != this.team)
             {
-                Debug.Log(other.gameObject.name + "'s team is " + other.gameObject.GetCharacterStats().TeamNumber);
                 enemiesNearby.Add(other.gameObject);
                 other.gameObject.GetCharacterStats().Died += EnemySearcher_Died;
             }

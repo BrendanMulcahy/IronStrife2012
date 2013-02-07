@@ -57,10 +57,20 @@ public class NPC_Controller : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         stats = gameObject.GetCharacterStats() as NPCStats;
         stats.Damaged += stats_Damaged;
+        stats.Died += stats_Died;
 
         navMeshAgent.speed = stats.MoveSpeed.ModifiedValue;
         navMeshAgent.stoppingDistance = 1.0f;
         navMeshAgent.angularSpeed = 220;
+    }
+
+    void stats_Died(GameObject deadUnit, UnitDiedEventArgs e)
+    {
+        if (navMeshAgent)
+            navMeshAgent.enabled = false;
+        StopAllCoroutines();
+        collider.enabled = false;
+        gameObject.GetPlayerMotor().enabled = false;
     }
 
     void stats_Damaged(GameObject sender, DamageEventArgs e)

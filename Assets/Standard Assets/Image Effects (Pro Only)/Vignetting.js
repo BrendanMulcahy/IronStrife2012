@@ -23,16 +23,6 @@ class Vignetting extends PostEffectsBase {
 	public var chromAberrationShader : Shader;
 	private var chromAberrationMaterial : Material;
 	
-	function OnDisable()
-	{
-		if (vignetteMaterial)
-		    DestroyImmediate(vignetteMaterial);
-		if (separableBlurMaterial)
-		    DestroyImmediate(separableBlurMaterial);
-		if (chromAberrationMaterial)
-		    DestroyImmediate(chromAberrationMaterial);
-	}
-	
 	function CheckResources () : boolean {	
 		CheckSupport (false);	
 	

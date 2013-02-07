@@ -26,12 +26,6 @@ class NoiseAndGrain extends PostEffectsBase {
 	
 	private var noiseMaterial : Material = null;
 	
-	function OnDisable()
-	{
-	    if (noiseMaterial)
-	        DestroyImmediate(noiseMaterial);
-	}
-	
 	function CheckResources () : boolean {
 		CheckSupport (false);
 		

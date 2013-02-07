@@ -74,23 +74,6 @@ class BloomAndLensFlares extends PostEffectsBase {
 	public var brightPassFilterShader : Shader;
 	private var brightPassFilterMaterial : Material;
 	
-    function OnDisable()
-    {
-		if (screenBlend) 
-		    DestroyImmediate(screenBlend);
-		if (lensFlareMaterial) 
-		    DestroyImmediate(lensFlareMaterial);
-		if (vignetteMaterial) 
-		    DestroyImmediate(vignetteMaterial);
-		if (separableBlurMaterial) 
-		    DestroyImmediate(separableBlurMaterial);
-		if (addBrightStuffBlendOneOneMaterial) 
-		    DestroyImmediate(addBrightStuffBlendOneOneMaterial);
-		if (hollywoodFlaresMaterial) 
-		    DestroyImmediate(hollywoodFlaresMaterial);
-		if (brightPassFilterMaterial) 
-		    DestroyImmediate(brightPassFilterMaterial);
-    }
 	function CheckResources () : boolean {
 		CheckSupport (false);
 		

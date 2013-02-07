@@ -106,6 +106,7 @@ public class PlayerGUI : MonoBehaviour
             DrawSpellIcons();
             //DrawScoreboard();
             //DrawHotkeyHelperIcons();
+            DrawXPBar();
         }
     }
 

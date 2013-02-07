@@ -27,7 +27,7 @@ public class MasterGameLogic : MonoBehaviour
     private bool gameEnded = false;
     public PlayerManager PlayerManager { get { return playerManager; } }
 
-
+    private List<ControlPoint> controlPoints = new List<ControlPoint>();
 
     // Use this for initialization
     void Awake()
@@ -60,4 +60,9 @@ public class MasterGameLogic : MonoBehaviour
         //
     }
 
+
+    internal void AddControlPoint(ControlPoint controlPoint)
+    {
+        controlPoints.Add(controlPoint);
+    }
 }

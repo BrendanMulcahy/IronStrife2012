@@ -96,24 +96,6 @@ class AntialiasingAsPostEffect extends PostEffectsBase  {
 		return isSupported;		            
 	}
 
-    function OnDisable()
-    {
-		if(materialFXAAPreset2)
-		    Destroy(materialFXAAPreset2);
-		if(materialFXAAPreset3)
-    		Destroy(materialFXAAPreset3);
-		if(materialFXAAII)
-	    	Destroy(materialFXAAII);
-		if(materialFXAAIII)
-		    Destroy(materialFXAAIII);
-		if(nfaa)
-		    Destroy(nfaa);
-		if(ssaa)
-		    Destroy(ssaa);
-		if(dlaa)
-		    Destroy(dlaa);
-    }
-    
 	function OnRenderImage (source : RenderTexture, destination : RenderTexture) {
 		if(CheckResources()==false) {
 			Graphics.Blit (source, destination);

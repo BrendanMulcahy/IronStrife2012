@@ -120,16 +120,31 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    protected void OnDeath(UnitDiedEventArgs unitDiedEventArgs)
+    protected virtual void OnDeath(UnitDiedEventArgs unitDiedEventArgs)
     {
         if (Died != null)
         {
             Died(gameObject, unitDiedEventArgs);
         }
+        if (Network.isServer)
+        {
+            networkView.RPC("NotifyDeath", RPCMode.Others, unitDiedEventArgs.deathPosition, unitDiedEventArgs.killer.GetNetworkViewID());
+        }
+    }
+
+    [RPC]
+    void NotifyDeath(Vector3 deathPosition, NetworkViewID killer)
+    {
+        var e = new UnitDiedEventArgs() { reward = null, killer = killer.GetGameObject(), deathPosition = deathPosition };
+        if (Died != null)
+        {
+            Died(gameObject, e);
+        }
     }
 
     public static void RewardPlayersInArea(Vector3 location, GameObject killer, KillReward reward)
     {
+        if (Network.isClient) return;
         if (reward == null)
             Debug.Log("REWARD IS NULL.");
         int teamNumber;

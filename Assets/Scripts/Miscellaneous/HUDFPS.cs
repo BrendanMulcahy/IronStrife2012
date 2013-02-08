@@ -23,7 +23,7 @@ public class HUDFPS : MonoBehaviour
     private int frames = 0; // Frames drawn over the interval
     private float timeleft; // Left time for current interval
 
-    public static bool visible = false;
+    public static bool visible = true;
 
     public static GUIText guiTextDisplayer { get { return GameObject.Find("HUDFPS").GetComponent<GUIText>(); } }
 

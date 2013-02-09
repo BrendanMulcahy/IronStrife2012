@@ -14,7 +14,6 @@ public class MainMenu : MonoBehaviour
     string gameName = "Enter game name here";
     string gameDescription = "Enter game description";
     string scoreLimit = "500";
-    int parsedScore = 500;
 
     private Vector2 scrollPosition = new Vector2();
     private string chatTextInput = "";
@@ -310,7 +309,6 @@ public class MainMenu : MonoBehaviour
         gameDescription = GUILayout.TextField(gameDescription);
         GUILayout.Label("Score Limit:");
         scoreLimit = GUILayout.TextField(scoreLimit);
-        invalidScore = !int.TryParse(scoreLimit, out parsedScore);
         if (GUILayout.Button("Host Game"))
         {
             CreateGameLobby();

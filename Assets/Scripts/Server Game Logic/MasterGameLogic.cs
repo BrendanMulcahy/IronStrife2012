@@ -33,7 +33,7 @@ public class MasterGameLogic : MonoBehaviour
     void Awake()
     {
         npcManager = gameObject.AddComponent<NPCManager>();
-        playerManager = new PlayerManager();
+        playerManager = gameObject.AddComponent<PlayerManager>();
         foreach (GameObject go in GameObject.FindObjectsOfType(typeof(GameObject)))
         {
             go.SendMessage("OnMasterGameLogicAdded",SendMessageOptions.DontRequireReceiver);

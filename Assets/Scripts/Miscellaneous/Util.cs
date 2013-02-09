@@ -143,17 +143,8 @@ public static class Util
     /// <param name="go"></param>
     public static void DisableControls(this GameObject go)
     {
-        if (Network.isServer)
-        {
-            go.GetComponent<ServerController>().enabled = false;
-            go.GetComponent<ServerController>().Reset();
-        }
-        else
-        {
             go.GetComponent<NetworkController>().Reset();
             go.GetComponent<NetworkController>().enabled = false;
-
-        }
 
     }
 
@@ -163,9 +154,6 @@ public static class Util
     /// <param name="go"></param>
     public static void EnableControls(this GameObject go)
     {
-        if (Network.isServer)
-            go.GetComponent<ServerController>().enabled = true;
-        else
             go.GetComponent<NetworkController>().enabled = true;
     }
 

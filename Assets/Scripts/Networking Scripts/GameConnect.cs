@@ -63,6 +63,13 @@ public class GameConnect : MonoBehaviour
         StartCoroutine(HandleNewClientConnection(username, msg));
     }
 
+    /// <summary>
+    /// Server function that handles the connection of a new client. Should create their character and
+    /// synchronize the new player with all of the info about the world (other players, objects, game state, etc)
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="msg"></param>
+    /// <returns></returns>
     private System.Collections.IEnumerator HandleNewClientConnection(string username, NetworkMessageInfo msg)
     {
         // Send all player character information to the player 
@@ -96,9 +103,9 @@ public class GameConnect : MonoBehaviour
     void ClientStartup(NetworkMessageInfo msg)
     {
         Debug.Log(msg.sender);
-        foreach (PlayerRecord pr in MasterGameLogic.Main.PlayerManager.players)
+        foreach (PlayerRecord pr in PlayerManager.Main.players)
         {
-            networkView.RPC("SpawnCharacter", msg.sender, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);
+            networkView.RPC("SpawnCharacter", pr.networkPlayer, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);
         }
     }
 
@@ -127,6 +134,14 @@ public class GameConnect : MonoBehaviour
     {
         var pr = MasterGameLogic.Main.PlayerManager.GenerateNewPlayer(msg.sender, username);
         networkView.RPC("SpawnCharacterAndSetOwnership", msg.sender, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);
+
+        foreach (PlayerRecord rec in PlayerManager.Main.players)
+        {
+            if (rec != pr)
+            {
+                networkView.RPC("SpawnCharacter", rec.networkPlayer, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);
+            }
+        }
 
     }
 

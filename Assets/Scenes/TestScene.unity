@@ -28241,7 +28241,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8a7dd85494d8f4d4ba76b19deaeab3d3, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -9.71995354
+      value: -9.00224304
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8a7dd85494d8f4d4ba76b19deaeab3d3, type: 2}
       propertyPath: m_LocalPosition.z
@@ -58068,7 +58068,7 @@ GameObject:
   - 4: {fileID: 1133077699}
   - 114: {fileID: 1133077698}
   - 154: {fileID: 1133077697}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58097,7 +58097,7 @@ MonoBehaviour:
   m_Script: {fileID: 12000, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_TerrainData: {fileID: 15600000, guid: 60cb16fd8c1565741bdcac6782fa8683, type: 2}
-  m_TreeDistance: 5000
+  m_TreeDistance: 2000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
@@ -69742,6 +69742,7 @@ GameObject:
   - 4: {fileID: 1302499398}
   - 33: {fileID: 1302499400}
   - 23: {fileID: 1302499399}
+  - 64: {fileID: 1302499401}
   m_Layer: 0
   m_Name: Windmill1
   m_TagString: Untagged
@@ -69788,6 +69789,19 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 103063884}
   m_GameObject: {fileID: 1302499397}
+  m_Mesh: {fileID: 4300000, guid: 089235d97b494f24299630d683751942, type: 3}
+--- !u!64 &1302499401
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1302499397}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
   m_Mesh: {fileID: 4300000, guid: 089235d97b494f24299630d683751942, type: 3}
 --- !u!1001 &1302807840
 Prefab:
@@ -100410,7 +100424,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2039607873}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0da86a89d4eb46f999d433cdc44458c, type: 3}
   m_Name: 
@@ -104248,7 +104262,7 @@ Transform:
   m_PrefabInternal: {fileID: 584699040}
   m_GameObject: {fileID: 2117072331}
   m_LocalRotation: {x: 0, y: .000690533896, z: 0, w: .999999762}
-  m_LocalPosition: {x: -112.963623, y: -9.71995354, z: -77.6459961}
+  m_LocalPosition: {x: -112.963623, y: -9.00224304, z: -77.6459961}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1792072548}

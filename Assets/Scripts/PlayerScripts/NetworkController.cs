@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using System.Linq;
 
-[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerDisabled, PlayerScriptType.ServerOwnerDeleted)]
+[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerOwnerEnabled)]
 public class NetworkController : MonoBehaviour
 {
     public PlayerInputManager targetController;
@@ -25,7 +25,9 @@ public class NetworkController : MonoBehaviour
     private int spellBeingCast;
 
     private GameObject spellTargetReticle;
-
+    private ParticleSystem particleSys;
+    private float initialParticleSpeed;
+    private float initialParticleSize;
 
     //NOT SYNCED
     private bool lockButton;
@@ -40,14 +42,21 @@ public class NetworkController : MonoBehaviour
 
     void OnSetOwnership()
     {
-        if (Network.isServer) Destroy(this);
-        else
+        if (!Network.isServer)
         {
             GenerateNetworkView();
-
-            spellTargetReticle = Instantiate(Resources.Load("SpellEffects/SpellTarget") as GameObject) as GameObject;
-            spellTargetReticle.SetActive(false);
         }
+
+        InitializeSpellTargetReticle();
+    }
+
+    private void InitializeSpellTargetReticle()
+    {
+        spellTargetReticle = Instantiate(Resources.Load("SpellEffects/SpellTarget") as GameObject) as GameObject;
+        particleSys = spellTargetReticle.GetComponent<ParticleSystem>();
+        initialParticleSize = particleSys.startSize;
+        initialParticleSpeed = particleSys.startSpeed;
+        spellTargetReticle.SetActive(false);
     }
 
     private void GenerateNetworkView()
@@ -94,7 +103,12 @@ public class NetworkController : MonoBehaviour
                 targetController.spellBeingCast = (Spell)abilityManager.equippedSpells[i];
                 targetController.spellButton = true;
                 networkView.RPC("SendSpellCastInfo", RPCMode.Server, abilityManager.equippedSpells[i]);
+                if ((Spell)abilityManager.equippedSpells[i] is IPointSpell)
+                {
+                    ShowSpellTargetReticle((IPointSpell)((Spell)abilityManager.equippedSpells[i]));
+                }
             }
+
         }
 
         if (lockButton)
@@ -141,6 +155,43 @@ public class NetworkController : MonoBehaviour
         targetController.aimButton = aimButton;
         targetController.cameraMode = cameraMode;
 
+    }
+
+    private void ShowSpellTargetReticle(IPointSpell spell)
+    {
+        StartCoroutine(SpellTargetReticle(spell));
+    }
+
+    private IEnumerator SpellTargetReticle(IPointSpell spell)
+    {
+        spellTargetReticle.SetActive(true);
+        var diameter = spell.Radius * 2f;
+        spellTargetReticle.transform.localScale = new Vector3(diameter, .001f, diameter);
+        spellTargetReticle.particleSystem.startSize = initialParticleSize * diameter;
+        spellTargetReticle.particleSystem.startSpeed = initialParticleSpeed * diameter;
+
+        while (true)
+        {
+            if (!(targetController.spellBeingCast is IPointSpell) || Input.GetButtonDown("Fire1"))
+            {
+                HideSpellTargetReticle();
+                yield break;
+            }
+            RaycastHit hit;
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            int layerMask = (1 << 11) | (1 << 13);
+            if (Physics.Raycast(ray, out hit, 100f, layerMask))
+            {
+                spellTargetReticle.transform.position = Util.SampleFloorIncludingObjects(hit.point);
+            }
+
+            yield return null;
+        }
+    }
+
+    private void HideSpellTargetReticle()
+    {
+        spellTargetReticle.SetActive(false);
     }
 
     [DontAutoSerialize]

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class PlayerManager
+public class PlayerManager : MonoBehaviour
 {
     public List<PlayerRecord> players = new List<PlayerRecord>();
     public List<GameObject> goodPlayers = new List<GameObject>();
@@ -57,7 +57,7 @@ public class PlayerManager
         }
         return AddPlayer(newPlayer, username, player, interpolationViewID, animationViewID, team);
     }
-     
+
     /// <summary>
     /// Adds the player to the master player list. If a team number isn't given, a random team number is assigned.
     /// </summary>
@@ -66,7 +66,7 @@ public class PlayerManager
     /// <param name="team">[Optional] The team number of the new player. If not supplied, will be auto-assigned.</param>
     public PlayerRecord AddPlayer(GameObject gameObject, string username, NetworkPlayer player, NetworkViewID interpolationViewID, NetworkViewID animationViewID, int team = -1)
     {
-        if (team==-1)
+        if (team == -1)
         {
             team = GetAutoAssignTeamNumber();
         }
@@ -89,7 +89,7 @@ public class PlayerManager
         {
             evilPlayers.Add(gameObject);
         }
-            
+
         return newPlayer;
     }
 
@@ -160,7 +160,7 @@ public class PlayerManager
             goodPlayers.Remove(gameObject);
             evilPlayers.Add(gameObject);
         }
-        else if (oldTeam == 2 && newTeam ==1)
+        else if (oldTeam == 2 && newTeam == 1)
         {
             evilPlayers.Remove(gameObject);
             goodPlayers.Add(gameObject);

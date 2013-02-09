@@ -53,7 +53,8 @@ public class GameConnect : MonoBehaviour
 
         // Add a master game logic object and create the server's player.
         new GameObject("MasterGameLogic").AddComponent<MasterGameLogic>();
-        PlayerManager.Main.GenerateNewPlayer(Network.player, Util.Username);
+        if (SystemInfo.graphicsDeviceID != 0)
+            PlayerManager.Main.GenerateNewPlayer(Network.player, Util.Username);
     }
 
     [RPC]

@@ -361,7 +361,7 @@ public class MainMenu : MonoBehaviour
         {
             Network.InitializeServer(32, 25000, false);
             MasterServer.RegisterHost("IronStrife", gameName, gameDescription);
-            GameState.Reset(parsedScore);
+           // GameState.Reset(parsedScore);
             this.inGame = true;
             CloseMainMenu();
         }

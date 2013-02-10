@@ -221,7 +221,7 @@ public class RegularCamera : MonoBehaviour
         foreach (RaycastHit h in hits)
         {
             if (Vector3.Distance(h.collider.bounds.center, transform.position) > maximumAutoTransparentDistance) continue;
-            GameObject go = h.collider.transform.root.gameObject;
+            GameObject go = h.collider.gameObject;
             foreach (Renderer R in go.GetComponentsInChildren<Renderer>())
             {
                 AutoTransparent AT = R.GetComponent<AutoTransparent>();

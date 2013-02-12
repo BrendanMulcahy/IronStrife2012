@@ -40,7 +40,7 @@ public class PlayerGUI : MonoBehaviour
         stats = GetComponent<PlayerStats>();
         inputManager = GetComponent<PlayerInputManager>();
         controller = GetComponent<ThirdPersonController>();
-
+		
         elements["HealthBackground"] = Resources.Load("GUI/HealthBackground") as Texture2D;
         elements["HealthForeground"] = Resources.Load("GUI/HealthActive") as Texture2D;
         elements["ManaBackground"] = Resources.Load("GUI/ManaBackground") as Texture2D;
@@ -207,8 +207,17 @@ public class PlayerGUI : MonoBehaviour
         if (!controller.IsCasting) return;
         var castLength = inputManager.spellBeingCast.castTime;
         var currentProgress = inputManager.spellCastProgress;
+		var castPercentage = currentProgress/castLength;
+		
+		float leftMargin = 0.0557291666666667f * Screen.width;
+        float topmargin = (0.5576190476190476f + .05f) * Screen.height;
+        float width = Screen.width * 0.1901140684410646f;
+        float height = 50;
+        //GUI.DrawTexture(new Rect(leftMargin, topmargin, width, height), elements["StaminaBackground"]);
+		GUI.color = Color.black;
+        GUI.DrawTexture(new Rect(leftMargin, topmargin,  castPercentage * width, height), elements["HealthForeground"]);
 
-        GUI.Label(new Rect(50, 59, 200, 200), currentProgress.ToString() + " / " + castLength.ToString());
+        //GUI.Label(new Rect(50, 59, 200, 200), currentProgress.ToString() + " / " + castLength.ToString());
     }
 
     private void DrawLevel()

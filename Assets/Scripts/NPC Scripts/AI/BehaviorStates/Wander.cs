@@ -12,7 +12,6 @@ using System.Collections.Generic;
 	  public override void Enable()
         {
 			StartCoroutine(CheckIfContinueWandering());
-            //throw new System.NotImplementedException();
         }
 
         public override void Disable()

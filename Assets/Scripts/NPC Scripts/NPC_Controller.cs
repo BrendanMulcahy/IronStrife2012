@@ -18,6 +18,7 @@ public class NPC_Controller : MonoBehaviour
         this.targetTransform = null; 
         UpdatePath();
     }
+
     public void SetTarget(Transform transform)
     {
         this.targetTransform = transform; 
@@ -34,13 +35,13 @@ public class NPC_Controller : MonoBehaviour
     Vector3 moveDirection = new Vector3();
     Vector3 targetMoveDirection = new Vector3();
 
-    private Vector3 TargetMoveDirection
+    public Vector3 TargetMoveDirection
     {
         get { return targetMoveDirection; }
         set { targetMoveDirection = value; }
     }
 
-    private Vector3 MoveDirection
+    public Vector3 MoveDirection
     {
         get { return moveDirection; }
         set { moveDirection = value; }
@@ -142,7 +143,7 @@ public class NPC_Controller : MonoBehaviour
     /// <summary>
     /// Makes the NPC walk forward at its walk speed
     /// </summary>
-    private void Move()
+    public void Move()
     {
         if (motor.TotalImpactMagnitude >= .2f)
             return;

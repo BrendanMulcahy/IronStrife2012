@@ -4,7 +4,7 @@ public class ControlPoint : MonoBehaviour
 {
     public float NeutralSpawnRadius = 100f;
     public int numNPCsPerWave = 25;
-    public string npcType = "SkeletonNPC";
+    public string npcType = "AssaultSkeleton";
 
     void OnMasterGameLogicAdded()
     {
@@ -19,7 +19,8 @@ public class ControlPoint : MonoBehaviour
             direction.Normalize();
             var locationToSpawn = this.transform.position + direction * NeutralSpawnRadius;
 
-            NPCManager.Main.ServerSpawnNPC(npcType, locationToSpawn);
+            var newNPC = NPCManager.Main.ServerSpawnNPC(npcType, locationToSpawn);
+            newNPC.GetComponent<NeutralWaveBehaviour>().Target = this.gameObject;
         }
     }
 }

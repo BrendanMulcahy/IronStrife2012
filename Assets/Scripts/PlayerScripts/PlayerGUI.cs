@@ -21,6 +21,8 @@ public class PlayerGUI : MonoBehaviour
     private Texture2D[] spellIcons = new Texture2D[MAX_SPELL_NUMBER];
     public Texture healthBar;
     private Rect scoreboardRect = new Rect(Screen.width * .5f, 5, 200, 200);
+    private PlayerInputManager inputManager;
+    private ThirdPersonController controller;
 
     private GUISkin skin;
 
@@ -36,6 +38,8 @@ public class PlayerGUI : MonoBehaviour
     {
         healthBar = Resources.Load("WhiteSquare") as Texture;
         stats = GetComponent<PlayerStats>();
+        inputManager = GetComponent<PlayerInputManager>();
+        controller = GetComponent<ThirdPersonController>();
 
         elements["HealthBackground"] = Resources.Load("GUI/HealthBackground") as Texture2D;
         elements["HealthForeground"] = Resources.Load("GUI/HealthActive") as Texture2D;
@@ -107,6 +111,7 @@ public class PlayerGUI : MonoBehaviour
             //DrawScoreboard();
             //DrawHotkeyHelperIcons();
             DrawXPBar();
+            DrawSpellcastTimer();
         }
     }
 
@@ -195,6 +200,15 @@ public class PlayerGUI : MonoBehaviour
         }
         GUI.DrawTexture(new Rect(leftMargin, topMargin, width, height), elements["ActionSocketBezel"]);
 
+    }
+
+    void DrawSpellcastTimer()
+    {
+        if (!controller.IsCasting) return;
+        var castLength = inputManager.spellBeingCast.castTime;
+        var currentProgress = inputManager.spellCastProgress;
+
+        GUI.Label(new Rect(50, 59, 200, 200), currentProgress.ToString() + " / " + castLength.ToString());
     }
 
     private void DrawLevel()

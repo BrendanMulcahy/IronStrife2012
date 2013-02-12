@@ -24,5 +24,31 @@ public class PlayerInputManager : MonoBehaviour {
     public Vector3 targetClickLocation;
 
     public bool spellButton = false;
+    /// <summary>
+    /// The current spell being cast
+    /// </summary>
     public Spell spellBeingCast;
+
+    /// <summary>
+    /// The time so far spent casting the current spell. When this reaches the spell's cast time, the spell is cast.
+    /// </summary>
+    public float spellCastProgress = 0f;
+
+    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+    {
+        if (stream.isWriting)
+        {
+            int spell = (int)spellBeingCast;
+            stream.Serialize(ref spell);
+            stream.Serialize(ref spellCastProgress);
+        }
+        else
+        {
+            int spell = 0;
+            stream.Serialize(ref spell);
+            spellBeingCast = (Spell)spell;
+
+            stream.Serialize(ref spellCastProgress);
+        }
+    }
 }

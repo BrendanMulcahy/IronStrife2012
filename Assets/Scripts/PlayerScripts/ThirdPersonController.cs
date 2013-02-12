@@ -321,12 +321,15 @@ public class ThirdPersonController : MonoBehaviour, IController
     private IEnumerator SelfSpellCastTimer(Spell spell)
     {
         isCasting = true;
+        inputManager.spellCastProgress = 0f;
+
         float startTime = Time.time;
         float endTime = startTime + spell.castTime;
         while (startTime < endTime)
         {
             yield return null;
             startTime += Time.deltaTime;
+            inputManager.spellCastProgress += Time.deltaTime;
             if (isMoving || IsJumping()) { isCasting = false; inputManager.spellButton = false; inputManager.spellBeingCast = null; yield break; }
         }
         characterStats.Mana.CurrentValue -= spell.manaCost;
@@ -363,12 +366,14 @@ public class ThirdPersonController : MonoBehaviour, IController
     private IEnumerator PointSpellCastTimer(Spell spell)
     {
         isCasting = true;
+        inputManager.spellCastProgress = 0f;
         float startTime = Time.time;
         float endTime = startTime + spell.castTime;
         while (startTime < endTime)
         {
             yield return null;
             startTime += Time.deltaTime;
+            inputManager.spellCastProgress += Time.deltaTime;
             if (isMoving || IsJumping()) { isCasting = false; inputManager.spellButton = false; inputManager.spellBeingCast = null; yield break; }
         }
 

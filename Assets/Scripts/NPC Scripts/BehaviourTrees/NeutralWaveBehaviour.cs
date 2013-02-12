@@ -17,5 +17,8 @@ public class NeutralWaveBehaviour : AIBehaviourTreeBuilder
         var assaultReqs = new LinkedList<TransitionRequirement>();
         chase.transitions.Add(new StateTransition(assault, assaultReqs));
         assaultReqs.AddLast(new EnemyVisibilityLost(this.gameObject));
+
+        this.GetComponent<NPC_AI>().SetInitialState(assault);
+
     }
 }

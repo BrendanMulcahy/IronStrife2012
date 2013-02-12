@@ -18,6 +18,7 @@ public class ControlPoint : MonoBehaviour
             var direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
             direction.Normalize();
             var locationToSpawn = this.transform.position + direction * NeutralSpawnRadius;
+            Debug.Log("Will spawn a neutral at " + locationToSpawn);
 
             var newNPC = NPCManager.Main.ServerSpawnNPC(npcType, locationToSpawn);
             newNPC.GetComponent<NeutralWaveBehaviour>().Target = this.gameObject;

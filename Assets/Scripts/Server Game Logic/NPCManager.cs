@@ -89,6 +89,15 @@ public class NPCManager : MonoBehaviour
     public GameObject ServerSpawnNPC(string type, Vector3 location)
     {
         var pos = Util.SampleFloorIncludingObjects(location);
+        bool collision = true;
+        while (collision)
+        {
+            if (Physics.CheckSphere(pos, 1.0f, 1 << 9 ))
+            {
+                pos = Util.SampleFloorIncludingObjects(pos + new Vector3(Random.Range(-.5f, .5f), 0, Random.Range(-.5f, .5f)).normalized * .2f);
+            }
+            else collision = false;
+        }
 
         GameObject newNPC = GameObject.Instantiate(Resources.Load("NPCs/" + type), pos, Quaternion.identity) as GameObject;
         NetworkViewID animationID = Network.AllocateViewID();

@@ -13,7 +13,10 @@ public class Assault : NPC_BehaviorState
         set
         {
             target = value;
-            npcController.SetTarget(value.transform);
+            if (GetComponent<NPC_AI>().CurrentState == this)
+            {
+                GetComponent<NPC_Controller>().SetTarget(value.transform);
+            }
         }
     }
 
@@ -24,7 +27,7 @@ public class Assault : NPC_BehaviorState
 
     public override void Enable()
     {
-
+        GetComponent<NPC_Controller>().SetTarget(target.transform);
     }
 
     public override void Disable()

@@ -54,6 +54,7 @@ public class PlayerGUI : MonoBehaviour
         elements["CastRed"] = Resources.Load("SpellIcons/CastRed") as Texture2D;
         elements["OneHandedRed"] = Resources.Load("GUI/OneHandedRed") as Texture2D;
 
+        elements["SpellcastForeground"] = Resources.Load("GUI/SpellcastForeground") as Texture2D;
 
         elements["Button"] = Resources.Load("GUI/Button") as Texture2D;
 
@@ -208,14 +209,16 @@ public class PlayerGUI : MonoBehaviour
         var castLength = inputManager.spellBeingCast.castTime;
         var currentProgress = inputManager.spellCastProgress;
 		var castPercentage = currentProgress/castLength;
-		
-		float leftMargin = 0.0557291666666667f * Screen.width;
-        float topmargin = (0.5576190476190476f + .05f) * Screen.height;
-        float width = Screen.width * 0.1901140684410646f;
+
         float height = 50;
+        float width = Screen.width * 0.1901140684410646f;
+        float leftMargin = Screen.width * .5f - width / 2;
+        float topmargin = Screen.height * .85f;
+
         //GUI.DrawTexture(new Rect(leftMargin, topmargin, width, height), elements["StaminaBackground"]);
-		GUI.color = Color.black;
-        GUI.DrawTexture(new Rect(leftMargin, topmargin,  castPercentage * width, height), elements["HealthForeground"]);
+		//GUI.color = Color.black;
+        GUI.DrawTexture(new Rect(leftMargin, topmargin, width, height), elements["HealthBackground"]);
+        GUI.DrawTexture(new Rect(leftMargin, topmargin,  castPercentage * width, height), elements["SpellcastForeground"]);
 
         //GUI.Label(new Rect(50, 59, 200, 200), currentProgress.ToString() + " / " + castLength.ToString());
     }

@@ -175,6 +175,11 @@ public class GameSettings
     private GUIStyle listStyle;
     private Vector2 scrollPosition = new Vector2();
 
+    public GameSettings()
+    {
+        Start();
+    }
+
     // Use this for initialization
     public void Start()
     {
@@ -196,13 +201,7 @@ public class GameSettings
         _castShadows = PlayerPrefs.GetString("castShadows", "true");
         _username = PlayerPrefs.GetString("username", "default_username");
 
-        resolutions = Screen.resolutions;
 
-        list = new GUIContent[resolutions.Length];
-        for (int g = 0; g < resolutions.Length; g++)
-        {
-            list[g] = new GUIContent(resolutions[g].width + " x " + resolutions[g].height + " @ " + resolutions[g].refreshRate + " Hz");
-        }
         // Make a GUIStyle that has a solid white hover/onHover background to indicate highlighted items
         listStyle = new GUIStyle();
         listStyle.normal.textColor = Color.white;
@@ -234,6 +233,7 @@ public class GameSettings
         PlayerPrefs.SetFloat("basemapDistance", 100);
         PlayerPrefs.SetString("castShadows", "true");
         PlayerPrefs.SetString("username", "default_username");
+        PlayerPrefs.SetInt("QualityLevel", 0);
     }
 
     /// <summary>
@@ -254,6 +254,7 @@ public class GameSettings
             terrain.basemapDistance = basemapDistance;
             terrain.castShadows = castShadows;
         }
+        ChangeToGraphicsDefault(PlayerPrefs.GetInt("QualityLevel", 0));
     }
     /// <summary>
     /// Handles key checks.
@@ -317,20 +318,20 @@ public class GameSettings
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Low"))
         {
-            ChangeToGraphicsDefault("Low");
+            ChangeToGraphicsDefault(1);
         }
         if (GUILayout.Button("Medium"))
         {
-            ChangeToGraphicsDefault("Medium");
+            ChangeToGraphicsDefault(3);
         }
         if (GUILayout.Button("High"))
         {
-            ChangeToGraphicsDefault("High");
+            ChangeToGraphicsDefault(4);
 
         }
         if (GUILayout.Button("Ultra"))
         {
-            ChangeToGraphicsDefault("Ultra");
+            ChangeToGraphicsDefault(5);
         }
         GUILayout.EndHorizontal();
         GUILayout.FlexibleSpace();
@@ -348,11 +349,12 @@ public class GameSettings
 
     }
 
-    private void ChangeToGraphicsDefault(string p)
+    private void ChangeToGraphicsDefault(int p)
     {
+        PlayerPrefs.SetInt("QualityLevel", p);
         switch (p)
         {
-            case "Low":
+            case 0:
                 QualitySettings.SetQualityLevel(0);
                 maxMeshTrees = 80;
                 treeDistance = 500;
@@ -360,7 +362,7 @@ public class GameSettings
                 treeCrossFadeLength = 50;
                 break;
 
-            case "Medium":
+            case 3:
                 QualitySettings.SetQualityLevel(3);
                 maxMeshTrees = 150;
                 treeDistance = 1000;
@@ -368,7 +370,7 @@ public class GameSettings
                 treeCrossFadeLength = 100;
                 break;
 
-            case "High":
+            case 4:
                 QualitySettings.SetQualityLevel(4);
                 maxMeshTrees = 500;
                 treeDistance = 2000;
@@ -376,7 +378,7 @@ public class GameSettings
                 treeCrossFadeLength = 200;
                 break;
 
-            case "Ultra":
+            case 5:
                 QualitySettings.SetQualityLevel(5);
                 maxMeshTrees = 500;
                 treeDistance = 2000;

@@ -18,6 +18,8 @@ public class EnemySearcher : MonoBehaviour {
             gameObject.layer = 16;
             sphere.isTrigger = true;
             sphere.radius = searchradius;
+            var rb = this.gameObject.AddComponent<Rigidbody>();
+            rb.isKinematic = true;
         }
         team = transform.root.gameObject.GetCharacterStats().TeamNumber;
 		StartCoroutine(CheckForClosestEnemy());

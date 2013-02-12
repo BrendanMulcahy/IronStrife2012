@@ -34,13 +34,13 @@ public class NPC_Controller : MonoBehaviour
     Vector3 moveDirection = new Vector3();
     Vector3 targetMoveDirection = new Vector3();
 
-    public Vector3 TargetMoveDirection
+    private Vector3 TargetMoveDirection
     {
         get { return targetMoveDirection; }
         set { targetMoveDirection = value; }
     }
 
-    public Vector3 MoveDirection
+    private Vector3 MoveDirection
     {
         get { return moveDirection; }
         set { moveDirection = value; }
@@ -91,6 +91,7 @@ public class NPC_Controller : MonoBehaviour
         //UpdatePath();
         //UpdateMoveDirection();
         //AvoidObstacles();
+        navMeshAgent.speed = stats.MoveSpeed.ModifiedValue;
     }
 
     private void UpdatePath()
@@ -141,7 +142,7 @@ public class NPC_Controller : MonoBehaviour
     /// <summary>
     /// Makes the NPC walk forward at its walk speed
     /// </summary>
-    public void Move()
+    private void Move()
     {
         if (motor.TotalImpactMagnitude >= .2f)
             return;

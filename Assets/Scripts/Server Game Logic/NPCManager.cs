@@ -7,9 +7,14 @@ public class NPCManager : MonoBehaviour
     public List<NPCRecord> NPCs = new List<NPCRecord>();
     public List<NPCSpawnCamp> spawnCamps = new List<NPCSpawnCamp>();
     public const float RESPAWNINTERVAL = 4.0f;
+    public const float NEUTRALWAVEINTERVAL = 6.0f;
     public bool debugMessages = false;
 
     private float lastSpawntime;
+
+    private List<ControlPoint> controlPoints = new List<ControlPoint>();
+    public event NeutralWaveEventHandler NeutralWaveSpawned;
+    private float lastNeutralWaveSpawnTime = 6.0f;
 
     public static NPCManager Main
     {
@@ -32,14 +37,47 @@ public class NPCManager : MonoBehaviour
         {
             TrySpawnNeutrals();
         }
+
+        if (IsNeutralWaveTime())
+        {
+            TrySpawnNeutralWaves();
+        }
+    }
+
+    private void TrySpawnNeutralWaves()
+    {
+        lastNeutralWaveSpawnTime = GameTime.CurrentTime;
+
+        foreach (ControlPoint cp in controlPoints)
+        {
+            cp.SpawnNeutralWave();
+        }
+    }
+
+    private bool IsNeutralWaveTime()
+    {
+        if (!GameTime.Main.isDay) return false;
+
+        if (GameTime.CurrentTime - lastNeutralWaveSpawnTime >= NEUTRALWAVEINTERVAL)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void TrySpawnNeutrals()
     {
+        lastSpawntime = GameTime.CurrentTime; ;
+
         foreach (NPCSpawnCamp camp in spawnCamps)
         {
             camp.SpawnNeutrals();
         }
+    }
+
+    internal void AddControlPoint(ControlPoint controlPoint)
+    {
+        controlPoints.Add(controlPoint);
     }
 
     /// <summary>
@@ -95,7 +133,6 @@ public class NPCManager : MonoBehaviour
         if (currentTime - lastSpawntime >= RESPAWNINTERVAL)
         {
             if (debugMessages) { Debug.Log("It is time to spawn neutrals: " + GameTime.CurrentTime); }
-            lastSpawntime = currentTime;
             return true;
         }
 
@@ -117,4 +154,11 @@ public class NPCRecord
     public GameObject gameObject;
     public NetworkViewID animationViewID;
     public NetworkViewID transformViewID;
+}
+
+public delegate void NeutralWaveEventHandler(NeutralWaveEventArgs e);
+
+public class NeutralWaveEventArgs
+{
+    public GameObject target;
 }

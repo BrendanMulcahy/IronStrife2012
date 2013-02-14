@@ -23,7 +23,6 @@ public class Chase : NPC_BehaviorState
         {
             if (npcAI.Searcher.enemiesNearby.Count > 0)
             {
-
                 npcController.SetTarget(npcAI.Searcher.enemiesNearby[0].transform);
             }
         }

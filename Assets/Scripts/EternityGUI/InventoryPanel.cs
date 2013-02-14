@@ -41,11 +41,11 @@
 
             inventoryPanel.Resize(inventoryPanel.width, inventoryPanel.width);
 
-            var itemGrid = GridContainer.Create(new Vector3(), new Vector2(inventoryPanel.width /2 - 50, inventoryPanel.height - 30), 3, 3);
+            var itemGrid = GridContainer.Create(new Vector3(), new Vector2(64*3, 64*3), 3, 3);
             inventoryPanel.itemGrid = itemGrid;
             itemGrid.resizeElementsToFit = true;
             inventoryPanel.AddContainer(itemGrid);
-            itemGrid.transform.position = new Vector3(inventoryPanel.width / 2 + 25, 15, EternityUtil.GetElementLayer(itemGrid.gameObject)).ScreenToViewport();
+            itemGrid.transform.position = new Vector3(inventoryPanel.width / 2 + 64 * 1.5f, inventoryPanel.height / 2 - 64 * 1.5f, EternityUtil.GetElementLayer(itemGrid.gameObject)).ScreenToViewport();
             itemGrid.transform.localScale = new Vector3(1, 1, 1);
             foreach (Item i in inventoryPanel.inventory.Items)
             {
@@ -98,6 +98,7 @@
         private void AddItemToGrid(Item i)
         {
             var itemElement = ItemElement.Create(i);
+            itemElement.preserveAspectRatio = false;
             itemGrid.AddChild(itemElement);
             itemElement.Click += ItemButton_Click;
             itemElement.Dropped += itemElement_Dropped;

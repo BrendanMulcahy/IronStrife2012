@@ -14,16 +14,22 @@ public class NPC_Controller : MonoBehaviour
 
     public void SetTarget(Vector3 location)
     {
-        this.targetLocation = location; 
-        this.targetTransform = null; 
-        UpdatePath();
+        if (this.targetLocation != location)
+        {
+            this.targetLocation = location;
+            this.targetTransform = null;
+            UpdatePath();
+        }
     }
 
     public void SetTarget(Transform transform)
     {
-        this.targetTransform = transform; 
-        this.targetLocation = new Vector3(); 
-        UpdatePath();
+        if (this.targetTransform != transform)
+        {
+            this.targetTransform = transform;
+            this.targetLocation = new Vector3();
+            UpdatePath();
+        }
     }
 
     public float MoveSpeed
@@ -72,6 +78,7 @@ public class NPC_Controller : MonoBehaviour
         StopAllCoroutines();
         collider.enabled = false;
         gameObject.GetPlayerMotor().enabled = false;
+        this.enabled = false;
     }
 
     void stats_Damaged(GameObject sender, DamageEventArgs e)
@@ -89,20 +96,16 @@ public class NPC_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //UpdatePath();
-        //UpdateMoveDirection();
-        //AvoidObstacles();
+        UpdatePath();
         navMeshAgent.speed = stats.MoveSpeed.ModifiedValue;
     }
 
     private void UpdatePath()
     {
-        navMeshAgent.ResetPath();
+        var pos = targetTransform ? targetTransform.position : targetLocation;
 
-        if (targetTransform != null)
-            navMeshAgent.SetDestination(targetTransform.position);
-        else
-            navMeshAgent.SetDestination(targetLocation);
+        navMeshAgent.SetDestination(pos);
+
 
     }
 
@@ -167,6 +170,7 @@ public class NPC_Controller : MonoBehaviour
 
     private IEnumerator SwingAttack()
     {
+        Debug.Log("Attacking.");
         navMeshAgent.Stop();
         SendMessage("StartAttacking", SendMessageOptions.DontRequireReceiver);
         var swingLength = stats.attackLength;

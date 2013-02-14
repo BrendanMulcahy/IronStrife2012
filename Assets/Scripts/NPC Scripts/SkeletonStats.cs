@@ -7,7 +7,7 @@ public class SkeletonStats : NPCStats
         base.Start();
         Died += SkeletonStats_Died;
         reward = new KillReward(500, 500);
-        attackRange = 1.5f;
+        attackRange = 2.3f;
         teamNumber = 0;
     }
 

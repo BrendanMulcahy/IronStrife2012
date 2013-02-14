@@ -69,7 +69,6 @@ public class MainMenu : MonoBehaviour
         windowFunctions.Push(MainWindow);
 
         gs = new GameSettings();
-        gs.Start();
 
         audio.clip = mainMenuSong;
         audio.loop = true;

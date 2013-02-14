@@ -8,8 +8,8 @@ public class NPC_Controller : MonoBehaviour
     float moveSpeed;
     NPCStats stats;
 
-    Vector3 targetLocation;
-    Transform targetTransform;
+    public Vector3 targetLocation;
+    public Transform targetTransform;
     private NavMeshAgent navMeshAgent;
 
     public void SetTarget(Vector3 location)

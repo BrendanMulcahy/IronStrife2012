@@ -44,6 +44,14 @@ public class NPCManager : MonoBehaviour
         }
     }
 
+    void OnNeutralWaveSpawn()
+    {
+        if (NeutralWaveSpawned != null)
+        {
+            NeutralWaveSpawned(new NeutralWaveEventArgs());
+        }
+    }
+
     private void TrySpawnNeutralWaves()
     {
         lastNeutralWaveSpawnTime = GameTime.CurrentTime;

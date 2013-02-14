@@ -34,6 +34,7 @@ public class GameSettings
             _maxMeshTrees = value;
             terrain.treeMaximumFullLODCount = value;
             PlayerPrefs.SetInt("maxMeshTrees", value);
+            UpdateGraphicsSettings();
         }
     }
 
@@ -47,6 +48,7 @@ public class GameSettings
             _treeDistance = value;
             terrain.treeDistance = value;
             PlayerPrefs.SetFloat("treeDistance", value);
+            UpdateGraphicsSettings();
         }
     }
 
@@ -60,6 +62,7 @@ public class GameSettings
             _treeBillboardDistance = value;
             terrain.treeBillboardDistance = value;
             PlayerPrefs.SetFloat("treeBillboardDistance", value);
+            UpdateGraphicsSettings();
         }
     }
 
@@ -73,6 +76,7 @@ public class GameSettings
             _treeCrossFadeLength = value;
             terrain.treeCrossFadeLength = value;
             PlayerPrefs.SetFloat("treeCrossFadeLength", value);
+            UpdateGraphicsSettings();
         }
     }
 
@@ -86,6 +90,7 @@ public class GameSettings
             _detailObjectDistance = value;
             terrain.detailObjectDistance = value;
             PlayerPrefs.SetFloat("detailObjectDistance", value);
+            UpdateGraphicsSettings();
         }
     }
 
@@ -99,6 +104,7 @@ public class GameSettings
             _detailObjectDensity = value;
             terrain.detailObjectDensity = value;
             PlayerPrefs.SetFloat("detailObjectDensity", value);
+            UpdateGraphicsSettings();
         }
     }
 
@@ -112,6 +118,7 @@ public class GameSettings
             _heightmapPixelError = value;
             terrain.heightmapPixelError = value;
             PlayerPrefs.SetFloat("heightmapPixelError", value);
+            UpdateGraphicsSettings();
         }
     }
 
@@ -125,6 +132,7 @@ public class GameSettings
             _heightmapMaximumLOD = value;
             terrain.heightmapMaximumLOD = value;
             PlayerPrefs.SetInt("heightmapMaximumLOD", value);
+            UpdateGraphicsSettings();
         }
     }
 
@@ -138,6 +146,7 @@ public class GameSettings
             _basemapDistance = value;
             terrain.basemapDistance = value;
             PlayerPrefs.SetFloat("basemapDistance", value);
+            UpdateGraphicsSettings();
         }
     }
 
@@ -151,6 +160,7 @@ public class GameSettings
             _castShadows = value.ToString();
             terrain.castShadows = value;
             PlayerPrefs.SetString("castShadows", value.ToString());
+            UpdateGraphicsSettings();
         }
 
     }
@@ -162,7 +172,11 @@ public class GameSettings
         set
         {
             _username = value;
-            PlayerPrefs.SetString("username", value);
+            if (value != PlayerPrefs.GetString("username", "default_username"))
+            {
+                PlayerPrefs.SetString("username", value);
+                UpdateGraphicsSettings();
+            }
         }
     }
 
@@ -216,7 +230,7 @@ public class GameSettings
 
 
         // This section sets all of the terrain's graphics options to the user's settings.
-        UpdateGraphicsSettings();
+        ChangeToGraphicsDefault(PlayerPrefs.GetInt("QualityLevel", 0));
 
     }
 
@@ -229,7 +243,7 @@ public class GameSettings
         PlayerPrefs.SetFloat("detailObjectDistance", 100);
         PlayerPrefs.SetFloat("detailObjectDensity", .4f);
         PlayerPrefs.SetFloat("heightMapPixelError", 100);
-        PlayerPrefs.SetInt("heightmapMaximumLOD", 1);
+        PlayerPrefs.SetInt("heightmapMaximumLOD", 0);
         PlayerPrefs.SetFloat("basemapDistance", 100);
         PlayerPrefs.SetString("castShadows", "true");
         PlayerPrefs.SetString("username", "default_username");
@@ -250,11 +264,10 @@ public class GameSettings
             terrain.detailObjectDistance = detailObjectDistance;
             terrain.detailObjectDensity = detailObjectDensity;
             terrain.heightmapPixelError = heightmapPixelError;
-            terrain.heightmapMaximumLOD = heightmapMaximumLOD;
+            //terrain.heightmapMaximumLOD = heightmapMaximumLOD;
             terrain.basemapDistance = basemapDistance;
             terrain.castShadows = castShadows;
         }
-        ChangeToGraphicsDefault(PlayerPrefs.GetInt("QualityLevel", 0));
     }
     /// <summary>
     /// Handles key checks.
@@ -345,45 +358,46 @@ public class GameSettings
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
 
-        UpdateGraphicsSettings();
+        //UpdateGraphicsSettings();
 
     }
 
     private void ChangeToGraphicsDefault(int p)
     {
+        Debug.Log("Setting graphics quality to " + p + " / 5");
         PlayerPrefs.SetInt("QualityLevel", p);
+        QualitySettings.SetQualityLevel(p);
         switch (p)
         {
             case 0:
-                QualitySettings.SetQualityLevel(0);
                 maxMeshTrees = 80;
                 treeDistance = 500;
                 treeBillboardDistance = 1000;
                 treeCrossFadeLength = 50;
+                heightmapMaximumLOD = 0;
                 break;
 
             case 3:
-                QualitySettings.SetQualityLevel(3);
                 maxMeshTrees = 150;
                 treeDistance = 1000;
                 treeBillboardDistance = 2000;
                 treeCrossFadeLength = 100;
+                heightmapMaximumLOD = 0;
                 break;
 
             case 4:
-                QualitySettings.SetQualityLevel(4);
                 maxMeshTrees = 500;
                 treeDistance = 2000;
                 treeBillboardDistance = 2000;
-                treeCrossFadeLength = 200;
+                treeCrossFadeLength = 0;
+
                 break;
 
             case 5:
-                QualitySettings.SetQualityLevel(5);
                 maxMeshTrees = 500;
                 treeDistance = 2000;
                 treeBillboardDistance = 2000;
-                treeCrossFadeLength = 200;
+                treeCrossFadeLength = 0;
                 break;
         }
     }

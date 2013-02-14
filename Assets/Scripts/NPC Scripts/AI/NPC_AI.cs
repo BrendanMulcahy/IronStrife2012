@@ -58,7 +58,7 @@ public class NPC_AI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (currentState == null) return;
+        if (currentState == null) return;
         currentState.Run();
         TransitionState();
     }
@@ -77,19 +77,19 @@ public class NPC_AI : MonoBehaviour
             }
         }
     }
-	
-	    private void AddEnemySearcher()
+
+    private void AddEnemySearcher()
     {
         var sphereGO = new GameObject("EnemySearcher");
         sphereGO.layer = 16;
         sphereGO.transform.SetParentAndCenter(gameObject.transform);
         var searcher = sphereGO.AddComponent<EnemySearcher>();
-		enemySearcher = searcher;
+        enemySearcher = searcher;
     }
-	
-	public void SetInitialState(NPC_BehaviorState behavior)
-	{
+
+    public void SetInitialState(NPC_BehaviorState behavior)
+    {
         this.currentState = behavior;
         currentState.Enable();
-	}
+    }
 }

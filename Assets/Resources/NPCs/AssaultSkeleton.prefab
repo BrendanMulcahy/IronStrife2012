@@ -1296,7 +1296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33cd9eb4c4685d8409a61cd8e64a2999, type: 3}
   m_Name: 
   attackRange: 1.5
-  attackLength: 1.5
+  attackDuration: 1.5
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1

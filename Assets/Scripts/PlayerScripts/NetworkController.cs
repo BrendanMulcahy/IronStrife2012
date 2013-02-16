@@ -99,7 +99,6 @@ public class NetworkController : MonoBehaviour
         {
             if (Input.GetKeyDown(abilityManager.spellButtons[i]) && abilityManager.equippedSpells[i] != -1)
             {
-                Debug.Log("You are pressing a bound spell button.");
                 targetController.spellBeingCast = (Spell)abilityManager.equippedSpells[i];
                 targetController.spellButton = true;
                 networkView.RPC("SendSpellCastInfo", RPCMode.Server, abilityManager.equippedSpells[i]);

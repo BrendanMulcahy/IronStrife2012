@@ -25,7 +25,7 @@ public class AbilityManager : MonoBehaviour
         if (knownSpells.Count == 0)
         {
             knownSpells.Add(PlayerAbilities.GetSpell("Surge"));
-            knownSpells.Add(PlayerAbilities.GetSpell("Clearsight"));
+            knownSpells.Add(PlayerAbilities.GetSpell("Frost Blast"));
             knownSpells.Add(PlayerAbilities.GetSpell("Flameburst"));
             knownSpells.Add(PlayerAbilities.GetSpell("Magic Platform"));
             knownSpells.Add(PlayerAbilities.GetSpell("Magic Hook"));

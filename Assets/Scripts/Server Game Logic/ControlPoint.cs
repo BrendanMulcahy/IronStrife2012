@@ -33,7 +33,7 @@ public class ControlPoint : MonoBehaviour
         foreach (GameObject go in guardSpawnLocations)
         {
             var pos = go.transform.position;
-            NPCManager.Main.ServerSpawnNPC(guardType, pos);
+            NPCManager.Main.ServerSpawnNPC(guardType, pos, this.transform.rotation);
         }
     }
 }

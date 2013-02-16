@@ -211,7 +211,6 @@ public static class Util
         }
         else
         {
-            Debug.LogError("Couldn't find a spawn location at " + position + ". Moving search upwards 25 units.");
             return SampleFloorIncludingObjects(position + Vector3.up * 25f);
 
             //Debug.LogError("Sample floor failed at " + position);

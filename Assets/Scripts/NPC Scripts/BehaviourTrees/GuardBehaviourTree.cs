@@ -18,6 +18,7 @@ public class GuardBehaviourTree : AIBehaviourTreeBuilder
         LinkedList<TransitionRequirement> chaseToGuardRequirement = new LinkedList<TransitionRequirement>();
         chase.transitions.Add(new StateTransition(guard, chaseToGuardRequirement));
         chaseToGuardRequirement.AddLast(new DistanceFromLocation(this.transform.position, this.transform, 60f));
+        chaseToGuardRequirement.AddLast(new EnemyVisibilityLost(this.gameObject));
 
 
         //set initial state to wander

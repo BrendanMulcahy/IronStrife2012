@@ -28,10 +28,32 @@ public abstract class PointAreaSpell : Spell, IPointSpell, IAreaEffectSpell
         }
         spellObj.transform.position = targetPoint;
 
+        var casterTeam = caster.GetTeamNumber();
+
         var objectsInRange = Physics.OverlapSphere(targetPoint, this.Radius, 1 << 9);
         foreach (Collider other in objectsInRange)
         {
-            ApplyEffectsToTarget(caster, other.transform.root.gameObject, targetPoint);
+            switch (AffectType)
+            {
+
+                case SpellAffectType.All:
+                    ApplyEffectsToTarget(caster, other.transform.root.gameObject, targetPoint);
+                    break;
+
+                case SpellAffectType.Enemies:
+                    if (other.gameObject.GetTeamNumber() != casterTeam)
+                        ApplyEffectsToTarget(caster, other.transform.root.gameObject, targetPoint);
+                    break;
+
+                case SpellAffectType.Neutrals:
+                    if (other.gameObject.GetTeamNumber() == 0)
+                        ApplyEffectsToTarget(caster, other.transform.root.gameObject, targetPoint);
+                    break;
+                case SpellAffectType.Allies:
+                    if (other.gameObject.GetTeamNumber() == casterTeam)
+                        ApplyEffectsToTarget(caster, other.transform.root.gameObject, targetPoint);
+                    break;
+            }
         }
     }
 

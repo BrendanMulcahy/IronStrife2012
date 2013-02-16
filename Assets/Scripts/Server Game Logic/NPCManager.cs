@@ -103,7 +103,7 @@ public class NPCManager : MonoBehaviour
     /// <param name="type"></param>
     /// <param name="location"></param>
     /// <param name="zone"></param>
-    public GameObject ServerSpawnNPC(string type, Vector3 location)
+    public GameObject ServerSpawnNPC(string type, Vector3 location, Quaternion rotation = new Quaternion())
     {
         var pos = Util.SampleFloorIncludingObjects(location);
         bool collision = true;
@@ -116,7 +116,7 @@ public class NPCManager : MonoBehaviour
             else { collision = false;}
         }
 
-        GameObject newNPC = GameObject.Instantiate(Resources.Load("NPCs/" + type), pos, Quaternion.identity) as GameObject;
+        GameObject newNPC = GameObject.Instantiate(Resources.Load("NPCs/" + type), pos, rotation) as GameObject;
         NetworkViewID animationID = Network.AllocateViewID();
         NetworkViewID transformID = Network.AllocateViewID();
         newNPC.GetComponents<NetworkView>()[0].viewID = transformID;

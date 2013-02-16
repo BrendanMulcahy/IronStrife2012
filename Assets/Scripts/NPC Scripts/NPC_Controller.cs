@@ -12,6 +12,8 @@ public class NPC_Controller : MonoBehaviour
     public Transform targetTransform;
     private NavMeshAgent navMeshAgent;
 
+    bool canMove = true;
+
     public void SetTarget(Vector3 location)
     {
         if (this.targetLocation != location)
@@ -88,16 +90,16 @@ public class NPC_Controller : MonoBehaviour
 
     private IEnumerator StopMovingForSeconds(float time)
     {
-        navMeshAgent.Stop();
+        canMove = false;
         yield return new WaitForSeconds(time);
-        navMeshAgent.Resume();
+        canMove = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdatePath();
-        navMeshAgent.speed = stats.MoveSpeed.ModifiedValue;
+        navMeshAgent.speed = canMove ? stats.MoveSpeed.ModifiedValue : 0;
     }
 
     private void UpdatePath()
@@ -170,17 +172,16 @@ public class NPC_Controller : MonoBehaviour
 
     private IEnumerator SwingAttack()
     {
-        Debug.Log("Attacking.");
-        navMeshAgent.Stop();
+        canMove = false;
         SendMessage("StartAttacking", SendMessageOptions.DontRequireReceiver);
-        var swingLength = stats.attackLength;
+        var swingLength = stats.attackDuration;
         yield return new WaitForSeconds(swingLength * .25f);
         GetComponentInChildren<WeaponCollider>().StartSwingCollisionChecking();
 
         yield return new WaitForSeconds(swingLength * .45f);
         GetComponentInChildren<WeaponCollider>().StopSwingCollisionChecking();
         SendMessage("StopAttacking", SendMessageOptions.DontRequireReceiver);
-        navMeshAgent.Resume();
+        canMove = true;
         yield break;
     }
 }

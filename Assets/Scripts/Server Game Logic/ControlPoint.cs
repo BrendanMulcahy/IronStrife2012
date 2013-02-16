@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class ControlPoint : MonoBehaviour
 {
     public float NeutralSpawnRadius = 100f;
     public int numNPCsPerWave = 25;
     public string npcType = "AssaultSkeleton";
+    public string guardType = "GuardNPC";
+
+    public List<GameObject> guardSpawnLocations = new List<GameObject>();
 
     void OnMasterGameLogicAdded()
     {
@@ -21,6 +25,15 @@ public class ControlPoint : MonoBehaviour
 
             var newNPC = NPCManager.Main.ServerSpawnNPC(npcType, locationToSpawn);
             newNPC.GetComponent<NeutralWaveBehaviour>().Target = this.gameObject;
+        }
+    }
+
+    internal void SpawnGuards()
+    {
+        foreach (GameObject go in guardSpawnLocations)
+        {
+            var pos = go.transform.position;
+            NPCManager.Main.ServerSpawnNPC(guardType, pos);
         }
     }
 }

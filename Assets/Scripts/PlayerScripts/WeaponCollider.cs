@@ -8,6 +8,7 @@ public class WeaponCollider : MonoBehaviour
     /// </summary>
     public bool isActive = false;
     ArrayList gameObjectsHitThisSwing;
+    int teamNumber;
 
     void Start () 
     {
@@ -15,6 +16,7 @@ public class WeaponCollider : MonoBehaviour
         gameObjectsHitThisSwing = new ArrayList();
         collider.isTrigger = true;
         gameObject.layer = 17;
+        teamNumber = this.gameObject.GetTeamNumber();
     }
 
     public void StartSwingCollisionChecking()
@@ -34,7 +36,10 @@ public class WeaponCollider : MonoBehaviour
 
             if (!gameObjectsHitThisSwing.Contains(other.transform.root))
             {
-                ApplyWeaponHitting(other);
+                if (other.gameObject.GetTeamNumber() != this.teamNumber)
+                {
+                    ApplyWeaponHitting(other);
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ public class EnemySearcher : MonoBehaviour {
 	public float searchradius = 20f;
 
     private int team;
+    private CharacterStats stats;
 	
 	// Use this for initialization
 	void Awake () {
@@ -23,11 +24,12 @@ public class EnemySearcher : MonoBehaviour {
         }
         team = transform.root.gameObject.GetCharacterStats().TeamNumber;
 		StartCoroutine(CheckForClosestEnemy());
+        stats = transform.root.gameObject.GetCharacterStats();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        team = stats.TeamNumber;
 	}
 	
 	void OnTriggerEnter(Collider other)

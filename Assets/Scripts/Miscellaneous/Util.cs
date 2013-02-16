@@ -209,7 +209,28 @@ public static class Util
         {
             return hit.point + new Vector3(0, .05f, 0);
         }
-        else return new Vector3();
+        else
+        {
+            Debug.LogError("Couldn't find a spawn location at " + position + ". Moving search upwards 25 units.");
+            return SampleFloorIncludingObjects(position + Vector3.up * 25f);
+
+            //Debug.LogError("Sample floor failed at " + position);
+            //return new Vector3();
+        }
+    }
+
+    public static Vector3 SampleNavMesh(Vector3 targetPos)
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(targetPos, out hit, 1000f, ~0))
+        {
+            return hit.position;
+        }
+        else
+        {
+            Debug.LogError("No position was found near the NavMesh at " + targetPos);
+            return new Vector3();
+        }
     }
 
     internal static IEnumerator DestroyInSeconds(UnityEngine.Object toDestroy, float p)
@@ -551,12 +572,12 @@ public static class Util
             var baseVal = stat.baseValue;
             var previousVal = baseVal;
             stream.Serialize(ref baseVal);
-            stat.ChangeBaseValue(baseVal - previousVal);
+            stat.IncrementBaseValue(baseVal - previousVal);
 
             var mod = stat.ModifiedValue;
             var previous = mod;
             stream.Serialize(ref mod);
-            stat.ChangeModifierValue(mod - previous);
+            stat.IncrementModifierValue(mod - previous);
         }
     }
 
@@ -568,5 +589,20 @@ public static class Util
         {
             return PlayerManager.Main.FindRecord(go).networkPlayer;
         }
+    }
+
+    /// <summary>
+    /// Gets the team number of a given game object. Returns -1 if the object isn't associated with a team.
+    /// </summary>
+    /// <param name="go"></param>
+    /// <returns></returns>
+    public static int GetTeamNumber(this GameObject go)
+    {
+        var stats = go.transform.root.gameObject.GetCharacterStats();
+        if (stats)
+        {
+            return stats.TeamNumber;
+        }
+        else return -1;
     }
 }

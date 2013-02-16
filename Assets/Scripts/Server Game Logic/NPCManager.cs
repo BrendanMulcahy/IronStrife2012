@@ -29,6 +29,7 @@ public class NPCManager : MonoBehaviour
         spawnCamps = FindObjectsOfType(typeof(NPCSpawnCamp)).Cast<NPCSpawnCamp>().ToList();
         lastSpawntime = GameTime.CurrentTime;
         TrySpawnNeutrals();
+        TrySpawnGuards();
     }
 
     void Update()
@@ -52,7 +53,7 @@ public class NPCManager : MonoBehaviour
         }
     }
 
-    private void TrySpawnNeutralWaves()
+    internal void TrySpawnNeutralWaves()
     {
         lastNeutralWaveSpawnTime = GameTime.CurrentTime;
 
@@ -83,6 +84,14 @@ public class NPCManager : MonoBehaviour
         }
     }
 
+    private void TrySpawnGuards()
+    {
+        foreach (ControlPoint cp in controlPoints)
+        {
+            cp.SpawnGuards();
+        }
+    }
+
     internal void AddControlPoint(ControlPoint controlPoint)
     {
         controlPoints.Add(controlPoint);
@@ -100,11 +109,11 @@ public class NPCManager : MonoBehaviour
         bool collision = true;
         while (collision)
         {
-            if (Physics.CheckSphere(pos, 1.0f, 1 << 9 ))
+            if (Physics.CheckSphere(pos, 1.0f, 1 << 9))
             {
                 pos = Util.SampleFloorIncludingObjects(pos + new Vector3(Random.Range(-.5f, .5f), 0, Random.Range(-.5f, .5f)).normalized * .2f);
             }
-            else collision = false;
+            else { collision = false;}
         }
 
         GameObject newNPC = GameObject.Instantiate(Resources.Load("NPCs/" + type), pos, Quaternion.identity) as GameObject;

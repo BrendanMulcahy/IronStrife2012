@@ -73,7 +73,7 @@ public class PlayerStats : CharacterStats
         Strength = new StrengthStat(0);
         Strength.ModifiedValueChanged += Health.Strength_Changed;
         Strength.BaseValueChanged += Health.Strength_Changed;
-        Strength.ChangeBaseValue(10);
+        Strength.IncrementBaseValue(10);
 
         MoveSpeed = new MoveSpeedStat(10.0f);
         Agility = new AgilityStat(0);
@@ -81,12 +81,12 @@ public class PlayerStats : CharacterStats
         Agility.BaseValueChanged += Stamina.Agility_Changed;
         Agility.ModifiedValueChanged += MoveSpeed.Agility_Changed;
         Agility.BaseValueChanged += MoveSpeed.Agility_Changed;
-        Agility.ChangeBaseValue(10);
+        Agility.IncrementBaseValue(10);
 
         Intelligence = new IntelligenceStat(0);
         Intelligence.ModifiedValueChanged += Mana.Intelligence_Changed;
         Intelligence.BaseValueChanged += Mana.Intelligence_Changed;
-        Intelligence.ChangeBaseValue(10);
+        Intelligence.IncrementBaseValue(10);
 
         PhysicalDefense = new PhysicalDefense(0);
         MagicalDefense = new MagicalDefense(0);
@@ -167,13 +167,13 @@ public class PlayerStats : CharacterStats
         switch (type)
         {
             case 0:
-                Strength.ChangeBaseValue(1);
+                Strength.IncrementBaseValue(1);
                 break;
             case 1:
-                Agility.ChangeBaseValue(1);
+                Agility.IncrementBaseValue(1);
                 break;
             case 2:
-                Intelligence.ChangeBaseValue(1);
+                Intelligence.IncrementBaseValue(1);
                 break;
         }
         unusedStatPoints--;
@@ -298,9 +298,9 @@ public class PlayerStats : CharacterStats
     void LevelUp()
     {
         Level++;
-        Strength.ChangeBaseValue(1);
-        Agility.ChangeBaseValue(1);
-        Intelligence.ChangeBaseValue(1);
+        Strength.IncrementBaseValue(1);
+        Agility.IncrementBaseValue(1);
+        Intelligence.IncrementBaseValue(1);
         unusedStatPoints += 2;
 
         //	Debug.Log(this.gameObject.name + " has leveled up.");
@@ -321,9 +321,9 @@ public class PlayerStats : CharacterStats
     void ClientLevelUp(int newExperience)
     {
         Level++;
-        Strength.ChangeBaseValue(5);
-        Agility.ChangeBaseValue(5);
-        Intelligence.ChangeBaseValue(5);
+        Strength.IncrementBaseValue(5);
+        Agility.IncrementBaseValue(5);
+        Intelligence.IncrementBaseValue(5);
         unusedStatPoints += 2;
 
         experience = newExperience;

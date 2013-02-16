@@ -16,7 +16,7 @@ public abstract class BuffableStat
     {
         name = this.GetType().Name;
         this.baseValue = 0;
-        ChangeBaseValue(baseValue);
+        IncrementBaseValue(baseValue);
     }
 
     /// <summary>
@@ -30,7 +30,11 @@ public abstract class BuffableStat
 
     public BuffableStat() { }
 
-    public virtual void ChangeModifierValue(int value)
+    /// <summary>
+    /// Increments the modifier value of this stat by the given amount.
+    /// </summary>
+    /// <param name="value"></param>
+    public virtual void IncrementModifierValue(int value)
     {
         if (this.ModifiedValueChanged != null)
         {
@@ -40,7 +44,11 @@ public abstract class BuffableStat
 
     }
 
-    public virtual void ChangeBaseValue(int value)
+    /// <summary>
+    /// Increments the base value of this stat by the given amount.
+    /// </summary>
+    /// <param name="value"></param>
+    public virtual void IncrementBaseValue(int value)
     {
         if (this.BaseValueChanged != null)
         {

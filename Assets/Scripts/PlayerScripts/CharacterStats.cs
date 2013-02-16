@@ -42,7 +42,7 @@ public class CharacterStats : MonoBehaviour
         if ((Health = GetComponent<Health>()) == null)
             Health = gameObject.AddComponent<Health>();
         Health.SetInitialValues(50, 50);
-
+     
         if ((Mana = GetComponent<Mana>()) == null)
             Mana = gameObject.AddComponent<Mana>();
         Mana.SetInitialValues(50, 50);
@@ -60,7 +60,13 @@ public class CharacterStats : MonoBehaviour
 
     protected virtual void Start() 
     {
+        Died += Died_RewardPlayers;
 
+    }
+
+    private void Died_RewardPlayers(GameObject deadUnit, UnitDiedEventArgs e)
+    {
+        RewardPlayersInArea(e.deathPosition, e.killer, e.reward);
     }
 
     /// <summary>
@@ -120,7 +126,7 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    protected virtual void OnDeath(UnitDiedEventArgs unitDiedEventArgs)
+    private void OnDeath(UnitDiedEventArgs unitDiedEventArgs)
     {
         if (Died != null)
         {

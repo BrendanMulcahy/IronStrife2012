@@ -1,10 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class NPCGenericAnimation : MonoBehaviour
 {
     public NPCAnimationState state;
     private Animation ani;
     private NavMeshAgent navMeshAgent;
+
+    private Dictionary<AnimationName, string> _aniNames = new Dictionary<AnimationName, string>();
+    public Dictionary<AnimationName, string> aniNames { get { return _aniNames; } }
+
+    public enum AnimationName
+    {
+        Run,
+        Die,
+        Attack,
+        GetHit,
+        Idle,
+    }
 
     void Start()
     {
@@ -40,24 +53,24 @@ public class NPCGenericAnimation : MonoBehaviour
         {
 
             case NPCAnimationState.Moving:
-                ani.CrossFade("run", .2f);
+                ani.CrossFade(aniNames[AnimationName.Run], .2f);
                 break;
 
             case NPCAnimationState.Dying:
-                ani.CrossFade("die", .2f);
+                ani.CrossFade(aniNames[AnimationName.Die], .2f);
                 break;
 
             case NPCAnimationState.Attacking:
-                ani.CrossFade("attack", .2f);
+                ani.CrossFade(aniNames[AnimationName.Attack], .2f);
                 break;
 
             case NPCAnimationState.Flinching:
-                ani.CrossFade("gethit", .01f);
+                ani.CrossFade(aniNames[AnimationName.GetHit], .01f);
                 break;
 
             case NPCAnimationState.Idle:
             default:
-                ani.CrossFade("idle", .2f);
+                ani.CrossFade(aniNames[AnimationName.Idle], .2f);
                 break;
 
         }
@@ -65,7 +78,7 @@ public class NPCGenericAnimation : MonoBehaviour
 
     public void StartAttacking()
     {
-        ani.CrossFade("attack", .1f);
+        ani.CrossFade(aniNames[AnimationName.Attack], .1f);
         state = NPCAnimationState.Attacking;
     }
 
@@ -76,14 +89,14 @@ public class NPCGenericAnimation : MonoBehaviour
 
     private void StartFlinchingAnimation()
     {
-        ani.CrossFade("gethit", .01f);
+        ani.CrossFade(aniNames[AnimationName.GetHit], .01f);
         state = NPCAnimationState.Flinching;
         Invoke("SetIdle", .5f);
     }
 
     private void StartDyingAnimation()
     {
-        ani.CrossFade("die", .01f);
+        ani.CrossFade(aniNames[AnimationName.Die], .2f);
         state = NPCAnimationState.Dying;
     }
 

@@ -247,7 +247,13 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
             animationPrefix = "Idle";
         }
         if (!IsCasting)
-            animation.Stop("IdleConjure");
+        {
+            if (animation.IsPlaying("IdleConjure"))
+            {
+                animation.Stop("IdleConjure");
+                networkView.RPC("StopConjure", RPCMode.Others);
+            }
+        }
         
 
         //Priority of Animations for player
@@ -393,6 +399,7 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
     private void DidLand()
     {
         firstLandFrame = true;
+        networkView.RPC("SyncDidLand", RPCMode.Others);
     }
 
     /// <summary>

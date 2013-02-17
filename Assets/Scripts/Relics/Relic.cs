@@ -46,6 +46,16 @@ public class Relic : InteractableObject
             var buff = stats.gameObject.AddComponent(teamBuffName);
             ((RelicBuff)buff).Relic = this;
         }
+
+        if (Network.isServer)
+        {
+            player.GetCharacterStats().Died += RelicHolder_Died;
+        }
+    }
+
+    void RelicHolder_Died(GameObject deadUnit, UnitDiedEventArgs e)
+    {
+        networkView.RPC("CommitDropRelic", RPCMode.All);
     }
 
     [RPC]
@@ -57,6 +67,8 @@ public class Relic : InteractableObject
     [RPC]
     void CommitDropRelic()
     {
+        if (!this.isPickedUp) return;
+
         var player = this.transform.root.gameObject;
 
         isPickedUp = false;

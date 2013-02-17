@@ -11,18 +11,18 @@ using System.Collections;
 public class NetworkSyncAnimation : MonoBehaviour {
 
     private List<string> animationList;
+    bool isFirstLandFrame = false;
+    private int currentAnimation = 0;
+    private int lastAnimation = 0;
+    public string curAni;
 
     void Start()
     {
         if (this.animation.GetClipCount() == 0 )
             ThirdPersonSimpleAnimation.InitializeAnimation(this.animation);
         animationList = Util.GetAnimationList(GetComponent<Animation>().animation);
+        
     }
-
-	private int currentAnimation = 0;
-	private int lastAnimation = 0;
-
-    public string curAni;
 	
 	public void SyncAnimation(String animationValue)
 	{
@@ -35,6 +35,13 @@ public class NetworkSyncAnimation : MonoBehaviour {
 	void Update () {
         if (animationList == null)
             animationList = Util.GetAnimationList(GetComponent<Animation>().animation);
+
+        if (isFirstLandFrame)
+        {
+            isFirstLandFrame = false;
+            animation.CrossFade("RunJumpLand", .05f);
+            return;
+        }
 
         curAni = (String)animationList[currentAnimation];
 		if (lastAnimation != currentAnimation)
@@ -61,5 +68,16 @@ public class NetworkSyncAnimation : MonoBehaviour {
 		}	
 	}
 
+    [RPC]
+    void SyncDidLand()
+    {
+        isFirstLandFrame = true;
+    }
+
+    [RPC]
+    void StopConjure()
+    {
+        animation.Stop("IdleConjure");
+    }
 
 }

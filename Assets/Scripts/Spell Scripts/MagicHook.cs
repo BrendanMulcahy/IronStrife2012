@@ -79,7 +79,7 @@ public class MagicHookEffect : MonoBehaviour
             return;
         }
 
-        if (other.GetComponent<CharacterController>())
+        if (other.GetComponent<CharacterController>() || other.tag == "Relic")
             StartCoroutine(BeginPullingObject(other.gameObject));
         else
             StartCoroutine(BeginGrapplingToLocation(this.transform.position));

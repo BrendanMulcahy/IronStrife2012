@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -141,6 +142,10 @@ public class PlayerManager : MonoBehaviour
         return null;
     }
 
+    internal List<PlayerRecord> GetPlayersOnTeam(int team)
+    {
+        return players.Where(rec => rec.team == team).ToList();
+    }
 
     internal GameObject GetPlayerGameObject(NetworkPlayer player)
     {

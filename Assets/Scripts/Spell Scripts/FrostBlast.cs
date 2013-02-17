@@ -45,11 +45,11 @@ public class FrostSlow : Buff
 
     protected override void AddBuffEffects()
     {
-        this.gameObject.GetCharacterStats().MoveSpeed.ChangeModifierValue(-5f);
+        this.gameObject.GetCharacterStats().MoveSpeed.IncrementModifierValue(-5f);
     }
 
     protected override void RemoveBuffEffects()
     {
-        this.gameObject.GetCharacterStats().MoveSpeed.ChangeModifierValue(5f);
+        this.gameObject.GetCharacterStats().MoveSpeed.IncrementModifierValue(5f);
     }
 }

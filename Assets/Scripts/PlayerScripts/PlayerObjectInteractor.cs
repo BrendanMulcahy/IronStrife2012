@@ -35,10 +35,17 @@ public class PlayerObjectInteractor : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            var relic = this.GetComponentInChildren<Relic>();
+            if (relic)
+            {
+                relic.networkView.RPCToServer("TryDropRelic");
+            }
+
             if (selectedGO)
             {
                 selectedGO.GetComponent<InteractableObject>().InteractWith(this.gameObject);
             }
+
         }
     }
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using System.Linq;
 
-[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerOwnerEnabled)]
+[PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerOwnerEnabled, PlayerScriptType.ServerDisabled)]
 public class NetworkController : MonoBehaviour
 {
     public PlayerInputManager targetController;

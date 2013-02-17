@@ -36,7 +36,7 @@ public class GameConnect : MonoBehaviour
     void PlayerDisconnected(NetworkViewID viewID)
     {
         GameObject player = viewID.GetGameObject();
-        player.SendMessage("PlayerDisconnected");
+        player.SendMessage("PlayerDisconnected", SendMessageOptions.DontRequireReceiver);
         Destroy(player);
 
     }
@@ -105,7 +105,7 @@ public class GameConnect : MonoBehaviour
         Debug.Log(msg.sender);
         foreach (PlayerRecord pr in PlayerManager.Main.players)
         {
-            networkView.RPC("SpawnCharacter", pr.networkPlayer, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);
+            networkView.RPC("SpawnCharacter", msg.sender, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);
         }
     }
 
@@ -137,8 +137,9 @@ public class GameConnect : MonoBehaviour
 
         foreach (PlayerRecord rec in PlayerManager.Main.players)
         {
-            if (rec != pr)
+            if (rec != pr && rec.networkPlayer != Network.player)
             {
+                Debug.Log("rec.networkPlayer = " + rec.networkPlayer);
                 networkView.RPC("SpawnCharacter", rec.networkPlayer, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);
             }
         }

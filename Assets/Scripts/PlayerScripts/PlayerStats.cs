@@ -7,7 +7,8 @@ public class PlayerStats : CharacterStats
 {
     public string username = "default_username";
     public int experience = 0;
-    public int Level { get; set; }
+    private int _level;
+    public int Level { get { return _level; } set { _level = value; } }
     public int experienceNeeded;
     public int unusedStatPoints = 0;
 
@@ -15,7 +16,7 @@ public class PlayerStats : CharacterStats
     public AgilityStat Agility { get; set; }
     public IntelligenceStat Intelligence { get; set; }
 
-    static int[] experiencePerLevel = { 1000, 2000, 3000, 5000, 8000, 13000 };
+    static int[] experiencePerLevel = { 1000, 2000, 3000, 5000, 8000, 13000, 21000, 34000, 55000 };
 
     public event PlayerRespawnedEventHandler Respawned;
     public bool canRespawn;
@@ -380,6 +381,7 @@ public class PlayerStats : CharacterStats
     protected override void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
         base.OnSerializeNetworkView(stream, info);
+        stream.Serialize(ref _level);
 
         stream.SerializeBuffableStat(Strength);
         stream.SerializeBuffableStat(Agility);

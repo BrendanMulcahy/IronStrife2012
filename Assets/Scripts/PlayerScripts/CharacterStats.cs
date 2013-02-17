@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// Base class for handling health, mana, stamina, regeneration
@@ -161,9 +162,7 @@ public class CharacterStats : MonoBehaviour
         else teamNumber = killer.GetCharacterStats().TeamNumber;
 
         List<GameObject> playersToReward = new List<GameObject>();
-        List<GameObject> teamPlayers;
-        if (teamNumber == 1) teamPlayers = MasterGameLogic.Main.PlayerManager.goodPlayers;
-        else teamPlayers = MasterGameLogic.Main.PlayerManager.evilPlayers;
+        var teamPlayers = PlayerManager.Main.GetPlayersOnTeam(teamNumber).Select(x => x.gameObject);
 
         foreach (GameObject teamMate in teamPlayers)
         {
@@ -244,9 +243,16 @@ public class CharacterStats : MonoBehaviour
 
     protected virtual void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
+        stream.Serialize(ref teamNumber);
+
         stream.SerializeRegeneratingStat(Health);
         stream.SerializeRegeneratingStat(Mana);
         stream.SerializeRegeneratingStat(Stamina);
+
+        stream.SerializeBuffableStat(PhysicalDefense);
+        stream.SerializeBuffableStat(MagicalDefense);
+
+        stream.SerializeMoveSpeed(MoveSpeed);
 
     }
 

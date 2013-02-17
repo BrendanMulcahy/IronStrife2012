@@ -15,7 +15,7 @@
     {
         name = this.GetType().Name;
         this.baseValue = 0;
-        ChangeBaseValue(baseValue);
+        IncrementBaseValue(baseValue);
     }
 
     public event FloatChangedEventHandler BaseChanged;
@@ -23,7 +23,7 @@
 
     public MoveSpeedStat() { }
 
-    public virtual void ChangeModifierValue(float value)
+    public virtual void IncrementModifierValue(float value)
     {
         if (this.Changed != null)
         {
@@ -33,7 +33,7 @@
 
     }
 
-    public virtual void ChangeBaseValue(float value)
+    public virtual void IncrementBaseValue(float value)
     {
         if (this.BaseChanged != null)
         {
@@ -45,7 +45,7 @@
     internal void Agility_Changed(UnityEngine.GameObject sender, StatChangedEventArgs e)
     {
         var difference = e.newValue - e.oldValue;
-        this.ChangeModifierValue(difference * AgilityStat.moveSpeedPerAgility);
+        this.IncrementModifierValue(difference * AgilityStat.moveSpeedPerAgility);
     }
 
     public override string ToString()

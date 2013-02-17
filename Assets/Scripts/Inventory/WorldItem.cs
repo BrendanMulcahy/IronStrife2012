@@ -6,6 +6,9 @@
 [RequireComponent(typeof(NetworkView))]
 public class WorldItem : InteractableObject
 {
+    /// <summary>
+    /// The name of the item
+    /// </summary>
     public string itemName;
     public Item item;
 

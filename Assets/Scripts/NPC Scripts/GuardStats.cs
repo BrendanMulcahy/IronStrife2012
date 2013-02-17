@@ -8,7 +8,7 @@ public class GuardStats : NPCStats
         Health.SetInitialValues(250, 250);
         PhysicalDefense.IncrementBaseValue(25);
         MagicalDefense.IncrementBaseValue(15);
-        MoveSpeed.ChangeBaseValue(10.0f - MoveSpeed.baseValue);
+        MoveSpeed.IncrementBaseValue(10.0f - MoveSpeed.baseValue);
 
         reward = new KillReward(2000, 1000);
         attackRange = 2.3f;

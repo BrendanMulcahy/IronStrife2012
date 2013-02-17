@@ -580,6 +580,30 @@ public static class Util
         }
     }
 
+    public static void SerializeMoveSpeed(this BitStream stream, MoveSpeedStat stat)
+    {
+        if (stream.isWriting)
+        {
+            var baseVal = stat.baseValue;
+            stream.Serialize(ref baseVal);
+
+            var mod = stat.ModifiedValue;
+            stream.Serialize(ref mod);
+        }
+        else
+        {
+            var baseVal = stat.baseValue;
+            var previousVal = baseVal;
+            stream.Serialize(ref baseVal);
+            stat.IncrementBaseValue(baseVal - previousVal);
+
+            var mod = stat.ModifiedValue;
+            var previous = mod;
+            stream.Serialize(ref mod);
+            stat.IncrementModifierValue(mod - previous);
+        }
+    }
+
     public static NetworkPlayer GetNetworkPlayer(this GameObject go)
     {
         if (Network.isClient) return new NetworkPlayer();

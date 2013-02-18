@@ -9,6 +9,20 @@ public class WeaponCollider : MonoBehaviour
     public bool isActive = false;
     ArrayList gameObjectsHitThisSwing;
     int teamNumber;
+    /// <summary>
+    /// Number of targets that can be hit in one swing.
+    /// </summary>
+    int maxCleaveLevel = 1;
+    
+    /// <summary>
+    /// Number of targets hit in the current swing.
+    /// </summary>
+    int currentCleavelLevel = 0;
+
+    /// <summary>
+    /// Amount damage is reduced for each cleave target.
+    /// </summary>
+    //float cleaveReduction = .75f;
 
     void Start () 
     {
@@ -22,6 +36,8 @@ public class WeaponCollider : MonoBehaviour
     public void StartSwingCollisionChecking()
     {
         isActive = true;
+        currentCleavelLevel = 0;
+        teamNumber = this.gameObject.GetTeamNumber();
         gameObjectsHitThisSwing = new ArrayList();
     }
 
@@ -56,6 +72,9 @@ public class WeaponCollider : MonoBehaviour
         if (dr = other.transform.root.gameObject.GetDamageReceiver())
         {
             dr.ApplyHit(transform.root.gameObject);
+            currentCleavelLevel++;
+            if (currentCleavelLevel >= maxCleaveLevel)
+                StopSwingCollisionChecking();
         }
     }
 

@@ -38,6 +38,14 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
+    public virtual int RangedDamageModifier
+    {
+        get
+        {
+            return 0;
+        }
+    }
+
     protected virtual void Awake()
     {
         if ((Health = GetComponent<Health>()) == null)

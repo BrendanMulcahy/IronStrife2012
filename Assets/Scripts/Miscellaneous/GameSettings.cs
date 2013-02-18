@@ -364,7 +364,6 @@ public class GameSettings
 
     private void ChangeToGraphicsDefault(int p)
     {
-        Debug.Log("Setting graphics quality to " + p + " / 5");
         PlayerPrefs.SetInt("QualityLevel", p);
         QualitySettings.SetQualityLevel(p);
         switch (p)

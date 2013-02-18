@@ -16,5 +16,10 @@ public class AgilityStat : BuffableStat
     /// </summary>
     public const int staminaPerAgility = 5;
 
+    /// <summary>
+    /// The amount of ranged damage given by Agility per point
+    /// </summary>
+    public const int rangedDamagePerAgility = 1;
+
     public AgilityStat(int amount) : base(amount) { }
 }

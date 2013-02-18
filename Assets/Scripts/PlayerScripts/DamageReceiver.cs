@@ -36,4 +36,18 @@ public class DamageReceiver : MonoBehaviour {
             characterStats.ApplyDamage(attacker, damage);
         }
     }
+
+    internal void ApplyRangedHit(GameObject attacker)
+    {
+        if (this.enabled)
+        {
+            var attackerStats = attacker.GetCharacterStats();
+            var totalDamageMod = attackerStats.RangedDamageModifier;
+
+            var damage = new Damage(totalDamageMod, attacker, attacker.transform.position, DamageType.Physical);
+
+
+            characterStats.ApplyDamage(attacker, damage);
+        }
+    }
 }

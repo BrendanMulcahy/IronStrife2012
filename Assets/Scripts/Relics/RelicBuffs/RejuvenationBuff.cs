@@ -20,8 +20,8 @@ public class RejuvenationBuff : RelicBuff
     {
         while (true)
         {
-            stats.ApplyHealing(relic.gameObject, (int)(stats.Health.MaxValue * .02f));   //Restore 2% of the player's HP per second.
-            yield return new WaitForSeconds(1.0f);
+            stats.ApplyHealing(relic.gameObject, (int)(stats.Health.MaxValue * .1f));   //Restore 10% of the player's HP per 5 seconds.
+            yield return new WaitForSeconds(5.0f);
         }
     }
 }

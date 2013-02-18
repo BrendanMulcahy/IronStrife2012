@@ -7,8 +7,6 @@ public class NPCSpawnCamp : MonoBehaviour {
     public GameObject neutralType;
     //public Collider spawnZone;
     public string enemyType = "SkeletonGuard";
-
-    public bool debugMessages = false;
     public int amountToSpawn = 3;
 
     private LinkedList<GameObject> charactersWithinArea = new LinkedList<GameObject>();
@@ -33,22 +31,6 @@ public class NPCSpawnCamp : MonoBehaviour {
     private bool CanSpawn()
     {
         bool canSpawn = charactersWithinArea.Count == 0;
-
-        if (debugMessages)
-        {
-            if (canSpawn)
-            {
-                Debug.Log("Can spawn neutrals.");
-            }
-            else
-            {
-                foreach (GameObject go in charactersWithinArea)
-                {
-                    Debug.Log(go.name + " is in the spawn zone.");
-                }
-            }
-        }
-
         return canSpawn;
     }
 

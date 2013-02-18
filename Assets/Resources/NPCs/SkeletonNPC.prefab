@@ -1262,6 +1262,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f17b33da0b389f46afef3f1bf0c2bad, type: 3}
   m_Name: 
+  targetLocation: {x: 0, y: 0, z: 0}
+  targetTransform: {fileID: 0}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1284,7 +1286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33cd9eb4c4685d8409a61cd8e64a2999, type: 3}
   m_Name: 
   attackRange: 1.5
-  attackLength: 1.5
+  attackDuration: 1.5
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1469,7 +1471,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100076}
   m_Enabled: 1
-  m_StateSynchronization: 1
+  m_StateSynchronization: 2
   m_Observed: {fileID: 11400020}
   m_ViewID:
     m_ID: 0
@@ -1481,7 +1483,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100076}
   m_Enabled: 1
-  m_StateSynchronization: 1
+  m_StateSynchronization: 2
   m_Observed: {fileID: 11100000}
   m_ViewID:
     m_ID: 0

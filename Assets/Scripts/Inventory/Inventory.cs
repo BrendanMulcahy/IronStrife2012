@@ -10,13 +10,14 @@ using System;
 /// Contains information about currently equipped weapons, armor, shield, etc.
 /// Also contains a reference to the inventory panel.
 /// </summary>
-public class Inventory : MonoBehaviour
+public class Inventory : StrifeScriptBase
 {
 
     /// <summary>
     /// The list of items that a player currently owns.
     /// </summary>
     public List<Item> Items { get; set; }
+    public bool IsFull { get { return Items.Count == 9; } }
 
     public Item this[int index]
     {
@@ -233,6 +234,7 @@ public class Inventory : MonoBehaviour
     [RPC]
     public void TryPurchaseItem(string itemName, NetworkViewID shopID, NetworkMessageInfo msg)
     {
+        if (IsFull) return;
         var itemToPurchase = ItemFactory.Get(itemName);
         if (itemToPurchase.goldCost <= this._gold)
         {

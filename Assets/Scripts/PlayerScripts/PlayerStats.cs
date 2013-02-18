@@ -37,6 +37,16 @@ public class PlayerStats : CharacterStats
         }
     }
 
+    public override int RangedDamageModifier
+    {
+        get
+        {
+            if (inventory.currentWeapon == null) Debug.Log("weapon is null");
+            if (Agility == null) Debug.Log("Agility is null");
+            return Agility.ModifiedValue * AgilityStat.rangedDamagePerAgility + inventory.currentWeapon.damage;
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();

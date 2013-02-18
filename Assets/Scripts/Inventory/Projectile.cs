@@ -55,7 +55,7 @@ public class Projectile : MonoBehaviour {
         collider.enabled = false;
         var dr = other.transform.root.GetComponent<DamageReceiver>();
         if (dr!=null)
-            dr.ApplyHit(creator.gameObject);
+            dr.ApplyRangedHit(creator.gameObject);
         this.enabled = false;
         this.stuckIn = other.gameObject;
         this.transform.parent = other.transform;

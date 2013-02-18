@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class InteractableObject : MonoBehaviour
+public abstract class InteractableObject : StrifeScriptBase
 {
     /// <summary>
     /// The distance at which an object can be interacted with.

@@ -36,6 +36,10 @@ public class EquippableItem : Item
     public string equipLocationPath;
     // TODO : Replace this with a smart tag system for equip locations. Automatically find a child with some tag and equip an item to that location.
 
+    [NonSerialized]
+    [XmlIgnore]
+    public GameObject worldObject;
+
     /// <summary>
     /// Use this item from the inventory. AKA equip it to your player.
     /// </summary>
@@ -60,6 +64,7 @@ public class EquippableItem : Item
         itemGameObject.transform.localPosition = new Vector3(positionX, positionY, positionZ);
         itemGameObject.transform.localRotation = Quaternion.Euler(new Vector3(rotationX, rotationY, rotationZ));
         itemGameObject.layer = LayerMask.NameToLayer("Player");
+        worldObject = itemGameObject;
         return itemGameObject;
     }
 }

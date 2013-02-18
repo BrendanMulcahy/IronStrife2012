@@ -14,17 +14,15 @@ public class WorldItem : InteractableObject
 
     public override void InteractWith(GameObject player)
     {
-        if (Network.isServer)
-            ServerInteractWith(player.networkView.viewID);
-        else
-            networkView.RPC("ServerInteractWith", RPCMode.Server, player.networkView.viewID);
+        if (player.GetInventory().IsFull) PopupMessage.Display("Your inventory is full!", 0f);
+        networkView.RPCToServer("TryPickupItem", player.GetNetworkViewID());
     }
     
     [RPC]
-    void ServerInteractWith(NetworkViewID playerViewID)
+    void TryPickupItem(NetworkViewID playerViewID)
     {
         GameObject interactor = playerViewID.GetGameObject();
-
+        if (interactor.GetInventory().IsFull) return;
         if (item == null)
         {
             Debug.Log("This item doesn't have a viewID yet. Assigning one.");

@@ -100,24 +100,12 @@ public class DebugGUI : MonoBehaviour {
 		
 		Event e = Event.current;
 
-        if (consoleInputFieldFocused && e.type == EventType.keyDown && e.keyCode == KeyCode.UpArrow)
+        if (e.type == EventType.KeyUp)
         {
-            Debug.Log("moving history up");
-            if (selectedHistory == null)
-            {
-                selectedHistory = history.First;
-                if (selectedHistory != null)
-                {
-                    consoleInputField = selectedHistory.Value;
-                    return;
-                }
-            }
-            if (selectedHistory != null)
-            {
-                selectedHistory = selectedHistory.Next;
-                if (selectedHistory != null)
-                    consoleInputField = selectedHistory.Value;
-            }
+            if (e.keyCode == KeyCode.UpArrow)
+                MoveHistoryUp();
+            else if (e.keyCode == KeyCode.DownArrow)
+                MoveHistoryDown();
         }
 
 	    if (e.type == EventType.MouseDown && !window.Contains(e.mousePosition))
@@ -125,6 +113,34 @@ public class DebugGUI : MonoBehaviour {
 			consoleInputFieldFocused = false;
 	    }
 	}
+
+    private void MoveHistoryUp()
+    {
+        if (selectedHistory == null)
+            selectedHistory = history.First;
+        else
+            selectedHistory = selectedHistory.Next;
+
+        if (selectedHistory == null)
+            consoleInputField = "";
+        else
+            consoleInputField = selectedHistory.Value;
+
+        FocusInputField();
+    }
+
+    private void MoveHistoryDown()
+    {
+        if (selectedHistory == null) return;
+        else
+            selectedHistory = selectedHistory.Previous;
+
+        if (selectedHistory != null)
+            consoleInputField = selectedHistory.Value;
+
+        FocusInputField();
+
+    }
 
     private void TooltipWindow(int id)
     {
@@ -137,7 +153,7 @@ public class DebugGUI : MonoBehaviour {
         {
             if (consoleInputField.StartsWith("`"))
             {
-                consoleInputField = "";
+                ClearInputField();
             }
 
             mousePosition = Input.mousePosition;
@@ -148,6 +164,12 @@ public class DebugGUI : MonoBehaviour {
             BackQuotePressed();
         }
 	}
+
+    private void ClearInputField()
+    {
+        consoleInputField = "";
+        selectedHistory = null;
+    }
 
     private void BackQuotePressed()
     {
@@ -169,7 +191,7 @@ public class DebugGUI : MonoBehaviour {
     {
         visible = true;
         consoleInputFieldFocused = true;
-        consoleInputField = "";
+        ClearInputField();
     }
 		
 	void AddDebugLog(string message, string stackTrace)
@@ -264,12 +286,17 @@ public class DebugGUI : MonoBehaviour {
 		consoleInputField = GUILayout.TextField(consoleInputField);
 		if (consoleInputFieldFocused)
 		{
-			GUI.FocusControl("consoleInputField");
+            FocusInputField();
 		}
 	
 		GUI.DragWindow();
 	
 	}
+
+    private static void FocusInputField()
+    {
+        GUI.FocusControl("consoleInputField");
+    }
 	
 	void CloseDebugWindow()
 	{
@@ -280,6 +307,7 @@ public class DebugGUI : MonoBehaviour {
 	{
 		String command = consoleInputField;
 		ConsoleCommandSubmission consoleCommand = ParseCommand(command);
+        AddToHistory(command);
         if (consoleCommand.commandName == "help")
         {
             ShowHelp(consoleCommand.parameters);
@@ -296,8 +324,14 @@ public class DebugGUI : MonoBehaviour {
                 Debug.Log("Invalid command name.");
             }
         }
-		consoleInputField = "";
+        ClearInputField();
+
 	}
+
+    private void AddToHistory(String command)
+    {
+        history.AddFirst(command);
+    }
 
     private void ShowHelp(string[] parameters)
     {

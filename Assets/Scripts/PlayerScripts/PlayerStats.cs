@@ -221,8 +221,7 @@ public class PlayerStats : CharacterStats
                 networkView.RPC("BeginDying", this.gameObject.GetNetworkPlayer());
             }
         }
-        yield return new WaitForSeconds(8.0f);
-        transform.position = Vector3.zero;
+        yield break;
     }
 
     private void SetRespawnTimer()

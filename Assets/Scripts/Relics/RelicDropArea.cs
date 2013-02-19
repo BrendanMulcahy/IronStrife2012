@@ -9,6 +9,9 @@ public class RelicDropArea : MonoBehaviour
     /// </summary>
     public ControlPoint controlPoint;
 
+    private int particlesPerRelic = 50;
+    private float sizePerRelic = .15f;
+
     public List<Relic> relicsInArea = new List<Relic>();
 
     void Start()
@@ -43,8 +46,27 @@ public class RelicDropArea : MonoBehaviour
         if (relic)
         {
             relic.OnEnteredDropArea(this);
-            relicsInArea.Add(relic);
+            AddRelicToList(relic);
         }
+    }
+
+    /// <summary>
+    /// Adds a relic to the list of relics within this area, and changes the particle system's effects.
+    /// </summary>
+    /// <param name="relic"></param>
+    private void AddRelicToList(Relic relic)
+    {
+        relicsInArea.Add(relic);
+        var startSpeed = particleSystem.startSpeed;
+        for (int g = 1; g <= 4; g++)
+        {
+            particleSystem.startSpeed += startSpeed * g;
+            particleSystem.Emit(particlesPerRelic*4);
+            particleSystem.startSpeed -= startSpeed * g;
+        }
+        particleSystem.startSize += sizePerRelic;
+        particleSystem.emissionRate += particlesPerRelic;
+        particleSystem.Play();
     }
 
     void OnTriggerExit(Collider other)
@@ -53,8 +75,17 @@ public class RelicDropArea : MonoBehaviour
         if (relic && relicsInArea.Contains(relic))
         {
             relic.OnExitedDropArea();
-            relicsInArea.Remove(relic);
+            RemoveRelicFromList(relic);
         }
+    }
+
+    private void RemoveRelicFromList(Relic relic)
+    {
+        relicsInArea.Remove(relic);
+        particleSystem.startSize -= sizePerRelic;
+        particleSystem.emissionRate -= particlesPerRelic;
+
+
     }
 
 }

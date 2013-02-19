@@ -34,7 +34,6 @@ public class GameSettings
             _maxMeshTrees = value;
             terrain.treeMaximumFullLODCount = value;
             PlayerPrefs.SetInt("maxMeshTrees", value);
-            UpdateGraphicsSettings();
         }
     }
 
@@ -48,7 +47,6 @@ public class GameSettings
             _treeDistance = value;
             terrain.treeDistance = value;
             PlayerPrefs.SetFloat("treeDistance", value);
-            UpdateGraphicsSettings();
         }
     }
 
@@ -62,7 +60,6 @@ public class GameSettings
             _treeBillboardDistance = value;
             terrain.treeBillboardDistance = value;
             PlayerPrefs.SetFloat("treeBillboardDistance", value);
-            UpdateGraphicsSettings();
         }
     }
 
@@ -76,7 +73,6 @@ public class GameSettings
             _treeCrossFadeLength = value;
             terrain.treeCrossFadeLength = value;
             PlayerPrefs.SetFloat("treeCrossFadeLength", value);
-            UpdateGraphicsSettings();
         }
     }
 
@@ -90,7 +86,6 @@ public class GameSettings
             _detailObjectDistance = value;
             terrain.detailObjectDistance = value;
             PlayerPrefs.SetFloat("detailObjectDistance", value);
-            UpdateGraphicsSettings();
         }
     }
 
@@ -104,7 +99,6 @@ public class GameSettings
             _detailObjectDensity = value;
             terrain.detailObjectDensity = value;
             PlayerPrefs.SetFloat("detailObjectDensity", value);
-            UpdateGraphicsSettings();
         }
     }
 
@@ -118,7 +112,6 @@ public class GameSettings
             _heightmapPixelError = value;
             terrain.heightmapPixelError = value;
             PlayerPrefs.SetFloat("heightmapPixelError", value);
-            UpdateGraphicsSettings();
         }
     }
 
@@ -132,7 +125,6 @@ public class GameSettings
             _heightmapMaximumLOD = value;
             terrain.heightmapMaximumLOD = value;
             PlayerPrefs.SetInt("heightmapMaximumLOD", value);
-            UpdateGraphicsSettings();
         }
     }
 
@@ -146,7 +138,6 @@ public class GameSettings
             _basemapDistance = value;
             terrain.basemapDistance = value;
             PlayerPrefs.SetFloat("basemapDistance", value);
-            UpdateGraphicsSettings();
         }
     }
 
@@ -160,7 +151,6 @@ public class GameSettings
             _castShadows = value.ToString();
             terrain.castShadows = value;
             PlayerPrefs.SetString("castShadows", value.ToString());
-            UpdateGraphicsSettings();
         }
 
     }
@@ -175,7 +165,6 @@ public class GameSettings
             if (value != PlayerPrefs.GetString("username", "default_username"))
             {
                 PlayerPrefs.SetString("username", value);
-                UpdateGraphicsSettings();
             }
         }
     }
@@ -302,25 +291,6 @@ public class GameSettings
     public void SettingsWindow(int id)
     {
         scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-        //GUILayout.BeginVertical();
-        //GUILayout.Label("Max Trees : " + maxMeshTrees);
-        //maxMeshTrees = (int)GUILayout.HorizontalSlider(maxMeshTrees, 0, 10000);
-        //GUILayout.FlexibleSpace();
-        //GUILayout.Label("Tree Distance :" + treeDistance);
-        //treeDistance = GUILayout.HorizontalSlider(treeDistance, 0, 2000);
-        //GUILayout.FlexibleSpace();
-        //GUILayout.Label("Tree Billboard Distance :" + treeBillboardDistance);
-        //treeBillboardDistance = GUILayout.HorizontalSlider(treeBillboardDistance, 5, 2000);
-        //GUILayout.FlexibleSpace();
-        //GUILayout.Label("Tree Fade Distance :" + treeCrossFadeLength);
-        //treeCrossFadeLength = GUILayout.HorizontalSlider(treeCrossFadeLength, 0, 200);
-        //GUILayout.FlexibleSpace();
-        //GUILayout.Label("Grass Detail Distance :" + detailObjectDistance);
-        //detailObjectDistance = GUILayout.HorizontalSlider(detailObjectDistance, 0, 250);
-        //GUILayout.FlexibleSpace();
-        //GUILayout.Label("Grass Density :" + detailObjectDensity);
-        //detailObjectDensity = GUILayout.HorizontalSlider(detailObjectDensity, 0, 1);
-        //GUILayout.Space(25);
         GUILayout.BeginVertical();
         GUILayout.Space(20);
 
@@ -368,35 +338,33 @@ public class GameSettings
         QualitySettings.SetQualityLevel(p);
         switch (p)
         {
-            case 0:
-                maxMeshTrees = 80;
-                treeDistance = 500;
-                treeBillboardDistance = 1000;
-                treeCrossFadeLength = 50;
-                heightmapMaximumLOD = 0;
+            case 1:
+                maxMeshTrees = 20;
+                treeDistance = 400;
+                treeBillboardDistance = 40;
+                treeCrossFadeLength = 15;
                 break;
 
             case 3:
-                maxMeshTrees = 150;
-                treeDistance = 1000;
-                treeBillboardDistance = 2000;
-                treeCrossFadeLength = 100;
-                heightmapMaximumLOD = 0;
+                maxMeshTrees = 40;
+                treeDistance = 500;
+                treeBillboardDistance = 50;
+                treeCrossFadeLength = 15;
                 break;
 
             case 4:
-                maxMeshTrees = 500;
-                treeDistance = 2000;
-                treeBillboardDistance = 2000;
-                treeCrossFadeLength = 0;
+                maxMeshTrees = 60;
+                treeDistance = 600;
+                treeBillboardDistance = 60;
+                treeCrossFadeLength = 15;
 
                 break;
 
             case 5:
-                maxMeshTrees = 500;
-                treeDistance = 2000;
-                treeBillboardDistance = 2000;
-                treeCrossFadeLength = 0;
+                maxMeshTrees = 80;
+                treeDistance = 800;
+                treeBillboardDistance = 80;
+                treeCrossFadeLength = 15;
                 break;
         }
     }

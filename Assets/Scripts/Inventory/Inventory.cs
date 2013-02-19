@@ -228,6 +228,25 @@ public class Inventory : StrifeScriptBase
     }
 
     /// <summary>
+    /// Attempts to purchase the given item from the given shop.
+    /// </summary>
+    /// <param name="itemName"></param>
+    /// <param name="shopID"></param>
+    public void TryPurchaseItem(string itemName, NetworkViewID shopID)
+    {
+        var itemToPurchase = ItemFactory.Get(itemName);
+        if (itemToPurchase.goldCost <= this._gold)
+        {
+            ServerAddItemToInventory(itemName);
+            NetworkView.Find(shopID).RPC("ItemPurchasedSound", RPCMode.All);
+        }
+        else
+        {
+            InsufficientGoldMessage();
+        }
+    }
+
+    /// <summary>
     /// Called by a client, run on the server when a client attempts to purchase an item at a shop.
     /// </summary>
     /// <param name="itemname"></param>
@@ -244,25 +263,6 @@ public class Inventory : StrifeScriptBase
         else
         {
             networkView.RPC("InsufficientGoldMessage", msg.sender);
-        }
-    }
-
-    /// <summary>
-    /// Attempts to purchase the given item from the given shop.
-    /// </summary>
-    /// <param name="itemName"></param>
-    /// <param name="shopID"></param>
-    public void TryPurchaseItem(string itemName, NetworkViewID shopID)
-    {
-        var itemToPurchase = ItemFactory.Get(itemName);
-        if (itemToPurchase.goldCost <= this._gold)
-        {
-            ServerAddItemToInventory(itemName);
-            NetworkView.Find(shopID).RPC("ItemPurchasedSound", RPCMode.All);
-        }
-        else
-        {
-            InsufficientGoldMessage();
         }
     }
 

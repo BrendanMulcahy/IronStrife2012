@@ -37,6 +37,7 @@ public class Chase : NPC_BehaviorState
     private void StartSwinging()
     {
         isAttacking = true;
+        npcController.LookAtTarget(npcAI.Searcher.enemiesNearby[0].transform.position);
         npcController.BeginSwingAttack();
     }
 

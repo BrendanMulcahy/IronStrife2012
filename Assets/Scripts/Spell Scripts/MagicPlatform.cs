@@ -4,22 +4,6 @@ using UnityEngine;
 public class MagicPlatform : Spell, ISelfSpell
 {
 
-    public override string Name
-    {
-        get { return "Magic Platform"; }
-    }
-
-    public override SpellAffectType AffectType
-    {
-        get { return SpellAffectType.None; }
-    }
-
-    protected override void InitializeSpellValues()
-    {
-        manaCost = 40;
-        castTime = 0f;
-    }
-
     public void Execute(GameObject caster)
     {
         GameObject platform = GameObject.Instantiate(Resources.Load("SpellEffects/MagicPlatform")) as GameObject;

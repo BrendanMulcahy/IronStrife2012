@@ -57,5 +57,12 @@ public abstract class PointAreaSpell : Spell, IPointSpell, IAreaEffectSpell
         }
     }
 
-    public abstract float Radius { get; }
+    protected override void LoadSpellValuesFromXML(System.Xml.XmlAttributeCollection attributes)
+    {
+        base.LoadSpellValuesFromXML(attributes);
+        _radius = float.Parse(attributes["radius"].Value);
+    }
+
+    private float _radius = 1.0f;
+    public virtual float Radius { get { return _radius; } }
 }

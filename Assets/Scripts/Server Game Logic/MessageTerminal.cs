@@ -16,6 +16,13 @@ public class MessageTerminal : MonoBehaviour
         }
     }
 
+    private static GameObject itemDropEffect;
+
+    void Start()
+    {
+        itemDropEffect = Resources.Load("Items/WorldItems/DropEffect") as GameObject;
+    }
+
     [RPC]
     void SpawnNPC(string type, Vector3 position, NetworkViewID animationID, NetworkViewID transformID)
     {
@@ -23,6 +30,19 @@ public class MessageTerminal : MonoBehaviour
         GameObject newNPC = GameObject.Instantiate(Resources.Load("NPCs/" + type)) as GameObject;
         newNPC.GetComponents<NetworkView>()[0].viewID = transformID;
         newNPC.GetComponents<NetworkView>()[1].viewID = animationID;
+    }
+
+    [RPC]
+    void SpawnWorldItem(string itemName, NetworkViewID itemID, Vector3 position, NetworkViewID networkViewID)
+    {
+
+        var worldItemGO = Instantiate(WorldItem.GetWorldItemPrefab(itemName)) as GameObject;
+        var wi = worldItemGO.GetComponent<WorldItem>();
+        wi.itemName = itemName;
+        wi.item = ItemFactory.GetFromViewID(itemID, itemName);
+        wi.transform.position = position;
+        (Instantiate(itemDropEffect) as Transform).SetParentAndCenter(worldItemGO.transform);
+
     }
 
     [RPC]

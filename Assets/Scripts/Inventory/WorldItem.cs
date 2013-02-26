@@ -33,4 +33,15 @@ public class WorldItem : InteractableObject
         interactor.networkView.RPC("CommitAddToInventory", RPCMode.All, item.viewID, itemName);
         Network.Destroy(this.gameObject);
     }
+
+    public static GameObject GetWorldItemPrefab(string itemName)
+    {
+        GameObject worldItemPrefab = Resources.Load("Items/WorldItems/" + itemName) as GameObject;
+        if (!worldItemPrefab)
+        {
+            worldItemPrefab = Resources.Load("Items/WorldItems/PlaceholderItem") as GameObject;
+        }
+
+        return worldItemPrefab;
+    }
 }

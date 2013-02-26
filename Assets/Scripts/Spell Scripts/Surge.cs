@@ -2,26 +2,11 @@
 
 public class Surge : Spell, ISelfSpell
 {
-    public override string Name
-    {
-        get { return "Surge"; }
-    }
-
-    public override SpellAffectType AffectType
-    {
-        get { return SpellAffectType.Allies; }
-    }
-
     public void Execute(GameObject caster)
     {
         caster.AddComponent<SpeedBuff>().SetSource(caster);
     }
 
-    protected override void InitializeSpellValues()
-    {
-        this.castTime = 0.0f;
-        this.manaCost = 25;
-    }
 }
 
 public class SpeedBuff : Buff
@@ -45,6 +30,11 @@ public class SpeedBuff : Buff
     protected override float duration
     {
         get { return 5.0f; }
+    }
+
+    protected override bool DuplicateBuffAllowed()
+    {
+        return true;
     }
 
 }

@@ -14,24 +14,4 @@ public class Flameburst : PointAreaSpell
         }
     }
 
-    public override string Name
-    {
-        get { return "Flameburst"; }
-    }
-
-    public override SpellAffectType AffectType
-    {
-        get { return SpellAffectType.Enemies; }
-    }
-
-    protected override void InitializeSpellValues()
-    {
-        manaCost = 25;
-        castTime = 1.5f;
-    }
-
-    public override float Radius
-    {
-        get { return 15.0f; }
-    }
 }

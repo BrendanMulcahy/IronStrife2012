@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Spell name="Flameburst" manaCost="25" castTime="1.5" affectType="Enemies" radius="10.0" />

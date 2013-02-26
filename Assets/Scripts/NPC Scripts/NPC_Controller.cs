@@ -170,6 +170,11 @@ public class NPC_Controller : MonoBehaviour
         StartCoroutine(SwingAttack());
     }
 
+    public void LookAtTarget(Vector3 target)
+    {
+        
+    }
+
     private IEnumerator SwingAttack()
     {
         canMove = false;

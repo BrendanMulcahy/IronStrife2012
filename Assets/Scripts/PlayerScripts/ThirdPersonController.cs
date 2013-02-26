@@ -3,7 +3,7 @@ using System.Collections;
 using System.Linq;
 
 [PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerEnabled, PlayerScriptType.AllDisabled)]
-public class ThirdPersonController : MonoBehaviour, IController
+public class ThirdPersonController : StrifeScriptBase, IController
 {
 
     // The speed when walking
@@ -263,6 +263,15 @@ public class ThirdPersonController : MonoBehaviour, IController
         {
             if (inputManager.spellBeingCast.manaCost > characterStats.Mana.CurrentValue)
             {
+                PopupMessage.Display("You don't have enough mana!", 0.0f);
+                isCasting = false;
+                inputManager.spellButton = false;
+                inputManager.spellBeingCast = null;
+                return;
+            }
+            if (AbilityManager.IsOnCooldown(inputManager.spellBeingCast))
+            {
+                PopupMessage.Display("<color=red>" + inputManager.spellBeingCast.Name + "</color> is on cooldown for <color=red>" + AbilityManager.GetRemainingCooldownTime(inputManager.spellBeingCast) + "</color> more seconds!", 0.0f);
                 isCasting = false;
                 inputManager.spellButton = false;
                 inputManager.spellBeingCast = null;
@@ -336,12 +345,14 @@ public class ThirdPersonController : MonoBehaviour, IController
         if (spell is ISelfSpell)
         {
             ((ISelfSpell)spell).Execute(this.gameObject);
+            AbilityManager.PutOnCooldown(spell);
             if (Network.isServer)
                 networkView.RPC("SimulateISelfSpellExecute", RPCMode.Others, (int)spell);
         }
         else if (spell is ISelfSpellWithViewID)
         {
             ((ISelfSpellWithViewID)spell).Execute(this.gameObject, currentSpellView);
+            AbilityManager.PutOnCooldown(spell);
             if (Network.isServer)
                 networkView.RPC("SimulateISelfSpellWithViewIDExecute", RPCMode.Others, (int)spell, currentSpellView);
 
@@ -378,6 +389,7 @@ public class ThirdPersonController : MonoBehaviour, IController
         }
 
         characterStats.Mana.CurrentValue -= spell.manaCost;
+        AbilityManager.PutOnCooldown(spell);
         ((IPointSpell)spell).Execute(gameObject, inputManager.targetClickLocation);
         if (Network.isServer)
         networkView.RPC("SimulateIPointSpellExecute", RPCMode.Others, (int)spell, inputManager.targetClickLocation);
@@ -717,8 +729,8 @@ public class ThirdPersonController : MonoBehaviour, IController
         {
             if (inputManager.attackButton && inputManager.spellBeingCast != null && characterStats.Mana.CurrentValue >= inputManager.spellBeingCast.manaCost)
             {
-                if (inputManager.spellBeingCast == null) Debug.Log("spell being cast is null");
                     ((ITargetSpell)inputManager.spellBeingCast).Execute(this.gameObject, transform.forward, inputManager.homingTarget);
+                    AbilityManager.PutOnCooldown(inputManager.spellBeingCast);
                 if (Network.isServer)
                     networkView.RPC("SimulateITargetSpellExecute", RPCMode.Others, (int)inputManager.spellBeingCast, transform.forward, inputManager.homingTarget ? inputManager.homingTarget.GetNetworkViewID() : NetworkViewID.unassigned);
 

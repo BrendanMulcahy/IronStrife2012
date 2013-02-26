@@ -13,27 +13,6 @@ public class FrostBlast : PointAreaSpell
             target.AddComponent<FrostSlow>();
         }
     }
-
-    public override float Radius
-    {
-        get { return 10.0f; }
-    }
-
-    public override string Name
-    {
-        get { return "Frost Blast"; }
-    }
-
-    public override SpellAffectType AffectType
-    {
-        get { return SpellAffectType.Enemies; }
-    }
-
-    protected override void InitializeSpellValues()
-    {
-        manaCost = 35;
-        castTime = 1.0f;
-    }
 }
 
 public class FrostSlow : Buff
@@ -51,5 +30,10 @@ public class FrostSlow : Buff
     protected override void RemoveBuffEffects()
     {
         this.gameObject.GetCharacterStats().MoveSpeed.IncrementModifierValue(5f);
+    }
+
+    protected override bool DuplicateBuffAllowed()
+    {
+        return false;
     }
 }

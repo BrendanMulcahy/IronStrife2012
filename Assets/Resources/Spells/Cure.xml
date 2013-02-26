@@ -1,0 +1,7 @@
+<Spell
+name="Cure"
+manaCost="15"
+castTime="1.0"
+affectType="Enemies"
+
+/>

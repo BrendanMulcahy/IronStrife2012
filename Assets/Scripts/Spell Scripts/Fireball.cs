@@ -19,19 +19,5 @@ public class Fireball : ProjectileAreaEffectSpell
             stats.ApplyDamage(caster, new Damage(35, caster, effectLocation, DamageType.Magical));
     }
 
-    public override string Name
-    {
-        get { return "Fireball"; }
-    }
 
-    public override SpellAffectType AffectType
-    {
-        get { return SpellAffectType.Enemies; }
-    }
-
-    protected override void InitializeSpellValues()
-    {
-        manaCost = 25;
-        castTime = 2.0f;
-    }
 }

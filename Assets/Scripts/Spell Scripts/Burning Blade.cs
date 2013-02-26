@@ -2,23 +2,6 @@
 
 public class BurningBlade : Spell, ISelfSpell
 {
-
-    public override string Name
-    {
-        get { return "Burning Blade"; }
-    }
-
-    public override SpellAffectType AffectType
-    {
-        get { return SpellAffectType.Allies; }
-    }
-
-    protected override void InitializeSpellValues()
-    {
-        manaCost = 35;
-        castTime = 2.5f;
-    }
-
     public void Execute(GameObject caster)
     {
         caster.AddComponent<BurningBladeEffect>().SetSource(caster);

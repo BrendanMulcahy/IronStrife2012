@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 0
+  m_CurrentQuality: 5
   m_QualitySettings:
   - serializedVersion: 2
     name: Fastest
@@ -21,7 +21,7 @@ QualitySettings:
     softParticles: 0
     softVegetation: 0
     vSyncCount: 0
-    lodBias: .300000012
+    lodBias: .5
     maximumLODLevel: 0
     particleRaycastBudget: 4
     excludedTargetPlatforms: []
@@ -40,7 +40,7 @@ QualitySettings:
     softParticles: 0
     softVegetation: 0
     vSyncCount: 0
-    lodBias: .400000006
+    lodBias: .649999976
     maximumLODLevel: 0
     particleRaycastBudget: 16
     excludedTargetPlatforms: []
@@ -59,7 +59,7 @@ QualitySettings:
     softParticles: 0
     softVegetation: 0
     vSyncCount: 0
-    lodBias: .699999988
+    lodBias: .800000012
     maximumLODLevel: 0
     particleRaycastBudget: 64
     excludedTargetPlatforms: []

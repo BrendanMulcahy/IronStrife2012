@@ -12,19 +12,4 @@ public class Cure : Spell, ISelfSpell
         particle.transform.localPosition += Vector3.up * 1.7f;
     }
 
-    public override string Name
-    {
-        get { return "Cure"; }
-    }
-
-    public override SpellAffectType AffectType
-    {
-        get { return SpellAffectType.Allies; }
-    }
-
-    protected override void InitializeSpellValues()
-    {
-        manaCost = 15;
-        castTime = 1.5f;
-    }
 }

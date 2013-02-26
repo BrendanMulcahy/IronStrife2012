@@ -109,7 +109,7 @@ public class ControlPoint : MonoBehaviour
     {
         if (influence > 0 && controllingTeam != 1) controllingTeam = 1;
         else if (influence < 0 && controllingTeam != 2) controllingTeam = 2;
-        else if (controllingTeam != 0) controllingTeam = 0;
+        else if (influence == 0 && controllingTeam != 0) controllingTeam = 0;
     }
 
     private void DecayInfluence()
@@ -151,7 +151,8 @@ public class ControlPoint : MonoBehaviour
         foreach (GameObject go in guardSpawnLocations)
         {
             var pos = go.transform.position;
-            NPCManager.Main.ServerSpawnNPC(guardType, pos, this.transform.rotation);
+            var guard = NPCManager.Main.ServerSpawnNPC(guardType, pos, this.transform.rotation);
+            guard.GetCharacterStats().TeamNumber = this.controllingTeam;
         }
     }
 

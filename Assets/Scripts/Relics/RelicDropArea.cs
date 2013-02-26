@@ -11,6 +11,7 @@ public class RelicDropArea : MonoBehaviour
 
     private int particlesPerRelic = 50;
     private float sizePerRelic = .15f;
+    private new ParticleSystem particleSystem;
 
     public List<Relic> relicsInArea = new List<Relic>();
 
@@ -20,9 +21,21 @@ public class RelicDropArea : MonoBehaviour
         {
             AddDefaultCollider();
         }
+        if (!GetComponentInChildren<ParticleSystem>())
+        {
+            AddDefaultParticleSystem();
+        }
         this.gameObject.layer = 21;
 
         controlPoint.Captured += controlPoint_Captured;
+        particleSystem = this.gameObject.GetComponentInChildren<ParticleSystem>();
+    }
+
+    private void AddDefaultParticleSystem()
+    {
+        var prefab = Resources.Load("RelicDropEffect");
+        var go = Instantiate(prefab) as GameObject;
+        go.transform.SetParentAndCenter(this.transform);
     }
 
     void controlPoint_Captured(GameObject sender, ControlPointCapturedEventArgs e)

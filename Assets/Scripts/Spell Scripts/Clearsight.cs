@@ -3,23 +3,6 @@ using System.Linq;
 
 public class Clearsight : Spell, ISelfSpell
 {
-
-    public override string Name
-    {
-        get { return "Clearsight"; }
-    }
-
-    public override SpellAffectType AffectType
-    {
-        get { return SpellAffectType.Allies; }
-    }
-
-    protected override void InitializeSpellValues()
-    {
-        manaCost = 25;
-        castTime = 2.0f;
-    }
-
     public void Execute(GameObject caster)
     {
         caster.AddComponent<ClearsightBuff>();

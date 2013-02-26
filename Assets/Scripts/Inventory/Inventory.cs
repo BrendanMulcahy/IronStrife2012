@@ -403,11 +403,7 @@ public class Inventory : StrifeScriptBase
     {
         var toDrop = ItemFactory.GetFromViewID(viewID, itemName);
 
-        GameObject worldItemPrefab = Resources.Load("Items/WorldItems/" + toDrop.name) as GameObject;
-        if (!worldItemPrefab)
-        {
-            worldItemPrefab = Resources.Load("Items/WorldItems/PlaceholderItem") as GameObject;
-        }
+        GameObject worldItemPrefab = WorldItem.GetWorldItemPrefab(toDrop.name);
 
         var instance = GameObject.Instantiate(worldItemPrefab) as GameObject;
         instance.name = toDrop.name + "_Placeholder";

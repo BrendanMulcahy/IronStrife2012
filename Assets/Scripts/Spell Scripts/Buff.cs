@@ -19,15 +19,25 @@ public abstract class Buff : MonoBehaviour
 
     private void Initialize()
     {
+        if (DuplicateBuffAllowed())
+        {
+            if (this.gameObject.GetComponents(this.GetType()).Length > 1)
+            {
+                Destroy(this); return;
+            }
+        }
+
         AddBuffEffects();
         Invoke("RemoveBuffEffects", duration);
-        Util.DestroyInSeconds(this, duration + .01f);
+        Destroy(this, duration + .01f);
     }
 
     public void SetSource(GameObject source)
     {
         this._source = source;
     }
+
+    protected virtual bool DuplicateBuffAllowed() { return false; }
 
     protected abstract void AddBuffEffects();
 

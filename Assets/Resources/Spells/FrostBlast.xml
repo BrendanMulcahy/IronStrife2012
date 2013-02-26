@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Spell name="Frost Blast" manaCost="20" castTime="1.0" affectType="Enemies" radius="7.5" />

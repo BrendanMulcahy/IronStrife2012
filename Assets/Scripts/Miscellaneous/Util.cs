@@ -304,7 +304,7 @@ public static class Util
     /// <param name="other"></param>
     internal static void SetParentAndCenter(this Transform t, Transform other)
     {
-        t.parent = other.transform;
+        t.parent = other;
         t.localPosition = new Vector3();
         t.localRotation = Quaternion.identity;
 
@@ -627,5 +627,15 @@ public static class Util
             return stats.TeamNumber;
         }
         else return -1;
+    }
+
+    /// <summary>
+    /// Generates a random number between 0 and 1 and returns true if it is less than this float.
+    /// </summary>
+    /// <param name="f"></param>
+    /// <returns></returns>
+    public static bool TryRandomRoll(this float f)
+    {
+        return (UnityEngine.Random.value < f);
     }
 }

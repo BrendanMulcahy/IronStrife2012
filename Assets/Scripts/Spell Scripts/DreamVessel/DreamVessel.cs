@@ -16,21 +16,6 @@ public class DreamVessel : Spell,  ISelfSpellWithViewID
 
     }
 
-    public override string Name
-    {
-        get { return "Dream Vessel"; }
-    }
-
-    public override SpellAffectType AffectType
-    {
-        get { return SpellAffectType.Allies; }
-    }
-
-    protected override void InitializeSpellValues()
-    {
-        manaCost = 50;
-        castTime = 1.0f;
-    }
 }
 
 public class DreamVesselObject : InteractableObject

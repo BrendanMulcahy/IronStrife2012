@@ -2,6 +2,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
+using System.IO;
 
 public abstract class Spell
 {
@@ -10,20 +12,46 @@ public abstract class Spell
     public int manaCost;
     public GameObject caster;
     public Texture2D spellImage;
+    public float cooldown;
 
-    public abstract String Name { get; }
-    public abstract SpellAffectType AffectType { get; }
+    private string _name;
+    public string Name { get { return _name; } }
+
+
+    private SpellAffectType _affectType = SpellAffectType.Enemies;
+    public SpellAffectType AffectType { get { return _affectType; } }
 
     public Spell()
     {
-        this.GetSpellIcon();
         this.InitializeSpellValues();
+        this.GetSpellIcon();
+
     }
 
     /// <summary>
     /// Initializes castTime and manaCost
     /// </summary>
-    protected abstract void InitializeSpellValues();
+    void InitializeSpellValues()
+    {
+        var textAsset = Resources.Load("Spells/" + this.GetType()) as TextAsset;
+        var stream = new MemoryStream(textAsset.bytes);
+        XmlDocument doc = new XmlDocument();
+        doc.Load(stream);
+        this.LoadSpellValuesFromXML(doc.SelectSingleNode("Spell").Attributes);
+    }
+
+    protected virtual void LoadSpellValuesFromXML(XmlAttributeCollection attributes)
+    {
+        manaCost = int.Parse(attributes["manaCost"].Value);
+        castTime = float.Parse(attributes["castTime"].Value);
+        _affectType = (SpellAffectType)Enum.Parse(typeof(SpellAffectType), attributes["affectType"].Value);
+        _name = attributes["name"].Value;
+
+        if (attributes["cooldown"] == null)
+            cooldown = 0f;
+        else
+            cooldown = float.Parse(attributes["cooldown"].Value);
+    }
     
     public static explicit operator int(Spell s)
     {

@@ -2,9 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 [PlayerComponent(PlayerScriptType.AllDisabled, PlayerScriptType.ServerOwnerEnabled, PlayerScriptType.ClientOwnerEnabled)]
-public class AbilityManager : MonoBehaviour
+public class AbilityManager : StrifeScriptBase
 {
     public int[] equippedSpells = { -1, -1, -1, -1, -1 };
     public KeyCode[] spellButtons = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
@@ -14,6 +15,7 @@ public class AbilityManager : MonoBehaviour
     private List<Spell> knownSpells = new List<Spell>();
 
     private Rect abilityWindowRect = new Rect(70, 70, 600, 400);
+    private Dictionary<Spell, float> cooldownTimes = new Dictionary<Spell, float>();
 
     void Start()
     {
@@ -98,6 +100,37 @@ public class AbilityManager : MonoBehaviour
         {
             LookForSpellKey();
         }
+
+        UpdateCooldowns();
+    }
+
+    private void UpdateCooldowns()
+    {
+        var spells = cooldownTimes.Keys.ToArray();
+        for (int g = 0; g < spells.Length; g++)
+        {
+            cooldownTimes[spells[g]] -= Time.deltaTime;
+            if (cooldownTimes[spells[g]] <= 0)
+                cooldownTimes.Remove(spells[g]);
+        }
+    }
+
+    public void PutOnCooldown(Spell spell, float overrideTime = -1)
+    {
+        if (overrideTime == -1)
+        {
+            cooldownTimes[spell] = spell.cooldown;
+        }
+    }
+
+    public bool IsOnCooldown(Spell spell)
+    {
+        return cooldownTimes.ContainsKey(spell);
+    }
+
+    public float GetRemainingCooldownTime(Spell spell)
+    {
+        return cooldownTimes[spell];
     }
 
     private void ShowAbilityWindow(int id)

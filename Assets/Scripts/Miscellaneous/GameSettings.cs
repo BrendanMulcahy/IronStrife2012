@@ -339,13 +339,15 @@ public class GameSettings
         switch (p)
         {
             case 1:
-                maxMeshTrees = 20;
+                basemapDistance = 60;
+                maxMeshTrees = 15;
                 treeDistance = 400;
                 treeBillboardDistance = 40;
                 treeCrossFadeLength = 15;
                 break;
 
             case 3:
+                basemapDistance = 100;
                 maxMeshTrees = 40;
                 treeDistance = 500;
                 treeBillboardDistance = 50;
@@ -353,6 +355,7 @@ public class GameSettings
                 break;
 
             case 4:
+                basemapDistance = 160;
                 maxMeshTrees = 60;
                 treeDistance = 600;
                 treeBillboardDistance = 60;
@@ -361,6 +364,7 @@ public class GameSettings
                 break;
 
             case 5:
+                basemapDistance = 250;
                 maxMeshTrees = 80;
                 treeDistance = 800;
                 treeBillboardDistance = 80;

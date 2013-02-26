@@ -36,15 +36,6 @@ public class PlayerSoundGenerator : MonoBehaviour {
     }
 
     /// <summary>
-    /// Footstep sound effect. Should eventually be able to detect which material the player 
-    /// is standing on and play an appropriate sound
-    /// </summary>
-    void PlayFootStep()
-    {
-        PlayRandomPitch(footStepClip[Random.Range(0, footStepClip.Length)], .9f, 1.1f, 2.0f);
-    }
-
-    /// <summary>
     /// Plays a sound effect when the player swings his weapon.
     /// </summary>
     void PlaySwordSwing()

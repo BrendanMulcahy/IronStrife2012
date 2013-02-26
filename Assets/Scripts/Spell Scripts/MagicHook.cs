@@ -3,22 +3,6 @@ using UnityEngine;
 
 public class MagicHook : Spell, ITargetSpell
 {
-    public override string Name
-    {
-        get { return "Magic Hook"; }
-    }
-
-    public override SpellAffectType AffectType
-    {
-        get { return SpellAffectType.All; }
-    }
-
-    protected override void InitializeSpellValues()
-    {
-        manaCost = 10;
-        castTime = 0f;
-
-    }
 
     public void Execute(GameObject caster, Vector3 direction, GameObject homingTarget)
     {

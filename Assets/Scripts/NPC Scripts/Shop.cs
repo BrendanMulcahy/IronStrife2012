@@ -116,7 +116,7 @@ public class Shop : InteractableObject {
         Debug.Log("You are trying to buy " + item.name + " for "+item.goldCost + " gold.");
         if (Util.MyLocalPlayerObject.GetInventory().Gold > item.goldCost && !Util.MyLocalPlayerObject.GetInventory().IsFull)
         {
-            networkView.RPCToServer("TryPurchaseItem", item.name, this.networkView.viewID);
+            Util.MyLocalPlayerObject.networkView.RPCToServer("TryPurchaseItem", item.name, this.networkView.viewID);
         }
         else
         {

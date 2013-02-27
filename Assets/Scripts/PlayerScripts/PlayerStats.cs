@@ -16,6 +16,8 @@ public class PlayerStats : CharacterStats
     public AgilityStat Agility { get; set; }
     public IntelligenceStat Intelligence { get; set; }
 
+    public AttackSpeedStat AttackSpeed { get; set; }
+
     static int[] experiencePerLevel = { 1000, 2000, 3000, 5000, 8000, 13000, 21000, 34000, 55000 };
 
     public event PlayerRespawnedEventHandler Respawned;
@@ -87,11 +89,16 @@ public class PlayerStats : CharacterStats
         Strength.IncrementBaseValue(10);
 
         MoveSpeed = new MoveSpeedStat(10.0f);
+        AttackSpeed = new AttackSpeedStat(0);
+
         Agility = new AgilityStat(0);
         Agility.ModifiedValueChanged += Stamina.Agility_Changed;
         Agility.BaseValueChanged += Stamina.Agility_Changed;
         Agility.ModifiedValueChanged += MoveSpeed.Agility_Changed;
         Agility.BaseValueChanged += MoveSpeed.Agility_Changed;
+        Agility.ModifiedValueChanged += AttackSpeed.Agility_Changed;
+        Agility.BaseValueChanged += AttackSpeed.Agility_Changed;
+
         Agility.IncrementBaseValue(10);
 
         Intelligence = new IntelligenceStat(0);
@@ -405,6 +412,7 @@ public class PlayerStats : CharacterStats
         toReturn += Strength.ToString() + "\n";
         toReturn += Agility.ToString() + "\n";
         toReturn += Intelligence.ToString() + "\n";
+        toReturn += AttackSpeed.ToString() + "\n";
 
         return toReturn;
 

@@ -19,6 +19,9 @@ public class Weapon : EquippableItem
     [XmlAttribute("numHands")]
     public int numHands;
 
+    [XmlAttribute("baseAttackTime")]
+    public float baseAttackTime;
+
     public Weapon()
     {
         equipLocationPath = "MainC/ROOTJ/Spine01J/Spine02J/Spine03J/Spine04J/rClavicleJ/rShoulderJ/rElbowJ/rWristJ";
@@ -38,6 +41,7 @@ public class Weapon : EquippableItem
         {
             var text = base.TooltipText;
             text += "\nDamage: " + damage;
+            text += "\nSpeed: " + baseAttackTime;
             return text;
         }
     }

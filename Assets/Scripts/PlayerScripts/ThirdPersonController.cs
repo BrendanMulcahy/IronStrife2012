@@ -657,19 +657,33 @@ public class ThirdPersonController : StrifeScriptBase, IController
 
     private IEnumerator SwingAttack()
     {
-        SendMessage("StartAttacking", SendMessageOptions.DontRequireReceiver);
+        var before = Time.time;
         isAttacking = true;
-        var swingLength = .8f;
-        if (inventory.currentWeapon.numHands == 2)
-            swingLength = .95f;
-        yield return new WaitForSeconds(.15f);
+        var swingLength = GetSwingLength();
+        var damagePoint = swingLength * .33f;
+        SendMessage("StartAttacking", swingLength, SendMessageOptions.DontRequireReceiver);  // Sends global notification that this character has started attacking
+
+        yield return new WaitForSeconds(damagePoint);
         try { GetComponentInChildren<WeaponCollider>().StartSwingCollisionChecking(); }
         catch { isAttacking = false; yield break; }
-        yield return new WaitForSeconds(swingLength - .15f);
+        yield return new WaitForSeconds(swingLength - damagePoint);
         try { GetComponentInChildren<WeaponCollider>().StopSwingCollisionChecking(); }
         catch { isAttacking = false; yield break; }
         isAttacking = false;
+        Debug.Log("After: " + Time.time.ToString());
+        var after = Time.time;
+        Debug.Log("Elapsed: " + (after - before));
+
         yield break;
+    }
+
+    private float GetSwingLength()
+    {
+        var weapon = inventory.currentWeapon;
+        var baseTime = weapon.baseAttackTime;
+        var attackSpeed = ((PlayerStats)Stats).AttackSpeed.ModifiedValue;
+        var ratio = 1 + (attackSpeed / 100);
+        return baseTime / ratio;
     }
 
     private IEnumerator AimAttack()

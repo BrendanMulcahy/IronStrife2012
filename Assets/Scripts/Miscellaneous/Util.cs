@@ -638,4 +638,13 @@ public static class Util
     {
         return (UnityEngine.Random.value < f);
     }
+
+    /// <summary>
+    /// Prints a string to the Console.
+    /// </summary>
+    /// <param name="s">The string to be printed</param>
+    public static void ToConsole(this string s)
+    {
+        Debug.Log(s);
+    }
 }

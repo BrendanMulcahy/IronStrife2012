@@ -254,7 +254,9 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
                 networkView.RPC("StopConjure", RPCMode.Others);
             }
         }
-        
+        if (!IsAttacking)
+            animation.Stop(currentAttackAnimation);
+
 
         //Priority of Animations for player
         if (IsAttacking)
@@ -434,7 +436,7 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
         }
     }
 
-    private void StartAttacking()
+    private void StartAttacking(float attackLength)
     {
         if (numWeaponHands == 2)
         {
@@ -462,6 +464,13 @@ public class ThirdPersonSimpleAnimation : MonoBehaviour
 
             }
         }
+
+        SetAnimationLength(currentAttackAnimation, attackLength);
+    }
+
+    private void SetAnimationLength(string currentAttackAnimation, float attackLength)
+    {
+        animation[currentAttackAnimation].normalizedSpeed = 1.0f / attackLength;
     }
 
     [RPC]

@@ -10,7 +10,7 @@ public class AgilityStat : BuffableStat
     /// <summary>
     /// Percentage to increase swing speed per agility. 100% increase would double attacks per second
     /// </summary>
-    public const float attackSpeedPerAgility = 2.0f;
+    public const int attackSpeedPerAgility = 1;
     /// <summary>
     /// The amount of maximum stamina a player gains per point of agility
     /// </summary>

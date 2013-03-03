@@ -3,20 +3,19 @@ using System.Linq;
 
 public class CommandLineReader : MonoBehaviour
 {
+    private bool isHeadlessServer = false;
     void Awake()
     {
         var args = System.Environment.GetCommandLineArgs();
 
         if (args.ToList().Contains("StartHeadlessServer"))
         {
-            StartHeadlessServer(args[3], args[4]);
+            StartHeadlessServer(int.Parse(args[3]), args[4], args[5]);
         }
     }
 
-    void StartHeadlessServer(string name, string description)
+    void StartHeadlessServer(int port, string name, string description)
     {
-        Debug.Log("Starting headless server with name = " + name + " and description = " + description);
-        Network.InitializeServer(32, 25000, false);
-        MasterServer.RegisterHost("IronStrife", name, description);
+        this.gameObject.AddComponent<HeadlessServer>().StartHeadlessServer(port, name, description);
     }
 }

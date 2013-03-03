@@ -670,7 +670,6 @@ public class ThirdPersonController : StrifeScriptBase, IController
         try { GetComponentInChildren<WeaponCollider>().StopSwingCollisionChecking(); }
         catch { isAttacking = false; yield break; }
         isAttacking = false;
-        Debug.Log("After: " + Time.time.ToString());
         var after = Time.time;
         Debug.Log("Elapsed: " + (after - before));
 

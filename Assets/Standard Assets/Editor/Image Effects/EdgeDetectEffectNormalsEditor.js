@@ -1,4 +1,6 @@
 
+@script ExecuteInEditMode()
+
 @CustomEditor (EdgeDetectEffectNormals)
 
 class EdgeDetectEffectNormalsEditor extends Editor 
@@ -10,10 +12,7 @@ class EdgeDetectEffectNormalsEditor extends Editor
 	var sensitivityNormals : SerializedProperty;
 
 	var edgesOnly : SerializedProperty;
-	var edgesOnlyBgColor : SerializedProperty;
-
-  var edgeExp : SerializedProperty;
-  var sampleDist : SerializedProperty;
+	var edgesOnlyBgColor : SerializedProperty;	
 	
 
 	function OnEnable () {
@@ -26,33 +25,23 @@ class EdgeDetectEffectNormalsEditor extends Editor
 
 		edgesOnly = serObj.FindProperty("edgesOnly");
 		edgesOnlyBgColor = serObj.FindProperty("edgesOnlyBgColor");	
-
-    edgeExp = serObj.FindProperty("edgeExp");
-    sampleDist = serObj.FindProperty("sampleDist");
 	}
     		
     function OnInspectorGUI ()
-    {
-      serObj.Update ();
-
-      GUILayout.Label("Detects spatial differences and converts into black outlines", EditorStyles.miniBoldLabel);    	
+    {         
+    	serObj.Update ();
+    	
     	EditorGUILayout.PropertyField (mode, new GUIContent("Mode"));
     	
-      if(mode.intValue < 2) {
-     		EditorGUILayout.PropertyField (sensitivityDepth, new GUIContent(" Depth Sensitivity"));
-     		EditorGUILayout.PropertyField (sensitivityNormals, new GUIContent(" Normals Sensitivity"));
-      }
-      else {
-        EditorGUILayout.PropertyField (edgeExp, new GUIContent(" Edge Exponent"));        
-      }
-
-      EditorGUILayout.PropertyField (sampleDist, new GUIContent(" Sample Distance"));  
+    	GUILayout.Label ("Edge sensitivity");
+   		EditorGUILayout.PropertyField (sensitivityDepth, new GUIContent("Depth"));
+   		EditorGUILayout.PropertyField (sensitivityNormals, new GUIContent("Normals"));
    		    		
    		EditorGUILayout.Separator ();
    		
-   		GUILayout.Label ("Background Options");
-   		edgesOnly.floatValue = EditorGUILayout.Slider (" Edges only", edgesOnly.floatValue, 0.0, 1.0);
-   		EditorGUILayout.PropertyField (edgesOnlyBgColor, new GUIContent (" Color"));    		
+   		GUILayout.Label ("Background options");
+   		edgesOnly.floatValue = EditorGUILayout.Slider ("Edges only", edgesOnly.floatValue, 0.0, 1.0);
+   		EditorGUILayout.PropertyField (edgesOnlyBgColor, new GUIContent ("Background"));    		
     	    	
     	serObj.ApplyModifiedProperties();
     }

@@ -1,0 +1,19 @@
+# MakeHuman exported MTL with clothes
+# www.makehuman.org
+
+newmtl Allison
+Kd 0.8000 0.8000 0.8000
+Ks 1.0000 1.0000 1.0000
+map_Kd textures/caucasian-female-young.png
+newmtl long
+Kd 0.8000 0.8000 0.8000
+Ks 1.0000 1.0000 1.0000
+map_Kd textures/long_texture.tif
+newmtl Bikini
+Kd 0.8000 0.0000 0.0000
+Ks 1.0000 1.0000 1.0000
+map_Kd textures/bikini_texture.png
+newmtl Boots
+Kd 0.0204 0.0071 0.0076
+Ks 1.0000 1.0000 1.0000
+map_Kd textures/boots_texture.png

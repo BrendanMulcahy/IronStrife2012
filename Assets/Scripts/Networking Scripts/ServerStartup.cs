@@ -37,7 +37,7 @@ public class ServerStartup : MonoBehaviour
     {
         GameObject player = viewID.GetGameObject();
         player.SendMessage("PlayerDisconnected", SendMessageOptions.DontRequireReceiver);
-        Destroy(player);
+        Network.Destroy(viewID);
 
     }
 
@@ -52,7 +52,8 @@ public class ServerStartup : MonoBehaviour
         GameTime.Reset();
 
         // Add a master game logic object and create the server's player.
-        new GameObject("MasterGameLogic").AddComponent<MasterGameLogic>();
+        var mgl = new GameObject("MasterGameLogic").AddComponent<MasterGameLogic>();
+
         if (SystemInfo.graphicsDeviceID != 0)
             PlayerManager.Main.GenerateNewPlayer(Network.player, Util.Username);
     }

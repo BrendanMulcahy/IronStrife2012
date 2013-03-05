@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System.Xml.Serialization;
+using System.Net.Sockets;
+using System.Net;
+using System.IO;
 
 public class MainMenu : MonoBehaviour
 {
@@ -10,6 +14,7 @@ public class MainMenu : MonoBehaviour
     private Rect windowRect;
     private Rect imageRect;
     private Stack<GUI.WindowFunction> windowFunctions = new Stack<GUI.WindowFunction>();
+    private List<ServerInfo> servers = new List<ServerInfo>();
 
     string gameName = "Enter game name here";
     string gameDescription = "Enter game description";
@@ -260,7 +265,29 @@ public class MainMenu : MonoBehaviour
     private void JoinGameButtonPressed()
     {
         MasterServer.RequestHostList("IronStrife");
+        servers = GetMasterServerList();
         windowFunctions.Push(MasterGameListWindow);
+    }
+
+    private List<ServerInfo> GetMasterServerList()
+    {
+        TcpClient client = new TcpClient();
+        client.Connect(IPAddress.Parse("66.61.116.111"), 11417);
+        // Translate the passed message into ASCII and store it as a Byte array.
+        byte[] data = System.Text.Encoding.ASCII.GetBytes("getserverlist");
+        var stream = client.GetStream();
+        // Send the message to the connected TcpServer. 
+        stream.Write(data, 0, data.Length);
+        stream.Flush();
+
+        var bytes = new byte[4096];
+        stream.Read(bytes, 0, 4096);
+        stream.Flush(); 
+        var response = System.Text.Encoding.ASCII.GetString(bytes);
+        Debug.Log(response);
+        XmlSerializer xs = new XmlSerializer(typeof(List<ServerInfo>));
+        var s = (List<ServerInfo>)xs.Deserialize(new MemoryStream(bytes));
+        return s;
     }
 
     private void HostGameButtonPressed()
@@ -358,7 +385,11 @@ public class MainMenu : MonoBehaviour
         {
             Network.InitializeServer(32, 25000, false);
             MasterServer.RegisterHost("IronStrife", gameName, gameDescription);
-           // GameState.Reset(parsedScore);
+            var server = this.gameObject.AddComponent<StrifeServer>();
+            server.gameDescription = gameDescription;
+            server.gameName = gameName;
+            server.port = 25000;
+
             this.inGame = true;
             CloseMainMenu();
         }
@@ -422,21 +453,14 @@ public class MainMenu : MonoBehaviour
     public void MasterGameListWindow(int id)
     {
         GUI.skin.button.fontSize = 18;
-        hostData = MasterServer.PollHostList();
         scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-        if (hostData.Length != 0)
+        if (servers.Count != 0)
         {
-            string[] serverStrings = new string[hostData.Length];
-            for (int g = 0; g < hostData.Length; g++)
+            string[] serverStrings = new string[servers.Count];
+            for (int g = 0; g < servers.Count; g++)
             {
 
-                string tmpIp = "";
-                for (int i = 0; i < hostData[g].ip.Length; i++)
-                {
-                    tmpIp = hostData[g].ip[i];
-                }
-
-                serverStrings[g] = "Game name:" + hostData[g].gameName + "\nIP: <" + tmpIp + ":" + hostData[g].port + ">\tPlayers: [" + hostData[g].connectedPlayers + " / " + hostData[g].playerLimit + "]";
+                serverStrings[g] = "Game name:" + servers[g].gameName + "\nIP: <" + servers[g].ipAddress + ":" + servers[g].port + ">\tPlayers: [" + servers[g].numConnectedPlayers + " / " + servers[g].maxPlayers + "]";
             }
             GUILayout.BeginVertical();
             for (var q = 0; q < serverStrings.Length; q++)
@@ -475,9 +499,8 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     void ConnectToSelectedServer()
     {
-        HostData host = hostData[selectedServer];
-        //Debug.Log("Trying to connect to "+hostIp+":"+host.port);
-        Network.Connect(host);
+        var server = servers[selectedServer];
+        Network.Connect(server.ipAddress, server.port);
         this.inGame = true;
         this.CloseMainMenu();
     }
@@ -490,3 +513,21 @@ public class ChatEntry
     public double timeStamp;
 }
 
+public class ServerInfo
+{
+    [XmlElement("ipAddress")]
+    public string ipAddress;
+    [XmlElement("port")]
+    public int port;
+    [XmlElement("gameName")]
+    public string gameName;
+    [XmlElement("gameType")]
+    public string gametype;
+    [XmlElement("gameDescription")]
+    public string gameDescription;
+    [XmlElement("numConnectedPlayers")]
+    public int numConnectedPlayers;
+    [XmlElement("maxPlayers")]
+    public int maxPlayers;
+
+}

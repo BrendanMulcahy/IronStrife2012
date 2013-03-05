@@ -16,6 +16,6 @@ public class CommandLineReader : MonoBehaviour
 
     void StartHeadlessServer(int port, string name, string description)
     {
-        this.gameObject.AddComponent<HeadlessServer>().StartHeadlessServer(port, name, description);
+        this.gameObject.AddComponent<StrifeServer>().StartHeadlessServer(port, name, description);
     }
 }

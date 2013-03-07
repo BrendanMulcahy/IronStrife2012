@@ -31,10 +31,16 @@ public class GameTime : MonoBehaviour {
 
     public event DawnEventHandler Dawn;
     public event DuskEventHandler Dusk;
-    public bool isDay = false;
+    public event NewDayEventHandler NewDay;
+
+    private bool isDay = false;
+    public bool IsDay { get { return isDay; } }
+    public bool IsNight { get { return !isDay; } }
+
     public int currentDayNumber = 0;
     public delegate void DawnEventHandler();
     public delegate void DuskEventHandler();
+    public delegate void NewDayEventHandler();
 
     private static GameTime _instance;
     public static GameTime Main
@@ -101,7 +107,10 @@ public class GameTime : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         timeOfDay += (Time.deltaTime / HOUR) * (1440f / dayCycleInMinutes);
-        timeOfDay = timeOfDay % 24;
+        if (timeOfDay >= 24)
+        {
+            OnHourZero();
+        }
 
         if (!isDay && timeOfDay >= 6 && timeOfDay <18)
         {
@@ -122,6 +131,13 @@ public class GameTime : MonoBehaviour {
 		
         UpdateSkybox();
 	}
+
+    private void OnHourZero()
+    {
+        timeOfDay -= 24;
+        if (NewDay != null)
+            NewDay();
+    }
 
     private void OnDusk()
     {

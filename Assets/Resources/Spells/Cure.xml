@@ -1,7 +1,1 @@
-<Spell
-name="Cure"
-manaCost="15"
-castTime="1.0"
-affectType="Enemies"
-
-/>
+﻿<?xml version="1.0" encoding="utf-8"?><Spell xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Cure" manaCost="15" castTime="1.0" affectType="Enemies" />

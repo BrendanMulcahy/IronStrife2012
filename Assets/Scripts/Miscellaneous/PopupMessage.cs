@@ -100,11 +100,10 @@ public class PopupMessage : MonoBehaviour
         if (Network.isClient) return;
 
 
-        Main.networkView.RPC("ClientDisplay", RPCMode.All, p, fadeTime);
+        MessageTerminal.Main.networkView.RPC("ClientDisplay", RPCMode.All, p, fadeTime);
     }
 
-    [RPC]
-    void ClientDisplay(string p, float fadeTime = 2.5f)
+    public void ClientDisplay(string p, float fadeTime = 2.5f)
     {
         PopupMessage.Display(p, fadeTime);
     }

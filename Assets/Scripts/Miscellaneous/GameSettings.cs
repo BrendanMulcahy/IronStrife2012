@@ -169,6 +169,21 @@ public class GameSettings
         }
     }
 
+    private float _globalVolume;
+    public float GlobalVolume
+    {
+        get { return _globalVolume; }
+        set
+        {
+            _globalVolume = value;
+            AudioListener.volume = GlobalVolume;
+            if (value != PlayerPrefs.GetFloat("globalVolume", .5f))
+            {
+                PlayerPrefs.SetFloat("globalVolume", value);
+            }
+        }
+    }
+
     private Rect window;		//Display window size/coordinates
     private bool windowVisible = false; //Is the window visible? F8 is the hotkey currently.
 
@@ -203,6 +218,7 @@ public class GameSettings
         _basemapDistance = PlayerPrefs.GetFloat("basemapDistance", 100);
         _castShadows = PlayerPrefs.GetString("castShadows", "true");
         _username = PlayerPrefs.GetString("username", "default_username");
+        GlobalVolume = PlayerPrefs.GetFloat("globalVolume", .5f);
 
 
         // Make a GUIStyle that has a solid white hover/onHover background to indicate highlighted items
@@ -237,6 +253,7 @@ public class GameSettings
         PlayerPrefs.SetString("castShadows", "true");
         PlayerPrefs.SetString("username", "default_username");
         PlayerPrefs.SetInt("QualityLevel", 0);
+        PlayerPrefs.SetFloat("globalVolume", .5f);
     }
 
     /// <summary>
@@ -257,6 +274,7 @@ public class GameSettings
             terrain.basemapDistance = basemapDistance;
             terrain.castShadows = castShadows;
         }
+        AudioListener.volume = GlobalVolume;
     }
     /// <summary>
     /// Handles key checks.
@@ -318,7 +336,7 @@ public class GameSettings
         }
         GUILayout.EndHorizontal();
         GUILayout.FlexibleSpace();
-
+        GlobalVolume = GUILayout.HorizontalSlider(GlobalVolume, 0.0f, 1.0f);
 
         GUILayout.Label("Username to display in-game");
         username = GUILayout.TextField(username);
@@ -335,7 +353,7 @@ public class GameSettings
     private void ChangeToGraphicsDefault(int p)
     {
         PlayerPrefs.SetInt("QualityLevel", p);
-        QualitySettings.SetQualityLevel(p);
+        OnQualityChange(p);
         switch (p)
         {
             case 1:
@@ -370,6 +388,16 @@ public class GameSettings
                 treeBillboardDistance = 80;
                 treeCrossFadeLength = 15;
                 break;
+        }
+    }
+
+    private void OnQualityChange(int p)
+    {
+        QualitySettings.SetQualityLevel(p);
+        var allQualityChangers = UnityEngine.Object.FindObjectsOfType(typeof(QualityChanger));
+        foreach (QualityChanger qc in allQualityChangers)
+        {
+            qc.ChangeToQualityLevel(p);
         }
     }
 

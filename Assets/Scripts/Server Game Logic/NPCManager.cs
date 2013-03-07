@@ -30,6 +30,13 @@ public class NPCManager : MonoBehaviour
         lastSpawntime = GameTime.CurrentTime;
         TrySpawnNeutrals();
         TrySpawnGuards();
+        GameTime.Main.NewDay += Main_NewDay;
+    }
+
+    void Main_NewDay()
+    {
+        lastNeutralWaveSpawnTime -= 24;
+        lastSpawntime -= 24;
     }
 
     void Update()
@@ -65,7 +72,7 @@ public class NPCManager : MonoBehaviour
 
     private bool IsNeutralWaveTime()
     {
-        if (!GameTime.Main.isDay) return false;
+        if (GameTime.Main.IsNight) return false;
 
         if (GameTime.CurrentTime - lastNeutralWaveSpawnTime >= NEUTRALWAVEINTERVAL)
         {

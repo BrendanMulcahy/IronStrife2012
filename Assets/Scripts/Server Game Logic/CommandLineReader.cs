@@ -3,7 +3,6 @@ using System.Linq;
 
 public class CommandLineReader : MonoBehaviour
 {
-    private bool isHeadlessServer = false;
     void Awake()
     {
         var args = System.Environment.GetCommandLineArgs();

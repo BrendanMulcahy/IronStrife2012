@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
@@ -27,13 +28,20 @@ public class StrifeServer : MonoBehaviour
 
     private void RegisterWithMasterServer()
     {
-        TcpClient client = new TcpClient();
-        client.Connect(IPAddress.Parse("66.61.116.111"), 11417);
-        var request = "registerserver " + port + " " + gameName + " " + gameDescription + " " + gametype;
-        byte[] data = System.Text.Encoding.ASCII.GetBytes(request);
-        var stream = client.GetStream();
-        stream.Write(data, 0, data.Length);
-        stream.Flush();
+        try
+        {
+            TcpClient client = new TcpClient();
+            client.Connect(IPAddress.Parse("66.61.116.111"), 11417);
+            var request = "registerserver " + port + " " + gameName + " " + gameDescription + " " + gametype;
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(request);
+            var stream = client.GetStream();
+            stream.Write(data, 0, data.Length);
+            stream.Flush();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error connecting to the Master Server:\n" + e.ToString());
+        }
     }
 
     private IEnumerator SendHeartbeat()
@@ -62,7 +70,7 @@ public class StrifeServer : MonoBehaviour
 
     private void UnregisterWithMasterServer()
     {
-        throw new System.NotImplementedException();
+            
     }
 
     private void TurnOffServer()

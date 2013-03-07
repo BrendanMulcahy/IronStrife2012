@@ -59,4 +59,10 @@ public class MessageTerminal : MonoBehaviour
         PopupMessage.Display("The game has started!", 3.0f);
     }
 
+    [RPC]
+    void ClientDisplay(string message, float fadeTime)
+    {
+        PopupMessage.LocalDisplay(message, fadeTime);
+    }
+
 }

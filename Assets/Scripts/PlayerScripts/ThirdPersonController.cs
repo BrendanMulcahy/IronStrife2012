@@ -657,7 +657,6 @@ public class ThirdPersonController : StrifeScriptBase, IController
 
     private IEnumerator SwingAttack()
     {
-        var before = Time.time;
         isAttacking = true;
         var swingLength = GetSwingLength();
         var damagePoint = swingLength * .33f;
@@ -670,8 +669,6 @@ public class ThirdPersonController : StrifeScriptBase, IController
         try { GetComponentInChildren<WeaponCollider>().StopSwingCollisionChecking(); }
         catch { isAttacking = false; yield break; }
         isAttacking = false;
-        var after = Time.time;
-        Debug.Log("Elapsed: " + (after - before));
 
         yield break;
     }

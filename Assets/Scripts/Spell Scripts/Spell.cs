@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using System.IO;
+using System.Text;
 
 public abstract class Spell
 {
@@ -34,11 +35,21 @@ public abstract class Spell
     void InitializeSpellValues()
     {
         var textAsset = Resources.Load("Spells/" + this.GetType()) as TextAsset;
-        var stream = new MemoryStream(textAsset.bytes);
         XmlDocument doc = new XmlDocument();
-        doc.Load(stream);
-        this.LoadSpellValuesFromXML(doc.SelectSingleNode("Spell").Attributes);
+        doc.LoadXml(textAsset.text);
+        var node = doc.SelectSingleNode("Spell");
+        var atts = node.Attributes;
+        this.LoadSpellValuesFromXML(atts);
+        //this.ExportToNewXML(doc);
     }
+
+    private void ExportToNewXML(XmlDocument doc)
+    {
+        XmlTextWriter xmlWriter = new XmlTextWriter(File.Create(Application.dataPath + "/Resources/Spells/" + this.GetType().Name + "2.xml"), Encoding.UTF8);
+        doc.Save(xmlWriter);
+       
+    }
+
 
     protected virtual void LoadSpellValuesFromXML(XmlAttributeCollection attributes)
     {
@@ -51,6 +62,7 @@ public abstract class Spell
             cooldown = 0f;
         else
             cooldown = float.Parse(attributes["cooldown"].Value);
+
     }
     
     public static explicit operator int(Spell s)

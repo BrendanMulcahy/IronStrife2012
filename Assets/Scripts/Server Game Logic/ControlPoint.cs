@@ -13,6 +13,10 @@ public class ControlPoint : MonoBehaviour
 
     public int controllingTeam = 1;
 
+    public event AllegianceChangedEventHandler AllegianceChanged;
+
+    public delegate void AllegianceChangedEventHandler(ControlPoint sender, int oldTeam, int newTeam);
+
     /// <summary>
     /// The amount of control a team has over a control point. 
     /// 100 is completely controlled by team 1, 
@@ -107,9 +111,17 @@ public class ControlPoint : MonoBehaviour
 
     private void UpdateControl()
     {
-        if (influence > 0 && controllingTeam != 1) controllingTeam = 1;
-        else if (influence < 0 && controllingTeam != 2) controllingTeam = 2;
-        else if (influence == 0 && controllingTeam != 0) controllingTeam = 0;
+        if (influence > 0 && controllingTeam != 1) OnAllegianceChanged(1);
+        else if (influence < 0 && controllingTeam != 2) OnAllegianceChanged(2);
+        else if (influence == 0 && controllingTeam != 0) OnAllegianceChanged(0);
+    }
+
+    private void OnAllegianceChanged(int newTeam)
+    {
+        var oldTeam = controllingTeam;
+        controllingTeam = newTeam;
+        if (AllegianceChanged != null)
+            AllegianceChanged(this, oldTeam, newTeam);
     }
 
     private void DecayInfluence()
@@ -158,7 +170,22 @@ public class ControlPoint : MonoBehaviour
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo msg)
     {
-        stream.Serialize(ref controllingTeam);
+        if (stream.isWriting)
+            stream.Serialize(ref controllingTeam);
+        else
+        {
+            int newTeam = -1;
+            stream.Serialize(ref newTeam);
+            if (newTeam == -1)
+                Debug.LogError("Received an invalid update value for the controlling team of Control Point " + this.gameObject.name);
+            else
+            {
+                if (newTeam != controllingTeam)
+                {
+                    OnAllegianceChanged(newTeam);
+                }
+            }
+        }
     }
 
     void OnTriggerEnter(Collider other)

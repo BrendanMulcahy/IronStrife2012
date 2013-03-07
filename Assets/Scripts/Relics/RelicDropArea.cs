@@ -15,6 +15,11 @@ public class RelicDropArea : MonoBehaviour
 
     public List<Relic> relicsInArea = new List<Relic>();
 
+    public event RelicAddedEventHandler RelicAdded;
+    public event RelicRemovedEventHandler RelicRemoved;
+    public delegate void RelicAddedEventHandler(RelicDropArea dropArea, Relic relic);
+    public delegate void RelicRemovedEventHandler(RelicDropArea dropArea, Relic relic);
+
     void Start()
     {
         if (!collider)
@@ -80,6 +85,9 @@ public class RelicDropArea : MonoBehaviour
         particleSystem.startSize += sizePerRelic;
         particleSystem.emissionRate += particlesPerRelic;
         particleSystem.Play();
+
+        if (RelicAdded != null)
+            RelicAdded(this, relic);
     }
 
     void OnTriggerExit(Collider other)
@@ -98,7 +106,8 @@ public class RelicDropArea : MonoBehaviour
         particleSystem.startSize -= sizePerRelic;
         particleSystem.emissionRate -= particlesPerRelic;
 
-
+        if (RelicRemoved != null)
+            RelicRemoved(this, relic);
     }
 
 }

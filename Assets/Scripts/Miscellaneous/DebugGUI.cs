@@ -24,6 +24,7 @@ public class DebugGUI : MonoBehaviour {
     private string currentTooltip = "";
 
     private Dictionary<string, ConsoleCommand> commands;
+    private Dictionary<string, NetworkConsoleCommand> networkCommands;
 
     private const int maxHistoryCount = 40;
 
@@ -82,6 +83,13 @@ public class DebugGUI : MonoBehaviour {
         {
             var cc =  Activator.CreateInstance(t) as ConsoleCommand;
             commands.Add(cc.Names[0], cc);
+        }
+
+        networkCommands = new Dictionary<string, NetworkConsoleCommand>();
+        foreach (Type t in Util.GetSubclasses<NetworkConsoleCommand>())
+        {
+            var cc = Activator.CreateInstance(t) as NetworkConsoleCommand;
+            networkCommands.Add(cc.Name, cc);
         }
     }
 
@@ -319,6 +327,12 @@ public class DebugGUI : MonoBehaviour {
                 var chosenCommand = commands[consoleCommand.commandName];
                 chosenCommand.Execute(consoleCommand.parameters);
             }
+            if (networkCommands.ContainsKey(consoleCommand.commandName))
+            {
+                var chosenCommand = networkCommands[consoleCommand.commandName];
+                chosenCommand.TryExecute(consoleCommand.parameters);
+            }
+
             else
             {
                 Debug.Log("Invalid command name.");
@@ -327,6 +341,13 @@ public class DebugGUI : MonoBehaviour {
         ClearInputField();
 
 	}
+
+    [RPC]
+    void ExecuteNetworkConsoleCommand(string commandName, params object[] parameters)
+    {
+        var chosenCommand = networkCommands[commandName];
+        chosenCommand.CommitExecute(parameters);
+    }
 
     private void AddToHistory(String command)
     {

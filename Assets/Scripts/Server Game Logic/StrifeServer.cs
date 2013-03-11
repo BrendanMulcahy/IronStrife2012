@@ -23,25 +23,7 @@ public class StrifeServer : MonoBehaviour
     void Start()
     {
         StartCoroutine(SendHeartbeat());
-        RegisterWithMasterServer();
-    }
-
-    private void RegisterWithMasterServer()
-    {
-        try
-        {
-            TcpClient client = new TcpClient();
-            client.Connect(IPAddress.Parse("66.61.116.111"), 11417);
-            var request = "registerserver " + port + " " + gameName + " " + gameDescription + " " + gametype;
-            byte[] data = System.Text.Encoding.ASCII.GetBytes(request);
-            var stream = client.GetStream();
-            stream.Write(data, 0, data.Length);
-            stream.Flush();
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Error connecting to the Master Server:\n" + e.ToString());
-        }
+        StrifeMasterServer.RegisterWithMasterServer(port, gameName, gameDescription, gametype);
     }
 
     private IEnumerator SendHeartbeat()
@@ -65,13 +47,10 @@ public class StrifeServer : MonoBehaviour
     void OnDisconnectedFromServer(NetworkDisconnection mode)
     {
         TurnOffServer();
-        UnregisterWithMasterServer();
+        StrifeMasterServer.DeRegisterWithMasterServer(this.port);
     }
 
-    private void UnregisterWithMasterServer()
-    {
-            
-    }
+
 
     private void TurnOffServer()
     {

@@ -205,7 +205,7 @@ public class PlayerGUI : MonoBehaviour
 
     void DrawSpellcastTimer()
     {
-        if (!controller.IsCasting) return;
+        if (!controller.IsCasting || inputManager.spellBeingCast.castTime==0) return;
         var castLength = inputManager.spellBeingCast.castTime;
         var currentProgress = inputManager.spellCastProgress;
 		var castPercentage = currentProgress/castLength;

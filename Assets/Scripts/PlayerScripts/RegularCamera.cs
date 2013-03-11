@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class RegularCamera : MonoBehaviour
+public class RegularCamera : StrifeScriptBase
 {
 
     // This camera is similar to the one used in Jak & Dexter
@@ -13,7 +13,20 @@ public class RegularCamera : MonoBehaviour
 
     private Vector3 headOffset = Vector3.zero;
     private Vector3 centerOffset = Vector3.zero;
-    private ThirdPersonController controller;
+    private ThirdPersonController _controller;
+    private ThirdPersonController controller
+    {
+        get
+        {
+            if (!_controller)
+            {
+                if (target)
+                    _controller = target.GetComponent<ThirdPersonController>();
+            }
+            if (_controller) return _controller;
+            return null;
+        }
+    }
 
     private bool isScrollingDisabled = false;
 
@@ -57,11 +70,6 @@ public class RegularCamera : MonoBehaviour
                 centerOffset = characterController.bounds.center - target.position;
                 headOffset = centerOffset;
                 headOffset.y = characterController.bounds.max.y - target.position.y;
-            }
-
-            if (target)
-            {
-                controller = target.GetComponent<ThirdPersonController>();
             }
         }
     }

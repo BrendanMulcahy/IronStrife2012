@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 [DefaultSceneObject("DebugGUI")]
 /// <summary>
@@ -327,7 +328,7 @@ public class DebugGUI : MonoBehaviour {
                 var chosenCommand = commands[consoleCommand.commandName];
                 chosenCommand.Execute(consoleCommand.parameters);
             }
-            if (networkCommands.ContainsKey(consoleCommand.commandName))
+            else if (networkCommands.ContainsKey(consoleCommand.commandName))
             {
                 var chosenCommand = networkCommands[consoleCommand.commandName];
                 chosenCommand.TryExecute(consoleCommand.parameters);
@@ -343,10 +344,11 @@ public class DebugGUI : MonoBehaviour {
 	}
 
     [RPC]
-    void ExecuteNetworkConsoleCommand(string commandName, params object[] parameters)
+    void ExecuteNetworkConsoleCommand(string commandName, string allParams, NetworkMessageInfo msg)
     {
+        GameObject player = PlayerManager.Main.GetPlayerGameObject(msg.sender);
         var chosenCommand = networkCommands[commandName];
-        chosenCommand.CommitExecute(parameters);
+        chosenCommand.CommitExecute(player, allParams);
     }
 
     private void AddToHistory(String command)
@@ -359,9 +361,11 @@ public class DebugGUI : MonoBehaviour {
         if (parameters.Length == 0)
         {
             Debug.Log("The following are valid console commands. Type \"help <command>\" for more information.");
-            foreach (string key in commands.Keys)
+            var allKeys = commands.Keys.Concat(networkCommands.Keys).ToList();
+            allKeys.Sort();
+            foreach (string s in allKeys)
             {
-                Debug.Log(key);
+                Debug.Log(s);
             }
         }
         else if (parameters.Length != 1)
@@ -371,7 +375,10 @@ public class DebugGUI : MonoBehaviour {
         else
         {
             if (commands.ContainsKey(parameters[0]))
-                Debug.Log(commands[parameters[0]].HelpMessage);
+                Debug.Log(parameters[0]+": \n--> " + commands[parameters[0]].HelpMessage);
+            else if (networkCommands.ContainsKey(parameters[0]))
+                Debug.Log(parameters[0] + ": \n--> " + networkCommands[parameters[0]].HelpMessage);
+
             else
             {
                 Debug.Log("No such command. Type \"help\" for a list of all commands.");

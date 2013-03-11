@@ -71,4 +71,15 @@ public class StrifeScriptBase : MonoBehaviour
             return _damageReceiver;
         }
     }
+
+    private ThirdPersonController _thirdPersonController;
+    public ThirdPersonController Controller
+    {
+        get
+        {
+            if (!_thirdPersonController)
+                _thirdPersonController = GetComponent<ThirdPersonController>();
+            return _thirdPersonController;
+        }
+    }
 }

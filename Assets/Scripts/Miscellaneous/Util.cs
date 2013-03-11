@@ -143,8 +143,8 @@ public static class Util
     /// <param name="go"></param>
     public static void DisableControls(this GameObject go)
     {
-            go.GetComponent<NetworkController>().Reset();
-            go.GetComponent<NetworkController>().enabled = false;
+        go.GetComponent<NetworkController>().Reset();
+        go.GetComponent<NetworkController>().enabled = false;
 
     }
 
@@ -154,7 +154,7 @@ public static class Util
     /// <param name="go"></param>
     public static void EnableControls(this GameObject go)
     {
-            go.GetComponent<NetworkController>().enabled = true;
+        go.GetComponent<NetworkController>().enabled = true;
     }
 
     /// <summary>
@@ -472,7 +472,22 @@ public static class Util
             {
                 if (method.Name == methodName)
                 {
-                    method.Invoke(behaviour, parameters);
+                    var methodParameters = method.GetParameters();
+                    if (methodParameters[methodParameters.Length - 1].ParameterType == typeof(NetworkMessageInfo))
+                    {
+                        var newArray = new object[parameters.Length + 1];
+                        for (int g = 0; g < newArray.Length-1; g++)
+                        {
+                            newArray[g] = parameters[g];
+                        }
+                        newArray[newArray.Length-1] = new NetworkMessageInfo();
+                        method.Invoke(behaviour, newArray);
+                    }
+                    else
+                    {
+
+                        method.Invoke(behaviour, parameters);
+                    }
                     break;
                 }
             }
@@ -496,7 +511,23 @@ public static class Util
                 {
                     if (method.Name == methodName)
                     {
-                        method.Invoke(behaviour, parameters);
+                        var methodParameters = method.GetParameters();
+                        if (methodParameters.Length!=0 && methodParameters[methodParameters.Length - 1].ParameterType == typeof(NetworkMessageInfo))
+                        {
+                            var newArray = new object[parameters.Length + 1];
+                            for (int g = 0; g < newArray.Length - 1; g++)
+                            {
+                                newArray[g] = parameters[g];
+                            }
+                            newArray[newArray.Length - 1] = new NetworkMessageInfo();
+
+                            method.Invoke(behaviour, newArray);
+                        }
+                        else
+                        {
+
+                            method.Invoke(behaviour, parameters);
+                        }
                         break;
                     }
                 }

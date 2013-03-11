@@ -17,4 +17,14 @@ public class NetworkPrintCommand : NetworkConsoleCommand
     {
         get { return "networkprint"; }
     }
+
+    public override string HelpMessage
+    {
+        get { return "Prints a message on the server's debug log."; }
+    }
+
+    public override void ApplyLocalEffects(GameObject invokerObject, params string[] parameters)
+    {
+
+    }
 }

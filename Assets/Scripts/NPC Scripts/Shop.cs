@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Shop : InteractableObject {
+public class Shop : InteractableObject
+{
 
     public LinkedList<Item> itemsForSale;
     public Transform lookTarget = null;
@@ -18,7 +19,7 @@ public class Shop : InteractableObject {
     public int counter = 1;
     private AudioClip coinSound;
 
-	void Awake() 
+    void Awake()
     {
         coinSound = Resources.Load("Sounds/coins") as AudioClip;
         sellingAbility = ItemAvailability.Regular;
@@ -35,9 +36,9 @@ public class Shop : InteractableObject {
 
         animation.Play("Idle01");
         skin = Resources.Load("ISEGUISkin") as GUISkin;
-	}
-	
-	void Update() 
+    }
+
+    void Update()
     {
         if (counter-- == 0)
             disabledThisFrame = false;
@@ -63,7 +64,7 @@ public class Shop : InteractableObject {
 
             }
         }
-	}
+    }
 
     void OnGUI()
     {
@@ -91,7 +92,7 @@ public class Shop : InteractableObject {
                 Util.MyLocalPlayerObject.DisableControls();
             }
         }
-        
+
     }
 
     void ShowShop(int id)
@@ -100,7 +101,7 @@ public class Shop : InteractableObject {
         GUILayout.BeginVertical();
         foreach (Item item in itemsForSale)
         {
-            if (GUILayout.Button(item.name + "\t\t\t\t"+item.goldCost, GUI.skin.GetStyle("smallButton")))
+            if (GUILayout.Button(item.name + "\t\t\t\t" + item.goldCost, GUI.skin.GetStyle("smallButton")))
             {
                 ButtonPressed(item);
             }
@@ -113,10 +114,13 @@ public class Shop : InteractableObject {
 
     private void ButtonPressed(Item item)
     {
-        Debug.Log("You are trying to buy " + item.name + " for "+item.goldCost + " gold.");
-        if (Util.MyLocalPlayerObject.GetInventory().Gold > item.goldCost && !Util.MyLocalPlayerObject.GetInventory().IsFull)
+        Debug.Log("You are trying to buy " + item.name + " for " + item.goldCost + " gold.");
+        if (Util.MyLocalPlayerObject.GetInventory().Gold > item.goldCost)
         {
-            networkView.RPCToServer("TryPurchaseItem", item.name, this.networkView.viewID);
+            if (!Util.MyLocalPlayerObject.GetInventory().IsFull)
+                Util.MyLocalPlayerObject.networkView.RPCToServer("TryPurchaseItem", item.name, this.networkView.viewID);
+            else
+                PopupMessage.LocalDisplay("You can't buy that, your inventory is full!");
         }
         else
         {

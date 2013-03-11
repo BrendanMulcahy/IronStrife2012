@@ -1,19 +1,27 @@
 ﻿using UnityEngine;
-class RefreshCommand : ConsoleCommand
-{
-    public override string[] Names { get { string[] names = { "refresh" }; return names; } }
-    
-
+class RefreshCommand : NetworkConsoleCommand
+{    
     public override string HelpMessage
     {
-        get { return "Refresh Mana Hp and Stamina"; }
+        get { return "Refreshrd your Mana, Health, and Stamina"; }
     }
 
-    public override void Execute(params string[] parameters)
+    public override void ExecuteCommand(GameObject invokerObject, params string[] parameters)
     {
-        GameObject CurrentPlayer = Util.MyLocalPlayerObject;
-        CurrentPlayer.GetCharacterStats().ApplyHealing(CurrentPlayer,999999);
-        CurrentPlayer.GetCharacterStats().Mana.CurrentValue = CurrentPlayer.GetCharacterStats().Mana.MaxValue;
-        CurrentPlayer.GetCharacterStats().Stamina.CurrentValue = CurrentPlayer.GetCharacterStats().Stamina.MaxValue;
+        invokerObject.GetCharacterStats().ApplyHealing(invokerObject, 999999);
+        invokerObject.GetCharacterStats().Mana.CurrentValue = invokerObject.GetCharacterStats().Mana.MaxValue;
+        invokerObject.GetCharacterStats().Stamina.CurrentValue = invokerObject.GetCharacterStats().Stamina.MaxValue;
+    }
+
+    public override string Name
+    {
+        get { return "refresh"; }
+    }
+
+    public override void ApplyLocalEffects(GameObject invokerObject, params string[] parameters)
+    {
+        invokerObject.GetCharacterStats().ApplyHealing(invokerObject, 999999);
+        invokerObject.GetCharacterStats().Mana.CurrentValue = invokerObject.GetCharacterStats().Mana.MaxValue;
+        invokerObject.GetCharacterStats().Stamina.CurrentValue = invokerObject.GetCharacterStats().Stamina.MaxValue;
     }
 }

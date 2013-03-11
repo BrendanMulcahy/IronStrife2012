@@ -11,22 +11,23 @@ public abstract class NetworkConsoleCommand
     /// </summary>
     public void TryExecute(params string[] parameters)
     {
-        object[] allParameters = new object[parameters.Length + 1];
-        allParameters[0] = Util.MyLocalPlayerObject.networkView.viewID;
-        for (int g=0; g < parameters.Length; g++)
+        string allParams = "";
+        foreach (string s in parameters)
         {
-            allParameters[g + 1] = parameters[g];
+            allParams += s + " ";
         }
-        DebugGUI.Main.networkView.RPCToServer(DebugGUI.Main, "ExecuteNetworkConsoleCommand", this.Name, allParameters);
+        DebugGUI.Main.networkView.RPCToServer(DebugGUI.Main, "ExecuteNetworkConsoleCommand", this.Name, allParams);
+
+        if (Network.isClient)   ApplyLocalEffects(Util.MyLocalPlayerObject, parameters);
     }
 
-    public void CommitExecute(params object[] parameters)
+    public void CommitExecute(GameObject player, string parameters)
     {
-        var strings = parameters.Skip(1).Cast<string>().ToArray();
-        var go = ((NetworkViewID)parameters[0]).GetGameObject();
-        ExecuteCommand(go, strings);
+        ExecuteCommand(player, parameters.Split(' '));
     }
     public abstract void ExecuteCommand(GameObject invokerObject, params string[] parameters);
+    public abstract void ApplyLocalEffects(GameObject invokerObject, params string[] parameters);
     public abstract string Name { get; }
+    public abstract string HelpMessage { get; }
    
 }

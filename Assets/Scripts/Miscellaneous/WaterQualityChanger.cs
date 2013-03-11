@@ -26,12 +26,12 @@ public class WaterQualityChanger : QualityChanger
                 break;
             case 2:
             case 3:
+            case 4:
                 water.m_WaterMode = Water.WaterMode.Reflective;
 
                 break;
-            case 4:
             case 5:
-                water.m_WaterMode = Water.WaterMode.Reflective;
+                water.m_WaterMode = Water.WaterMode.Refractive;
                 break;
         }
     }

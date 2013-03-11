@@ -67,7 +67,7 @@ public class NetworkController : MonoBehaviour
         nv.observed = this;
         nv.stateSynchronization = NetworkStateSynchronization.Unreliable;
         nv.viewID = viewID;
-        previousNetworkView.RPC("SetControllerNetworkView", RPCMode.Server, viewID);
+        previousNetworkView.RPCToServer("SetControllerNetworkView", viewID);
     }
 
     [RPC]
@@ -101,7 +101,7 @@ public class NetworkController : MonoBehaviour
             {
                 targetController.spellBeingCast = (Spell)abilityManager.equippedSpells[i];
                 targetController.spellButton = true;
-                networkView.RPC("SendSpellCastInfo", RPCMode.Server, abilityManager.equippedSpells[i]);
+                networkView.RPCToServer(this,"SendSpellCastInfo", abilityManager.equippedSpells[i]);
                 if ((Spell)abilityManager.equippedSpells[i] is IPointSpell)
                 {
                     ShowSpellTargetReticle((IPointSpell)((Spell)abilityManager.equippedSpells[i]));
@@ -115,7 +115,7 @@ public class NetworkController : MonoBehaviour
             if (tpController.LockedOn)
             {
                 tpController.LockedOn = false; tpController.LockedTarget = null;
-                networkView.RPC("ClientStopLocking", RPCMode.Server);
+                networkView.RPCToServer("ClientStopLocking");
                 regularCamera.CameraMode = CameraMode.Regular;
 
             }
@@ -124,7 +124,7 @@ public class NetworkController : MonoBehaviour
                 GameObject closestTarget = FindLockableTarget();
                 if (closestTarget != null)
                 {
-                    networkView.RPC("ClientLockTarget", RPCMode.Server, closestTarget.networkView.viewID);
+                    networkView.RPCToServer("ClientLockTarget", closestTarget.networkView.viewID);
                     tpController.LockedTarget = closestTarget;
                     tpController.LockedOn = true;
                     regularCamera.CameraMode = CameraMode.Locked;
@@ -140,7 +140,7 @@ public class NetworkController : MonoBehaviour
             if (Physics.Raycast(ray.origin, ray.direction, out hit, 50f, mask))
             {
                 targetController.targetClickLocation = hit.point;
-                networkView.RPC("SendTargetClickLocation", RPCMode.Server, hit.point);
+                networkView.RPCToServer(this,"SendTargetClickLocation", hit.point);
             }
         }
 

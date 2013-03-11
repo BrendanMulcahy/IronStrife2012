@@ -46,7 +46,6 @@ public class MainMenu : MonoBehaviour
 
     GameSettings gs;
 
-
     GUISkin skin;
 
     int selectedServer = -1;
@@ -265,29 +264,8 @@ public class MainMenu : MonoBehaviour
     private void JoinGameButtonPressed()
     {
         MasterServer.RequestHostList("IronStrife");
-        servers = GetMasterServerList();
+        servers = StrifeMasterServer.GetMasterServerList();
         windowFunctions.Push(MasterGameListWindow);
-    }
-
-    private List<ServerInfo> GetMasterServerList()
-    {
-        TcpClient client = new TcpClient();
-        client.Connect(IPAddress.Parse("66.61.116.111"), 11417);
-        // Translate the passed message into ASCII and store it as a Byte array.
-        byte[] data = System.Text.Encoding.ASCII.GetBytes("getserverlist");
-        var stream = client.GetStream();
-        // Send the message to the connected TcpServer. 
-        stream.Write(data, 0, data.Length);
-        stream.Flush();
-
-        var bytes = new byte[4096];
-        stream.Read(bytes, 0, 4096);
-        stream.Flush(); 
-        var response = System.Text.Encoding.ASCII.GetString(bytes);
-        Debug.Log(response);
-        XmlSerializer xs = new XmlSerializer(typeof(List<ServerInfo>));
-        var s = (List<ServerInfo>)xs.Deserialize(new MemoryStream(bytes));
-        return s;
     }
 
     private void HostGameButtonPressed()
@@ -511,23 +489,4 @@ public class ChatEntry
     public string sender;
     public string message;
     public double timeStamp;
-}
-
-public class ServerInfo
-{
-    [XmlElement("ipAddress")]
-    public string ipAddress;
-    [XmlElement("port")]
-    public int port;
-    [XmlElement("gameName")]
-    public string gameName;
-    [XmlElement("gameType")]
-    public string gametype;
-    [XmlElement("gameDescription")]
-    public string gameDescription;
-    [XmlElement("numConnectedPlayers")]
-    public int numConnectedPlayers;
-    [XmlElement("maxPlayers")]
-    public int maxPlayers;
-
 }

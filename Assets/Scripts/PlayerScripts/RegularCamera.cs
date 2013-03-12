@@ -281,12 +281,12 @@ public class RegularCamera : StrifeScriptBase
         }
     }
 
-    private void DisableScrolling()
+    internal void DisableScrolling()
     {
         isScrollingDisabled = true;
     }
 
-    private void EnableScrolling()
+    internal void EnableScrolling()
     {
         isScrollingDisabled = false;
     }

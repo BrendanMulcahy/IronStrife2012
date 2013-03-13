@@ -29,6 +29,13 @@ public class Water : MonoBehaviour
 	
 	private static bool s_InsideWater = false;
 
+    void Start()
+    {
+        int layerMask = (1 << 9) | (1 << 11) | (1 << 15) | (1 << 17) | (1 << 18) | (1 << 20);
+        m_RefractLayers = layerMask;
+        m_ReflectLayers = layerMask;
+    }
+
 	// This is called when it's known that the object will be rendered by some
 	// camera. We render reflections / refractions and do other updates here.
 	// Because the script executes in edit mode, reflections for the scene view

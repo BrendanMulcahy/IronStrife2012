@@ -53,7 +53,9 @@ public class ServerStartup : MonoBehaviour
 
         // Add a master game logic object and create the server's player.
         var mgl = new GameObject("MasterGameLogic").AddComponent<MasterGameLogic>();
+        DefaultSceneObjectGenerator.CreateNetworkedObjects();
 
+        // If this is not a headless server, create a player for the server.
         if (SystemInfo.graphicsDeviceID != 0)
             PlayerManager.Main.GenerateNewPlayer(Network.player, Util.Username);
     }

@@ -173,9 +173,6 @@ public class NPC_Controller : MonoBehaviour
     public void LookAtTarget(Vector3 target)
     {
         this.transform.LookAt(target);
-        var rotation = this.transform.rotation.eulerAngles;
-        rotation.y = 0;
-        this.transform.eulerAngles = rotation;
     }
 
     private IEnumerator SwingAttack()

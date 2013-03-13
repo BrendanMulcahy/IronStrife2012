@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 
-[DefaultSceneObject("DebugGUI")]
+[DefaultSceneObject("DebugGUI", "DebugGUI", true)]
 /// <summary>
 /// Class for handling debug commands and displaying debug messages. 
 /// Use the Debug.Log() method to print to this window.

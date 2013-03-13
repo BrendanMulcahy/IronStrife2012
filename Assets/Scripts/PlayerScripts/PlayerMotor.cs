@@ -15,7 +15,7 @@ public class PlayerMotor : MonoBehaviour
 
     void PlayerMotor_Damaged(GameObject sender, DamageEventArgs e)
     {
-        var direction = sender.transform.position - e.damageLocation;
+        var direction = (sender.transform.position - e.damageLocation).normalized;
         float magnitude = e.damage.amount * 1.5f;
         AddImpact(direction, magnitude);
     }

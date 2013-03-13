@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Reflection;
 using System;
+using System.Linq;
 
 public class DefaultSceneObjectGenerator : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class DefaultSceneObjectGenerator : MonoBehaviour
             if (t.IsSubclassOf(typeof(MonoBehaviour)))
             {
                 var attributes = t.GetCustomAttributes(typeof(DefaultSceneObjectAttribute), true);
-                if (attributes.Length != 0)
+
+                if (attributes.Length != 0 && !((DefaultSceneObjectAttribute)attributes[0]).hasNetworkView)
                 {
                     CreateDefaultSceneObject(attributes[0] as DefaultSceneObjectAttribute, t);
                 }
@@ -26,7 +28,7 @@ public class DefaultSceneObjectGenerator : MonoBehaviour
         {
             if (p.prefabName != null)
             {
-                var go = Instantiate(Resources.Load("DefaultSceneObjects/"+p.prefabName) as GameObject);
+                var go = Instantiate(Resources.Load("DefaultSceneObjects/" + p.prefabName)) as GameObject;
                 go.name = p.gameObjectName;
             }
             else
@@ -35,5 +37,41 @@ public class DefaultSceneObjectGenerator : MonoBehaviour
                 newGO.AddComponent(t);
             }
         }
+    }
+
+    public static void CreateNetworkedObjects()
+    {
+        var allNetworkedTypes = Util.GetClassesWithAttribute<DefaultSceneObjectAttribute>();
+        foreach (Type t in allNetworkedTypes)
+        {
+            var attributes = t.GetCustomAttributes(typeof(DefaultSceneObjectAttribute), true);
+            if (attributes.Length != 0 && ((DefaultSceneObjectAttribute)attributes[0]).hasNetworkView)
+            {
+                CreateNetworkObject(attributes[0] as DefaultSceneObjectAttribute, t);
+            }
+        }
+    }
+
+    private static void CreateNetworkObject(DefaultSceneObjectAttribute p, Type t)
+    {
+        GameObject newGo = null;
+
+        if (p.prefabName == null)
+        {
+            Debug.LogError("There is no prefab for " + t.Name + "! Cannot create a NetworkedSceneObject without a prefab.");
+        }
+        else
+        {
+            newGo = Instantiate(Resources.Load("DefaultSceneObjects/" + p.prefabName)) as GameObject;
+            newGo.name = p.gameObjectName;
+        }
+
+        var networkViews = newGo.GetComponents<NetworkView>();
+        foreach (NetworkView nv in networkViews)
+        {
+            nv.viewID = Network.AllocateViewID();
+        }
+
+        newGo.AddComponent<NetworkedSceneObject>();
     }
 }

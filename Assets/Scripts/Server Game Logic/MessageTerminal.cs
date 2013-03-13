@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class MessageTerminal : MonoBehaviour
 {
@@ -63,6 +64,65 @@ public class MessageTerminal : MonoBehaviour
     void ClientDisplay(string message, float fadeTime)
     {
         PopupMessage.LocalDisplay(message, fadeTime);
+    }
+
+    [RPC]
+    void CreateNetworkedSceneObject1(string typeName, NetworkViewID viewId)
+    {
+        Type t = Type.GetType(typeName);
+        var attributes = t.GetCustomAttributes(typeof(DefaultSceneObjectAttribute), true);
+        var p = attributes[0] as DefaultSceneObjectAttribute;
+
+        GameObject newGo = null;
+        if (p.prefabName != null)
+        {
+            newGo = Instantiate(Resources.Load("DefaultSceneObjects/" + p.prefabName)) as GameObject;
+            newGo.name = p.gameObjectName;
+        }
+        newGo.networkView.viewID = viewId;
+    }
+
+    [RPC]
+    void CreateNetworkedSceneObject2(string typeName, NetworkViewID viewId1, NetworkViewID viewId2)
+    {
+        Type t = Type.GetType(typeName);
+        var attributes = t.GetCustomAttributes(typeof(DefaultSceneObjectAttribute), true);
+        var p = attributes[0] as DefaultSceneObjectAttribute;
+
+        GameObject newGo = null;
+        if (p.prefabName != null)
+        {
+            newGo = Instantiate(Resources.Load("DefaultSceneObjects/" + p.prefabName)) as GameObject;
+            newGo.name = p.gameObjectName;
+        }
+        var viewIds = newGo.GetComponents<NetworkView>();
+        viewIds[0].viewID = viewId1;
+        viewIds[1].viewID = viewId2;
+    }
+
+    [RPC]
+    void CreateNetworkedSceneObject3(string typeName, NetworkViewID viewId1, NetworkViewID viewId2, NetworkViewID viewId3)
+    {
+        Type t = Type.GetType(typeName);
+        var attributes = t.GetCustomAttributes(typeof(DefaultSceneObjectAttribute), true);
+        var p = attributes[0] as DefaultSceneObjectAttribute;
+
+        GameObject newGo = null;
+        if (p.prefabName != null)
+        {
+            newGo = Instantiate(Resources.Load("DefaultSceneObjects/" + p.prefabName)) as GameObject;
+            newGo.name = p.gameObjectName;
+        }
+        var viewIds = newGo.GetComponents<NetworkView>();
+        viewIds[0].viewID = viewId1;
+        viewIds[1].viewID = viewId2;
+        viewIds[2].viewID = viewId3;
+    }
+
+    [RPC]
+    void SetTimeScale(float newScale)
+    {
+        Time.timeScale = newScale;
     }
 
 }

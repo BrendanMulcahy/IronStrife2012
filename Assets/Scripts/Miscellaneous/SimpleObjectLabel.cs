@@ -24,6 +24,8 @@ public class SimpleObjectLabel : MonoBehaviour
         cam = Camera.main;
         camTransform = cam.transform;
         offset = new Vector3(0, 3f, 0);
+        if (!target)
+            target = transform.root;
 
         if (!guiText)
         {

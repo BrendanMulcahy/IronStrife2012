@@ -13,6 +13,7 @@ public class WaterQualityChanger : QualityChanger
         camTransform = Camera.main.transform;
         thisTransform = this.transform;
         StartCoroutine(TryDisable());
+        ChangeToQualityLevel(PlayerPrefs.GetInt("QualityLevel", 0));
     }
 
     public override void ChangeToQualityLevel(int level)

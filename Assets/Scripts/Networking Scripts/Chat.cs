@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+[DefaultSceneObject("Chat", "Chat", hasNetworkView:true)]
 public class Chat : MonoBehaviour
 {
     GUISkin skin;
@@ -13,15 +14,10 @@ public class Chat : MonoBehaviour
     private List<ChatEntry> newEntries = new List<ChatEntry>();
     private List<ChatEntry> oldEntries = new List<ChatEntry>();
     private Vector2 scrollPosition;
-    string senderName = "";
     GUIStyle style;
     float chatWidth = Screen.width / 1.7f;
     float chatHeight = 140;
     Rect chatArea;
-    int numberOfNewEntries;
-    int numberOfOldEntries;
-    GameObject playerGO;
-    private bool inputFieldShouldBeCleared = false;
     private bool visibleNextFrame = false;
     private bool invisibleNextFrame = false;
     private bool submitNextFrame = false;
@@ -39,16 +35,8 @@ public class Chat : MonoBehaviour
         skin = Resources.Load("ISEGUISkin") as GUISkin;
     }
 
-    void SetPlayer(GameObject setGO)
-    {
-        playerGO = setGO;
-    }
-
     void Update()
     {
-        numberOfOldEntries = oldEntries.Count;
-        numberOfNewEntries = newEntries.Count;
-
         chatWidth = Screen.width / 2.4f;
         chatHeight = Screen.height * .31f;
         chatArea = new Rect(0.25f * Screen.width + 10, Screen.height - chatHeight - 25, chatWidth, chatHeight);

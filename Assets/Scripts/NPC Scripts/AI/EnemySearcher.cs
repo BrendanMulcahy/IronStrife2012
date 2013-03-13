@@ -61,7 +61,7 @@ public class EnemySearcher : MonoBehaviour {
 	{
 		while (true)
 		{
-			enemiesNearby = enemiesNearby.OrderBy(x => ( x ? x.transform.position : new Vector3() - this.transform.position).magnitude).ToList();
+            enemiesNearby.OrderBy((g) => Vector3.Distance(this.transform.position, g.transform.position));
 			yield return new WaitForSeconds(1.0f);
 		}
 		

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Linq;
 
+[DefaultSceneObject("CommandLineReader")]
 public class CommandLineReader : MonoBehaviour
 {
     void Awake()

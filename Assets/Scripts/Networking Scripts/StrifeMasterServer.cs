@@ -61,7 +61,6 @@ public static class StrifeMasterServer
         stream.Read(bytes, 0, 4096);
         stream.Flush();
         var response = System.Text.Encoding.ASCII.GetString(bytes);
-        Debug.Log(response);
         XmlSerializer xs = new XmlSerializer(typeof(ServerInfo[]));
         var s = (ServerInfo[])xs.Deserialize(new MemoryStream(bytes));
         return s.ToList();

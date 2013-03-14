@@ -73,11 +73,14 @@ public class MessageTerminal : MonoBehaviour
         var attributes = t.GetCustomAttributes(typeof(DefaultSceneObjectAttribute), true);
         var p = attributes[0] as DefaultSceneObjectAttribute;
 
-        GameObject newGo = null;
-        if (p.prefabName != null)
+        GameObject newGo = GameObject.Find(p.prefabName);
+        if (!newGo)
         {
-            newGo = Instantiate(Resources.Load("DefaultSceneObjects/" + p.prefabName)) as GameObject;
-            newGo.name = p.gameObjectName;
+            if (p.prefabName != null)
+            {
+                newGo = Instantiate(Resources.Load("DefaultSceneObjects/" + p.prefabName)) as GameObject;
+                newGo.name = p.gameObjectName;
+            }
         }
         newGo.networkView.viewID = viewId;
     }
@@ -89,11 +92,14 @@ public class MessageTerminal : MonoBehaviour
         var attributes = t.GetCustomAttributes(typeof(DefaultSceneObjectAttribute), true);
         var p = attributes[0] as DefaultSceneObjectAttribute;
 
-        GameObject newGo = null;
-        if (p.prefabName != null)
+        GameObject newGo = GameObject.Find(p.prefabName);
+        if (!newGo)
         {
-            newGo = Instantiate(Resources.Load("DefaultSceneObjects/" + p.prefabName)) as GameObject;
-            newGo.name = p.gameObjectName;
+            if (p.prefabName != null)
+            {
+                newGo = Instantiate(Resources.Load("DefaultSceneObjects/" + p.prefabName)) as GameObject;
+                newGo.name = p.gameObjectName;
+            }
         }
         var viewIds = newGo.GetComponents<NetworkView>();
         viewIds[0].viewID = viewId1;
@@ -107,11 +113,14 @@ public class MessageTerminal : MonoBehaviour
         var attributes = t.GetCustomAttributes(typeof(DefaultSceneObjectAttribute), true);
         var p = attributes[0] as DefaultSceneObjectAttribute;
 
-        GameObject newGo = null;
-        if (p.prefabName != null)
+        GameObject newGo = GameObject.Find(p.prefabName);
+        if (!newGo)
         {
-            newGo = Instantiate(Resources.Load("DefaultSceneObjects/" + p.prefabName)) as GameObject;
-            newGo.name = p.gameObjectName;
+            if (p.prefabName != null)
+            {
+                newGo = Instantiate(Resources.Load("DefaultSceneObjects/" + p.prefabName)) as GameObject;
+                newGo.name = p.gameObjectName;
+            }
         }
         var viewIds = newGo.GetComponents<NetworkView>();
         viewIds[0].viewID = viewId1;

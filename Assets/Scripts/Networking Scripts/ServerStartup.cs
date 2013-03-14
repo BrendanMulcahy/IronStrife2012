@@ -105,7 +105,6 @@ public class ServerStartup : MonoBehaviour
     /// <param name="msg"></param>
     void ClientStartup(NetworkMessageInfo msg)
     {
-        Debug.Log(msg.sender);
         foreach (PlayerRecord pr in PlayerManager.Main.players)
         {
             networkView.RPC("SpawnCharacter", msg.sender, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);

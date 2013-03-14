@@ -24,7 +24,7 @@ public class CharacterStats : MonoBehaviour
     protected int teamNumber = 0;
     public int TeamNumber { get { return teamNumber; } set { networkView.RPC("ChangeTeam", RPCMode.All, value); } }
 
-    public KillReward reward;
+    public KillReward reward = KillReward.None;
 
     public event UnitDiedEventHandler Died;
     public event DamageEventHandler Damaged;
@@ -137,20 +137,17 @@ public class CharacterStats : MonoBehaviour
 
     private void OnDeath(UnitDiedEventArgs unitDiedEventArgs)
     {
-        if (Died != null)
-        {
-            Died(gameObject, unitDiedEventArgs);
-        }
         if (Network.isServer)
         {
-            networkView.RPC("NotifyDeath", RPCMode.Others, unitDiedEventArgs.deathPosition, unitDiedEventArgs.killer.GetNetworkViewID());
+            networkView.RPC("NotifyDeath", RPCMode.All, unitDiedEventArgs.deathPosition, unitDiedEventArgs.killer.GetNetworkViewID(), unitDiedEventArgs.reward.experience, unitDiedEventArgs.reward.gold);
         }
     }
 
     [RPC]
-    void NotifyDeath(Vector3 deathPosition, NetworkViewID killer)
+    protected virtual void NotifyDeath(Vector3 deathPosition, NetworkViewID killer, int experience, int gold)
     {
-        var e = new UnitDiedEventArgs() { reward = null, killer = killer.GetGameObject(), deathPosition = deathPosition };
+        Debug.Log("Running notify death... " + this.name + " has died to " + killer.GetGameObject().name);
+        var e = new UnitDiedEventArgs() { reward = new KillReward(experience, gold), killer = killer.GetGameObject(), deathPosition = deathPosition };
         if (Died != null)
         {
             Died(gameObject, e);
@@ -160,8 +157,7 @@ public class CharacterStats : MonoBehaviour
     public static void RewardPlayersInArea(Vector3 location, GameObject killer, KillReward reward)
     {
         if (Network.isClient) return;
-        if (reward == null)
-            Debug.Log("REWARD IS NULL.");
+
         int teamNumber;
         if (killer.GetCharacterStats().teamNumber == 0)
             return;
@@ -281,7 +277,7 @@ public class CharacterStats : MonoBehaviour
     }
 }
 
-public class KillReward
+public struct KillReward
 {
     public int experience;
     public int gold;
@@ -300,5 +296,12 @@ public class KillReward
     public static KillReward operator *(KillReward reward, int factor)
     {
         return new KillReward(reward.experience * factor, reward.gold * factor);
+    }
+
+    public static KillReward None { get { return new KillReward(0, 0); } }
+
+    public override string ToString()
+    {
+        return String.Format("Reward [ {0} XP, {1} Gold ]", experience, gold);
     }
 }

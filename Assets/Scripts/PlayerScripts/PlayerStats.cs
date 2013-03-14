@@ -54,17 +54,17 @@ public class PlayerStats : CharacterStats
         base.Awake();
         inventory = GetComponent<Inventory>();
         SetInitialStats();
-
-    }
-
-    protected override void Start()
-    {
         experienceNeeded = experiencePerLevel[0];
         Level = 1;
         Died += PlayerDied;
         UpdateKillReward();
         TeamNumber = 1;
         inventory = gameObject.GetInventory();
+    }
+
+    protected override void Start()
+    {
+
 
         windowRect = new Rect(Screen.width * .2f, Screen.height * .2f, Screen.width * .35f, Screen.height * .6f);
     }
@@ -207,12 +207,29 @@ public class PlayerStats : CharacterStats
 
     void PlayerDied(GameObject sender, UnitDiedEventArgs e)
     {
-        CharacterStats.RewardPlayersInArea(e.deathPosition, e.killer, e.reward);
         SetRespawnTimer();
-        networkView.RPC("BroadcastDeath", RPCMode.All, e.killer.networkView.viewID);
-
         StartCoroutine(TimedDeathAnimation());
 
+        if (gameObject.IsMyLocalPlayer())
+        {
+            PopupMessage.Display("You were killed by " + e.killer.name);
+            gameObject.DisableControls();
+            Camera.main.gameObject.GetComponent<BlurEffect>().enabled = true;
+            Invoke("EnableRespawnCamera", 6.0f);
+            return;
+        }
+        else
+        {
+            transform.FindChild("Name Label").GetComponent<CharacterLabel>().DisableLabels();
+            if (Util.MyLocalPlayerObject.GetCharacterStats().TeamNumber != this.teamNumber)
+            {
+                PopupMessage.LocalDisplay(gameObject.name + " has been killed by " + e.killer.name + "!", 2.5f, 0, 1, 0);
+            }
+            else
+            {
+                PopupMessage.LocalDisplay(gameObject.name + " has been killed by " + e.killer.name + "!", 2.5f, 1, 0, 0);
+            }
+        }
     }
 
     private IEnumerator TimedDeathAnimation()
@@ -271,34 +288,8 @@ public class PlayerStats : CharacterStats
         {
             LevelUp();
         }
-        if (gameObject != Util.MyLocalPlayerObject)
+        if (!this.gameObject.IsMyLocalPlayer())
             networkView.RPC("BroadcastReward", this.gameObject.GetNetworkPlayer(), reward.experience, reward.gold);
-    }
-
-    [RPC]
-    void BroadcastDeath(NetworkViewID killerID)
-    {
-        if (gameObject == Util.MyLocalPlayerObject)
-        {
-            PopupMessage.Display("You were killed by " + NetworkView.Find(killerID).gameObject.name);
-            gameObject.DisableControls();
-            SetRespawnTimer();
-            Camera.main.gameObject.GetComponent<BlurEffect>().enabled = true;
-            Invoke("EnableRespawnCamera", 6.0f);
-            return;
-        }
-        else
-        {
-            transform.FindChild("Name Label").GetComponent<CharacterLabel>().DisableLabels();
-            if (Util.MyLocalPlayerObject.GetCharacterStats().TeamNumber != this.teamNumber)
-            {
-                PopupMessage.LocalDisplay(gameObject.name + " has been killed by " + NetworkView.Find(killerID).gameObject.name + "!", 2.5f, 0, 1, 0);
-            }
-            else
-            {
-                PopupMessage.LocalDisplay(gameObject.name + " has been killed by " + NetworkView.Find(killerID).gameObject.name + "!", 2.5f, 1, 0, 0);
-            }
-        }
     }
 
     /// <summary>

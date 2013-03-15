@@ -90,7 +90,7 @@ public static class StrifeMasterServer
     {
         try
         {
-            TcpClient client = new TcpClient();
+            TcpClient client = new TcpClient() { SendTimeout = 5 };
             client.Connect(MasterServerAddress, masterServerPort);
             var request = "deregisterserver " + port;
             byte[] data = System.Text.Encoding.ASCII.GetBytes(request);

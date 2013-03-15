@@ -146,7 +146,6 @@ public class CharacterStats : MonoBehaviour
     [RPC]
     protected virtual void NotifyDeath(Vector3 deathPosition, NetworkViewID killer, int experience, int gold)
     {
-        Debug.Log("Running notify death... " + this.name + " has died to " + killer.GetGameObject().name);
         var e = new UnitDiedEventArgs() { reward = new KillReward(experience, gold), killer = killer.GetGameObject(), deathPosition = deathPosition };
         if (Died != null)
         {
@@ -242,13 +241,11 @@ public class CharacterStats : MonoBehaviour
         {
             particles = minimapLabelTransform.GetComponent<ParticleSystem>();
         }
-        particles.startColor = teamNumber == 1 ? Color.blue : Color.red;
+        particles.startColor = TeamNumber == 1 ? Color.blue : Color.red;
     }
 
     protected virtual void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
-        stream.Serialize(ref teamNumber);
-
         stream.SerializeRegeneratingStat(Health);
         stream.SerializeRegeneratingStat(Mana);
         stream.SerializeRegeneratingStat(Stamina);

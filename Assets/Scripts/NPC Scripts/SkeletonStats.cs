@@ -8,7 +8,7 @@ public class SkeletonStats : NPCStats
         Died += SkeletonStats_Died;
         reward = new KillReward(500, 500);
         attackRange = 2.3f;
-        teamNumber = 0;
+        TeamNumber = 0;
 
     }
 

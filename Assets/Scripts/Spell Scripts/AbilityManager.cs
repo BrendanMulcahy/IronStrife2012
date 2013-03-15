@@ -17,6 +17,11 @@ public class AbilityManager : StrifeScriptBase
     private Rect abilityWindowRect = new Rect(70, 70, 600, 400);
     private Dictionary<Spell, float> cooldownTimes = new Dictionary<Spell, float>();
 
+    void Awake()
+    {
+        StartCoroutine(UpdateCooldowns());  // Cooldowns need to be updated on everyone, not just the owner
+    }
+
     void Start()
     {
         AddStartingSpells();
@@ -100,18 +105,20 @@ public class AbilityManager : StrifeScriptBase
         {
             LookForSpellKey();
         }
-
-        UpdateCooldowns();
     }
 
-    private void UpdateCooldowns()
+    private IEnumerator UpdateCooldowns()
     {
-        var spells = cooldownTimes.Keys.ToArray();
-        for (int g = 0; g < spells.Length; g++)
+        while (true)
         {
-            cooldownTimes[spells[g]] -= Time.deltaTime;
-            if (cooldownTimes[spells[g]] <= 0)
-                cooldownTimes.Remove(spells[g]);
+            var spells = cooldownTimes.Keys.ToArray();
+            for (int g = 0; g < spells.Length; g++)
+            {
+                cooldownTimes[spells[g]] -= Time.deltaTime;
+                if (cooldownTimes[spells[g]] <= 0)
+                    cooldownTimes.Remove(spells[g]);
+            }
+            yield return null;
         }
     }
 

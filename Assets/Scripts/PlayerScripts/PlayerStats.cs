@@ -399,6 +399,7 @@ public class PlayerStats : CharacterStats
     public override string ToString()
     {
         var toReturn = "Level: " + Level;
+        toReturn += "\nXP: " + experience + " / " + experienceNeeded;
         toReturn+= "\n"+ base.ToString();
         toReturn += Strength.ToString() + "\n";
         toReturn += Agility.ToString() + "\n";

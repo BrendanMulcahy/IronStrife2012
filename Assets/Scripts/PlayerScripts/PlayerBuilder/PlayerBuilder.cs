@@ -80,6 +80,7 @@ public static class PlayerBuilder
     internal static void SetOwnership(GameObject gameObject)
     {
         Util.MyLocalPlayerObject = gameObject;
+        Util.MyLocalPlayerTeam = gameObject.GetCharacterStats().TeamNumber;
 
         if (Network.isServer)
             AddServerOwnerComponents(gameObject);
@@ -218,10 +219,10 @@ public static class PlayerBuilder
     /// <param name="interpolationViewID"></param>
     /// <param name="animationViewID"></param>
     /// <returns></returns>
-    internal static GameObject GenerateClient(string username, NetworkViewID interpolationViewID, NetworkViewID animationViewID)
+    internal static GameObject GenerateClient(string username, NetworkViewID interpolationViewID, NetworkViewID animationViewID, PlayerRecord record)
     {
         var gameObject = GameObject.Instantiate(Resources.Load("Player/PlayerPrefabMelee01")) as GameObject;
-
+        if (record != null) record.gameObject = gameObject;
         //NetworkView interpolationView = gameObject.GetComponents<NetworkView>()[0];
         //interpolationView.viewID = interpolationViewID;
         //interpolationView.observed = gameObject.AddComponent<GraduallyUpdateState>();
@@ -242,11 +243,11 @@ public static class PlayerBuilder
         return gameObject;
     }
 
-    internal static GameObject GenerateServer(string username, NetworkViewID interpolationViewID, NetworkViewID animationViewID)
+    internal static GameObject GenerateServer(string username, NetworkViewID interpolationViewID, NetworkViewID animationViewID, PlayerRecord record)
     {
 
         var gameObject = GameObject.Instantiate(Resources.Load("Player/PlayerPrefabMelee01")) as GameObject;
-
+        record.gameObject = gameObject;
         //NetworkView interpolationView = gameObject.GetComponents<NetworkView>()[0];
         //interpolationView.viewID = interpolationViewID;
         //interpolationView.observed = gameObject.AddComponent<ServerUpdateState>();

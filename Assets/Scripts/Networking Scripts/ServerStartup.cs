@@ -122,7 +122,7 @@ public class ServerStartup : MonoBehaviour
     [RPC]
     void SpawnCharacter(string username, NetworkPlayer player, int team, NetworkViewID interpolationViewID, NetworkViewID animationViewID)
     {
-        PlayerBuilder.GenerateClient(username, interpolationViewID, animationViewID);
+        PlayerBuilder.GenerateClient(username, interpolationViewID, animationViewID, null);
 
     }
 
@@ -159,7 +159,7 @@ public class ServerStartup : MonoBehaviour
     [RPC]
     void SpawnCharacterAndSetOwnership(string username, NetworkPlayer player, int team, NetworkViewID interpolationViewID, NetworkViewID animationViewID)
     {
-        var go = PlayerBuilder.GenerateClient(username, interpolationViewID, animationViewID);
+        var go = PlayerBuilder.GenerateClient(username, interpolationViewID, animationViewID, null);
 
         PlayerBuilder.SetOwnership(go);
 

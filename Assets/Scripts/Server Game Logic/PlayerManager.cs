@@ -44,19 +44,20 @@ public class PlayerManager : MonoBehaviour
         var interpolationViewID = Network.AllocateViewID();
         var animationViewID = Network.AllocateViewID();
         var team = 1;
-
+        var record = AddPlayer(null, username, player, interpolationViewID, animationViewID, team);
         GameObject newPlayer;
 
         if (player == Network.player && Network.isServer)
         {
-            newPlayer = PlayerBuilder.GenerateServer(username, interpolationViewID, animationViewID);
+            newPlayer = PlayerBuilder.GenerateServer(username, interpolationViewID, animationViewID, record);
             PlayerBuilder.SetOwnership(newPlayer);
         }
         else
         {
-            newPlayer = PlayerBuilder.GenerateServer(username, interpolationViewID, animationViewID);
+            newPlayer = PlayerBuilder.GenerateServer(username, interpolationViewID, animationViewID, record);
         }
-        return AddPlayer(newPlayer, username, player, interpolationViewID, animationViewID, team);
+        record.gameObject = newPlayer;
+        return record;
     }
 
     /// <summary>
@@ -112,7 +113,7 @@ public class PlayerManager : MonoBehaviour
                 return pr;
             }
         }
-        Debug.LogWarning("User not found.");
+        Debug.LogWarning("PlayerRecord for " + go.name +" not found.");
         return null;
     }
 

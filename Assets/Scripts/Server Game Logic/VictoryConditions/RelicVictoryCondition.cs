@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+[DefaultSceneObject("RelicVictoryCondition", "RelicVictoryCondition", true)]
 public class RelicVictoryCondition : VictoryCondition
 {
     List<Relic> allRelics = new List<Relic>();
@@ -35,7 +36,10 @@ public class RelicVictoryCondition : VictoryCondition
         base.OnMasterGameLogicAdded();
         allRelics = Object.FindObjectsOfType(typeof(Relic)).Cast<Relic>().ToList();
         dropArea = Object.FindObjectOfType(typeof(RelicVictoryDropArea)) as RelicVictoryDropArea;
-        dropArea.RelicAdded += RelicVictory_RelicAdded;
+        if (dropArea)
+        {
+            dropArea.RelicAdded += RelicVictory_RelicAdded;
+        }
     }
 
 

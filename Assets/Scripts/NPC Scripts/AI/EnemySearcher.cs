@@ -64,6 +64,5 @@ public class EnemySearcher : MonoBehaviour {
             enemiesNearby.OrderBy((g) => Vector3.Distance(this.transform.position, g.transform.position));
 			yield return new WaitForSeconds(1.0f);
 		}
-		
 	}
 }

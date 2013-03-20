@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+[DefaultSceneObject("ConquestVictoryCondition", "ConquestVictoryCondition", true)]
 public class ConquestVictory : VictoryCondition
 {
     List<ControlPoint> controlPoints;

@@ -59,6 +59,21 @@ public class GameTime : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        if (suns.Length == 0)
+        {
+            suns = new Transform[1];
+            var sunPrefab = Resources.Load("Sun") as GameObject;
+            var newSun = Instantiate(sunPrefab) as GameObject;
+            suns[0] = newSun.transform;
+        }
+        if (moons.Length == 0)
+        {
+            moons = new Transform[1];
+            var moonPrefab = Resources.Load("Moon") as GameObject;
+            var newMoon = Instantiate(moonPrefab) as GameObject;
+            moons[0] = newMoon.transform;
+        }
+
 		for (int i = 0; i < suns.Length; i++)
 		{
 			Sun temp = suns[i].GetComponent<Sun>();
@@ -80,8 +95,8 @@ public class GameTime : MonoBehaviour {
 				temp = moons[i].GetComponent<Moon>();
 			}
 		}
-		
-        skyboxMaterial = RenderSettings.skybox;
+
+        skyboxMaterial = new Material(Resources.Load("Materials/DualSkybox") as Material);
 
         initialRotations = new Quaternion[2];
         initialRotations[0] = Quaternion.Euler(90, 0, 0);

@@ -64,8 +64,6 @@ public class PlayerStats : CharacterStats
 
     protected override void Start()
     {
-
-
         windowRect = new Rect(Screen.width * .2f, Screen.height * .2f, Screen.width * .35f, Screen.height * .6f);
     }
 
@@ -347,10 +345,9 @@ public class PlayerStats : CharacterStats
     [RPC]
     public void TryRespawn(Vector3 requestedRespawnLocation)
     {
-        Debug.Log("Trying to respawn.");
         if (canRespawn)
         {
-            Vector3 actualRespawnLocation = Util.FindClosestTeamRespawn(requestedRespawnLocation, teamNumber);
+            Vector3 actualRespawnLocation = PlayerManager.Main.GetClosestRespawnPoint(requestedRespawnLocation, TeamNumber).transform.position;
             networkView.RPC("StopDying", RPCMode.All);
             Health.CurrentValue = Health.MaxValue;
             transform.position = actualRespawnLocation;

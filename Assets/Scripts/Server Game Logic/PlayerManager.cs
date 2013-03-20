@@ -8,6 +8,8 @@ public class PlayerManager : MonoBehaviour
     public List<GameObject> goodPlayers = new List<GameObject>();
     public List<GameObject> evilPlayers = new List<GameObject>();
 
+    private List<RespawnPoint> respawnPoints = new List<RespawnPoint>();
+
     public static PlayerManager Main
     {
         get { return MasterGameLogic.Main.PlayerManager; }
@@ -39,7 +41,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public PlayerRecord GenerateNewPlayer(NetworkPlayer player, string username)
+    public PlayerRecord GenerateNewPlayerRecord(NetworkPlayer player, string username)
     {
         var interpolationViewID = Network.AllocateViewID();
         var animationViewID = Network.AllocateViewID();
@@ -113,7 +115,7 @@ public class PlayerManager : MonoBehaviour
                 return pr;
             }
         }
-        Debug.LogWarning("PlayerRecord for " + go.name +" not found.");
+        Debug.LogWarning("PlayerRecord for " + go.name + " not found.");
         return null;
     }
 
@@ -178,6 +180,44 @@ public class PlayerManager : MonoBehaviour
     {
         var record = FindRecord(player);
         players.Remove(record);
+    }
+
+    internal void RegisterRespawnPoint(RespawnPoint respawnPoint)
+    {
+        if (!respawnPoints.Contains(respawnPoint))
+        {
+            respawnPoints.Add(respawnPoint);
+        }
+    }
+
+    internal void DeregisterRespawnPoint(RespawnPoint respawnPoint)
+    {
+        if (respawnPoints.Contains(respawnPoint))
+        {
+            respawnPoints.Remove(respawnPoint);
+        }
+    }
+
+    internal RespawnPoint GetClosestRespawnPoint(Vector3 location, int teamNumber)
+    {
+        if (respawnPoints.Count == 0)
+        {
+            Debug.LogWarning("There are no respawn points registered.");
+            return null;
+        }
+        var sortedList = respawnPoints.Where((g) => (g.controllingTeam == teamNumber)).OrderBy((g) => Vector3.Distance(this.transform.position, g.transform.position)).ToArray();
+        return sortedList[0];
+    }
+
+    internal RespawnPoint GetStartingSpawnLocation(int teamNumber)
+    {
+        if (respawnPoints.Count == 0)
+        {
+            Debug.LogWarning("There are no respawn points registered.");
+            return null;
+        }
+        var sortedList = respawnPoints.Where((g) => (g.isStartingSpawn)).ToArray();
+        return sortedList[0];
     }
 }
 

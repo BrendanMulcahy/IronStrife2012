@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[DefaultSceneObject("Chat", "Chat", hasNetworkView:true)]
+[DefaultSceneObject("Chat", "Chat", hasNetworkView: true)]
 public class Chat : MonoBehaviour
 {
     GUISkin skin;
@@ -21,6 +21,8 @@ public class Chat : MonoBehaviour
     private bool visibleNextFrame = false;
     private bool invisibleNextFrame = false;
     private bool submitNextFrame = false;
+
+    public bool enableChatShadow = true;
 
     class ChatEntry
     {
@@ -65,13 +67,13 @@ public class Chat : MonoBehaviour
 
     private void FocusChatInput()
     {
-        GameObject.Find("Main Camera").GetComponent<RegularCamera>().DisableScrolling();
+        GameObject.Find("MainCamera").GetComponent<RegularCamera>().DisableScrolling();
         visibleNextFrame = true; scrollPosition.y = 100000;
     }
 
     private void UnfocusChatInput()
     {
-        GameObject.Find("Main Camera").GetComponent<RegularCamera>().EnableScrolling();
+        GameObject.Find("MainCamera").GetComponent<RegularCamera>().EnableScrolling();
         invisibleNextFrame = true;
     }
 
@@ -108,12 +110,12 @@ public class Chat : MonoBehaviour
         {
             foreach (ChatEntry entry in oldEntries)
             {
-                GUILayout.Label(entry.sender + ": " + entry.text, "smallLabel");
+                PrintChatEntry(entry);
             }
         }
         foreach (ChatEntry entry in newEntries)
         {
-            GUILayout.Label(entry.sender + ": " + entry.text, "smallLabel");
+            PrintChatEntry(entry, true);
         }
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
@@ -124,6 +126,39 @@ public class Chat : MonoBehaviour
             GUI.FocusControl("inputField");
         }
         GUILayout.EndArea();
+    }
+
+    private void PrintChatEntry(ChatEntry entry, bool fade = false)
+    {
+        if (fade)
+        {
+            if (entry.age > 5)
+            {
+                float alpha = 1 - ((entry.age - 5) / 2f);
+                var color = GUI.color;
+                color.a = alpha;
+                GUI.color = color;
+            }
+            else
+            {
+                var color = GUI.color;
+                color.a = 1f;
+                GUI.color = color;
+            }
+        }
+        if (enableChatShadow)
+        {
+            GUILayout.Label("<color=black>" + entry.sender + ": " + entry.text + "</color>", "smallLabel");
+            var lastRect = GUILayoutUtility.GetLastRect();
+            lastRect.x -= 1f; lastRect.y -= 1f;
+            GUI.Label(lastRect, "<color=red>" + entry.sender + "</color>" + ": " + entry.text, "smallLabel");
+        }
+        else
+        {
+            GUILayout.Label("<color=red>" + entry.sender + "</color>" + ": " + entry.text, "smallLabel");
+
+        }
+
     }
 
     private void SubmitChatMessage()

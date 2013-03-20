@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[DefaultSceneObject("ServerStartup", "ServerStartup", hasNetworkView:true)]
 /// <summary>
 /// Handles game initialization upon server creation or connection to server
 /// </summary>
@@ -57,7 +58,7 @@ public class ServerStartup : MonoBehaviour
 
         // If this is not a headless server, create a player for the server.
         if (SystemInfo.graphicsDeviceID != 0)
-            PlayerManager.Main.GenerateNewPlayer(Network.player, Util.Username);
+            PlayerManager.Main.GenerateNewPlayerRecord(Network.player, Util.Username);
     }
 
     [RPC]
@@ -134,7 +135,7 @@ public class ServerStartup : MonoBehaviour
     [RPC]
     void AssignNewPlayerCharacter(string username, NetworkMessageInfo msg)
     {
-        var pr = MasterGameLogic.Main.PlayerManager.GenerateNewPlayer(msg.sender, username);
+        var pr = MasterGameLogic.Main.PlayerManager.GenerateNewPlayerRecord(msg.sender, username);
         networkView.RPC("SpawnCharacterAndSetOwnership", msg.sender, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);
 
         foreach (PlayerRecord rec in PlayerManager.Main.players)

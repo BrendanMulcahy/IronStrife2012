@@ -206,8 +206,8 @@ GameObject:
   - 33: {fileID: 3300020}
   - 23: {fileID: 2300020}
   - 64: {fileID: 6400020}
-  - 95: {fileID: 9500002}
   - 114: {fileID: 11400000}
+  - 95: {fileID: 9500002}
   m_Layer: 0
   m_Name: PoO_Table
   m_TagString: Untagged
@@ -333,7 +333,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1022.80939, y: 130.985168, z: 992.602905}
+  m_LocalPosition: {x: -3.96722412, y: 66.713562, z: 23.5656738}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -778,7 +778,7 @@ MeshCollider:
   m_Mesh: {fileID: 4300000, guid: 4b1a80939dbe44bd1904df80692b4e58, type: 3}
 --- !u!95 &9500002
 Animator:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100022}

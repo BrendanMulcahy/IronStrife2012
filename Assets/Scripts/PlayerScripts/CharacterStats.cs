@@ -214,7 +214,6 @@ public class CharacterStats : MonoBehaviour
     {
         if (Network.isServer && this is PlayerStats)
         {
-            if (MasterGameLogic.Main.PlayerManager == null) Debug.Log("NULL!");
             MasterGameLogic.Main.PlayerManager.ChangePlayerTeam(gameObject, TeamNumber, newTeam);
         }
         if (gameObject == Util.MyLocalPlayerObject)

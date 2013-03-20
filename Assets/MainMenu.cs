@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 
+[DefaultSceneObject("MainMenu", "MainMenu")]
 public class MainMenu : MonoBehaviour
 {
     Resolution currentResolution;

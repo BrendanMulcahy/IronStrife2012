@@ -223,13 +223,6 @@ public static class PlayerBuilder
     {
         var gameObject = GameObject.Instantiate(Resources.Load("Player/PlayerPrefabMelee01")) as GameObject;
         if (record != null) record.gameObject = gameObject;
-        //NetworkView interpolationView = gameObject.GetComponents<NetworkView>()[0];
-        //interpolationView.viewID = interpolationViewID;
-        //interpolationView.observed = gameObject.AddComponent<GraduallyUpdateState>();
-
-        //NetworkView animationView = gameObject.GetComponents<NetworkView>()[1];
-        //animationView.viewID = animationViewID;
-        //animationView.observed = gameObject.AddComponent<NetworkSyncAnimation>();
 
         NetworkView masterView = gameObject.GetComponents<NetworkView>()[0];
         masterView.viewID = interpolationViewID;
@@ -247,15 +240,8 @@ public static class PlayerBuilder
     {
 
         var gameObject = GameObject.Instantiate(Resources.Load("Player/PlayerPrefabMelee01")) as GameObject;
+        gameObject.transform.position = PlayerManager.Main.GetStartingSpawnLocation(record.team).transform.position;
         record.gameObject = gameObject;
-        //NetworkView interpolationView = gameObject.GetComponents<NetworkView>()[0];
-        //interpolationView.viewID = interpolationViewID;
-        //interpolationView.observed = gameObject.AddComponent<ServerUpdateState>();
-
-        //NetworkView animationView = gameObject.GetComponents<NetworkView>()[1];
-        //animationView.viewID = animationViewID;
-        //animationView.observed = gameObject.AddComponent<NetworkSyncAnimation>();
-
         NetworkView masterView = gameObject.GetComponents<NetworkView>()[0];
         masterView.viewID = interpolationViewID;
         masterView.observed = gameObject.AddComponent<MasterNetworkSerializer>();

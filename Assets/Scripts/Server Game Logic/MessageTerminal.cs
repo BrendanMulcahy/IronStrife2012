@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 
+[DefaultSceneObject("MessageTerminal", "MessageTerminal", true)]
 public class MessageTerminal : MonoBehaviour
 {
     private static MessageTerminal _instance;

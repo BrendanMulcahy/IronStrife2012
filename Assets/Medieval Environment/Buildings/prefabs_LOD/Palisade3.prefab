@@ -176,7 +176,7 @@ LODGroup:
   - screenRelativeHeight: .600000024
     renderers:
     - renderer: {fileID: 2300002}
-  - screenRelativeHeight: .0825041309
+  - screenRelativeHeight: .0109677184
     renderers:
     - renderer: {fileID: 2300000}
   m_Enabled: 1

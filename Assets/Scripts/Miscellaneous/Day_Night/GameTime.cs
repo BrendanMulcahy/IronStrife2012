@@ -27,7 +27,7 @@ public class GameTime : MonoBehaviour {
 	
 	public float timeOfDay;
 
-    public Material skyboxMaterial;
+    public Skybox skybox;
 
     public event DawnEventHandler Dawn;
     public event DuskEventHandler Dusk;
@@ -96,7 +96,7 @@ public class GameTime : MonoBehaviour {
 			}
 		}
 
-        skyboxMaterial = new Material(Resources.Load("Materials/DualSkybox") as Material);
+        skybox = Camera.main.GetComponent<Skybox>();
 
         initialRotations = new Quaternion[2];
         initialRotations[0] = Quaternion.Euler(90, 0, 0);
@@ -187,7 +187,7 @@ public class GameTime : MonoBehaviour {
         {
             float currentPercentage = (CurrentTime - 6f) / 2f ;
             currentVal = 1 - currentPercentage;
-            skyboxMaterial.SetFloat("_Blend", currentVal);
+            skybox.material.SetFloat("_Blend", currentVal);
 
         }
 
@@ -195,7 +195,7 @@ public class GameTime : MonoBehaviour {
         {
             float currentPercentage = (CurrentTime - 18f) / 2f;
             currentVal = currentPercentage;
-            skyboxMaterial.SetFloat("_Blend", currentVal);
+            skybox.material.SetFloat("_Blend", currentVal);
 
         }
 
@@ -213,9 +213,9 @@ public class GameTime : MonoBehaviour {
         Main.timeOfDay = gameTime;
 
         if (gameTime > 8 && gameTime < 18)
-            Main.skyboxMaterial.SetFloat("_Blend", 0);
+            Main.skybox.material.SetFloat("_Blend", 0);
         else if (gameTime > 20 && gameTime < 6)
-            Main.skyboxMaterial.SetFloat("_Blend", 1);
+            Main.skybox.material.SetFloat("_Blend", 1);
 
         SunManager.SetTime(gameTime);
     }

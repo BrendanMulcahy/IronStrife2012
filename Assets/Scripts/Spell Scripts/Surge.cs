@@ -19,6 +19,7 @@ public class SpeedBuff : Buff
         trail = Instantiate(Resources.Load("SpellEffects/SurgeTrail")) as GameObject;
         trail.transform.SetParentAndCenter(gameObject.transform);
         trail.transform.localPosition = new Vector3(0, 1.5f, 0);
+        trail.layer = 9;
     }
 
     protected override void RemoveBuffEffects()

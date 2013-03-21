@@ -34,9 +34,9 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _ReflectiveColorCube
+          name: _RefractionTex
         second:
-          m_Texture: {fileID: 8900000, guid: 9cda328e4b6954d70841a8a66f42ec08, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -48,16 +48,16 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _ReflectiveColor
+          name: _ReflectiveColorCube
         second:
-          m_Texture: {fileID: 2800000, guid: 587c38344f65cf84ab93798a4fb5efc3, type: 3}
+          m_Texture: {fileID: 8900000, guid: 9cda328e4b6954d70841a8a66f42ec08, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _RefractionTex
+          name: _ReflectiveColor
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 587c38344f65cf84ab93798a4fb5efc3, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:

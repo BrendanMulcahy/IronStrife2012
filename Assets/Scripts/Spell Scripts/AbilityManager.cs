@@ -17,6 +17,9 @@ public class AbilityManager : StrifeScriptBase
     private Rect abilityWindowRect = new Rect(70, 70, 600, 400);
     private Dictionary<Spell, float> cooldownTimes = new Dictionary<Spell, float>();
 
+    public event SpellCastEventHandler SpellCast;
+    public delegate void SpellCastEventHandler(GameObject sender, Spell spellCast);
+
     void Awake()
     {
         StartCoroutine(UpdateCooldowns());  // Cooldowns need to be updated on everyone, not just the owner
@@ -104,6 +107,14 @@ public class AbilityManager : StrifeScriptBase
         if (lookingForSpellKey)
         {
             LookForSpellKey();
+        }
+    }
+
+    internal void OnSpellCast(Spell spell)
+    {
+        if (SpellCast != null)
+        {
+            SpellCast(this.gameObject, spell);
         }
     }
 

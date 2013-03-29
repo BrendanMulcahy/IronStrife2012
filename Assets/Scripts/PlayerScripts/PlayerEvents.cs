@@ -7,6 +7,7 @@ using UnityEngine;
 /// <param name="deadUnit">The unit that has been killed</param>
 /// <param name="e">Unit died event args</param>
 public delegate void UnitDiedEventHandler(GameObject deadUnit, UnitDiedEventArgs e);
+public delegate void UnitKilledEventHandler(GameObject killer, UnitKilledEventArgs e);
 public delegate void PlayerRespawnedEventHandler(PlayerRespawnedEventArgs e);
 public delegate void HealedEventHandler(GameObject sender, HealedEventArgs e);
 public delegate void DamageEventHandler(GameObject sender, DamageEventArgs e);
@@ -20,6 +21,12 @@ public class UnitDiedEventArgs
     public GameObject killer;
     public Vector3 deathPosition;
     public KillReward reward;
+}
+
+public class UnitKilledEventArgs
+{
+    public GameObject deadUnit;
+    public Vector3 deathPosition;
 }
 
 public class PlayerRespawnedEventArgs

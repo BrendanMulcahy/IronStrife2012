@@ -345,6 +345,7 @@ public class ThirdPersonController : StrifeScriptBase, IController
         if (spell is ISelfSpell)
         {
             ((ISelfSpell)spell).Execute(this.gameObject);
+            AbilityManager.OnSpellCast(spell);
             AbilityManager.PutOnCooldown(spell);
             if (Network.isServer)
                 networkView.RPC("SimulateISelfSpellExecute", RPCMode.Others, (int)spell);
@@ -352,6 +353,7 @@ public class ThirdPersonController : StrifeScriptBase, IController
         else if (spell is ISelfSpellWithViewID)
         {
             ((ISelfSpellWithViewID)spell).Execute(this.gameObject, currentSpellView);
+            AbilityManager.OnSpellCast(spell);
             AbilityManager.PutOnCooldown(spell);
             if (Network.isServer)
                 networkView.RPC("SimulateISelfSpellWithViewIDExecute", RPCMode.Others, (int)spell, currentSpellView);
@@ -389,6 +391,7 @@ public class ThirdPersonController : StrifeScriptBase, IController
         }
 
         characterStats.Mana.CurrentValue -= spell.manaCost;
+        AbilityManager.OnSpellCast(spell);
         AbilityManager.PutOnCooldown(spell);
         ((IPointSpell)spell).Execute(gameObject, inputManager.targetClickLocation);
         if (Network.isServer)
@@ -740,6 +743,7 @@ public class ThirdPersonController : StrifeScriptBase, IController
             if (inputManager.attackButton && inputManager.spellBeingCast != null && characterStats.Mana.CurrentValue >= inputManager.spellBeingCast.manaCost)
             {
                     ((ITargetSpell)inputManager.spellBeingCast).Execute(this.gameObject, transform.forward, inputManager.homingTarget);
+                    AbilityManager.OnSpellCast(inputManager.spellBeingCast);
                     AbilityManager.PutOnCooldown(inputManager.spellBeingCast);
                 if (Network.isServer)
                     networkView.RPC("SimulateITargetSpellExecute", RPCMode.Others, (int)inputManager.spellBeingCast, transform.forward, inputManager.homingTarget ? inputManager.homingTarget.GetNetworkViewID() : NetworkViewID.unassigned);

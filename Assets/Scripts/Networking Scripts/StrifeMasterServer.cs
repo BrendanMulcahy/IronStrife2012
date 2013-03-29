@@ -76,8 +76,18 @@ public static class StrifeMasterServer
             byte[] data = System.Text.Encoding.ASCII.GetBytes(request);
             using (Stream stream = client.GetStream())
             {
-                stream.Write(data, 0, data.Length);
-                stream.Flush();
+                var obj = new RegisterServerRequest()
+                {
+                    serverInfo =
+                      new ServerInfo()
+                      {
+                          port = port,
+                          gameDescription = gameDescription,
+                          gameName = gameName,
+                          gametype = gameType
+                      }
+                };
+                new XmlSerializer(typeof(RegisterServerRequest)).Serialize(stream, obj);
             }
         }
         catch (Exception e)
@@ -96,8 +106,27 @@ public static class StrifeMasterServer
             byte[] data = System.Text.Encoding.ASCII.GetBytes(request);
             using (Stream stream = client.GetStream())
             {
-                stream.Write(data, 0, data.Length);
-                stream.Flush();
+                var obj = new DeregisterServerRequest() { port = port };
+                new XmlSerializer(typeof(DeregisterServerRequest)).Serialize(stream, obj);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error deregistering with the Master Server:\n" + e.ToString());
+        }
+    }
+
+    internal static void SendStatsRecord(PlayerStatRecord recordToUpload)
+    {
+        try
+        {
+            TcpClient client = new TcpClient() { SendTimeout = 5, ReceiveTimeout = 5 };
+            client.Connect(MasterServerAddress, masterServerPort);
+            using (Stream stream = client.GetStream())
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(SendStatsRequest));
+                var obj = new SendStatsRequest() { record = recordToUpload };
+                serializer.Serialize(stream, obj);
             }
         }
         catch (Exception e)
@@ -107,14 +136,19 @@ public static class StrifeMasterServer
     }
 }
 
+[Serializable]
+[XmlType("ServerInfo")]
 public class ServerInfo
 {
     [XmlElement("ipAddress")]
     public string ipAddress;
+    public string IpAddress { get { return ipAddress; } }
     [XmlElement("port")]
     public int port;
     [XmlElement("gameName")]
     public string gameName;
+    public string GameName { get { return gameName; } }
+
     [XmlElement("gameType")]
     public string gametype;
     [XmlElement("gameDescription")]
@@ -124,4 +158,64 @@ public class ServerInfo
     [XmlElement("maxPlayers")]
     public int maxPlayers;
 
+    public override string ToString()
+    {
+        return ipAddress + ": " + port + " | " + gameName + " : " + gameDescription + " | Type: " + gametype + " | " + numConnectedPlayers + " / " + maxPlayers;
+    }
+}
+
+[Serializable]
+[XmlRoot("StrifeServerList")]
+public class StrifeServerList
+{
+    public List<ServerInfo> servers;
+}
+
+[XmlInclude(typeof(GetServerListRequest))]
+[XmlInclude(typeof(RegisterServerRequest))]
+[XmlInclude(typeof(DeregisterServerRequest))]
+[XmlInclude(typeof(SendStatsRequest))]
+public abstract class StrifeServerRequest
+{
+    [XmlAttribute("type")]
+    public string type;
+}
+
+[XmlRoot("GetServerListRequest")]
+public class GetServerListRequest : StrifeServerRequest
+{
+    public GetServerListRequest()
+    {
+        type = "GetServerList";
+    }
+}
+
+[XmlRoot("RegisterServerRequest")]
+public class RegisterServerRequest : StrifeServerRequest
+{
+    public ServerInfo serverInfo;
+    public RegisterServerRequest()
+    {
+        this.type = "RegisterServer";
+    }
+}
+
+[XmlRoot("DeregisterServerRequest")]
+public class DeregisterServerRequest : StrifeServerRequest
+{
+    public int port;
+    public DeregisterServerRequest()
+    {
+        this.type = "DeregisterServer";
+    }
+}
+
+[XmlRoot("SendStatsRequest")]
+public class SendStatsRequest : StrifeServerRequest
+{
+    public PlayerStatRecord record;
+    public SendStatsRequest()
+    {
+        this.type = "SendStats";
+    }
 }

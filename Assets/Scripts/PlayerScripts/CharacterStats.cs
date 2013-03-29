@@ -29,6 +29,7 @@ public class CharacterStats : MonoBehaviour
     public event UnitDiedEventHandler Died;
     public event DamageEventHandler Damaged;
     public event HealedEventHandler Healed;
+    public event UnitKilledEventHandler KilledEnemy;
 
     public virtual int PhysicalDamageModifier
     {
@@ -143,6 +144,14 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
+    internal void OnKilledUnit(UnitKilledEventArgs unitKilledEventArgs)
+    {
+        if (KilledEnemy != null)
+        {
+            KilledEnemy(this.gameObject, unitKilledEventArgs);
+        }
+    }
+
     [RPC]
     protected virtual void NotifyDeath(Vector3 deathPosition, NetworkViewID killer, int experience, int gold)
     {
@@ -151,6 +160,8 @@ public class CharacterStats : MonoBehaviour
         {
             Died(gameObject, e);
         }
+
+        killer.GetGameObject().GetCharacterStats().OnKilledUnit(new UnitKilledEventArgs() { deadUnit = this.gameObject, deathPosition = deathPosition });
     }
 
     public static void RewardPlayersInArea(Vector3 location, GameObject killer, KillReward reward)

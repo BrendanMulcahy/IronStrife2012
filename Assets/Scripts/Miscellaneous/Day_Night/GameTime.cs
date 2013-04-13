@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-
-
 /// <summary>
 /// Game time.
 /// Class Handles the movement of the sun and moon in the sky, as well as the changing of the skybox over time.

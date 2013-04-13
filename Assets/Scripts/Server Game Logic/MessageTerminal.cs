@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-[DefaultSceneObject("MessageTerminal", "MessageTerminal", true)]
 public class MessageTerminal : MonoBehaviour
 {
     private static MessageTerminal _instance;
@@ -70,6 +69,7 @@ public class MessageTerminal : MonoBehaviour
     [RPC]
     void CreateNetworkedSceneObject1(string typeName, NetworkViewID viewId)
     {
+        Debug.Log("Running CreateNetworkedSceneObject of type " + typeName); 
         Type t = Type.GetType(typeName);
         var attributes = t.GetCustomAttributes(typeof(DefaultSceneObjectAttribute), true);
         var p = attributes[0] as DefaultSceneObjectAttribute;
@@ -89,6 +89,7 @@ public class MessageTerminal : MonoBehaviour
     [RPC]
     void CreateNetworkedSceneObject2(string typeName, NetworkViewID viewId1, NetworkViewID viewId2)
     {
+        Debug.Log("Running CreateNetworkedSceneObject of type " + typeName); 
         Type t = Type.GetType(typeName);
         var attributes = t.GetCustomAttributes(typeof(DefaultSceneObjectAttribute), true);
         var p = attributes[0] as DefaultSceneObjectAttribute;
@@ -110,6 +111,7 @@ public class MessageTerminal : MonoBehaviour
     [RPC]
     void CreateNetworkedSceneObject3(string typeName, NetworkViewID viewId1, NetworkViewID viewId2, NetworkViewID viewId3)
     {
+        Debug.Log("Running CreateNetworkedSceneObject of type " + typeName);
         Type t = Type.GetType(typeName);
         var attributes = t.GetCustomAttributes(typeof(DefaultSceneObjectAttribute), true);
         var p = attributes[0] as DefaultSceneObjectAttribute;

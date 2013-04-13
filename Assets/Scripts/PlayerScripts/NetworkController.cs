@@ -68,6 +68,24 @@ public class NetworkController : MonoBehaviour
         nv.stateSynchronization = NetworkStateSynchronization.Unreliable;
         nv.viewID = viewID;
         previousNetworkView.RPCToServer("SetControllerNetworkView", viewID);
+        foreach (NetworkPlayer player in Network.connections)
+        {
+            if (player.ToString() != "0")
+            {
+                nv.SetScope(player, false);
+            }
+        }
+    }
+
+    void OnPlayerConnected(NetworkPlayer player)
+    {
+        if (this.gameObject.GetNetworkPlayer() == player)
+            return;
+        var netViews = this.GetComponents<NetworkView>();
+        if (netViews.Length > 1)
+        {
+            netViews[1].SetScope(player, false);
+        }
     }
 
     [RPC]

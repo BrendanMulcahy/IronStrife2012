@@ -6,6 +6,8 @@ using System.Net.Sockets;
 using System.Xml.Serialization;
 using UnityEngine;
 using System.Linq;
+using System.Text;
+using System.Xml;
 
 public static class StrifeMasterServer
 {
@@ -51,16 +53,15 @@ public static class StrifeMasterServer
         TcpClient client = new TcpClient();
         client.Connect(MasterServerAddress, masterServerPort);
         // Translate the passed message into ASCII and store it as a Byte array.
-        byte[] data = System.Text.Encoding.ASCII.GetBytes("getserverlist");
+        var buffer = new byte[4096];
+        new XmlSerializer(typeof(GetServerListRequest)).Serialize(new MemoryStream(buffer), new GetServerListRequest());
         var stream = client.GetStream();
         // Send the message to the connected TcpServer. 
-        stream.Write(data, 0, data.Length);
+        stream.Write(buffer, 0, buffer.Length);
         stream.Flush();
 
-        var bytes = new byte[4096];
-        stream.Read(bytes, 0, 4096);
-        stream.Flush();
-        var response = System.Text.Encoding.ASCII.GetString(bytes);
+        var response = new StreamReader(stream).ReadToEnd();
+        var bytes = Encoding.UTF8.GetBytes(response);
         XmlSerializer xs = new XmlSerializer(typeof(ServerInfo[]));
         var s = (ServerInfo[])xs.Deserialize(new MemoryStream(bytes));
         return s.ToList();
@@ -72,8 +73,6 @@ public static class StrifeMasterServer
         {
             TcpClient client = new TcpClient() { SendTimeout = 5, ReceiveTimeout = 5 };
             client.Connect(MasterServerAddress, masterServerPort);
-            var request = "registerserver " + port + " " + gameName + " " + gameDescription + " " + gameType;
-            byte[] data = System.Text.Encoding.ASCII.GetBytes(request);
             using (Stream stream = client.GetStream())
             {
                 var obj = new RegisterServerRequest()
@@ -87,27 +86,32 @@ public static class StrifeMasterServer
                           gametype = gameType
                       }
                 };
-                new XmlSerializer(typeof(RegisterServerRequest)).Serialize(stream, obj);
+                var buffer = new byte[4096];
+                var xs = new XmlSerializer(typeof(RegisterServerRequest));
+                xs.Serialize(new MemoryStream(buffer), obj);
+                stream.Write(buffer, 0, buffer.Length);
             }
         }
         catch (Exception e)
         {
             Debug.LogError("Error registering with the Master Server:\n" + e.ToString());
+
         }
     }
 
-    public static void DeRegisterWithMasterServer(int port)
+    public static void DeregisterWithMasterServer(int port)
     {
         try
         {
             TcpClient client = new TcpClient() { SendTimeout = 5, ReceiveTimeout = 5 };
             client.Connect(MasterServerAddress, masterServerPort);
-            var request = "deregisterserver " + port;
-            byte[] data = System.Text.Encoding.ASCII.GetBytes(request);
             using (Stream stream = client.GetStream())
             {
                 var obj = new DeregisterServerRequest() { port = port };
-                new XmlSerializer(typeof(DeregisterServerRequest)).Serialize(stream, obj);
+                var buffer = new byte[4096];
+                var xs = new XmlSerializer(typeof(DeregisterServerRequest));
+                xs.Serialize(new MemoryStream(buffer), obj);
+                stream.Write(buffer, 0, buffer.Length);
             }
         }
         catch (Exception e)
@@ -126,7 +130,10 @@ public static class StrifeMasterServer
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(SendStatsRequest));
                 var obj = new SendStatsRequest() { record = recordToUpload };
-                serializer.Serialize(stream, obj);
+                var buffer = new byte[4096];
+                var xs = new XmlSerializer(typeof(SendStatsRequest));
+                xs.Serialize(new MemoryStream(buffer), obj);
+                stream.Write(buffer, 0, buffer.Length);
             }
         }
         catch (Exception e)

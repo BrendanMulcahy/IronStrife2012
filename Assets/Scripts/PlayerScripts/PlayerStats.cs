@@ -58,7 +58,6 @@ public class PlayerStats : CharacterStats
         Level = 1;
         Died += PlayerDied;
         UpdateKillReward();
-        TeamNumber = 1;
         inventory = gameObject.GetInventory();
     }
 

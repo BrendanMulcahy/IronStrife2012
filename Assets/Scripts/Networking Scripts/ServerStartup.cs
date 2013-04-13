@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[DefaultSceneObject("ServerStartup", "ServerStartup", hasNetworkView:true)]
 /// <summary>
 /// Handles game initialization upon server creation or connection to server
 /// </summary>

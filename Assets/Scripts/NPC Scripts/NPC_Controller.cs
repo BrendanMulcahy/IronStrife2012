@@ -60,6 +60,7 @@ public class NPC_Controller : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (Network.isClient) { this.enabled = false; return; }
         navMeshAgent = GetComponent<NavMeshAgent>();
         characterController = GetComponent<CharacterController>();
         moveDirection = Vector3.forward;

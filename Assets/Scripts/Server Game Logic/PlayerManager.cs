@@ -45,8 +45,7 @@ public class PlayerManager : MonoBehaviour
     {
         var interpolationViewID = Network.AllocateViewID();
         var animationViewID = Network.AllocateViewID();
-        var team = 1;
-        var record = AddPlayer(null, username, player, interpolationViewID, animationViewID, team);
+        var record = AddPlayer(null, username, player, interpolationViewID, animationViewID, -1);
         GameObject newPlayer;
 
         if (player == Network.player && Network.isServer)
@@ -58,6 +57,7 @@ public class PlayerManager : MonoBehaviour
         {
             newPlayer = PlayerBuilder.GenerateServer(username, interpolationViewID, animationViewID, record);
         }
+        newPlayer.GetComponent<PlayerStats>().TeamNumber = record.team;
         record.gameObject = newPlayer;
         return record;
     }
@@ -103,7 +103,14 @@ public class PlayerManager : MonoBehaviour
     /// <returns>The team with less players on it</returns>
     private int GetAutoAssignTeamNumber()
     {
-        return 1;
+        var allPlayerStats = Object.FindObjectsOfType(typeof(PlayerStats)) as PlayerStats[];
+        int numTeamOne = allPlayerStats.Where(s => s.TeamNumber == 1).Count();
+        int numTeamTwo = allPlayerStats.Length - numTeamOne;
+        if (numTeamOne > numTeamTwo)
+        {
+            return 2;
+        }
+        else return 1;
     }
 
     public PlayerRecord FindRecord(GameObject go)

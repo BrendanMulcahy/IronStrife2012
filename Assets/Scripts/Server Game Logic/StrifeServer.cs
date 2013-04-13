@@ -47,7 +47,7 @@ public class StrifeServer : MonoBehaviour
     void OnDisconnectedFromServer(NetworkDisconnection mode)
     {
         TurnOffServer();
-        StrifeMasterServer.DeRegisterWithMasterServer(this.port);
+        StrifeMasterServer.DeregisterWithMasterServer(this.port);
     }
 
 

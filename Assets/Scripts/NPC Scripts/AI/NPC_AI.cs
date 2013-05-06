@@ -5,7 +5,7 @@ using System.Collections;
 /// <summary>
 /// A basic AI that uses a typical finite state machine to determine AI behavior
 /// </summary>
-public class NPC_AI : MonoBehaviour
+public class NPC_AI : StrifeScriptBase
 {
     private float walkSpeed = 5.0f;  //the speed this AI typically walks at
 
@@ -42,12 +42,13 @@ public class NPC_AI : MonoBehaviour
         }
 
         AddEnemySearcher();
-        gameObject.GetCharacterStats().Died += NPC_AI_Died;
+        Stats.Died += NPC_AI_Died;
 
     }
 
     void NPC_AI_Died(GameObject deadUnit, UnitDiedEventArgs e)
     {
+        Destroy(this);
         if (deadUnit)
         {
             Util.Destroy(deadUnit.GetComponents<NPC_BehaviorState>());

@@ -7636,6 +7636,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 962d775ad0b63b24ab7e73d4b9752d2a, type: 3}
   m_Name: 
+  interactionRange: 5
   lookTarget: {fileID: 0}
   isShopping: 0
   sellingAbility: 0

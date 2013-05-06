@@ -62,6 +62,7 @@ public class MainMenu : MonoBehaviour
         skin = Util.ISEGUISkin;
         logoImage = Resources.Load("GUI/MainMenuLogo") as Texture2D;
         mainMenuSong = Resources.Load("BGM/Iron Strife Theme") as AudioClip;
+        PlayerPrefs.SetInt("teamNumber", -1);
     }
 
     void Start()
@@ -78,6 +79,25 @@ public class MainMenu : MonoBehaviour
         audio.clip = mainMenuSong;
         audio.loop = true;
         audio.Play();
+
+        //Prefetch socket policy in web players so they can get master server list.
+#if UNITY_WEBPLAYER
+        try
+        {
+            if (!UnityEngine.Security.PrefetchSocketPolicy(StrifeMasterServer.MasterServerAddress.ToString(), 845))
+            {
+                Debug.LogError("Error prefetching socket policy.");
+            }
+            else
+            {
+                Debug.Log("Socket policy prefetched successfully.");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning("Error prefetching securty policy: " + e.Message);
+        }
+#endif
     }
 
     private void Resize()
@@ -143,6 +163,7 @@ public class MainMenu : MonoBehaviour
             Resize();
         }
     }
+
 
     private void MainFrame(int id)
     {
@@ -418,6 +439,7 @@ public class MainMenu : MonoBehaviour
 
     void OnConnectedToServer()
     {
+        this.visible = false;
         // Notify our objects that the level and the network is ready
         foreach (GameObject go in FindObjectsOfType(typeof(GameObject)))
             go.SendMessage("OnNetworkLoadedLevel", SendMessageOptions.DontRequireReceiver);

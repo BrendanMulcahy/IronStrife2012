@@ -15,6 +15,12 @@ public class NPCStats : CharacterStats
             this.gameObject.AddComponent<DamageNumbers>();
         if (!this.GetComponentInChildren<PlayerMotor>())
             this.gameObject.AddComponent<PlayerMotor>();
+        this.Died += NPCStats_Died;
+    }
+
+    void NPCStats_Died(GameObject deadUnit, UnitDiedEventArgs e)
+    {
+        Destroy(this.gameObject, 4.0f);
 
     }
 

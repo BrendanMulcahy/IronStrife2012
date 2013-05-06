@@ -16,7 +16,7 @@ public class ServerStartup : MonoBehaviour
     {
         var fader = this.gameObject.AddComponent<CameraFade>();
         fader.FadeToSolid(1.0f);
-        networkView.RPC("NewClientConnection", RPCMode.Server, Util.Username);
+        networkView.RPC("NewClientConnection", RPCMode.Server, Util.Username, PlayerPrefs.GetInt("teamNumber", -1));
     }
 
     void OnPlayerConnected(NetworkPlayer player)
@@ -40,7 +40,7 @@ public class ServerStartup : MonoBehaviour
         Network.Destroy(viewID);
 
     }
-
+    
     void Awake()
     {
         networkView.group = 1;
@@ -57,13 +57,13 @@ public class ServerStartup : MonoBehaviour
 
         // If this is not a headless server, create a player for the server.
         if (SystemInfo.graphicsDeviceID != 0)
-            PlayerManager.Main.GenerateNewPlayerRecord(Network.player, Util.Username);
+            PlayerManager.Main.GenerateNewPlayerRecord(Network.player, Util.Username, -1);
     }
 
     [RPC]
-    void NewClientConnection(string username, NetworkMessageInfo msg)
+    void NewClientConnection(string username, int teamNumber, NetworkMessageInfo msg)
     {
-        StartCoroutine(HandleNewClientConnection(username, msg));
+        StartCoroutine(HandleNewClientConnection(username, teamNumber, msg));
     }
 
     /// <summary>
@@ -73,12 +73,12 @@ public class ServerStartup : MonoBehaviour
     /// <param name="username"></param>
     /// <param name="msg"></param>
     /// <returns></returns>
-    private System.Collections.IEnumerator HandleNewClientConnection(string username, NetworkMessageInfo msg)
+    private System.Collections.IEnumerator HandleNewClientConnection(string username, int teamNumber, NetworkMessageInfo msg)
     {
         // Send all player character information to the player 
         networkView.RPC("LoadingStarted", msg.sender);
         ClientStartup(msg);
-        AssignNewPlayerCharacter(username, msg);
+        AssignNewPlayerCharacter(username, teamNumber, msg);
         SynchronizeGameObjects(msg.sender); // Synchronize all GameObjects we just sent.
 
         // Resume state updates to the newly connected client 
@@ -132,9 +132,10 @@ public class ServerStartup : MonoBehaviour
     /// <param name="username"></param>
     /// <param name="msg"></param>
     [RPC]
-    void AssignNewPlayerCharacter(string username, NetworkMessageInfo msg)
+    void AssignNewPlayerCharacter(string username, int teamNumber, NetworkMessageInfo msg)
     {
-        var pr = MasterGameLogic.Main.PlayerManager.GenerateNewPlayerRecord(msg.sender, username);
+        var pr = MasterGameLogic.Main.PlayerManager.GenerateNewPlayerRecord(msg.sender, username, teamNumber);
+
         networkView.RPC("SpawnCharacterAndSetOwnership", msg.sender, pr.username, pr.networkPlayer, pr.team, pr.interpolationViewID, pr.animationViewID);
 
         foreach (PlayerRecord rec in PlayerManager.Main.players)

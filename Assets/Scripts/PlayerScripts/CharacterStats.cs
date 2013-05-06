@@ -66,6 +66,18 @@ public class CharacterStats : MonoBehaviour
 
         MoveSpeed = new MoveSpeedStat(8.0f);
 
+        AddCharacterLabel();
+    }
+
+    private void AddCharacterLabel()
+    {
+        var child = this.GetComponentInChildren<CharacterLabel>();
+        if (!child)
+        {
+            var newLabel = Instantiate(Resources.Load("Name Label") as GameObject) as GameObject;
+            newLabel.transform.SetParentAndCenter(this.transform);
+            newLabel.name = "Name Label";
+        }
     }
 
     protected virtual void Start() 
@@ -265,6 +277,7 @@ public class CharacterStats : MonoBehaviour
 
         stream.SerializeMoveSpeed(MoveSpeed);
 
+        stream.Serialize(ref teamNumber);
     }
 
     public override string ToString()

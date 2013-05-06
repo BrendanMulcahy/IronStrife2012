@@ -10,6 +10,19 @@ public class DamageReceiver : MonoBehaviour {
     protected PlayerMotor playerMotor;
     protected Inventory inventory;
 
+    private static GameObject _damageParticlePrefab;
+    private static GameObject damageParticlePrefab
+    {
+        get
+        {
+            if (!_damageParticlePrefab)
+            {
+                _damageParticlePrefab = Resources.Load("Particles/DamageTakenParticle") as GameObject;
+            }
+            return _damageParticlePrefab;
+        }
+    }
+
     public virtual void Start()
     {
         characterStats = gameObject.GetCharacterStats();
@@ -32,9 +45,13 @@ public class DamageReceiver : MonoBehaviour {
 
             var damage = new Damage(totalDamageMod, attacker, attacker.transform.position, DamageType.Physical);
 
-
             characterStats.ApplyDamage(attacker, damage);
         }
+    }
+
+    public static void AddDamageParticle(Vector3 vector3)
+    {
+        Instantiate(damageParticlePrefab, vector3, Quaternion.identity);
     }
 
     internal void ApplyRangedHit(GameObject attacker)

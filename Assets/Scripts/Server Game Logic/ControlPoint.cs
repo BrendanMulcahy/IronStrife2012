@@ -7,9 +7,12 @@ public class ControlPoint : MonoBehaviour
     public int numNPCsPerWave = 25;
     public string npcType = "AssaultSkeleton";
     public string guardType = "GuardNPC";
-
+    public Transform attackSpawnPosition;
     public List<GameObject> guardSpawnLocations = new List<GameObject>();
     public List<GameObject> playersInArea = new List<GameObject>();
+    public List<ControlPoint> adjacentControlPoints = new List<ControlPoint>();
+    public int attackWaveSize = 5;
+    public string attackNPCName = "GoblinAttacker";
 
     public int controllingTeam = 1;
 
@@ -201,6 +204,31 @@ public class ControlPoint : MonoBehaviour
         if (playersInArea.Contains(other.gameObject))
         {
             playersInArea.Remove(other.gameObject);
+        }
+    }
+
+    internal void SpawnAttackWaves()
+    {
+        foreach (ControlPoint cp in adjacentControlPoints)
+        {
+            if (this.controllingTeam == 0 || cp.controllingTeam == this.controllingTeam)
+                continue;
+
+            else
+            {
+                SpawnSingleWaveTowardControlPoint(cp);
+            }
+        }
+    }
+
+    private void SpawnSingleWaveTowardControlPoint(ControlPoint cp)
+    {
+        var prefab = Resources.Load("NPCs/" + attackNPCName) as GameObject;
+        for (int g = 0; g < attackWaveSize; g++)
+        {
+            var newNPC = NPCManager.Main.ServerSpawnNPC(attackNPCName, this.attackSpawnPosition ? attackSpawnPosition.position : this.transform.position);
+            newNPC.GetComponent<AttackWaveBehaviour>().Target = cp.gameObject;
+            newNPC.GetComponent<CharacterStats>().TeamNumber = this.controllingTeam;
         }
     }
 }

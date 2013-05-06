@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Consumable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Clearsight Scroll" itemType="Consumable" goldCost="350" availability="Regular" buffScript="SpellScrollEffect" description="Clearsight : Gives the caster magic vision, allowing him to see through walls and obstacles." buffParameters="Clearsight" parameterNames="Spell_Name" />

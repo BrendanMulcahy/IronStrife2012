@@ -41,11 +41,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public PlayerRecord GenerateNewPlayerRecord(NetworkPlayer player, string username)
+    public PlayerRecord GenerateNewPlayerRecord(NetworkPlayer player, string username, int teamNumber)
     {
         var interpolationViewID = Network.AllocateViewID();
         var animationViewID = Network.AllocateViewID();
-        var record = AddPlayer(null, username, player, interpolationViewID, animationViewID, -1);
+        var record = AddPlayer(null, username, player, interpolationViewID, animationViewID, teamNumber);
         GameObject newPlayer;
 
         if (player == Network.player && Network.isServer)
@@ -212,7 +212,13 @@ public class PlayerManager : MonoBehaviour
             Debug.LogWarning("There are no respawn points registered.");
             return null;
         }
-        var sortedList = respawnPoints.Where((g) => (g.controllingTeam == teamNumber)).OrderBy((g) => Vector3.Distance(this.transform.position, g.transform.position)).ToArray();
+        Debug.Log("Finding a respawn point for team " + teamNumber);
+        var teamPoints = respawnPoints.Where((g) => (g.controllingTeam == teamNumber));
+        foreach (RespawnPoint cp in teamPoints)
+        {
+            Debug.Log("--" + cp.gameObject.name);
+        }
+        var sortedList = teamPoints.OrderBy((g) => Vector3.Distance(location, g.transform.position)).ToArray();
         return sortedList[0];
     }
 

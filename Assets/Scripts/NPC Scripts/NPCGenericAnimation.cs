@@ -26,6 +26,13 @@ public class NPCGenericAnimation : MonoBehaviour
 
         ani = this.GetComponent<Animation>();
         navMeshAgent = this.GetComponent<NavMeshAgent>();
+
+        SetAnimationNames();
+    }
+
+    protected virtual void SetAnimationNames()
+    {
+        
     }
 
     void NPCGenericAnimation_Died(GameObject deadUnit, UnitDiedEventArgs e)

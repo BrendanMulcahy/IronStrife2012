@@ -166,18 +166,6 @@ public static class Util
     }
 
     /// <summary>
-    /// Locates the closest valid spawn location for a given team and a given spawn location.
-    /// </summary>
-    /// <param name="requestedRespawnLocation"></param>
-    /// <param name="teamNumber"></param>
-    /// <returns></returns>
-    internal static Vector3 FindClosestTeamRespawn(Vector3 requestedRespawnLocation, int teamNumber)
-    {
-        var spawner = GameObject.Find("GameConnect");
-        return spawner.transform.position;
-    }
-
-    /// <summary>
     /// Moves the transform to the main terrain's floor at the given world position.
     /// </summary>
     /// <param name="transform">The transform to move</param>
@@ -540,6 +528,7 @@ public static class Util
     }
 
     private static Font _OFLGoudyStMTT;
+    public static int listenPort;
     public static Font OFLGoudyStMTT
     {
         get

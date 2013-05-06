@@ -6,6 +6,9 @@ public class CommandLineReader : MonoBehaviour
 {
     void Awake()
     {
+#if UNITY_WEBPLAYER
+        return;
+#endif
         var args = System.Environment.GetCommandLineArgs();
 
         if (args.ToList().Contains("StartHeadlessServer"))

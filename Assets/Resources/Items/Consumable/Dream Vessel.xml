@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Consumable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Dream Vessel" itemType="Consumable" goldCost="999" availability="Regular" buffScript="SpellScrollEffect" description="Dream Vessel : Creates an ethereal vehicle for the player to fly." buffParameters="Dream_Vessel" parameterNames="Spell_Name" />

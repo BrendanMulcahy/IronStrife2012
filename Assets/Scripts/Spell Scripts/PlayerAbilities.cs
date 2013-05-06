@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using UnityEngine;
 
 public static class PlayerAbilities
 {
@@ -15,6 +16,7 @@ public static class PlayerAbilities
     public static Spell GetSpell(string s)
     {
         if (!isInitialized) Initialize();
+        Debug.Log("Finding spell " + s);
         return spellDictionary[s];
     }
 

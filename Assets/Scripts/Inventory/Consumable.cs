@@ -1,5 +1,6 @@
 ﻿using System.Xml.Serialization;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// Class for consumable items, including potions, temporary buffers, etc.
@@ -28,7 +29,10 @@ public class Consumable : Item
     public virtual void Consume(GameObject consumer)
     {
         var buff = consumer.AddComponent(buffScript) as ItemEffect;
-        buff.parameters = buffParameters;
+        var newParams = buffParameters.ToList();
+        newParams.ForEach(x => x.Replace('_', ' '));
+        buff.parameters = newParams.ToArray();
+
 
     }
 

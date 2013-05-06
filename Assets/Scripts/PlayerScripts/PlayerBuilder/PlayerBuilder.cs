@@ -240,7 +240,7 @@ public static class PlayerBuilder
     {
 
         var gameObject = GameObject.Instantiate(Resources.Load("Player/PlayerPrefabMelee01")) as GameObject;
-        gameObject.transform.position = PlayerManager.Main.GetStartingSpawnLocation(record.team).transform.position;
+        gameObject.transform.position = PlayerManager.Main.GetClosestRespawnPoint(Vector3.zero, record.team).transform.position;
         record.gameObject = gameObject;
         NetworkView masterView = gameObject.GetComponents<NetworkView>()[0];
         masterView.viewID = interpolationViewID;

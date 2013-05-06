@@ -16,6 +16,9 @@ public class NPCManager : MonoBehaviour
     public event NeutralWaveEventHandler NeutralWaveSpawned;
     private float lastNeutralWaveSpawnTime = 6.0f;
 
+    private float lastAttackWaveSpawnTime = 6.0f;
+    public const float attackWaveInterval = 6.0f;
+
     public static NPCManager Main
     {
         get
@@ -37,6 +40,7 @@ public class NPCManager : MonoBehaviour
     {
         lastNeutralWaveSpawnTime -= 24;
         lastSpawntime -= 24;
+        lastAttackWaveSpawnTime -= 24;
     }
 
     void Update()
@@ -49,6 +53,32 @@ public class NPCManager : MonoBehaviour
         if (IsNeutralWaveTime())
         {
             TrySpawnNeutralWaves();
+        }
+
+        if (IsAttackWaveTime())
+        {
+            TrySpawnAttackWaves();
+        }
+    }
+
+    private bool IsAttackWaveTime()
+    {
+        if (GameTime.Main.IsNight) return false;
+
+        if (GameTime.CurrentTime - lastAttackWaveSpawnTime >= attackWaveInterval)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void TrySpawnAttackWaves()
+    {
+        lastAttackWaveSpawnTime = GameTime.CurrentTime;
+
+        foreach (ControlPoint cp in controlPoints)
+        {
+            cp.SpawnAttackWaves();
         }
     }
 

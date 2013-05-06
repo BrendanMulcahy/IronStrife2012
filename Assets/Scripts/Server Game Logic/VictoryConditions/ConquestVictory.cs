@@ -107,7 +107,7 @@ public class ConquestVictory : VictoryCondition
     {
         teamControlPoints[oldTeam]--;
         teamControlPoints[newteam]++;
-        Debug.Log("Team " + oldTeam + " now controls " + teamControlPoints[oldTeam] + " bases and Team " + newteam + " now controls " + teamControlPoints[newteam]);
+        PopupMessage.NetworkDisplay("Team " + oldTeam + " now controls " + teamControlPoints[oldTeam] + " bases and Team " + newteam + " now controls " + teamControlPoints[newteam]);
     }
 
     protected override void ServerUpdate()

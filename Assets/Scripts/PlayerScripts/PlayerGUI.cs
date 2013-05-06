@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [PlayerComponent(PlayerScriptType.ClientOwnerEnabled, PlayerScriptType.ServerOwnerEnabled)]
-public class PlayerGUI : MonoBehaviour
+public class PlayerGUI : StrifeScriptBase
 {
     private bool visible = true;
 
@@ -57,6 +57,7 @@ public class PlayerGUI : MonoBehaviour
         elements["SpellcastForeground"] = Resources.Load("GUI/SpellcastForeground") as Texture2D;
 
         elements["Button"] = Resources.Load("GUI/Button") as Texture2D;
+        elements["Gold"] = Resources.Load("GUI/STOLEN_GoldCoin") as Texture2D;
 
         StartCoroutine(LoadNetworkRequiredComponents());
 
@@ -113,7 +114,25 @@ public class PlayerGUI : MonoBehaviour
             //DrawHotkeyHelperIcons();
             DrawXPBar();
             DrawSpellcastTimer();
+            DrawGold();
         }
+    }
+
+    private void DrawGold()
+    {
+        float leftMargin = 0.2358432351070646f * Screen.width;
+        float topMargin = (0.8940740740740741f) * Screen.height;
+
+        float width = 40;
+
+        float height = (width / elements["Gold"].width) * elements["Gold"].height;
+
+        GUI.Label(new Rect(leftMargin, topMargin, width, height), elements["Gold"]);
+        var before = GUI.color;
+        GUI.color = Color.yellow;
+        var goldString = Inventory.Gold.ToString();
+        GUI.Label(new Rect(leftMargin + goldString.Length * 5, topMargin, 100, height), goldString);
+        GUI.color = before;
     }
 
     private void DrawHotkeyHelperIcons()
@@ -205,7 +224,10 @@ public class PlayerGUI : MonoBehaviour
 
     void DrawSpellcastTimer()
     {
-        if (!controller.IsCasting || inputManager.spellBeingCast.castTime==0) return;
+        if (!controller.IsCasting) 
+            return;
+        if (inputManager.spellBeingCast != null && inputManager.spellBeingCast.castTime==0) 
+            return;
         var castLength = inputManager.spellBeingCast.castTime;
         var currentProgress = inputManager.spellCastProgress;
 		var castPercentage = currentProgress/castLength;

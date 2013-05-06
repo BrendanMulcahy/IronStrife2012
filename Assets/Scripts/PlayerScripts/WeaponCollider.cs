@@ -75,6 +75,7 @@ public class WeaponCollider : MonoBehaviour
             currentCleavelLevel++;
             if (currentCleavelLevel >= maxCleaveLevel)
                 StopSwingCollisionChecking();
+            DamageReceiver.AddDamageParticle(this.transform.position);
         }
     }
 

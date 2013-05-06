@@ -25,6 +25,7 @@ public class PlayerMotor : MonoBehaviour
     {
         dir.Normalize();
         if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
+        force = Mathf.Max(force, 10.0f);
         impact += dir.normalized * force / mass;
     }
 

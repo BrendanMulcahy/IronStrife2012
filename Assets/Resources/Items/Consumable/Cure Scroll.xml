@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Consumable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Cure Scroll" itemType="Consumable" goldCost="250" availability="Regular" buffScript="SpellScrollEffect" description="Cure : Restores 50 health to the caster." buffParameters="Cure" parameterNames="Spell_Name" />

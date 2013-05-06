@@ -3,7 +3,7 @@
 /// <summary>
 /// Base class for buffs given to players for holding a relic or having a teammate hold a relic
 /// </summary>
-public abstract class RelicBuff : MonoBehaviour
+public abstract class RelicBuff : StrifeScriptBase
 {
     /// <summary>
     /// The relic that produced this RelicBuff

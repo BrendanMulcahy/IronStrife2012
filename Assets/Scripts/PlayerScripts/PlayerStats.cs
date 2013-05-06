@@ -27,6 +27,7 @@ public class PlayerStats : CharacterStats
     private Inventory inventory;
     Rect windowRect;
     private Vector2 scrollPos = new Vector2();
+    private AudioClip goldClip;
 
 
     public override int PhysicalDamageModifier
@@ -59,6 +60,8 @@ public class PlayerStats : CharacterStats
         Died += PlayerDied;
         UpdateKillReward();
         inventory = gameObject.GetInventory();
+        goldClip =  Resources.Load("Sounds/coins") as AudioClip;
+
     }
 
     protected override void Start()
@@ -287,6 +290,18 @@ public class PlayerStats : CharacterStats
         }
         if (!this.gameObject.IsMyLocalPlayer())
             networkView.RPC("BroadcastReward", this.gameObject.GetNetworkPlayer(), reward.experience, reward.gold);
+        else
+        {
+            PlayGoldSound();
+        }
+    }
+
+    /// <summary>
+    /// Plays a gold noise.
+    /// </summary>
+    private void PlayGoldSound()
+    {
+        audio.PlayOneShot(goldClip);
     }
 
     /// <summary>
@@ -298,6 +313,7 @@ public class PlayerStats : CharacterStats
         Debug.Log("You have obtained "+xp + " experience and " + goldReward + " gold.");
         experience += xp;
         inventory.Gold += goldReward;
+        PlayGoldSound();
     }
 
     void LevelUp()

@@ -18,6 +18,7 @@ public class StrifeServer : MonoBehaviour
         this.port = port;
         this.gameName = name;
         this.gameDescription = description;
+        Util.listenPort = port;
     }
 
     void Start()

@@ -5,7 +5,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[DefaultSceneObject("Chat", "Chat", hasNetworkView: true)]
 public class Chat : MonoBehaviour
 {
     GUISkin skin;

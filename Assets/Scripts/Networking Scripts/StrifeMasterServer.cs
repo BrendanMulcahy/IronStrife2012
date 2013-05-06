@@ -83,7 +83,9 @@ public static class StrifeMasterServer
                           port = port,
                           gameDescription = gameDescription,
                           gameName = gameName,
-                          gametype = gameType
+                          gametype = gameType,
+                          maxPlayers = Network.maxConnections,
+                          numConnectedPlayers = Network.connections.Length
                       }
                 };
                 var buffer = new byte[4096];
@@ -120,7 +122,7 @@ public static class StrifeMasterServer
         }
     }
 
-    internal static void SendStatsRecord(PlayerStatRecord recordToUpload)
+    internal static void NotifyPlayerJoined(int id)
     {
         try
         {
@@ -128,17 +130,37 @@ public static class StrifeMasterServer
             client.Connect(MasterServerAddress, masterServerPort);
             using (Stream stream = client.GetStream())
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(SendStatsRequest));
-                var obj = new SendStatsRequest() { record = recordToUpload };
+                var obj = new PlayerJoinedRequest() { serverPort = Util.listenPort, userId = id };
                 var buffer = new byte[4096];
-                var xs = new XmlSerializer(typeof(SendStatsRequest));
+                var xs = new XmlSerializer(typeof(PlayerJoinedRequest));
                 xs.Serialize(new MemoryStream(buffer), obj);
                 stream.Write(buffer, 0, buffer.Length);
             }
         }
         catch (Exception e)
         {
-            Debug.LogError("Error deregistering with the Master Server:\n" + e.ToString());
+            Debug.LogError("Error sending PlayerJoined notification with the Master Server:\n" + e.ToString());
+        }
+    }
+
+    internal static void NotifyPlayerLeft(int id)
+    {
+        try
+        {
+            TcpClient client = new TcpClient() { SendTimeout = 5, ReceiveTimeout = 5 };
+            client.Connect(MasterServerAddress, masterServerPort);
+            using (Stream stream = client.GetStream())
+            {
+                var obj = new PlayerLeftRequest() { serverPort = Util.listenPort, userId = id };
+                var buffer = new byte[4096];
+                var xs = new XmlSerializer(typeof(PlayerLeftRequest));
+                xs.Serialize(new MemoryStream(buffer), obj);
+                stream.Write(buffer, 0, buffer.Length);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error sending PlayerLeft notification with the Master Server:\n" + e.ToString());
         }
     }
 }
@@ -220,9 +242,31 @@ public class DeregisterServerRequest : StrifeServerRequest
 [XmlRoot("SendStatsRequest")]
 public class SendStatsRequest : StrifeServerRequest
 {
-    public PlayerStatRecord record;
+    //public PlayerStatRecord record;
     public SendStatsRequest()
     {
         this.type = "SendStats";
+    }
+}
+
+[XmlRoot("PlayerJoinedRequest")]
+public class PlayerJoinedRequest : StrifeServerRequest
+{
+    public int serverPort;
+    public int userId;
+    public PlayerJoinedRequest()
+    {
+        this.type = "PlayerJoined";
+    }
+}
+
+[XmlRoot("PlayerLeftRequest")]
+public class PlayerLeftRequest : StrifeServerRequest
+{
+    public int serverPort;
+    public int userId;
+    public PlayerLeftRequest()
+    {
+        this.type = "PlayerLeft";
     }
 }

@@ -33,6 +33,7 @@ public class Relic : InteractableObject
     void CommitPickupRelic(NetworkViewID viewID)
     {
         isPickedUp = true;
+        this.collider.enabled = false;
         var player = viewID.GetGameObject();
         SetControllingTeam(player.GetTeamNumber());
         AddHolderBuffs(player);
@@ -103,6 +104,7 @@ public class Relic : InteractableObject
         RemoveHolderBuffs(player);
 
         isPickedUp = false;
+        this.collider.enabled = true;
         this.transform.parent = null;
         rigidbody.isKinematic = false;
 

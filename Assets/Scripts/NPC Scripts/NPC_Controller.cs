@@ -77,11 +77,12 @@ public class NPC_Controller : MonoBehaviour
     void stats_Died(GameObject deadUnit, UnitDiedEventArgs e)
     {
         if (navMeshAgent)
-            navMeshAgent.enabled = false;
+            navMeshAgent.Stop();
         StopAllCoroutines();
         collider.enabled = false;
         gameObject.GetPlayerMotor().enabled = false;
         this.enabled = false;
+
     }
 
     void stats_Damaged(GameObject sender, DamageEventArgs e)
@@ -180,6 +181,7 @@ public class NPC_Controller : MonoBehaviour
     {
         canMove = false;
         SendMessage("StartAttacking", SendMessageOptions.DontRequireReceiver);
+        if (!stats) yield break;
         var swingLength = stats.attackDuration;
         yield return new WaitForSeconds(swingLength * .25f);
         GetComponentInChildren<WeaponCollider>().StartSwingCollisionChecking();

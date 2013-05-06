@@ -67,7 +67,6 @@ public class PlayerStatTracker : MonoBehaviour
     {
         var recordToUpload = new PlayerStatRecord(playerId, kills, deaths, itemsPurchased, spellsCast);
 
-        StrifeMasterServer.SendStatsRecord(recordToUpload);
     }
 }
 
